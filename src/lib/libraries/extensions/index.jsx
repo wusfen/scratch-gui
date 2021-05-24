@@ -164,7 +164,8 @@ export default [
                 id="gui.extension.makeymakey.description"
             />
         ),
-        featured: true
+        featured: true,
+        disabled: !false
     },
     {
         name: 'micro:bit',
@@ -180,7 +181,7 @@ export default [
             />
         ),
         featured: true,
-        disabled: false,
+        disabled: !false,
         bluetoothRequired: true,
         internetConnectionRequired: true,
         launchPeripheralConnectionFlow: true,
@@ -210,7 +211,7 @@ export default [
             />
         ),
         featured: true,
-        disabled: false,
+        disabled: !false,
         bluetoothRequired: true,
         internetConnectionRequired: true,
         launchPeripheralConnectionFlow: true,
@@ -240,7 +241,7 @@ export default [
             />
         ),
         featured: true,
-        disabled: false,
+        disabled: !false,
         bluetoothRequired: true,
         internetConnectionRequired: true,
         launchPeripheralConnectionFlow: true,
@@ -271,7 +272,7 @@ export default [
             />
         ),
         featured: true,
-        disabled: false,
+        disabled: !false,
         bluetoothRequired: true,
         internetConnectionRequired: true,
         launchPeripheralConnectionFlow: true,
@@ -302,7 +303,7 @@ export default [
             />
         ),
         featured: true,
-        disabled: false,
+        disabled: !false,
         bluetoothRequired: true,
         internetConnectionRequired: true,
         launchPeripheralConnectionFlow: true,
@@ -318,4 +319,4 @@ export default [
         ),
         helpLink: 'https://scratch.mit.edu/vernier'
     }
-];
+].filter(e => !e.disabled);

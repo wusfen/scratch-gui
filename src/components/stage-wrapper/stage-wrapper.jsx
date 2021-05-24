@@ -29,12 +29,6 @@ const StageWrapperComponent = function (props) {
             )}
             dir={isRtl ? 'rtl' : 'ltr'}
         >
-            <Box className={styles.stageMenuWrapper}>
-                <StageHeader
-                    stageSize={stageSize}
-                    vm={vm}
-                />
-            </Box>
             <Box className={styles.stageCanvasWrapper}>
                 {
                     isRendererSupported ?
@@ -44,6 +38,12 @@ const StageWrapperComponent = function (props) {
                         /> :
                         null
                 }
+            </Box>
+            <Box className={styles.stageMenuWrapper}>
+                <StageHeader
+                    stageSize={stageSize}
+                    vm={vm}
+                />
             </Box>
             {loading ? (
                 <Loader isFullScreen={isFullScreen} />

@@ -354,8 +354,10 @@ const events = function (isInitialSetup, isStage) {
         ` : `
             <block type="event_whenthisspriteclicked"/>
         `}
+        <!--
         <block type="event_whenbackdropswitchesto">
         </block>
+        -->
         ${blockSeparator}
         <block type="event_whengreaterthan">
             <value name="VALUE">
@@ -765,11 +767,11 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
 
     const everything = [
         xmlOpen,
+        eventsXML, gap,
+        controlXML, gap,
         motionXML, gap,
         looksXML, gap,
         soundXML, gap,
-        eventsXML, gap,
-        controlXML, gap,
         sensingXML, gap,
         operatorsXML, gap,
         variablesXML, gap,

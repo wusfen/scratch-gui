@@ -3,7 +3,8 @@ module.exports = {
     root: true,
     extends: ['scratch', 'scratch/es6', 'scratch/react', 'plugin:import/errors'],
     env: {
-        browser: true
+        browser: true,
+        node: true,
     },
     globals: {
         process: true
@@ -16,7 +17,9 @@ module.exports = {
         'react/jsx-no-literals': 'error',
         'no-confusing-arrow': ['error', {
             'allowParens': true
-        }]
+        }],
+        'no-console': 1,
+        'no-unused-vars': 1
     },
     settings: {
         react: {

@@ -5,7 +5,7 @@ import Renderer from 'scratch-render';
 import VM from 'scratch-vm';
 import {connect} from 'react-redux';
 
-import {STAGE_DISPLAY_SIZES} from '../lib/layout-constants';
+import layout, {STAGE_DISPLAY_SIZES} from '../lib/layout-constants';
 import {getEventXY} from '../lib/touch-utils';
 import VideoProvider from '../lib/video/video-provider';
 import {BitmapAdapter as V2BitmapAdapter} from 'scratch-svg-renderer';
@@ -66,6 +66,9 @@ class Stage extends React.Component {
             // the canvas white instead of solid black–needed because it is not
             // possible to use CSS to style the canvas to have a different
             // default color
+            const w = layout.standardStageWidth / 2;
+            const h = layout.standardStageHeight / 2;
+            this.props.vm.renderer.setStageSize(-w, w, -h, h);
             this.props.vm.renderer.draw();
         }
         this.props.vm.attachV2BitmapAdapter(new V2BitmapAdapter());

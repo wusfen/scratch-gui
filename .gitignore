@@ -17,3 +17,9 @@ npm-*
 # Generated translation files
 /translations
 /locale
+
+
+######
+/_node_modules
+*.local.*
+######

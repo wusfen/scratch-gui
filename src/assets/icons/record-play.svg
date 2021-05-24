@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60.1 (88133) - https://sketch.com -->
+    <title>record-play</title>
+    <desc>Created with Sketch.</desc>
+    <g id="record-play" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M20.6047294,6.5582765 L32.2901269,27.0077221 C32.8381469,27.966757 32.5049534,29.1884663 31.5459185,29.7364863 C31.2437231,29.9091694 30.9016945,30 30.5536406,30 L5.44635936,30 C4.34178986,30 3.44635936,29.1045695 3.44635936,28 C3.44635936,27.6519461 3.53718999,27.3099175 3.70987307,27.0077221 L15.3952706,6.5582765 C16.2173005,5.11972416 18.0498645,4.61993398 19.4884168,5.44196388 C19.9535106,5.70773179 20.3389615,6.09318267 20.6047294,6.5582765 Z" id="Triangle" fill="#FFFFFF" transform="translate(18.000000, 16.000000) rotate(-270.000000) translate(-18.000000, -16.000000) "></path>
+    </g>
+</svg>

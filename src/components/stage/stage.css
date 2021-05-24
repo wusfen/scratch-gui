@@ -9,8 +9,9 @@
     */
     display: block;
 
-    border-radius: $space;
-    border: $stage-standard-border-width solid $ui-black-transparent;
+    /* border-radius: $space; */
+    border-radius: 4px;
+    /* border: $stage-standard-border-width solid $ui-black-transparent; */
     overflow: hidden;
 
     /* @todo: This is for overriding the value being set somewhere. Where is it being set? */
@@ -24,6 +25,14 @@
 
     /* enforce overflow + reset position of absolutely-positioned children */
     position: relative;
+
+    width: 266px !important;
+    height: 473px !important;
+}
+
+.stage canvas {
+    width: 266px !important;
+    height: 473px !important;
 }
 
 .stage.full-screen {
@@ -122,7 +131,7 @@ stage doesn't "spill" out from under its rounded corners. instead, shift these o
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0,0,0,0.25);
+    background: rgba(0, 0, 0, 0.25);
     border-radius: 0.5rem;
     pointer-events: all;
     cursor: pointer;
@@ -131,7 +140,7 @@ stage doesn't "spill" out from under its rounded corners. instead, shift these o
 .green-flag-overlay {
     padding: 1rem;
     border-radius: 100%;
-    background: rgba(255,255,255,0.75);
+    background: rgba(255, 255, 255, 0.75);
     border: 3px solid $ui-white;
     display: flex;
     justify-content: center;
@@ -146,9 +155,11 @@ stage doesn't "spill" out from under its rounded corners. instead, shift these o
     object-fit: contain;
 }
 
-
-
 @keyframes flash {
-    0% { opacity: 1; }
-    100% { opacity: 0; }
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }

@@ -4,10 +4,13 @@
 .wrapper {
     display: flex;
     flex-grow: 1;
-    border: 1px solid $ui-black-transparent;
-    background: white;
+    /* border: 1px solid $ui-black-transparent; */
+    /* background: white; */
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 0.85rem;
+
+    background: $ui-primary;
+    color: $text-primary;
 }
 
 [dir="ltr"] .wrapper {
@@ -33,4 +36,12 @@
 
 [dir="rtl"] .detail-area {
     border-right: 1px solid $ui-black-transparent;
+}
+
+.wrapper [class*="canvas-container"] {
+    border: none;
+}
+
+.wrapper [class*="scrollbar-wrapper"] {
+    opacity: 0.48;
 }

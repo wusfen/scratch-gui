@@ -1,0 +1,16 @@
+icon:before {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    width: 1em;
+    height: 1em;
+    background: center no-repeat url("./show.svg");
+    background-size: contain;
+}
+[data-show]:before {
+    background-image: url("./show.svg");
+}
+
+[data-hide]:before {
+    background-image: url("./hide.svg");
+}

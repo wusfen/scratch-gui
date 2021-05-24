@@ -1,4 +1,29 @@
-import GoogleAnalytics from 'react-ga';
+// import GoogleAnalytics from 'react-ga';
+
+const noop = function () {
+   
+};
+
+// fake ga
+const GoogleAnalytics = {
+    initialize: noop,
+    ga: noop,
+    set: noop,
+    send: noop,
+    pageview: e => {
+        console.log('[pageview]', arguments);
+    },
+    modalview: noop,
+    timing: noop,
+    event: e => {
+        console.log('[event]', arguments);
+    },
+    exception: noop,
+    plugin: noop,
+    outboundLink: noop,
+    OutboundLink: noop,
+    testModeAPI: noop
+};
 
 import log from './log';
 

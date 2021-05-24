@@ -21,13 +21,20 @@ $header-height: calc($stage-menu-height - 2px);
     border-bottom: 0;
     cursor: pointer;
     transition: all 0.25s ease;
+
+    height: 89px;
+    background: none;
+    border: 0;
+    margin: 10px;
 }
 
 .stage-selector.is-selected {
-    border-top-left-radius: .625rem;
-    border-top-right-radius: .625rem;
+    border-top-left-radius: 0.625rem;
+    border-top-right-radius: 0.625rem;
     border-color: $motion-primary;
     box-shadow: 0px 0px 0px 4px $motion-transparent;
+
+    border-radius: 0.625rem;
 }
 
 .stage-selector:hover {
@@ -47,6 +54,8 @@ $header-height: calc($stage-menu-height - 2px);
     border-bottom: 1px solid $ui-black-transparent;
     width: 100%;
     transition: background-color 0.25s ease;
+
+    display: none;
 }
 
 .header-title {
@@ -72,6 +81,8 @@ $header-height: calc($stage-menu-height - 2px);
     font-size: 0.625rem;
     color: $text-primary;
     user-select: none;
+
+    display: none;
 }
 
 .label {
@@ -80,15 +91,17 @@ $header-height: calc($stage-menu-height - 2px);
     color: $text-primary;
     user-select: none;
     text-align: center;
+
+    margin: 0;
 }
 
 .costume-canvas {
     display: block;
-    margin-top: .25rem;
+    margin-top: 0.25rem;
     width: 100%;
     user-select: none;
     border: 1px solid $ui-black-transparent;
-    border-radius: .25rem;
+    border-radius: 0.25rem;
     box-shadow: inset 0 0 4px $ui-black-transparent;
     max-width: 64px;
     max-height: 48px;
@@ -97,9 +110,13 @@ $header-height: calc($stage-menu-height - 2px);
 .add-button {
     position: absolute;
     bottom: 0.75rem;
+
+    bottom: auto;
+    top: 670px;
 }
 
-.raised, .raised .header {
+.raised,
+.raised .header {
     background-color: $drop-highlight;
     transition: all 0.25s ease;
 }
@@ -113,7 +130,13 @@ $header-height: calc($stage-menu-height - 2px);
 }
 
 @keyframes glowing {
-    10% { box-shadow: 0 0 10px #7fff1e; }
-    90% { box-shadow: 0 0 10px #7fff1e; }
-    100% { box-shadow: none; }
+    10% {
+        box-shadow: 0 0 10px #7fff1e;
+    }
+    90% {
+        box-shadow: 0 0 10px #7fff1e;
+    }
+    100% {
+        box-shadow: none;
+    }
 }

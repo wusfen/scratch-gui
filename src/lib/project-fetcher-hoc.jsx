@@ -130,7 +130,9 @@ const ProjectFetcherHOC = function (WrappedComponent) {
         setProjectId: PropTypes.func
     };
     ProjectFetcherComponent.defaultProps = {
-        assetHost: 'https://assets.scratch.mit.edu',
+        // TODO
+        // assetHost: 'https://assets.scratch.mit.edu',
+        assetHost: 'https://oss.iandcode.com/subProg/scratchResources/assets',
         projectHost: 'https://projects.scratch.mit.edu'
     };
 

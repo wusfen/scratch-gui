@@ -17,6 +17,7 @@ import styles from './target-pane.css';
  * @returns {React.Component} rendered component
  */
 const TargetPane = ({
+    isRtl,
     editingTarget,
     fileInputRef,
     hoveredTarget,
@@ -78,7 +79,11 @@ const TargetPane = ({
             onSpriteUpload={onSpriteUpload}
             onSurpriseSpriteClick={onSurpriseSpriteClick}
         />
-        <div className={styles.stageSelectorWrapper}>
+
+        <div
+            hidden
+            className={styles.stageSelectorWrapper}
+        >
             {stage.id && <StageSelector
                 asset={
                     stage.costume &&

@@ -14,6 +14,7 @@ import {STAGE_DISPLAY_SIZES} from '../../lib/layout-constants.js';
 import {isWideLocale} from '../../lib/locale-utils.js';
 
 import styles from './sprite-info.css';
+import icons from '../../assets/icons/icons.css';
 
 import xIcon from './icon--x.svg';
 import yIcon from './icon--y.svg';
@@ -74,117 +75,52 @@ class SpriteInfo extends React.Component {
 
         const labelAbove = isWideLocale(this.props.intl.locale);
 
-        const spriteNameInput = (
-            <BufferedInput
-                className={classNames(
-                    styles.spriteInput,
-                    {
-                        [styles.columnInput]: labelAbove
-                    }
-                )}
-                disabled={this.props.disabled}
-                placeholder={this.props.intl.formatMessage(messages.spritePlaceholder)}
-                tabIndex="0"
-                type="text"
-                value={this.props.disabled ? '' : this.props.name}
-                onSubmit={this.props.onChangeName}
-            />
-        );
-
-        const xPosition = (
-            <div className={styles.group}>
-                {
-                    (stageSize === STAGE_DISPLAY_SIZES.large) ?
-                        <div className={styles.iconWrapper}>
-                            <img
-                                aria-hidden="true"
-                                className={classNames(styles.xIcon, styles.icon)}
-                                src={xIcon}
-                            />
-                        </div> :
-                        null
-                }
-                <Label text="x">
-                    <BufferedInput
-                        small
-                        disabled={this.props.disabled}
-                        placeholder="x"
-                        tabIndex="0"
-                        type="text"
-                        value={this.props.disabled ? '' : Math.round(this.props.x)}
-                        onSubmit={this.props.onChangeX}
-                    />
-                </Label>
-            </div>
-        );
-
-        const yPosition = (
-            <div className={styles.group}>
-                {
-                    (stageSize === STAGE_DISPLAY_SIZES.large) ?
-                        <div className={styles.iconWrapper}>
-                            <img
-                                aria-hidden="true"
-                                className={classNames(styles.yIcon, styles.icon)}
-                                src={yIcon}
-                            />
-                        </div> :
-                        null
-                }
-                <Label text="y">
-                    <BufferedInput
-                        small
-                        disabled={this.props.disabled}
-                        placeholder="y"
-                        tabIndex="0"
-                        type="text"
-                        value={this.props.disabled ? '' : Math.round(this.props.y)}
-                        onSubmit={this.props.onChangeY}
-                    />
-                </Label>
-            </div>
-        );
-
-        if (stageSize === STAGE_DISPLAY_SIZES.small) {
-            return (
-                <Box className={styles.spriteInfo}>
-                    <div className={classNames(styles.row, styles.rowPrimary)}>
-                        <div className={styles.group}>
-                            {spriteNameInput}
-                        </div>
-                    </div>
-                    <div className={classNames(styles.row, styles.rowSecondary)}>
-                        {xPosition}
-                        {yPosition}
-                    </div>
-                </Box>
-            );
-        }
-
         return (
             <Box className={styles.spriteInfo}>
-                <div className={classNames(styles.row, styles.rowPrimary)}>
+                <div className={classNames(styles.row)}>
+                    {/* 角色名 */}
                     <div className={styles.group}>
                         <Label
                             above={labelAbove}
-                            text={sprite}
+                            // text={sprite}
+                            text={this.props.name}
                         >
-                            {spriteNameInput}
+                            <BufferedInput
+                                hidden
+                                className={classNames(
+                                    styles.spriteInput,
+                                    {
+                                        [styles.columnInput]: labelAbove
+                                    }
+                                )}
+                                disabled={this.props.disabled}
+                                placeholder={this.props.intl.formatMessage(messages.spritePlaceholder)}
+                                tabIndex="0"
+                                type="text"
+                                value={this.props.disabled ? '' : this.props.name}
+                                onSubmit={this.props.onChangeName}
+                            />
                         </Label>
                     </div>
-                    {xPosition}
-                    {yPosition}
-                </div>
-                <div className={classNames(styles.row, styles.rowSecondary)}>
-                    <div className={labelAbove ? styles.column : styles.group}>
-                        {
-                            stageSize === STAGE_DISPLAY_SIZES.large ?
-                                <Label
-                                    secondary
-                                    text={showLabel}
-                                /> :
-                                null
-                        }
+                    {/* 显示 */}
+                    {
+                        this.props.visible ?
+                            <icon
+                                className={classNames(styles.iconWrap)}
+                                data-show
+                                onClick={this.props.onClickNotVisible}
+                            /> :
+                            <icon
+                                className={classNames(styles.iconWrap)}
+                                data-hide
+                                onClick={this.props.onClickVisible}
+                            />
+                    }
+
+                    <div
+                        hidden
+                        className={labelAbove ? styles.column : styles.group}
+                    >
                         <div className={styles.radioWrapper}>
                             <div
                                 className={classNames(
@@ -226,14 +162,30 @@ class SpriteInfo extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className={classNames(styles.group, styles.largerInput)}>
+                </div>
+
+                <div className={classNames(styles.row)}>
+                    <div className={styles.group}>
+                        <Label
+                            above={labelAbove}
+                            text="x"
+                        >
+                            <BufferedInput
+                                disabled={this.props.disabled}
+                                tabIndex="0"
+                                type="text"
+                                value={this.props.disabled ? '' : Math.round(this.props.x)}
+                                onSubmit={this.props.onChangeX}
+                            />
+                        </Label>
+                    </div>
+                    <div className={classNames(styles.group)}>
                         <Label
                             secondary
                             above={labelAbove}
                             text={sizeLabel}
                         >
                             <BufferedInput
-                                small
                                 disabled={this.props.disabled}
                                 label={sizeLabel}
                                 tabIndex="0"
@@ -243,7 +195,23 @@ class SpriteInfo extends React.Component {
                             />
                         </Label>
                     </div>
-                    <div className={classNames(styles.group, styles.largerInput)}>
+                </div>
+                <div className={classNames(styles.row)}>
+                    <div className={styles.group}>
+                        <Label
+                            above={labelAbove}
+                            text="y"
+                        >
+                            <BufferedInput
+                                disabled={this.props.disabled}
+                                tabIndex="0"
+                                type="text"
+                                value={this.props.disabled ? '' : Math.round(this.props.y)}
+                                onSubmit={this.props.onChangeY}
+                            />
+                        </Label>
+                    </div>
+                    <div className={classNames(styles.group)}>
                         <DirectionPicker
                             direction={Math.round(this.props.direction)}
                             disabled={this.props.disabled}

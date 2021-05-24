@@ -1,3 +1,1 @@
-module.exports = {
-    extends: ['scratch', 'scratch/node']
-};
+module.exports = require('./src/.eslintrc.js')

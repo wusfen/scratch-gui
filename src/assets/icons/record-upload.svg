@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="56px" height="56px" viewBox="0 0 56 56" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60.1 (88133) - https://sketch.com -->
+    <title>record-upload</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#82EABA" offset="0%"></stop>
+            <stop stop-color="#4EE6BF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="record-upload" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M43.9243008,18.6546077 C43.1724714,10.4290899 36.6304601,4 28.6666357,4 C20.8005945,4 14.3268709,10.2748123 13.4442212,18.3536699 C5.82587531,19.6486519 0,26.6261214 0,35.058827 C0,44.414854 7.16373982,52 15.9999763,52 L24.1464179,52 L24.1464179,36.4705865 L13.0391431,36.4705865 L28.0000277,19.5294135 L42.9608569,36.4705865 L32.146489,36.4705865 L32.146489,52 L41.3333505,52 L41.3333505,51.9272265 C49.5442061,51.2099209 56,43.9383105 56,35.058827 C56,27.1384072 50.8599905,20.5103912 43.9243008,18.6546077 Z" id="Fill-1" fill="url(#linearGradient-1)"></path>
+    </g>
+</svg>

@@ -37,19 +37,32 @@ const Controls = function (props) {
             className={classNames(styles.controlsContainer, className)}
             {...componentProps}
         >
+            {turbo ? (
+                <TurboMode />
+            ) : null}
             <GreenFlag
+                hidden
                 active={active}
                 title={intl.formatMessage(messages.goTitle)}
                 onClick={onGreenFlagClick}
             />
             <StopAll
+                hidden
                 active={active}
                 title={intl.formatMessage(messages.stopTitle)}
                 onClick={onStopAllClick}
             />
-            {turbo ? (
-                <TurboMode />
-            ) : null}
+            <button
+                className={classNames(styles.button)}
+                type="button"
+                onClick={active ? onStopAllClick : onGreenFlagClick}
+            >
+                <img
+                    src={require('../../assets/icons/star.svg')}
+                    alt=""
+                />
+                {active ? '结束' : '开始'}
+            </button>
         </div>
     );
 };

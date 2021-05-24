@@ -31,6 +31,8 @@ import DragLayer from '../../containers/drag-layer.jsx';
 import ConnectionModal from '../../containers/connection-modal.jsx';
 import TelemetryModal from '../telemetry-modal/telemetry-modal.jsx';
 
+import $SpriteList from '../../containers/$-sprite-list.jsx';
+
 import layout, {STAGE_SIZE_MODES} from '../../lib/layout-constants';
 import {resolveStageSize} from '../../lib/screen-utils';
 
@@ -171,12 +173,13 @@ const GUIComponent = props => {
                         onShowPrivacyPolicy={onShowPrivacyPolicy}
                     />
                 ) : null}
-                {loading ? (
-                    <Loader />
-                ) : null}
                 {isCreating ? (
                     <Loader messageId="gui.loader.creating" />
-                ) : null}
+                ) : (
+                    loading ? (
+                        <Loader />
+                    ) : null
+                )}
                 {isRendererSupported ? null : (
                     <WebGlModal isRtl={isRtl} />
                 )}
@@ -248,7 +251,10 @@ const GUIComponent = props => {
                                 selectedTabPanelClassName={tabClassNames.tabPanelSelected}
                                 onSelect={onActivateTab}
                             >
-                                <TabList className={tabClassNames.tabList}>
+                                <TabList
+                                    hidden
+                                    className={tabClassNames.tabList}
+                                >
                                     <Tab className={tabClassNames.tab}>
                                         <img
                                             draggable={false}
@@ -338,6 +344,8 @@ const GUIComponent = props => {
                                 <Backpack host={backpackHost} />
                             ) : null}
                         </Box>
+
+                        <$SpriteList vm={vm} />
 
                         <Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}>
                             <StageWrapper

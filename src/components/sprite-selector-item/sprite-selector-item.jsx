@@ -2,7 +2,6 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import DeleteButton from '../delete-button/delete-button.jsx';
 import styles from './sprite-selector-item.css';
 import {ContextMenuTrigger} from 'react-contextmenu';
 import {DangerousMenuItem, ContextMenu, MenuItem} from '../context-menu/context-menu.jsx';
@@ -47,12 +46,33 @@ const SpriteSelectorItem = props => (
                 <div className={styles.spriteDetails}>{props.details}</div>
             ) : null}
         </div>
+
         {(props.selected && props.onDeleteButtonClick) ? (
-            <DeleteButton
-                className={styles.deleteButton}
-                onClick={props.onDeleteButtonClick}
-            />
+            <div className={styles.actionWrap}>
+                <button
+                    hidden={!!props.number}
+                    type="button"
+                    onClick={function (e) {
+                        e.stopPropagation();
+                        document.querySelector('[role="tablist"]').children[1].click();
+                    }}
+                >
+                    <img
+                        src={require('../../assets/icons/edit.svg')}
+                        alt="*"
+                    />
+                </button>
+                <button
+                    type="button"
+                    onClick={props.onDeleteButtonClick}
+                >
+                    <img
+                        src={require('../../assets/icons/delete.svg')}
+                        alt="-"
+                    /></button>
+            </div>
         ) : null }
+
         {props.onDuplicateButtonClick || props.onDeleteButtonClick || props.onExportButtonClick ? (
             <ContextMenu id={`${props.name}-${contextMenuId++}`}>
                 {props.onDuplicateButtonClick ? (

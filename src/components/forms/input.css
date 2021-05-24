@@ -29,6 +29,13 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     min-width: 0;
+
+    height: 28px;
+    background: $motion-primary;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: normal;
 }
 
 .input-form:hover {

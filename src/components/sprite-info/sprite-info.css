@@ -2,18 +2,19 @@
 @import "../../css/colors.css";
 
 .sprite-info {
-    padding: 0.75rem;
+    /* padding: 0.75rem; */
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    background-color: white;
+    /* background-color: white; */
     color: $text-primary;
-    border-top-left-radius: $space;
-    border-top-right-radius: $space;
-    border-bottom: 1px solid $ui-black-transparent;
+    /* border-top-left-radius: $space; */
+    /* border-top-right-radius: $space; */
+    /* border-bottom: 1px solid $ui-black-transparent; */
 }
 
 .row {
     display: flex;
     justify-content: space-between;
+    align-item: center;
 }
 
 .row-primary {
@@ -136,4 +137,33 @@
 
 .sprite-input {
     width: 8rem;
+}
+
+
+.row > .group{
+    flex: 1;
+}
+
+.row{
+    margin-left: -3px;
+    margin-right: -3px;
+    margin-bottom: 6px;
+}
+.row > *{
+    margin: 0 3px;
+}
+
+.group input{
+    width: 100%;
+    text-align: right;
+}
+
+.icon-wrap{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: #9678FF;
+    border-radius: 10px;
 }

@@ -100,7 +100,7 @@ const SpriteSelectorComponent = function (props) {
                 onChangeY={onChangeSpriteY}
             />
 
-            <SpriteList
+            {/* <SpriteList
                 editingTarget={editingTarget}
                 hoveredTarget={hoveredTarget}
                 items={Object.keys(sprites).map(id => sprites[id])}
@@ -111,7 +111,7 @@ const SpriteSelectorComponent = function (props) {
                 onDuplicateSprite={onDuplicateSprite}
                 onExportSprite={onExportSprite}
                 onSelectSprite={onSelectSprite}
-            />
+            /> */}
             <ActionMenu
                 className={styles.addButton}
                 img={spriteIcon}

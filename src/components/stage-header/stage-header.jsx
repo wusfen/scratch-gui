@@ -149,10 +149,9 @@ const StageHeaderComponent = function (props) {
         header = (
             <Box className={styles.stageHeaderWrapper}>
                 <Box className={styles.stageMenuWrapper}>
-                    <Controls vm={vm} />
                     <div className={styles.stageSizeRow}>
-                        {stageControls}
-                        <div>
+                        {/* {stageControls} */}
+                        <div hidden>
                             <Button
                                 className={styles.stageButton}
                                 onClick={onSetStageFull}
@@ -167,6 +166,7 @@ const StageHeaderComponent = function (props) {
                             </Button>
                         </div>
                     </div>
+                    <Controls vm={vm} />
                 </Box>
             </Box>
         );

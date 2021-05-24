@@ -1,11 +1,12 @@
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import styles from './label.css';
 
 const Label = props => (
-    <label className={props.above ? styles.inputGroupColumn : styles.inputGroup}>
-        <span className={props.secondary ? styles.inputLabelSecondary : styles.inputLabel}>
+    <label className={classNames(props.above ? styles.inputGroupColumn : styles.inputGroup)}>
+        <span className={classNames(props.secondary ? styles.inputLabelSecondary : styles.inputLabel)}>
             {props.text}
         </span>
         {props.children}

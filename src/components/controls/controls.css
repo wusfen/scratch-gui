@@ -1,3 +1,28 @@
 .controls-container {
     display: flex;
 }
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 105px;
+    height: 40px;
+    line-height: 40px;
+    background: #ff457f;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.33), inset 0 1px 12px 0 #ffb0c8;
+    border: 0;
+    border-radius: 10px;
+    font-family: SourceHanSansCN-Medium;
+    font-size: 16px;
+    color: #ffffff;
+    letter-spacing: 0;
+    text-align: center;
+    outline: 0;
+}
+
+.button img {
+    width: 22px;
+    height: 22px;
+    margin-right: 10px;
+}

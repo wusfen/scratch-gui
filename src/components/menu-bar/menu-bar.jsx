@@ -73,9 +73,13 @@ import dropdownCaret from './dropdown-caret.svg';
 import languageIcon from '../language-selector/language-icon.svg';
 import aboutIcon from './icon--about.svg';
 
-import scratchLogo from './scratch-logo.svg';
+// import scratchLogo from './scratch-logo.svg';
+import scratchLogo from '../../assets/logo.png';
 
 import sharedMessages from '../../lib/shared-messages';
+
+import folderIcon from '../../assets/icons/folder.svg';
+import setupIcon from '../../assets/icons/set up.svg';
 
 const ariaMessages = defineMessages({
     language: {
@@ -388,6 +392,7 @@ class MenuBar extends React.Component {
             >
                 <div className={styles.mainMenu}>
                     <div className={styles.fileGroup}>
+                        {/* logo */}
                         <div className={classNames(styles.menuBarItem)}>
                             <img
                                 alt="Scratch"
@@ -399,6 +404,7 @@ class MenuBar extends React.Component {
                                 onClick={this.props.onClickLogo}
                             />
                         </div>
+                        {/* lang */}
                         {(this.props.canChangeLanguage) && (<div
                             className={classNames(styles.menuBarItem, styles.hoverable, styles.languageMenu)}
                         >
@@ -408,12 +414,14 @@ class MenuBar extends React.Component {
                                     src={languageIcon}
                                 />
                                 <img
+                                    hidden
                                     className={styles.languageCaret}
                                     src={dropdownCaret}
                                 />
                             </div>
                             <LanguageSelector label={this.props.intl.formatMessage(ariaMessages.language)} />
                         </div>)}
+                        {/* file */}
                         {(this.props.canManageFiles) && (
                             <div
                                 className={classNames(styles.menuBarItem, styles.hoverable, {
@@ -421,10 +429,15 @@ class MenuBar extends React.Component {
                                 })}
                                 onMouseUp={this.props.onClickFile}
                             >
-                                <FormattedMessage
+                                {/* <FormattedMessage
                                     defaultMessage="File"
                                     description="Text for file dropdown menu"
                                     id="gui.menuBar.file"
+                                /> */}
+                                <img
+                                    className={styles.icon}
+                                    src={folderIcon}
+                                    alt="file"
                                 />
                                 <MenuBarMenu
                                     className={classNames(styles.menuBarMenu)}
@@ -481,6 +494,7 @@ class MenuBar extends React.Component {
                                 </MenuBarMenu>
                             </div>
                         )}
+                        {/* edit */}
                         <div
                             className={classNames(styles.menuBarItem, styles.hoverable, {
                                 [styles.active]: this.props.editMenuOpen
@@ -488,10 +502,16 @@ class MenuBar extends React.Component {
                             onMouseUp={this.props.onClickEdit}
                         >
                             <div className={classNames(styles.editMenu)}>
-                                <FormattedMessage
+                                {/* <FormattedMessage
                                     defaultMessage="Edit"
                                     description="Text for edit dropdown menu"
                                     id="gui.menuBar.edit"
+                                /> */}
+                                
+                                <img
+                                    className={styles.icon}
+                                    src={setupIcon}
+                                    alt="setting"
                                 />
                             </div>
                             <MenuBarMenu
@@ -530,8 +550,11 @@ class MenuBar extends React.Component {
                             </MenuBarMenu>
                         </div>
                     </div>
-                    <Divider className={classNames(styles.divider)} />
+
+                    {/* <Divider className={classNames(styles.divider)} /> */}
+                    
                     <div
+                        hidden
                         aria-label={this.props.intl.formatMessage(ariaMessages.tutorials)}
                         className={classNames(styles.menuBarItem, styles.hoverable)}
                         onClick={this.props.onOpenTipLibrary}
@@ -542,9 +565,14 @@ class MenuBar extends React.Component {
                         />
                         <FormattedMessage {...ariaMessages.tutorials} />
                     </div>
-                    <Divider className={classNames(styles.divider)} />
+
+                    {/* <Divider className={classNames(styles.divider)} /> */}
+
                     {this.props.canEditTitle ? (
-                        <div className={classNames(styles.menuBarItem, styles.growable)}>
+                        <div
+                            hidden
+                            className={classNames(styles.menuBarItem, styles.growable)}
+                        >
                             <MenuBarItemTooltip
                                 enable
                                 id="title-field"
@@ -563,7 +591,10 @@ class MenuBar extends React.Component {
                             username={this.props.authorUsername}
                         />
                     ) : null)}
-                    <div className={classNames(styles.menuBarItem)}>
+                    <div
+                        hidden
+                        className={classNames(styles.menuBarItem)}
+                    >
                         {this.props.canShare ? (
                             (this.props.isShowingProject || this.props.isUpdating) && (
                                 <ProjectWatcher onDoneUpdating={this.props.onSeeCommunity}>
@@ -591,7 +622,10 @@ class MenuBar extends React.Component {
                         )}
                         {this.props.canRemix ? remixButton : []}
                     </div>
-                    <div className={classNames(styles.menuBarItem, styles.communityButtonWrapper)}>
+                    <div
+                        hidden
+                        className={classNames(styles.menuBarItem, styles.communityButtonWrapper)}
+                    >
                         {this.props.enableCommunity ? (
                             (this.props.isShowingProject || this.props.isUpdating) && (
                                 <ProjectWatcher onDoneUpdating={this.props.onSeeCommunity}>
@@ -705,6 +739,7 @@ class MenuBar extends React.Component {
                                 <React.Fragment>
                                     <MenuBarItemTooltip id="mystuff">
                                         <div
+                                            hidden
                                             className={classNames(
                                                 styles.menuBarItem,
                                                 styles.hoverable,
@@ -722,6 +757,7 @@ class MenuBar extends React.Component {
                                         place={this.props.isRtl ? 'right' : 'left'}
                                     >
                                         <div
+                                            hidden
                                             className={classNames(
                                                 styles.menuBarItem,
                                                 styles.hoverable,
@@ -748,6 +784,10 @@ class MenuBar extends React.Component {
                 </div>
 
                 {aboutButton}
+
+                <button
+                    className={styles.publishButton}
+                >{'提交'}</button>
             </Box>
         );
     }

@@ -7,7 +7,7 @@
 }
 
 .drag-over:after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -18,7 +18,7 @@
     transition: all 0.25s ease;
 }
 
-.blocks :global(.injectionDiv){
+.blocks :global(.injectionDiv) {
     position: absolute;
     top: 0;
     right: 0;
@@ -44,7 +44,7 @@
     border-right: 1px solid $ui-black-transparent;
     border-bottom: 1px solid $ui-black-transparent;
     box-sizing: content-box;
-    height: calc(100% - 3.25rem) !important;
+    /* height: calc(100% - 3.25rem) !important; */
 
     /*
         For now, the layout cannot support scrollbars in the category menu.
@@ -53,6 +53,8 @@
         same for Firefox, so a different solution may be needed for them.
     */
     -ms-overflow-style: none;
+
+    background: #f1e0ff;
 }
 
 [dir="rtl"] .blocks :global(.blocklyToolboxDiv) {
@@ -73,7 +75,6 @@
     border-right: none;
     border-left: 1px solid $ui-black-transparent;
 }
-
 
 .blocks :global(.blocklyBlockDragSurface) {
     /*
@@ -96,4 +97,80 @@
 .blocks :global(.blocklyMinimalBody) {
     min-width: auto;
     min-height: auto;
+}
+
+/* ======================================== */
+
+.blocks :global(.injectionDiv) {
+    background: #f1e0ff;
+    box-shadow: inset 0 1px 7px 0 #d096ff;
+    border-radius: 20px;
+    border: 0;
+}
+
+.blocks :global(.blocklyToolboxDiv) {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 70px;
+    height: auto;
+    padding-top: 20px;
+    border: 0;
+    border-top-left-radius: inherit;
+    border-bottom-left-radius: inherit;
+}
+
+.blocks :global(.scratchCategoryMenu) {
+    width: 100%;
+    background: none;
+}
+
+.blocks :global(.scratchCategoryMenuRow) {
+    height: 55px;
+}
+
+.blocks :global(.blocklyFlyout) {
+    border: 0;
+    background: #ffffff;
+    box-shadow: 0 1px 9px 0 rgba(0, 0, 0, 0.18);
+    border-radius: 0 20px 20px 0;
+    transform: translate(70px, 0px) !important;
+}
+
+.blocks :global(.blocklyFlyoutBackground) {
+    fill-opacity: 0;
+}
+
+.blocks :global(.blocklyFlyoutLabel) {
+    display: none;
+}
+
+.blocks :global(.blocklyMainWorkspaceScrollbar) {
+    display: none;
+}
+
+.blocks :global(.blocklyFlyoutScrollbar) {
+    display: none;
+}
+
+.blocks :global(.blocklyFlyoutScrollbar) {
+    transform: translate(308.5px, 2.5px) !important;
+}
+
+.blocks :global(.categorySelected) {
+    background: #fff;
+}
+
+.blocks :global(.blocklySvg) {
+    background: none;
+}
+
+.blocks :global(.blocklySvg) g * {
+    /* transition: 0.5s; */
+}
+
+.blocks :global(.blocklyZoom) {
+    opacity: 0.25;
 }

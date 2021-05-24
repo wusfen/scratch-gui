@@ -90,10 +90,26 @@ class Blocks extends React.Component {
         this.ScratchBlocks.Procedures.externalProcedureDefCallback = this.props.onActivateCustomProcedures;
         this.ScratchBlocks.ScratchMsgs.setLocale(this.props.locale);
 
-        const workspaceConfig = defaultsDeep({},
-            Blocks.defaultOptions,
-            this.props.options,
-            {rtl: this.props.isRtl, toolbox: this.props.toolboxXML}
+        const workspaceConfig = defaultsDeep({}, {
+            grid: {
+                length: 48,
+                spacing: 48,
+                colour: '#E0BAFF',
+                snap: true
+            },
+            zoom: {
+                controls: true,
+                wheel: true,
+                startScale: .75,
+                maxScale: 3,
+                minScale: 0.3,
+                scaleSpeed: 1.2
+            },
+            collapse: true
+        },
+        Blocks.defaultOptions,
+        this.props.options,
+        {rtl: this.props.isRtl, toolbox: this.props.toolboxXML}
         );
         this.workspace = this.ScratchBlocks.inject(this.blocks, workspaceConfig);
 

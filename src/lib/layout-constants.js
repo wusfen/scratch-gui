@@ -38,7 +38,7 @@ const STAGE_DISPLAY_SIZES = keyMirror({
 });
 
 // zoom level to start with
-const BLOCKS_DEFAULT_SCALE = 0.675;
+const BLOCKS_DEFAULT_SCALE = 0.75;
 
 const STAGE_DISPLAY_SCALES = {};
 STAGE_DISPLAY_SCALES[STAGE_DISPLAY_SIZES.large] = 1; // large mode, wide browser (standard)
@@ -46,10 +46,10 @@ STAGE_DISPLAY_SCALES[STAGE_DISPLAY_SIZES.largeConstrained] = 0.85; // large mode
 STAGE_DISPLAY_SCALES[STAGE_DISPLAY_SIZES.small] = 0.5; // small mode, regardless of browser size
 
 export default {
-    standardStageWidth: 480,
-    standardStageHeight: 360,
-    fullSizeMinWidth: 1096,
-    fullSizePaintMinWidth: 1250
+    standardStageWidth: 375,
+    standardStageHeight: 667,
+    fullSizeMinWidth: 375,
+    fullSizePaintMinWidth: 667
 };
 
 export {
