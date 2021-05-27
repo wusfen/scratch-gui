@@ -339,6 +339,9 @@ class MenuBar extends React.Component {
             this.props.onRequestCloseAbout();
         };
     }
+    handleSubmit () {
+        dispatchEvent(new Event('exit'));
+    }
     render () {
         const saveNowMessage = (
             <FormattedMessage
@@ -788,6 +791,7 @@ class MenuBar extends React.Component {
 
                 <button
                     className={styles.publishButton}
+                    onClick={this.handleSubmit}
                 >{'提交'}</button>
             </Box>
         );

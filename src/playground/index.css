@@ -35,6 +35,7 @@ html {
 /* ================ */
 html {
     -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
 }
 
 ::-webkit-scrollbar {

@@ -8,6 +8,61 @@
   <meta name="google" value="notranslate">
   <link rel="shortcut icon" href="static/favicon.ico">
   <title>豌豆编程</title>
+
+  <!-- <script src="https://cdn.jsdelivr.net/gh/wusfen/console.js@0.0.10/dist/console.js"></script> -->
+  <!-- <script> document.onclick = e => { console.show = 2 } </script> -->
+  <!-- <script src="https://unpkg.com/vconsole/dist/vconsole.min.js"></script> -->
+  <!-- <script> var vConsole = new window.VConsole();</script> -->
+  <script>
+    document.addEventListener('touchmove', function (e) {
+      if (e.touches && e.touches.length === 3) {
+        if (document.__f12) return
+        document.__f12 = true
+
+        var script = document.createElement('script')
+        script.src = "https://cdn.jsdelivr.net/gh/wusfen/console.js@0.0.10/dist/console.js"
+        document.body.appendChild(script)
+        console.show = 2
+      }
+    })
+  </script>
+
+  <script>
+    function nativeCall(options) {
+      // ios
+      try {
+        window["webkit"].messageHandlers.webCall.postMessage(JSON.stringify(options), "*");
+      } catch (e) { }
+      // TODO android
+      try { } catch (e) {
+
+      }
+    }
+    addEventListener('exit', function () {
+      nativeCall({
+        "code": 0,
+      })
+    })
+  </script>
+
+  <script>
+      // arrayBuffer polyfill
+      (function () {
+        File.prototype.arrayBuffer = File.prototype.arrayBuffer || myArrayBuffer;
+        Blob.prototype.arrayBuffer = Blob.prototype.arrayBuffer || myArrayBuffer;
+
+        function myArrayBuffer() {
+          // this: File or Blob
+          return new Promise((resolve) => {
+            let fr = new FileReader();
+            fr.onload = () => {
+              resolve(fr.result);
+            };
+            fr.readAsArrayBuffer(this);
+          })
+        }
+      })();
+  </script>
 </head>
 
 <body>
