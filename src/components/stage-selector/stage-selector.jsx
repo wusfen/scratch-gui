@@ -93,7 +93,30 @@ const StageSelector = props => {
                     id="gui.stageSelector.backdrops"
                 />
             </div>
-            <div className={styles.count}>{backdropCount}</div>
+            <div
+                hidden
+                className={styles.count}
+            >{backdropCount}</div>
+
+
+            {selected ?
+                <div className={styles.actionWrap}>
+                    <button
+                        hidden={!!props.number}
+                        type="button"
+                        onClick={function (e) {
+                            e.stopPropagation();
+                            document.querySelector('[role="tablist"]').children[1].click();
+                        }}
+                    >
+                        <img
+                            src={require('../../assets/icons/edit.svg')}
+                            alt="*"
+                        />
+                    </button>
+                </div> :
+                null}
+            
             <ActionMenu
                 className={styles.addButton}
                 img={backdropIcon}

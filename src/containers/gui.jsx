@@ -41,10 +41,25 @@ import GUIComponent from '../components/gui/gui.jsx';
 import {setIsScratchDesktop} from '../lib/isScratchDesktop.js';
 
 class GUI extends React.Component {
-    componentDidMount () {
+    async componentDidMount () {
         setIsScratchDesktop(this.props.isScratchDesktop);
         this.props.onStorageInit(storage);
         this.props.onVmInit(this.props.vm);
+
+        window.gui = this;
+
+        // loadProject ?file
+        const url = new URL(location);
+        const fileUrl = url.searchParams.get('file');
+        if (fileUrl) {
+            const res = await fetch(fileUrl);
+            const blob = await res.blob();
+            const buffer = await blob.arrayBuffer();
+            
+            // loadProject
+            const vm = this.props.vm;
+            vm.loadProject(buffer);
+        }
     }
     componentDidUpdate (prevProps) {
         if (this.props.projectId !== prevProps.projectId && this.props.projectId !== null) {

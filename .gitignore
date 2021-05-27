@@ -22,4 +22,5 @@ npm-*
 ######
 /_node_modules
 *.local.*
+.vscode
 ######

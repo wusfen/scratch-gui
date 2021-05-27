@@ -25,6 +25,8 @@
 
     width: 65px;
     height: 89px;
+    height: 72px;
+    padding: 2px;
 }
 
 .sprite-selector-item.is-selected {

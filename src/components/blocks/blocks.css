@@ -136,11 +136,14 @@
     background: #ffffff;
     box-shadow: 0 1px 9px 0 rgba(0, 0, 0, 0.18);
     border-radius: 0 20px 20px 0;
-    transform: translate(70px, 0px) !important;
+    transform: translate(66px, 0px) !important;
+    overflow: visible;
+    width: 210px;
 }
 
 .blocks :global(.blocklyFlyoutBackground) {
     fill-opacity: 0;
+    pointer-events: none;
 }
 
 .blocks :global(.blocklyFlyoutLabel) {
@@ -148,7 +151,24 @@
 }
 
 .blocks :global(.blocklyMainWorkspaceScrollbar) {
-    display: none;
+}
+
+.blocks
+    :global(.blocklyMainWorkspaceScrollbar.blocklyScrollbarVertical)
+    :global(.blocklyScrollbarHandle) {
+    fill: $ui-primary;
+    opacity: 0.25;
+    width: 4px;
+    x: 8.5;
+}
+
+.blocks
+    :global(.blocklyMainWorkspaceScrollbar.blocklyScrollbarHorizontal)
+    :global(.blocklyScrollbarHandle) {
+    fill: $ui-primary;
+    opacity: 0.25;
+    height: 4px;
+    y: 8.5;
 }
 
 .blocks :global(.blocklyFlyoutScrollbar) {
