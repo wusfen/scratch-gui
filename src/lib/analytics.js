@@ -10,12 +10,14 @@ const GoogleAnalytics = {
     ga: noop,
     set: noop,
     send: noop,
-    pageview: e => {
+    pageview: function (e) {
+        // eslint-disable-next-line prefer-rest-params
         console.log('[pageview]', arguments);
     },
     modalview: noop,
     timing: noop,
-    event: e => {
+    event: function (e) {
+        // eslint-disable-next-line prefer-rest-params
         console.log('[event]', arguments);
     },
     exception: noop,

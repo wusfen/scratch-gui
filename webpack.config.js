@@ -28,7 +28,7 @@ const config = {
         gui: './src/playground/index.jsx'
     },
     output: {
-        path: path.resolve(__dirname, 'build'),
+        path: path.resolve(__dirname, 'dist'),
         filename: `[name].js____${buildTime}.js`,
         chunkFilename: 'chunks/[name].js____[contenthash:5].js'
     },

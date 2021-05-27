@@ -23,4 +23,5 @@ npm-*
 /_node_modules
 *.local.*
 .vscode
+lint.json
 ######

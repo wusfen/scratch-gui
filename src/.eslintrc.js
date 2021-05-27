@@ -19,7 +19,9 @@ module.exports = {
             'allowParens': true
         }],
         'no-console': 1,
-        'no-unused-vars': 1
+        'no-unused-vars': 1,
+        'no-prototype-builtins': 1,
+        'comma-dangle': [1, 'never'],
     },
     settings: {
         react: {
