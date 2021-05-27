@@ -67,7 +67,20 @@ const ProjectFetcherHOC = function (WrappedComponent) {
                 this.props.onActivateTab(BLOCKS_TAB_INDEX);
             }
         }
-        fetchProject (projectId, loadingState) {
+        async fetchProject (projectId, loadingState) {
+            // ?file
+            const url = new URL(location);
+            const fileUrl = url.searchParams.get('file');
+            if (fileUrl) {
+                const res = await fetch(fileUrl);
+                const blob = await res.blob();
+                const buffer = await blob.arrayBuffer();
+            
+                // loadProject
+                this.props.onFetchedProjectData(buffer, loadingState);
+                return;
+            }
+
             return storage
                 .load(storage.AssetType.Project, projectId, storage.DataFormat.JSON)
                 .then(projectAsset => {

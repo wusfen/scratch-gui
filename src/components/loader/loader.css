@@ -16,8 +16,8 @@
     text-align: center;
     color: white;
 
-    background-color: rgba(0, 0, 0, 0.06);
-    backdrop-filter: blur(3px);
+    background-color: rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(5px);
 }
 
 .fullscreen {
