@@ -22,6 +22,7 @@ module.exports = {
         'no-unused-vars': 1,
         'no-prototype-builtins': 1,
         'comma-dangle': [1, 'never'],
+        'import/no-commonjs': 0,
     },
     settings: {
         react: {

@@ -78,9 +78,15 @@ export default function (vm) {
         if (vm.editingTarget && vm.editingTarget.sprite.sounds.length > 0) {
             menu = vm.editingTarget.sprite.sounds.map(sound => [sound.name, sound.name]);
         }
+        // menu.push([
+        //     ScratchBlocks.ScratchMsgs.translate('SOUND_RECORD', 'record...'),
+        //     ScratchBlocks.recordSoundCallback
+        // ]);
         menu.push([
-            ScratchBlocks.ScratchMsgs.translate('SOUND_RECORD', 'record...'),
-            ScratchBlocks.recordSoundCallback
+            '+ 编辑',
+            function () {
+                document.querySelector('[role="tablist"]').children[2].click();
+            }
         ]);
         return menu;
     };
