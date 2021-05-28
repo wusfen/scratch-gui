@@ -18,6 +18,8 @@ const buildTime = [
     new Date().getMinutes()
 ].map(e => ''.padStart.call(e, 2, 0)).join('');
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 const config = {
     devServer: {
         host: '0.0.0.0',
@@ -26,12 +28,14 @@ const config = {
     entry: {
         gui: './src/playground/index.jsx'
     },
-    output: {
-        publicPath: process.env.PUBLIC_PATH || './',
-        path: path.resolve(__dirname, 'dist'),
-        filename: `[name].js____${buildTime}.js`,
-        chunkFilename: 'chunks/[name].js____[contenthash:5].js'
-    },
+    output: isProduction ?
+        {
+            publicPath: process.env.PUBLIC_PATH || './',
+            path: path.resolve(__dirname, 'dist'),
+            filename: `[name].js____${buildTime}.js`,
+            chunkFilename: 'chunks/[name].js____[contenthash:5].js'
+        } :
+        {},
     module: {
         rules: [
             {
