@@ -10,7 +10,6 @@ const autoprefixer = require('autoprefixer');
 const postcssVars = require('postcss-simple-vars');
 const postcssImport = require('postcss-import');
 
-const STATIC_PATH = process.env.STATIC_PATH || './static';
 const buildTime = [
     new Date().getFullYear(),
     new Date().getMonth() + 1,
@@ -28,6 +27,7 @@ const config = {
         gui: './src/playground/index.jsx'
     },
     output: {
+        publicPath: process.env.PUBLIC_PATH || './',
         path: path.resolve(__dirname, 'dist'),
         filename: `[name].js____${buildTime}.js`,
         chunkFilename: 'chunks/[name].js____[contenthash:5].js'
@@ -103,8 +103,7 @@ const config = {
                         loader: 'file-loader',
                         options: {
                             name: '[name].[ext]____[hash:5].[ext]',
-                            outputPath: 'static/assets/',
-                            publicPath: `${STATIC_PATH}/assets/`
+                            outputPath: 'static/assets/'
                         }
                     }
                 ]
