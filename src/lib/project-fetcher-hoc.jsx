@@ -23,6 +23,8 @@ import {
 import log from './log';
 import storage from './storage';
 
+import {ajax} from './ajax.js';
+
 /* Higher Order Component to provide behavior for loading projects by id. If
  * there's no id, the default project is loaded.
  * @param {React.Component} WrappedComponent component to receive projectData prop
@@ -68,14 +70,23 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             }
         }
         async fetchProject (projectId, loadingState) {
-            // ?file
+            // ?id 用户作业id
             const url = new URL(location);
-            const fileUrl = url.searchParams.get('file');
-            if (fileUrl) {
+            const id = url.searchParams.get('id');
+            let fileUrl = '';
+            if (id) {
+                const {data} = await ajax.get(`/v1/hwUserWork/getWorkInfo/${id}`);
+                fileUrl = data.workPath;
+                // TODO 临时存值
+                window._workInfo = data;
+            }
+
+            // ?file
+            fileUrl = fileUrl || url.searchParams.get('file');
+            if (/^http/.test(fileUrl)) {
                 const res = await fetch(fileUrl);
                 const blob = await res.blob();
                 const buffer = await blob.arrayBuffer();
-            
                 // loadProject
                 this.props.onFetchedProjectData(buffer, loadingState);
                 return;

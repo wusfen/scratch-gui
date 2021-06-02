@@ -1,5 +1,11 @@
 /* eslint-disable comma-dangle, require-jsdoc, func-style */
+// TODO responseType: blob
 
+/**
+ * xhr
+ * @param {object} options options
+ * @returns {promise} res
+ */
 function request (options) {
     let {
         method,
@@ -47,6 +53,8 @@ function request (options) {
 
     // headers
     for (const key in headers) {
+        // FormData file
+        if (data instanceof FormData && /Content-Type/i.test(key)) continue;
         xhr.setRequestHeader(key, headers[key]);
     }
 

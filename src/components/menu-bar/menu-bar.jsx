@@ -81,6 +81,8 @@ import sharedMessages from '../../lib/shared-messages';
 import folderIcon from '../../assets/icons/folder.svg';
 import setupIcon from '../../assets/icons/set up.svg';
 
+import {ajax} from '../../lib/ajax.js';
+
 const ariaMessages = defineMessages({
     language: {
         id: 'gui.menuBar.LanguageSelector',
@@ -165,6 +167,7 @@ class MenuBar extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
+            'handleSubmit',
             'handleClickNew',
             'handleClickRemix',
             'handleClickSave',
@@ -339,8 +342,60 @@ class MenuBar extends React.Component {
             this.props.onRequestCloseAbout();
         };
     }
-    handleSubmit () {
-        dispatchEvent(new Event('exit'));
+    async handleSubmit () {
+        // dispatchEvent(new Event('exit'));
+        const blob = await this.props.vm.saveProjectSb3();
+        let formData = new FormData();
+        formData.append('file', blob);
+        // TODO remove
+        if (/mock/.test(location)) {
+            formData = null;
+        }
+
+        // 上传文件
+        const {data: fileData} = await ajax.post('/v1/file/upload', formData);
+
+        // TODO 临时存值
+        const workInfo = window._workInfo;
+        // 提交
+        const {data: workId} = await ajax.put('/v1/hwUserWork/submitWork', {
+            id: workInfo.id,
+            submitType: 2,
+            workPath: fileData.path,
+            // analystStatus: undefined,
+            workId: workInfo.analystStatus === -1 ? workInfo.workId : ''
+        });
+        alert('提交成功');
+
+        // 轮询批改结果
+        const checkStartTime = new Date();
+        // eslint-disable-next-line func-style, require-jsdoc
+        async function checkResult () {
+            const {data} = await ajax.get(`/v1/hwUserWork/getWorkData/${workId}`);
+
+            if (data.analystStatus === 1) {
+                alert('批改正确');
+                return;
+            }
+            if (data.analystStatus === 2) {
+                alert('批改错误');
+                return;
+            }
+            if (data.analystStatus === 3) {
+                alert('需班主任二次批改确认');
+                return;
+            }
+
+            // 超时
+            if (new Date() - checkStartTime > 10 * 1000) {
+                alert('超过10秒未有批发结果');
+            } else {
+                setTimeout(() => {
+                    checkResult();
+                }, 2000);
+            }
+        }
+        checkResult();
     }
     render () {
         const saveNowMessage = (
