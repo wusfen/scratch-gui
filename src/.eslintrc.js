@@ -23,6 +23,7 @@ module.exports = {
         'no-prototype-builtins': 1,
         'comma-dangle': [1, 'never'],
         'import/no-commonjs': 0,
+        'no-alert': 1,
     },
     settings: {
         react: {
