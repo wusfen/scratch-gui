@@ -7,8 +7,8 @@ const params = new URL(location).searchParams;
 // ?base=dev
 const baseMap = {
     dev: '//dev-homework.app.vipthink.net',
-    uat: 'TODO',
-    prod: 'TODO',
+    uat: '//uat-homework.app.vipthink.net',
+    prod: '//homework.app.vipthink.net',
     mock: 'http://yapi.vipthink.net/mock/1788/',
 };
 
@@ -30,8 +30,8 @@ ajax.setSettings({
     // base: 'http://yapi.vipthink.net/mock/1788/',
     onload (res) {
         if (!/^(0|200)$/.test(res.code)) {
-            alert(res.code);
-            return Promise.reject(res.code);
+            alert(res.detail || res.code);
+            return Promise.reject(res.detail || res.code);
         }
     },
     onerror (res) {
