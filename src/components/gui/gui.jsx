@@ -345,7 +345,10 @@ const GUIComponent = props => {
                             ) : null}
                         </Box>
 
-                        <WDSpriteList vm={vm} />
+                        <WDSpriteList
+                            vm={vm}
+                            stageSize={stageSize}
+                        />
 
                         <Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}>
                             <StageWrapper

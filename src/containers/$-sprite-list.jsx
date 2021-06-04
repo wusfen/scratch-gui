@@ -297,7 +297,7 @@ class TargetPane extends React.Component {
                         stage.costume &&
                     stage.costume.asset
                     }
-                    backdropCount={stage.costumeCount}
+                    backdropCount={stage.costumeCount || 0}
                     id={stage.id}
                     selected={stage.id === editingTarget}
                     onSelect={this.handleSelectSprite}

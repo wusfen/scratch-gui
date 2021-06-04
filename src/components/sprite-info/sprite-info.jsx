@@ -14,7 +14,7 @@ import {STAGE_DISPLAY_SIZES} from '../../lib/layout-constants.js';
 import {isWideLocale} from '../../lib/locale-utils.js';
 
 import styles from './sprite-info.css';
-import icons from '../../assets/icons/icons.css';
+import Icon from '../../assets/icons/icon.jsx';
 
 import xIcon from './icon--x.svg';
 import yIcon from './icon--y.svg';
@@ -83,7 +83,7 @@ class SpriteInfo extends React.Component {
                         <Label
                             above={labelAbove}
                             // text={sprite}
-                            text={this.props.name}
+                            text={this.props.name || ''}
                         >
                             <BufferedInput
                                 hidden
@@ -105,16 +105,20 @@ class SpriteInfo extends React.Component {
                     {/* 显示 */}
                     {
                         this.props.visible ?
-                            <icon
+                            <b
                                 className={classNames(styles.iconWrap)}
-                                data-show
+                                name="show"
                                 onClick={this.props.onClickNotVisible}
-                            /> :
-                            <icon
+                            >
+                                <Icon name="show" />
+                            </b> :
+                            <b
                                 className={classNames(styles.iconWrap)}
-                                data-hide
+                                name="hide"
                                 onClick={this.props.onClickVisible}
-                            />
+                            >
+                                <Icon name="hide" />
+                            </b>
                     }
 
                     <div

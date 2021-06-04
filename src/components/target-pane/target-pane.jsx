@@ -50,6 +50,7 @@ const TargetPane = ({
 }) => (
     <div
         className={styles.targetPane}
+        dir={isRtl ? 'rtl' : 'ltr'}
         {...componentProps}
     >
 
@@ -131,6 +132,7 @@ const spriteShape = PropTypes.shape({
 });
 
 TargetPane.propTypes = {
+    isRtl: PropTypes.bool,
     editingTarget: PropTypes.string,
     extensionLibraryVisible: PropTypes.bool,
     fileInputRef: PropTypes.func,
