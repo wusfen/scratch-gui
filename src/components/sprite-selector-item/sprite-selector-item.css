@@ -27,6 +27,7 @@
     height: 89px;
     height: 72px;
     padding: 2px;
+    color: $ui-white;
 }
 
 .sprite-selector-item.is-selected {

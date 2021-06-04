@@ -31,7 +31,7 @@ import DragLayer from '../../containers/drag-layer.jsx';
 import ConnectionModal from '../../containers/connection-modal.jsx';
 import TelemetryModal from '../telemetry-modal/telemetry-modal.jsx';
 
-import $SpriteList from '../../containers/$-sprite-list.jsx';
+import WDSpriteList from '../../containers/$-sprite-list.jsx';
 
 import layout, {STAGE_SIZE_MODES} from '../../lib/layout-constants';
 import {resolveStageSize} from '../../lib/screen-utils';
@@ -345,7 +345,7 @@ const GUIComponent = props => {
                             ) : null}
                         </Box>
 
-                        <$SpriteList vm={vm} />
+                        <WDSpriteList vm={vm} />
 
                         <Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}>
                             <StageWrapper

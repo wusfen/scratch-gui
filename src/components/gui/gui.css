@@ -225,7 +225,6 @@
 }
 
 .extension-button-container {
-    display: none;
     width: 3.75rem;
     height: 3.25rem;
     position: absolute;
@@ -237,6 +236,9 @@
 
     border: 1px solid $motion-primary;
     box-sizing: content-box; /* To match scratch-block vertical toolbox borders */
+
+    width: 70px;
+    box-sizing: border-box;
 }
 
 $fade-out-distance: 15px;

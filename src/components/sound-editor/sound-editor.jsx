@@ -145,8 +145,9 @@ const SoundEditor = props => (
     >
         <div className={styles.row}>
             <div className={styles.inputGroup}>
-                <Label text={props.intl.formatMessage(messages.sound)}>
+                <Label xxx-text={props.intl.formatMessage(messages.sound)}>
                     <BufferedInput
+                        style={{width: 100}}
                         tabIndex="1"
                         type="text"
                         value={props.name}

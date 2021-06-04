@@ -101,7 +101,7 @@ $motion-primary: #886dff;
 $motion-primary: #9678ff;
 $motion-tertiary: #9678ff;
 $motion-transparent: #d1c4ff21;
-$text-primary: #f5f5f5;
+$text-primary: hsla(254, 100%, 15%, 0.68);
 
 $extensions-primary: #ac9afe88;
 
