@@ -46,7 +46,7 @@ html {
     display: none !important;
 }
 
-input {
+input[type="text"] {
     appearance: none;
 }
 
