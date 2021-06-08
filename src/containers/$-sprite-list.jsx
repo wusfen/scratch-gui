@@ -33,7 +33,7 @@ import styles from './$-sprite-list.css';
 import StageSelector from '../containers/stage-selector.jsx';
 
 
-class TargetPane extends React.Component {
+class TargetPane$ extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
@@ -326,7 +326,7 @@ const {
     ...targetPaneProps
 } = TargetPaneComponent.propTypes;
 
-TargetPane.propTypes = {
+TargetPane$.propTypes = {
     intl: intlShape.isRequired,
     onCloseImporting: PropTypes.func,
     onShowImporting: PropTypes.func,
@@ -371,4 +371,4 @@ const mapDispatchToProps = dispatch => ({
 export default injectIntl(connect(
     mapStateToProps,
     mapDispatchToProps
-)(TargetPane));
+)(TargetPane$));
