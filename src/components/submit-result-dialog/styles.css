@@ -1,0 +1,88 @@
+.overlay {
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 333px;
+    height: 192px;
+    /* background: #f1e0ff; */
+    /* box-shadow: 0px 1px 7px 0px rgba(208, 150, 255, 1); */
+    border-radius: 20px;
+}
+
+.container > * {
+    position: relative;
+}
+
+.bg-img {
+    position: absolute;
+    right: 33px;
+    bottom: 25px;
+    width: 383px;
+    height: 263px;
+    background: center/contain no-repeat url("./img/已提交.png");
+}
+
+.submit-yes .bg-img {
+    width: 383px;
+    height: 263px;
+    background-image: url("./img/已提交.png");
+}
+
+.submit-right .bg-img {
+    right: 33px;
+    bottom: 2px;
+    width: calc(977px / 2);
+    height: calc(653px / 2);
+    background-image: url("./img/太棒了.png");
+}
+
+.submit-wrong .bg-img {
+    right: 33px;
+    bottom: 30px;
+    width: calc(812px / 2);
+    height: calc(511px / 2);
+    background-image: url("./img/再试试.png");
+}
+
+.text {
+    width: 176px;
+    height: 40px;
+    margin-bottom: 16px;
+    font-size: 16px;
+    font-family: SourceHanSansCN-Normal, SourceHanSansCN;
+    font-weight: 400;
+    color: #6d57dc;
+    line-height: 20px;
+    white-space: pre-wrap;
+    text-align: center;
+}
+
+.button {
+    height: 40px;
+    padding: 0 14px;
+    background: #ff457f;
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.33),
+        inset 0px 1px 12px 0px rgba(255, 176, 200, 1);
+    border-radius: 10px;
+    font-size: 16px;
+    font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+    font-weight: 500;
+    color: #ffffff;
+    line-height: 24px;
+}

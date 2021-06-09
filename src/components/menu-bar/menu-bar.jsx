@@ -168,6 +168,7 @@ class MenuBar extends React.Component {
         super(props);
         bindAll(this, [
             'handleSubmit',
+            'handleExit',
             'handleClickNew',
             'handleClickRemix',
             'handleClickSave',
@@ -180,6 +181,17 @@ class MenuBar extends React.Component {
             'getSaveToComputerHandler',
             'restoreOptionMessage'
         ]);
+
+        this.state = {
+            isShowSkipButton: false,
+            isShowPublishButton: !false
+        };
+
+        // 是否显示跳过按钮
+        const quitCondition = (new URL(location)).searchParams.get('quitCondition');
+        if (!quitCondition || quitCondition === '3') {
+            this.state.isShowSkipButton = true;
+        }
     }
     componentDidMount () {
         document.addEventListener('keydown', this.handleKeyPress);
@@ -343,7 +355,8 @@ class MenuBar extends React.Component {
         };
     }
     async handleSubmit () {
-        // dispatchEvent(new Event('exit'));
+        dispatchEvent(new Event('submit:提交'));
+
         const blob = await this.props.vm.saveProjectSb3();
         let formData = new FormData();
         formData.append('file', blob);
@@ -353,7 +366,11 @@ class MenuBar extends React.Component {
         }
 
         // 上传文件
-        const {data: fileData} = await ajax.post('/v1/file/upload', formData);
+        const {data: fileData} = await ajax.post('/v1/file/upload', formData, {
+            onloadend () {
+                dispatchEvent(new Event('submit:已提交异常'));
+            }
+        });
 
         // TODO 临时存值
         const workInfo = window._workInfo;
@@ -364,8 +381,13 @@ class MenuBar extends React.Component {
             workPath: fileData.path,
             // analystStatus: undefined,
             workId: workInfo.analystStatus === -1 ? workInfo.workId : ''
+        }, {
+            onloadend () {
+                dispatchEvent(new Event('submit:已提交异常'));
+            }
         });
-        alert('提交成功');
+        
+        dispatchEvent(new Event('submit:轮询'));
 
         // 轮询批改结果
         const checkStartTime = new Date();
@@ -374,21 +396,21 @@ class MenuBar extends React.Component {
             const {data} = await ajax.get(`/v1/hwUserWork/getWorkData/${workId}`);
 
             if (data.analystStatus === 1) {
-                alert('批改正确');
+                dispatchEvent(new Event('submit:已提交正确'));
                 return;
             }
             if (data.analystStatus === 2) {
-                alert('批改错误');
+                dispatchEvent(new Event('submit:已提交错误'));
                 return;
             }
             if (data.analystStatus === 3) {
-                alert('需班主任二次批改确认');
+                dispatchEvent(new Event('submit:已提交人工'));
                 return;
             }
 
             // 超时
             if (new Date() - checkStartTime > 10 * 1000) {
-                alert('超过10秒未有批发结果');
+                dispatchEvent(new Event('submit:已提交未知'));
             } else {
                 setTimeout(() => {
                     checkResult();
@@ -396,6 +418,9 @@ class MenuBar extends React.Component {
             }
         }
         checkResult();
+    }
+    handleExit () {
+        dispatchEvent(new Event('exit'));
     }
     render () {
         const saveNowMessage = (
@@ -843,10 +868,21 @@ class MenuBar extends React.Component {
 
                 {aboutButton}
 
-                <button
-                    className={styles.publishButton}
-                    onClick={this.handleSubmit}
-                >{'提交'}</button>
+                <div
+                    className={styles.buttons}
+                >
+                    <button
+                        hidden={!this.state.isShowSkipButton}
+                        className={styles.button}
+                        onClick={this.handleExit}
+                    >{'跳过'}</button>
+
+                    <button
+                        hidden={!this.state.isShowPublishButton}
+                        className={styles.publishButton}
+                        onClick={this.handleSubmit}
+                    >{'提交'}</button>
+                </div>
             </Box>
         );
     }

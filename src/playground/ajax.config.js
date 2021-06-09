@@ -36,6 +36,7 @@ ajax.setSettings({
     },
     onerror (res) {
         alert('error');
+        dispatchEvent(new Event('exit'));
     }
 });
 // for console

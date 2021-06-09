@@ -1,5 +1,6 @@
 /* eslint-disable comma-dangle, require-jsdoc, func-style */
 // TODO responseType: blob
+// TODO catch
 
 /**
  * xhr

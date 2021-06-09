@@ -42,6 +42,8 @@ import codeIcon from './icon--code.svg';
 import costumesIcon from './icon--costumes.svg';
 import soundsIcon from './icon--sounds.svg';
 
+import SubmitResultDialog from '../submit-result-dialog/index.jsx';
+
 const messages = defineMessages({
     addExtension: {
         id: 'gui.gui.addExtension',
@@ -368,6 +370,8 @@ const GUIComponent = props => {
                     </Box>
                 </Box>
                 <DragLayer />
+
+                <SubmitResultDialog />
             </Box>
         );
     }}</MediaQuery>);

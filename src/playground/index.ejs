@@ -33,12 +33,16 @@
       try {
         window["webkit"].messageHandlers.webCall.postMessage(JSON.stringify(options), "*");
       } catch (e) { }
-      // TODO android
-      try { } catch (e) {
 
-      }
+      // android
+      try {
+        native.call(JSON.stringify(options))
+      } catch (e) { }
     }
+
     addEventListener('exit', function () {
+      console.log('[exit]')
+
       nativeCall({
         "code": 0,
       })

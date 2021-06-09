@@ -206,6 +206,10 @@
     background: rgba(159, 138, 255, 0);
     box-shadow: inset 0 1px 10px 0 $motion-primary;
     border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .target-wrapper {
@@ -222,6 +226,8 @@
     */
     /* TODO this also breaks the thermometer menu */
     /* overflow: hidden; */
+
+    flex: none;
 }
 
 .extension-button-container {
