@@ -238,7 +238,7 @@ const spriteUpload = function (fileData, fileType, spriteName, storage, handleSp
                 costumes: vmCostumes,
                 sounds: [] // TODO are all of these necessary?
             };
-            randomizeSpritePosition(newSprite);
+            // randomizeSpritePosition(newSprite);
             // TODO probably just want sprite upload to handle this object directly
             handleSprite(JSON.stringify(newSprite));
         }, handleError);
