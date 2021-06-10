@@ -24,7 +24,7 @@ lint_code:
         - npm i
     script:
         - npm run lint
-        - npm run sonar:scan
+        # - npm run sonar:scan
     after_script:
         - npm run build
     tags:
