@@ -6,10 +6,10 @@ const params = new URL(location).searchParams;
 
 // ?base=dev
 const baseMap = {
-    dev: '//dev-homework.app.vipthink.net',
-    uat: '//uat-homework.app.vipthink.net',
-    prod: '//homework.app.vipthink.net',
-    mock: 'http://yapi.vipthink.net/mock/1788/',
+    dev: '//dev-icode.vipthink.cn/v1/homework/',
+    uat: '//uat-icode.vipthink.cn/v1/homework',
+    prod: '//icode.vipthink.cn/v1/homework',
+    mock: '//yapi.vipthink.net/mock/1788/',
 };
 
 let base = baseMap.prod;
