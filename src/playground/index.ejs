@@ -29,6 +29,8 @@
 
   <script>
     function nativeCall(options) {
+      console.log('[nativeCall]', options)
+
       // ios
       try {
         window["webkit"].messageHandlers.webCall.postMessage(JSON.stringify(options), "*");
@@ -38,6 +40,11 @@
       try {
         native.call(JSON.stringify(options))
       } catch (e) { }
+
+      // pc(iframe)
+      try {
+        parent.postMessage(options, "*")
+      } catch (e) { }
     }
 
     addEventListener('exit', function () {
@@ -45,6 +52,11 @@
 
       nativeCall({
         "code": 0,
+        "protocol": 200134,
+        "data": {
+          "operType": 1,
+          "param": 1
+        }
       })
     })
   </script>
