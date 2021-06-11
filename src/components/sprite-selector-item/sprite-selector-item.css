@@ -157,6 +157,15 @@
     background: #724bfa;
     border-radius: 10px;
 }
+@media screen and (pointer: fine) {
+    :hover .sprite-selector-item .action-wrap {
+        display: none;
+    }
+    :hover .sprite-selector-item:hover .action-wrap {
+        display: block;
+    }
+}
+
 .action-wrap > button {
     flex: 1;
     width: 50%;

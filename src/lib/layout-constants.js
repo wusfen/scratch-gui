@@ -42,14 +42,30 @@ const BLOCKS_DEFAULT_SCALE = 0.75;
 
 const STAGE_DISPLAY_SCALES = {};
 STAGE_DISPLAY_SCALES[STAGE_DISPLAY_SIZES.large] = 1; // large mode, wide browser (standard)
-STAGE_DISPLAY_SCALES[STAGE_DISPLAY_SIZES.largeConstrained] = 0.85; // large mode but narrow browser
+STAGE_DISPLAY_SCALES[STAGE_DISPLAY_SIZES.largeConstrained] = 1; // large mode but narrow browser
 STAGE_DISPLAY_SCALES[STAGE_DISPLAY_SIZES.small] = 0.5; // small mode, regardless of browser size
 
+window.STAGE_WIDTH = 375;
+window.STAGE_HEIGHT = 667;
+
+const searchParams = (new URL(location)).searchParams;
+if (searchParams.get('STAGE_WIDTH')) {
+    window.STAGE_WIDTH = +searchParams.get('STAGE_WIDTH');
+    window.STAGE_HEIGHT = +searchParams.get('STAGE_HEIGHT');
+    if (!window.STAGE_HEIGHT) {
+        window.STAGE_HEIGHT = window.STAGE_WIDTH * (16 / 9);
+    }
+}
+
+const htmlEl = document.documentElement;
+htmlEl.style.setProperty('--STAGE_WIDTH', window.STAGE_WIDTH);
+htmlEl.style.setProperty('--STAGE_HEIGHT', window.STAGE_HEIGHT);
+
 export default {
-    standardStageWidth: 375,
-    standardStageHeight: 667,
-    fullSizeMinWidth: 375,
-    fullSizePaintMinWidth: 667
+    standardStageWidth: window.STAGE_WIDTH,
+    standardStageHeight: window.STAGE_HEIGHT,
+    fullSizeMinWidth: 1096,
+    fullSizePaintMinWidth: 1250
 };
 
 export {
