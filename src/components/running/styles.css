@@ -5,11 +5,52 @@
     right: 0;
     bottom: 0;
     z-index: 99;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     cursor: pointer;
     background: rgba(0, 0, 0, 0.75);
     border-radius: 20px;
     color: #fff;
+}
+
+.iconWrap {
+    width: 20rem;
+    margin: 12.5rem auto 0;
+}
+
+.icon {
+    display: block;
+    margin-left: 2rem;
+}
+
+.icon1 {
+    width: 15.375rem;
+    height: 7.25rem;
+    background-image: url("./icon1.png");
+    background-size: 100% 100%;
+}
+
+.icon2 {
+    width: 12.5rem;
+    height: 7.25rem;
+    background-image: url("./icon2.png");
+    background-size: 100% 100%;
+}
+
+.icon3 {
+    width: 19.438rem;
+    height: 7.25rem;
+    background-image: url("./icon3.png");
+    background-size: 100% 100%;
+}
+
+.text1 {
+    text-align: center;
+    font-size: 3rem;
+    line-height: 3rem;
+    margin: 1.25rem 0;
+}
+
+.text2 {
+    display: block;
+    font-size: 2rem;
+    text-align: center;
 }
