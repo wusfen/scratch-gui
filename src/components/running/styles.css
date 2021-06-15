@@ -5,6 +5,9 @@
     right: 0;
     bottom: 0;
     z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     background: rgba(0, 0, 0, 0.75);
     border-radius: 20px;
@@ -13,12 +16,14 @@
 
 .iconWrap {
     width: 20rem;
-    margin: 12.5rem auto 0;
+    margin: auto 0;
 }
 
 .icon {
     display: block;
     margin-left: 2rem;
+    position: relative;
+    visibility: hidden;
 }
 
 .icon1 {
@@ -26,6 +31,7 @@
     height: 7.25rem;
     background-image: url("./icon1.png");
     background-size: 100% 100%;
+    animation: top-to-bottom 3s ease infinite;
 }
 
 .icon2 {
@@ -33,6 +39,7 @@
     height: 7.25rem;
     background-image: url("./icon2.png");
     background-size: 100% 100%;
+    animation: top-to-bottom2 3s ease infinite;
 }
 
 .icon3 {
@@ -40,6 +47,7 @@
     height: 7.25rem;
     background-image: url("./icon3.png");
     background-size: 100% 100%;
+    animation: top-to-bottom3 3s ease infinite;
 }
 
 .text1 {
@@ -53,4 +61,65 @@
     display: block;
     font-size: 2rem;
     text-align: center;
+}
+
+@keyframes top-to-bottom {
+    0% {
+        top: -5rem;
+        visibility: hidden;
+    }
+
+    33% {
+        top: -5rem;
+        visibility: hidden;
+    }
+
+    66% {
+        top: -5rem;
+        visibility: hidden;
+    }
+
+    100% {
+        top: 0rem;
+        visibility: visible;
+    }
+    
+}
+
+@keyframes top-to-bottom2 {
+    0% {
+        top: -5rem;
+        visibility: hidden;
+    }
+
+    33% {
+        top: -5rem;
+        visibility: hidden;
+    }
+
+    66% {
+        top: 0rem;
+        visibility: visible;
+    }
+
+    100% {
+        visibility: hidden;
+    }
+    
+}
+
+@keyframes top-to-bottom3 {
+    0% {
+        top: -5rem;
+        visibility: visible;
+    }
+
+    33% {
+        top: 0rem;
+    }
+
+    100% {
+        visibility: hidden;
+    }
+    
 }

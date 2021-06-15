@@ -33,13 +33,15 @@ class Component extends React.Component{
                 className={classNames(styles.container)}
                 onClick={onStopAllClick}
             >
-                <div className={classNames(styles.iconWrap)}>
-                    <span className={classNames(styles.icon, styles.icon1)}></span>
-                    <span className={classNames(styles.icon, styles.icon2)}></span>
-                    <span className={classNames(styles.icon, styles.icon3)}></span>
+                <div>
+                    <div className={classNames(styles.iconWrap)}>
+                        <span className={classNames(styles.icon, styles.icon1)}></span>
+                        <span className={classNames(styles.icon, styles.icon2)}></span>
+                        <span className={classNames(styles.icon, styles.icon3)}></span>
+                    </div>
+                    <p className={classNames(styles.text1)}>积木块运行中...</p>
+                    <span className={classNames(styles.text2)}>点击停止</span>
                 </div>
-                <p className={classNames(styles.text1)}>积木块运行中...</p>
-                <span className={classNames(styles.text2)}>点击停止</span>
             </div>
         );
     }
