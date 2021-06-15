@@ -13,3 +13,113 @@
     border-radius: 20px;
     color: #fff;
 }
+
+.iconWrap {
+    width: 10rem;
+    margin: auto 0;
+}
+
+.icon {
+    display: block;
+    margin-left: 1rem;
+    position: relative;
+    visibility: hidden;
+}
+
+.icon1 {
+    width: 7.69rem;
+    height: 3.625rem;
+    background-image: url("./icon1.png");
+    background-size: 100% 100%;
+    animation: top-to-bottom 3s ease infinite;
+}
+
+.icon2 {
+    width: 6.25rem;
+    height: 3.625rem;
+    background-image: url("./icon2.png");
+    background-size: 100% 100%;
+    animation: top-to-bottom2 3s ease infinite;
+}
+
+.icon3 {
+    width: 9.72rem;
+    height: 3.625rem;
+    background-image: url("./icon3.png");
+    background-size: 100% 100%;
+    animation: top-to-bottom3 3s ease infinite;
+}
+
+.text1 {
+    text-align: center;
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    margin: 0.8rem 0 0.6rem 0;
+}
+
+.text2 {
+    display: block;
+    font-size: 1rem;
+    text-align: center;
+}
+
+@keyframes top-to-bottom {
+    0% {
+        top: -2.5rem;
+        visibility: hidden;
+    }
+
+    33% {
+        top: -2.5rem;
+        visibility: hidden;
+    }
+
+    66% {
+        top: -2.5rem;
+        visibility: hidden;
+    }
+
+    100% {
+        top: 0rem;
+        visibility: visible;
+    }
+    
+}
+
+@keyframes top-to-bottom2 {
+    0% {
+        top: -2.5rem;
+        visibility: hidden;
+    }
+
+    33% {
+        top: -2.5rem;
+        visibility: hidden;
+    }
+
+    66% {
+        top: 0rem;
+        visibility: visible;
+    }
+
+    100% {
+        visibility: hidden;
+    }
+    
+}
+
+@keyframes top-to-bottom3 {
+    0% {
+        top: -2.5rem;
+        visibility: visible;
+    }
+
+    33% {
+        top: 0rem;
+    }
+
+    100% {
+        visibility: hidden;
+    }
+    
+}
