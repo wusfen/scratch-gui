@@ -32,6 +32,7 @@ import ConnectionModal from '../../containers/connection-modal.jsx';
 import TelemetryModal from '../telemetry-modal/telemetry-modal.jsx';
 
 import WDSpriteList from '../../containers/$-sprite-list.jsx';
+import Running from '../../containers/running.jsx';
 
 import layout, {STAGE_SIZE_MODES} from '../../lib/layout-constants';
 import {resolveStageSize} from '../../lib/screen-utils';
@@ -317,6 +318,7 @@ const GUIComponent = props => {
                                             stageSize={stageSize}
                                             vm={vm}
                                         />
+                                        <Running vm={vm} />
                                     </Box>
                                     <Box className={styles.extensionButtonContainer}>
                                         <button
