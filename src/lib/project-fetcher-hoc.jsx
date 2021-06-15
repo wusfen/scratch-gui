@@ -83,7 +83,12 @@ const ProjectFetcherHOC = function (WrappedComponent) {
 
             // ?file
             fileUrl = fileUrl || url.searchParams.get('file');
-            if (/^http/.test(fileUrl)) {
+
+            // default.sb3
+            fileUrl = fileUrl || require('!file-loader!../lib/default-project/default.sb3');
+            
+            // fetch
+            if (/.sb3/.test(fileUrl)) {
                 const res = await fetch(fileUrl);
                 const blob = await res.blob();
                 const buffer = await blob.arrayBuffer();
@@ -91,6 +96,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
                 this.props.onFetchedProjectData(buffer, loadingState);
                 return;
             }
+
 
             return storage
                 .load(storage.AssetType.Project, projectId, storage.DataFormat.JSON)
