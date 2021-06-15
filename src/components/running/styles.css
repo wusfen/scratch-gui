@@ -15,36 +15,36 @@
 }
 
 .iconWrap {
-    width: 20rem;
+    width: 10rem;
     margin: auto 0;
 }
 
 .icon {
     display: block;
-    margin-left: 2rem;
+    margin-left: 1rem;
     position: relative;
     visibility: hidden;
 }
 
 .icon1 {
-    width: 15.375rem;
-    height: 7.25rem;
+    width: 7.69rem;
+    height: 3.625rem;
     background-image: url("./icon1.png");
     background-size: 100% 100%;
     animation: top-to-bottom 3s ease infinite;
 }
 
 .icon2 {
-    width: 12.5rem;
-    height: 7.25rem;
+    width: 6.25rem;
+    height: 3.625rem;
     background-image: url("./icon2.png");
     background-size: 100% 100%;
     animation: top-to-bottom2 3s ease infinite;
 }
 
 .icon3 {
-    width: 19.438rem;
-    height: 7.25rem;
+    width: 9.72rem;
+    height: 3.625rem;
     background-image: url("./icon3.png");
     background-size: 100% 100%;
     animation: top-to-bottom3 3s ease infinite;
@@ -52,30 +52,30 @@
 
 .text1 {
     text-align: center;
-    font-size: 3rem;
-    line-height: 3rem;
-    margin: 1.25rem 0;
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    margin: 0.8rem 0 0.6rem 0;
 }
 
 .text2 {
     display: block;
-    font-size: 2rem;
+    font-size: 1rem;
     text-align: center;
 }
 
 @keyframes top-to-bottom {
     0% {
-        top: -5rem;
+        top: -2.5rem;
         visibility: hidden;
     }
 
     33% {
-        top: -5rem;
+        top: -2.5rem;
         visibility: hidden;
     }
 
     66% {
-        top: -5rem;
+        top: -2.5rem;
         visibility: hidden;
     }
 
@@ -88,12 +88,12 @@
 
 @keyframes top-to-bottom2 {
     0% {
-        top: -5rem;
+        top: -2.5rem;
         visibility: hidden;
     }
 
     33% {
-        top: -5rem;
+        top: -2.5rem;
         visibility: hidden;
     }
 
@@ -110,7 +110,7 @@
 
 @keyframes top-to-bottom3 {
     0% {
-        top: -5rem;
+        top: -2.5rem;
         visibility: visible;
     }
 
