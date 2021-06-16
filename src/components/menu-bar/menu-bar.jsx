@@ -381,10 +381,6 @@ class MenuBar extends React.Component {
             workPath: fileData.path,
             // analystStatus: undefined,
             workId: workInfo.analystStatus === -1 ? workInfo.workId : ''
-        }, {
-            onloadend () {
-                dispatchEvent(new Event('submit:已提交异常'));
-            }
         });
         
         dispatchEvent(new Event('submit:轮询'));
