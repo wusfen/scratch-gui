@@ -355,7 +355,7 @@ class MenuBar extends React.Component {
         };
     }
     async handleSubmit () {
-        dispatchEvent(new Event('submit:提交'));
+        dispatchEvent(new Event('submit:提交中'));
 
         const blob = await this.props.vm.saveProjectSb3();
         let formData = new FormData();
@@ -366,11 +366,7 @@ class MenuBar extends React.Component {
         }
 
         // 上传文件
-        const {data: fileData} = await ajax.post('/file/upload', formData, {
-            onloadend () {
-                dispatchEvent(new Event('submit:已提交异常'));
-            }
-        });
+        const {data: fileData} = await ajax.post('/file/upload', formData);
 
         // TODO 临时存值
         const workInfo = window._workInfo;
@@ -383,8 +379,6 @@ class MenuBar extends React.Component {
             workId: workInfo.analystStatus === -1 ? workInfo.workId : ''
         });
         
-        dispatchEvent(new Event('submit:轮询'));
-
         // 轮询批改结果
         const checkStartTime = new Date();
         // eslint-disable-next-line func-style, require-jsdoc
