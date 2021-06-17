@@ -366,7 +366,7 @@ class MenuBar extends React.Component {
         }
 
         // 上传文件
-        const {data: fileData} = await ajax.post('/v1/file/upload', formData, {
+        const {data: fileData} = await ajax.post('/file/upload', formData, {
             onloadend () {
                 dispatchEvent(new Event('submit:已提交异常'));
             }
@@ -375,7 +375,7 @@ class MenuBar extends React.Component {
         // TODO 临时存值
         const workInfo = window._workInfo;
         // 提交
-        const {data: workId} = await ajax.put('/v1/hwUserWork/submitWork', {
+        const {data: workId} = await ajax.put('/hwUserWork/submitWork', {
             id: workInfo.id,
             submitType: 2,
             workPath: fileData.path,
@@ -389,7 +389,7 @@ class MenuBar extends React.Component {
         const checkStartTime = new Date();
         // eslint-disable-next-line func-style, require-jsdoc
         async function checkResult () {
-            const {data} = await ajax.get(`/v1/hwUserWork/getWorkData/${workId}`);
+            const {data} = await ajax.get(`/hwUserWork/getWorkData/${workId}`);
 
             if (data.analystStatus === 1) {
                 dispatchEvent(new Event('submit:已提交正确'));

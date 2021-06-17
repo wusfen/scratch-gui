@@ -75,7 +75,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             const id = url.searchParams.get('id');
             let fileUrl = '';
             if (id) {
-                const {data} = await ajax.get(`/v1/hwUserWork/getWorkInfo/${id}`);
+                const {data} = await ajax.get(`/hwUserWork/getWorkInfo/${id}`);
                 fileUrl = data.workPath;
                 // TODO 临时存值
                 window._workInfo = data;
