@@ -359,6 +359,7 @@ const events = function (isInitialSetup, isStage) {
         </block>
         -->
         ${blockSeparator}
+        <!--
         <block type="event_whengreaterthan">
             <value name="VALUE">
                 <shadow type="math_number">
@@ -367,6 +368,7 @@ const events = function (isInitialSetup, isStage) {
             </value>
         </block>
         ${blockSeparator}
+        -->
         <block type="event_whenbroadcastreceived">
         </block>
         <block type="event_broadcast">
@@ -486,8 +488,10 @@ const sensing = function (isInitialSetup, isStage) {
             ${blockSeparator}
         `}
         ${blockSeparator}
+        <!--
         <block id="loudness" type="sensing_loudness"/>
         ${blockSeparator}
+        -->
         <block id="timer" type="sensing_timer"/>
         <block type="sensing_resettimer"/>
         ${blockSeparator}
