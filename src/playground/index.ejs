@@ -14,7 +14,7 @@
   <!-- <script src="https://unpkg.com/vconsole/dist/vconsole.min.js"></script> -->
   <!-- <script> var vConsole = new window.VConsole();</script> -->
   <script>
-    function showConsole(params) {
+    function showConsole(e) {
       if (e.touches && e.touches.length === 3) {
         if (document.__f12) return
         document.__f12 = true
@@ -71,13 +71,13 @@
         Blob.prototype.arrayBuffer = Blob.prototype.arrayBuffer || myArrayBuffer;
 
         function myArrayBuffer() {
-          // this: File or Blob
+          var blob = this
           return new Promise(function(resolve) {
             let fr = new FileReader();
             fr.onload = function(e) {
               resolve(fr.result);
             };
-            fr.readAsArrayBuffer(this);
+            fr.readAsArrayBuffer(blob);
           })
         }
       })();
