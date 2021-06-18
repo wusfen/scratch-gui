@@ -12,7 +12,7 @@ const statusMap = {
         style: styles.submit0
     },
     提交中超时: {
-        text: `超时`,
+        text: `作业提交中\n请稍候......`,
         style: styles.submit0
     },
     已提交正确: {

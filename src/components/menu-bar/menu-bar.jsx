@@ -183,15 +183,10 @@ class MenuBar extends React.Component {
         ]);
 
         this.state = {
-            isShowSkipButton: false,
+            isShowSkipButton: !false,
             isShowPublishButton: !false
         };
 
-        // 是否显示跳过按钮
-        const quitCondition = (new URL(location)).searchParams.get('quitCondition');
-        if (!quitCondition || quitCondition === '3') {
-            this.state.isShowSkipButton = true;
-        }
     }
     componentDidMount () {
         document.addEventListener('keydown', this.handleKeyPress);
@@ -358,7 +353,7 @@ class MenuBar extends React.Component {
         dispatchEvent(new Event('submit:提交中'));
         const timeoutTimer = setTimeout(() => {
             dispatchEvent(new Event('submit:提交中超时'));
-        }, 10 * 1000);
+        }, 10 * 1500);
 
         const blob = await this.props.vm.saveProjectSb3();
         let formData = new FormData();
