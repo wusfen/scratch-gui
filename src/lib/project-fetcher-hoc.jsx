@@ -86,9 +86,10 @@ const ProjectFetcherHOC = function (WrappedComponent) {
 
             // default.sb3
             fileUrl = fileUrl || require('!file-loader!../lib/default-project/default.sb3');
+            console.info('[load sb3]', fileUrl);
             
             // fetch
-            if (/.sb3/.test(fileUrl)) {
+            if (/^http|.sb3$/.test(fileUrl)) {
                 const res = await fetch(fileUrl);
                 const blob = await res.blob();
                 const buffer = await blob.arrayBuffer();
