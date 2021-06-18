@@ -14,7 +14,7 @@
   <!-- <script src="https://unpkg.com/vconsole/dist/vconsole.min.js"></script> -->
   <!-- <script> var vConsole = new window.VConsole();</script> -->
   <script>
-    document.addEventListener('touchmove', function (e) {
+    function showConsole(params) {
       if (e.touches && e.touches.length === 3) {
         if (document.__f12) return
         document.__f12 = true
@@ -24,7 +24,10 @@
         document.body.appendChild(script)
         console.show = 2
       }
-    })
+    }
+    
+    document.addEventListener('touchstart', showConsole)
+    document.addEventListener('contextmenu', showConsole)
   </script>
 
   <script>
@@ -69,9 +72,9 @@
 
         function myArrayBuffer() {
           // this: File or Blob
-          return new Promise((resolve) => {
+          return new Promise(function(resolve) {
             let fr = new FileReader();
-            fr.onload = () => {
+            fr.onload = function(e) {
               resolve(fr.result);
             };
             fr.readAsArrayBuffer(this);
