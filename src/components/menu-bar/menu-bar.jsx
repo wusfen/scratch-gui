@@ -356,6 +356,9 @@ class MenuBar extends React.Component {
     }
     async handleSubmit () {
         dispatchEvent(new Event('submit:提交中'));
+        const timeoutTimer = setTimeout(() => {
+            dispatchEvent(new Event('submit:提交中超时'));
+        }, 10 * 1000);
 
         const blob = await this.props.vm.saveProjectSb3();
         let formData = new FormData();
@@ -384,6 +387,7 @@ class MenuBar extends React.Component {
         // eslint-disable-next-line func-style, require-jsdoc
         async function checkResult () {
             const {data} = await ajax.get(`/hwUserWork/getWorkData/${workId}`);
+            clearTimeout(timeoutTimer);
 
             if (data.analystStatus === 1) {
                 dispatchEvent(new Event('submit:已提交正确'));
@@ -863,7 +867,7 @@ class MenuBar extends React.Component {
                 >
                     <button
                         hidden={!this.state.isShowSkipButton}
-                        className={styles.button}
+                        className={styles.skipButton}
                         onClick={this.handleExit}
                     >{'跳过'}</button>
 

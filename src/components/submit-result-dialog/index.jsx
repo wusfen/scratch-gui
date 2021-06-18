@@ -11,6 +11,10 @@ const statusMap = {
         text: `作业提交中\n请稍候......`,
         style: styles.submit0
     },
+    提交中超时: {
+        text: `超时`,
+        style: styles.submit0
+    },
     已提交正确: {
         text: `恭喜你答对了！\n马上继续上课了哦`,
         style: styles.submit1
@@ -55,7 +59,7 @@ class Component extends React.Component{
 
         this.state = {
             status: '提交中',
-            isShow: !false,
+            isShow: false,
             backTimeRemain: 10
         };
 
@@ -137,7 +141,7 @@ class Component extends React.Component{
                         {`确定`}
                     </button>
                     <button
-                        hidden={!(/已提交/.test(status))}
+                        hidden={!(/超时|已提交/.test(status))}
                         type="button"
                         className={classNames(styles.close)}
                         onClick={this.handleClose}

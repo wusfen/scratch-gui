@@ -35,8 +35,7 @@ ajax.setSettings({
         }
     },
     onerror (res) {
-        alert('error');
-        dispatchEvent(new Event('exit'));
+        alert('接口异常');
     }
 });
 // for console
