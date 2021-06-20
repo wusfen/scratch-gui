@@ -21,7 +21,7 @@ module.exports = {
         'no-console': 1,
         'no-unused-vars': 1,
         'no-prototype-builtins': 1,
-        'comma-dangle': [1, 'never'],
+        'comma-dangle': [1, 'ignore'],
         'import/no-commonjs': 0,
         'no-alert': 1,
     },

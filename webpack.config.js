@@ -46,7 +46,7 @@ const config = {
                     /node_modules[\\/]pify/,
                     /node_modules[\\/]@vernier[\\/]godirect/,
                     /node_modules[\\/]scratch-l10n[\\/]locales/,
-                    /node_modules[\\/]scratch-blocks.msg/,
+                    /node_modules[\\/]scratch-blocks/,
                     /node_modules[\\/]scratch-paint/
                 ],
                 use: [
