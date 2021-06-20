@@ -11,7 +11,7 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 0.8rem;
     color: $text-primary;
-    border-width: 2px;
+    border-width: 0.125rem;
     border-style: solid;
     border-color: $ui-black-transparent;
     border-radius: $space;
@@ -23,23 +23,23 @@
 
     border: none;
 
-    width: 65px;
-    height: 89px;
-    height: 72px;
-    padding: 2px;
+    width: 4.0625rem;
+    height: 5.5625rem;
+    height: 4.5rem;
+    padding: 0.125rem;
     color: $ui-white;
 }
 
 .sprite-selector-item.is-selected {
-    /* box-shadow: 0px 0px 0px 4px $motion-transparent; */
-    /* border: 2px solid $motion-primary; */
+    /* box-shadow: 0rem 0rem 0rem .25rem $motion-transparent; */
+    /* border: .125rem solid $motion-primary; */
     /* background: $ui-white; */
 
     background: #8362f9;
 }
 
 .sprite-selector-item:hover {
-    /* border: 2px solid $motion-primary; */
+    /* border: .125rem solid $motion-primary; */
     /* background: $ui-white; */
 
     background: #8362f9;
@@ -47,7 +47,7 @@
 
 .sprite-selector-item:hover .sprite-image,
 .is-selected .sprite-image {
-    filter: drop-shadow(0px 0px 2px $ui-black-transparent);
+    filter: drop-shadow(0rem 0rem 0.125rem $ui-black-transparent);
 }
 
 /* Outer/Inner chicanery is to prevent layouts when sprite image changes */
@@ -70,13 +70,13 @@
 .sprite-image {
     user-select: none;
     pointer-events: none;
-    max-width: 32px;
-    max-height: 32px;
+    max-width: 2rem;
+    max-height: 2rem;
 
-    max-width: 44px;
-    max-height: 44px;
-    width: 44px;
-    height: 44px;
+    max-width: 2.75rem;
+    max-height: 2.75rem;
+    width: 2.75rem;
+    height: 2.75rem;
     object-fit: contain;
 }
 
@@ -89,9 +89,9 @@
     color: $text-primary;
     user-select: none;
 
-    padding: 1px 0 4px;
+    padding: 1px 0 0.25rem;
     font-family: SourceHanSansCN-Normal;
-    font-size: 12px;
+    font-size: 0.75rem;
     color: #f1e0ff;
     text-align: center;
 }
@@ -155,7 +155,7 @@
     right: 0;
     display: flex;
     background: #724bfa;
-    border-radius: 10px;
+    border-radius: 0.625rem;
 }
 @media screen and (pointer: fine) {
     :hover .sprite-selector-item .action-wrap {
@@ -169,7 +169,7 @@
 .action-wrap > button {
     flex: 1;
     width: 50%;
-    height: 28px;
+    height: 1.75rem;
     background: none;
 }
 

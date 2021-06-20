@@ -14,13 +14,13 @@
 }
 
 .modal-content {
-    margin: 100px auto;
+    margin: 6.25rem auto;
     outline: none;
-    border: .25rem solid $ui-white-transparent;
+    border: 0.25rem solid $ui-white-transparent;
     padding: 0;
     border-radius: $space;
     user-select: none;
-    width: 500px;
+    width: 31.25rem;
 
     color: $text-primary;
     overflow: hidden;
@@ -31,7 +31,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 100px;
+    height: 6.25rem;
     background-color: $control-primary;
 }
 
@@ -71,8 +71,8 @@
 }
 
 .faq-link-text {
-    margin: 2rem 0 .5rem 0;
-    font-size: .875rem;
+    margin: 2rem 0 0.5rem 0;
+    font-size: 0.875rem;
     color: $text-primary;
 }
 

@@ -4,7 +4,7 @@
 
 $stage-js-width: var(--STAGE_WIDTH, 375);
 $stage-js-height: var(--STAGE_HEIGHT, 667);
-$stage-css-width: 266;
+$stage-css-width: var(--STAGE_CSS_WIDTH, 266);
 $stage-css-height: calc(
     $stage-css-width / ($stage-js-width / $stage-js-height)
 );
@@ -25,7 +25,7 @@ $stage-height: calc($stage-css-height * 1px);
     display: block;
 
     /* border-radius: $space; */
-    border-radius: 4px;
+    border-radius: 0.25rem;
     /* border: $stage-standard-border-width solid $ui-black-transparent; */
     overflow: hidden;
 
@@ -103,7 +103,7 @@ stage doesn't "spill" out from under its rounded corners. instead, shift these o
     top: 0;
     left: 0;
     z-index: $z-index-dragging-sprite;
-    filter: drop-shadow(5px 5px 5px $ui-black-transparent);
+    filter: drop-shadow(0.3125rem 0.3125rem 0.3125rem $ui-black-transparent);
 }
 
 .stage-bottom-wrapper {
@@ -131,7 +131,7 @@ stage doesn't "spill" out from under its rounded corners. instead, shift these o
 
 .frame {
     background: $motion-transparent;
-    border: 2px solid $motion-primary;
+    border: 0.125rem solid $motion-primary;
     border-radius: 0.5rem;
     animation-name: flash;
     animation-duration: 0.75s;
@@ -154,7 +154,7 @@ stage doesn't "spill" out from under its rounded corners. instead, shift these o
     padding: 1rem;
     border-radius: 100%;
     background: rgba(255, 255, 255, 0.75);
-    border: 3px solid $ui-white;
+    border: 0.1875rem solid $ui-white;
     display: flex;
     justify-content: center;
     align-items: center;
