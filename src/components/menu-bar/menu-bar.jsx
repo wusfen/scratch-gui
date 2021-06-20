@@ -167,8 +167,8 @@ class MenuBar extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
+            'handleSkip',
             'handleSubmit',
-            'handleExit',
             'handleClickNew',
             'handleClickRemix',
             'handleClickSave',
@@ -353,7 +353,7 @@ class MenuBar extends React.Component {
         dispatchEvent(new Event('submit:提交中'));
         const timeoutTimer = setTimeout(() => {
             dispatchEvent(new Event('submit:提交中超时'));
-        }, 10 * 1500);
+        }, 1000 * 15);
 
         const blob = await this.props.vm.saveProjectSb3();
         let formData = new FormData();
@@ -408,8 +408,8 @@ class MenuBar extends React.Component {
         }
         checkResult();
     }
-    handleExit () {
-        dispatchEvent(new Event('exit'));
+    handleSkip () {
+        dispatchEvent(new Event('submit:跳过'));
     }
     render () {
         const saveNowMessage = (
@@ -863,7 +863,7 @@ class MenuBar extends React.Component {
                     <button
                         hidden={!this.state.isShowSkipButton}
                         className={styles.skipButton}
-                        onClick={this.handleExit}
+                        onClick={this.handleSkip}
                     >{'跳过'}</button>
 
                     <button
