@@ -7,6 +7,10 @@ import bindAll from 'lodash.bindall';
 import styles from './styles.css';
 
 const statusMap = {
+    跳过: {
+        text: `即将跳过本次挑战`,
+        style: styles.submitX
+    },
     提交中: {
         text: `作业提交中\n请稍候......`,
         style: styles.submit0
@@ -35,8 +39,23 @@ const statusMap = {
 
 
 class Component extends React.Component{
+    initState() {
+        this.state = {
+            status: '提交中',
+            isShow: false,
+            isShowBackButton: false,
+            backTimeRemain: 10
+        }
+        this.setState(this.state)
+    }
     constructor (props) {
         super(props);
+        this.initState()
+
+        bindAll(this, [
+            'handleClose',
+            'startBackTimer'
+        ]);
 
         for (const status in statusMap) {
             addEventListener(`submit:${status}`, e => {
@@ -45,7 +64,7 @@ class Component extends React.Component{
                     status: status
                 });
 
-                if (/正确|未知/.test(status)) {
+                if (!/错误/.test(status)) {
                     this.startBackTimer();
                 }
 
@@ -57,43 +76,24 @@ class Component extends React.Component{
             });
         }
 
-        this.state = {
-            status: '提交中',
-            isShow: false,
-            backTimeRemain: 10
-        };
-
-        bindAll(this, [
-            'handleClose',
-            'handleOk',
-            'startBackTimer'
-        ]);
     }
     handleClose () {
-        this.setState({
-            isShow: false
-        });
-
-        if (/正确/.test(this.state.status)) {
+        if (this.state.isShowBackButton) {
             dispatchEvent(new Event('exit'));
         }
+
+        this.initState()
+        clearInterval(this.timer)
     }
-    handleOk () {
+    startBackTimer() {
         this.setState({
-            isShow: false
-        });
-    }
-    startBackTimer () {
+            isShowBackButton: true
+        })
+
         let backTimeRemain = this.state.backTimeRemain;
-        const timer = setInterval(() => {
+        this.timer = setInterval(() => {
             if (backTimeRemain <= 0) {
-                clearInterval(timer);
-                this.setState({
-                    isShow: false,
-                    backTimeRemain: 10
-                });
-                
-                dispatchEvent(new Event('exit'));
+                this.handleClose()
                 return;
             }
 
@@ -106,6 +106,7 @@ class Component extends React.Component{
     render () {
         const {
             isShow,
+            isShowBackButton,
             backTimeRemain,
             status
         } = this.state;
@@ -125,10 +126,10 @@ class Component extends React.Component{
                         {text}
                     </div>
                     <button
-                        hidden={!(/正确|未知/.test(status))}
+                        hidden={!(isShowBackButton)}
                         type="button"
                         className={classNames(styles.button)}
-                        onClick={this.handleOk}
+                        onClick={this.handleClose}
                     >
                         {`返回课程 (${backTimeRemain}s)`}
                     </button>
@@ -136,12 +137,12 @@ class Component extends React.Component{
                         hidden={!(/错误/.test(status))}
                         type="button"
                         className={classNames(styles.button)}
-                        onClick={this.handleOk}
+                        onClick={this.handleClose}
                     >
                         {`确定`}
                     </button>
                     <button
-                        hidden={!(/超时|已提交/.test(status))}
+                        hidden={!(/跳过|超时|已提交/.test(status))}
                         type="button"
                         className={classNames(styles.close)}
                         onClick={this.handleClose}

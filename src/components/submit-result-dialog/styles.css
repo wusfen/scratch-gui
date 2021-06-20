@@ -50,6 +50,12 @@
     color: transparent;
 }
 
+.submit-x .bg-img {
+    width: 383px;
+    height: 263px;
+    background-image: url("./img/跳过.png");
+}
+
 .submit-0 .bg-img {
     width: 383px;
     height: 263px;
@@ -79,6 +85,9 @@
 }
 
 .text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 176px;
     height: 40px;
     margin-bottom: 16px;
