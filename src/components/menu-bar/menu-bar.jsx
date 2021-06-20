@@ -353,7 +353,7 @@ class MenuBar extends React.Component {
         dispatchEvent(new Event('submit:提交中'));
         const timeoutTimer = setTimeout(() => {
             dispatchEvent(new Event('submit:提交中超时'));
-        }, 10 * 1500);
+        }, 1000 * 15);
 
         const blob = await this.props.vm.saveProjectSb3();
         let formData = new FormData();

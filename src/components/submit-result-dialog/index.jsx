@@ -12,28 +12,30 @@ const statusMap = {
         style: styles.submitX
     },
     提交中: {
-        text: `作业提交中\n请稍候......`,
-        style: styles.submit0
+        text1: '正在提交作业···',
+        text2: '请稍等',
+        style: styles.submitIng
     },
     提交中超时: {
-        text: `作业提交中\n请稍候......`,
-        style: styles.submit0
+        text1: '正在提交作业···',
+        text2: '请稍等',
+        style: styles.submitIng
     },
     已提交正确: {
         text: `恭喜你答对了！\n马上继续上课了哦`,
-        style: styles.submit1
+        style: styles.submitCorrect
     },
     已提交错误: {
         text: `答案还差一点点\n再改一下试试吧！`,
-        style: styles.submit2
+        style: styles.submitFault
     },
     已提交人工: {
         text: `作品已提交！\n需班主任二次批改确认！`,
-        style: styles.submit3
+        style: styles.submitEd
     },
     已提交未知: {
         text: `作品已提交！\n老师正在批改，请稍候！`,
-        style: styles.submit3
+        style: styles.submitEd
     }
 };
 
@@ -64,7 +66,7 @@ class Component extends React.Component{
                     status: status
                 });
 
-                if (!/错误/.test(status)) {
+                if (!/提交中|错误/.test(status)) {
                     this.startBackTimer();
                 }
 
@@ -112,6 +114,8 @@ class Component extends React.Component{
         } = this.state;
 
         const text = statusMap[status].text;
+        const text1 = statusMap[status].text1;
+        const text2 = statusMap[status].text2;
 
         return (
             <div
@@ -122,9 +126,13 @@ class Component extends React.Component{
             >
                 <div className={classNames(styles.container)} >
                     <div className={classNames(styles.bgImg)} />
+
                     <div className={classNames(styles.text)}>
                         {text}
+                        <div className={classNames(styles.text1)}>{text1}</div>
+                        <div className={classNames(styles.text2)}>{text2}</div>
                     </div>
+
                     <button
                         hidden={!(isShowBackButton)}
                         type="button"
@@ -141,6 +149,7 @@ class Component extends React.Component{
                     >
                         {`确定`}
                     </button>
+
                     <button
                         hidden={!(/跳过|超时|已提交/.test(status))}
                         type="button"
