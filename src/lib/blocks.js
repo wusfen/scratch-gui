@@ -1,11 +1,26 @@
 import ScratchBlocks from 'scratch-blocks';
 
+window.MODE = (new URL(location)).searchParams.get('mode');
+
 /**
  * Connect scratch blocks with the vm
  * @param {VirtualMachine} vm - The scratch vm
  * @return {ScratchBlocks} ScratchBlocks connected with the vm
  */
 export default function (vm) {
+
+    //教师模拟下过滤名字
+    const getVariablesOfType = function(workspace, type){
+        var variable_list = workspace.getVariablesOfType(type);
+        if(window.MODE !== 'teacher'){
+            return variable_list.filter(function(variable){
+                var text = variable.name;
+                return !(0 === text.indexOf('#') && text.length - 1 === text.indexOf('*'));
+              });
+        }
+        return variable_list;
+    }
+
 
     const jsonForMenuBlock = function (name, menuOptionsFn, colors, start) {
         return {
@@ -358,6 +373,126 @@ export default function (vm) {
     ScratchBlocks.utils.is3dSupported = function () {
         return true;
     };
+
+    const orgDataCategory = ScratchBlocks.DataCategory;
+
+    ScratchBlocks.DataCategory = function(workspace) {
+        var variableModelList = getVariablesOfType(workspace, '');
+        variableModelList.sort(ScratchBlocks.VariableModel.compareByName);
+        var xmlList = [];
+      
+        orgDataCategory.addCreateButton(xmlList, workspace, 'VARIABLE');
+      
+        for (var i = 0; i < variableModelList.length; i++) {
+            orgDataCategory.addDataVariable(xmlList, variableModelList[i]);
+        }
+      
+        if (variableModelList.length > 0) {
+          xmlList[xmlList.length - 1].setAttribute('gap', 24);
+          var firstVariable = variableModelList[0];
+      
+          orgDataCategory.addSetVariableTo(xmlList, firstVariable);
+          orgDataCategory.addChangeVariableBy(xmlList, firstVariable);
+          orgDataCategory.addShowVariable(xmlList, firstVariable);
+          orgDataCategory.addHideVariable(xmlList, firstVariable);
+        }
+      
+        // Now add list variables to the flyout
+        orgDataCategory.addCreateButton(xmlList, workspace, 'LIST');
+        variableModelList = getVariablesOfType(workspace, ScratchBlocks.LIST_VARIABLE_TYPE);
+        variableModelList.sort(ScratchBlocks.VariableModel.compareByName);
+        for (var i = 0; i < variableModelList.length; i++) {
+            orgDataCategory.addDataList(xmlList, variableModelList[i]);
+        }
+      
+        if (variableModelList.length > 0) {
+          xmlList[xmlList.length - 1].setAttribute('gap', 24);
+          var firstVariable = variableModelList[0];
+      
+          orgDataCategory.addAddToList(xmlList, firstVariable);
+          orgDataCategory.addSep(xmlList);
+          orgDataCategory.addDeleteOfList(xmlList, firstVariable);
+          orgDataCategory.addDeleteAllOfList(xmlList, firstVariable);
+          orgDataCategory.addInsertAtList(xmlList, firstVariable);
+          orgDataCategory.addReplaceItemOfList(xmlList, firstVariable);
+          orgDataCategory.addSep(xmlList);
+          orgDataCategory.addItemOfList(xmlList, firstVariable);
+          orgDataCategory.addItemNumberOfList(xmlList, firstVariable);
+          orgDataCategory.addLengthOfList(xmlList, firstVariable);
+          orgDataCategory.addListContainsItem(xmlList, firstVariable);
+          orgDataCategory.addSep(xmlList);
+          orgDataCategory.addShowList(xmlList, firstVariable);
+          orgDataCategory.addHideList(xmlList, firstVariable);
+        }
+      
+        return xmlList;
+      };
+
+    
+    for(var key of Object.keys(orgDataCategory)){
+        ScratchBlocks.DataCategory[key] = orgDataCategory[key];
+    }
+
+    ScratchBlocks.FieldVariable.dropdownCreate = function() {
+        if (!this.variable_) {
+          throw new Error('Tried to call dropdownCreate on a variable field with no' +
+              ' variable selected.');
+        }
+        var variableModelList = [];
+        var name = this.getText();
+        var workspace = null;
+        if (this.sourceBlock_) {
+          workspace = this.sourceBlock_.workspace;
+        }
+        if (workspace) {
+          var variableTypes = this.getVariableTypes_();
+          var variableModelList = [];
+          // Get a copy of the list, so that adding rename and new variable options
+          // doesn't modify the workspace's list.
+          for (var i = 0; i < variableTypes.length; i++) {
+            var variableType = variableTypes[i];
+            var variables = getVariablesOfType(workspace, variableType);
+            variableModelList = variableModelList.concat(variables);
+      
+            var potentialVarMap = workspace.getPotentialVariableMap();
+            if (potentialVarMap) {
+              var potentialVars = potentialVarMap.getVariablesOfType(variableType);
+              variableModelList = variableModelList.concat(potentialVars);
+            }
+          }
+        }
+        variableModelList.sort(ScratchBlocks.VariableModel.compareByName);
+      
+        var options = [];
+        for (var i = 0; i < variableModelList.length; i++) {
+          // Set the uuid as the internal representation of the variable.
+          options[i] = [variableModelList[i].name, variableModelList[i].getId()];
+        }
+        if (this.defaultType_ == ScratchBlocks.BROADCAST_MESSAGE_VARIABLE_TYPE) {
+          options.unshift(
+              [ScratchBlocks.Msg.NEW_BROADCAST_MESSAGE, ScratchBlocks.NEW_BROADCAST_MESSAGE_ID]);
+        } else {
+          // Scalar variables and lists have the same backing action, but the option
+          // text is different.
+          if (this.defaultType_ == ScratchBlocks.LIST_VARIABLE_TYPE) {
+            var renameText = ScratchBlocks.Msg.RENAME_LIST;
+            var deleteText = ScratchBlocks.Msg.DELETE_LIST;
+          } else {
+            var renameText = ScratchBlocks.Msg.RENAME_VARIABLE;
+            var deleteText = ScratchBlocks.Msg.DELETE_VARIABLE;
+          }
+          options.push([renameText, ScratchBlocks.RENAME_VARIABLE_ID]);
+          if (deleteText) {
+            options.push(
+                [
+                  deleteText.replace('%1', name),
+                  ScratchBlocks.DELETE_VARIABLE_ID
+                ]);
+          }
+        }
+      
+        return options;
+      };
 
     return ScratchBlocks;
 }
