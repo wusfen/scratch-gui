@@ -41,18 +41,9 @@ const statusMap = {
 
 
 class Component extends React.Component{
-    initState() {
-        this.state = {
-            status: '提交中',
-            isShow: false,
-            isShowBackButton: false,
-            backTimeRemain: 10
-        }
-        this.setState(this.state)
-    }
     constructor (props) {
         super(props);
-        this.initState()
+        this.state = this.getInitState();
 
         bindAll(this, [
             'handleClose',
@@ -79,23 +70,31 @@ class Component extends React.Component{
         }
 
     }
+    getInitState () {
+        return {
+            status: '提交中',
+            isShow: false,
+            isShowBackButton: false,
+            backTimeRemain: 10
+        };
+    }
     handleClose () {
         if (this.state.isShowBackButton) {
             dispatchEvent(new Event('exit'));
         }
 
-        this.initState()
-        clearInterval(this.timer)
+        this.setState(this.getInitState());
+        clearInterval(this.timer);
     }
-    startBackTimer() {
+    startBackTimer () {
         this.setState({
             isShowBackButton: true
-        })
+        });
 
         let backTimeRemain = this.state.backTimeRemain;
         this.timer = setInterval(() => {
             if (backTimeRemain <= 0) {
-                this.handleClose()
+                this.handleClose();
                 return;
             }
 
