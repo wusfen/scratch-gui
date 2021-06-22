@@ -39,6 +39,17 @@
     margin-bottom: .25rem;
 }
 
+.icon-wrapper-abs
+{
+    position:absolute;
+    display: inline-block;
+    width: calc(2rem + 2px);
+    height: calc(2rem + 2px);
+    padding: 0.5rem;
+    outline: none;
+    user-select: none;
+}
+
 .icon-wrapper {
     display: inline-block;
     width: calc(2rem + .125rem);

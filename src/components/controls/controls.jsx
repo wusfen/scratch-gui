@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {defineMessages, injectIntl, intlShape} from 'react-intl';
+import { defineMessages, injectIntl, intlShape } from 'react-intl';
 
 import GreenFlag from '../green-flag/green-flag.jsx';
 import StopAll from '../stop-all/stop-all.jsx';
@@ -58,7 +58,7 @@ const Controls = function (props) {
                 onClick={active ? onStopAllClick : onGreenFlagClick}
             >
                 <img
-                    src={require('../../assets/icons/star.svg')}
+                    src={!active ? require('../../assets/icons/star.svg') : require('../../assets/icons/pause.png')}
                     alt=""
                 />
                 {active ? '结束' : '开始'}

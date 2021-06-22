@@ -6,6 +6,16 @@
     justify-content: center;
 
 }
+.icon-wrapper-abs
+{
+    position:absolute;
+    display: inline-block;
+    width: calc(2rem + 2px);
+    height: calc(2rem + 2px);
+    padding: 0.5rem;
+    outline: none;
+    user-select: none;
+}
 
 .icon-button {
     margin: 0.25rem;
