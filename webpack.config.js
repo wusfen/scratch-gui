@@ -140,6 +140,7 @@ const config = {
         new HtmlWebpackPlugin({
             template: 'src/playground/index.ejs',
             title: '',
+            PUBLIC_PATH: process.env.PUBLIC_PATH || '',
             sentryConfig: process.env.SENTRY_CONFIG ?
                 `"${process.env.SENTRY_CONFIG}"` :
                 null
