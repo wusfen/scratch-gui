@@ -20,7 +20,7 @@ import DragConstants from '../lib/drag-constants';
 import defineDynamicBlock from '../lib/define-dynamic-block';
 
 import {connect} from 'react-redux';
-import {updateToolbox} from '../reducers/toolbox';
+import toolbox, {updateToolbox} from '../reducers/toolbox';
 import {activateColorPicker} from '../reducers/color-picker';
 import {closeExtensionLibrary, openSoundRecorder, openConnectionModal} from '../reducers/modals';
 import {activateCustomProcedures, deactivateCustomProcedures} from '../reducers/custom-procedures';
@@ -112,6 +112,34 @@ class Blocks extends React.Component {
         {rtl: this.props.isRtl, toolbox: this.props.toolboxXML}
         );
         this.workspace = this.ScratchBlocks.inject(this.blocks, workspaceConfig);
+        window.ScratchBlocks = this. ScratchBlocks;
+        window.workspace = this.workspace;
+        const workspace = this.workspace;
+
+        const toolbox_ = workspace.toolbox_;
+        toolbox_.flyout_.DEFAULT_WIDTH = 1000;
+        toolbox_.width = 105;
+        toolbox_.flyout_.autoClose = true;
+        toolbox_.clearSelection = function () {
+            toolbox_.flyout_.setVisible(false);
+            return toolbox_.setSelectedItem(null);
+        };
+        toolbox_.clearSelection();
+        const rect = toolbox_.getClientRect();
+        toolbox_.getClientRect = function () {
+            const toolboxRect = this.HtmlDiv.getBoundingClientRect();
+            const x = toolboxRect.left;
+            const y = toolboxRect.top;
+            const width = toolboxRect.width;
+            const height = toolboxRect.height;
+  
+            return Object.assign(rect, {
+                left: x,
+                top: y,
+                width: width,
+                height: height,
+            });
+        };
 
         // Register buttons under new callback keys for creating variables,
         // lists, and procedures from extensions.
@@ -229,6 +257,10 @@ class Blocks extends React.Component {
     updateToolbox () {
         this.toolboxUpdateTimeout = false;
 
+        if (!this.workspace.toolbox_.selectedItem_) {
+            return;
+        }
+        
         const categoryId = this.workspace.toolbox_.getSelectedCategoryId();
         const offset = this.workspace.toolbox_.getCategoryScrollOffset();
         this.workspace.updateToolbox(this.props.toolboxXML);
