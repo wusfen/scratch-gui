@@ -54,7 +54,12 @@ const DirectionPicker = props => (
     <Label
         secondary
         above={props.labelAbove}
+        text=""
     >
+          <img
+                className={styles.iconWrapperAbs}
+                src={rotateIcon}
+            />
         <Popover
             body={
                 <div>
@@ -106,10 +111,7 @@ const DirectionPicker = props => (
             preferPlace="above"
             onOuterAction={props.onClosePopover}
         >
-            <img
-                className={styles.iconWrapperAbs}
-                src={rotateIcon}
-            />
+          
             <BufferedInput
                 small
                 disabled={props.disabled}

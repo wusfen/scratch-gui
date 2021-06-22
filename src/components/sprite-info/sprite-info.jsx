@@ -178,6 +178,7 @@ class SpriteInfo extends React.Component {
                     <div className={styles.group}>
                         <Label
                             above={labelAbove}
+                            text=''
                         >
                             <img
                                 className={styles.iconWrapperAbs}
@@ -196,6 +197,7 @@ class SpriteInfo extends React.Component {
                         <Label
                             secondary
                             above={labelAbove}
+                            text=''
                         >
                             <img
                                 className={styles.iconWrapperAbs}
@@ -216,6 +218,7 @@ class SpriteInfo extends React.Component {
                     <div className={styles.group}>
                         <Label
                             above={labelAbove}
+                            text=''
                         >
                             <img
                                 className={styles.iconWrapperAbs}
