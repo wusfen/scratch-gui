@@ -2,16 +2,18 @@
 @import "../../css/colors.css";
 @import "../../css/z-index.css";
 
-.page-wrapper {
-    height: 100%;
-
-    padding: 6px 12px 24px 12px;
+html {
     background-color: $ui-primary;
 }
 
+.page-wrapper {
+    height: 100%;
+    padding: 1rem 0.75rem;
+    padding: calc(16 * 1px) 0.75rem;
+}
+
 .body-wrapper {
-    height: calc(100% - $menu-bar-height);
-    background-color: $ui-primary;
+    height: calc(100% - $menu-bar-height - 0.5rem);
 }
 
 .body-wrapper * {
@@ -38,17 +40,17 @@
 
 .editor-wrapper {
     /*
-        This is carefully balanced--  the minimum width at which the GUI will be displayed is 1024px.
-        At that size, the stage pane is 408px wide, with $space of padding to each side.
+        This is carefully balanced--  the minimum width at which the GUI will be displayed is 64rem.
+        At that size, the stage pane is 25.5rem wide, with $space of padding to each side.
         However, we must also add the border width to the stage pane. All-in-all, the stage pane's final width is
-        408px + ($space + $stage-standard-border-width * 2) (one border & padding per left/right side).
+        25.5rem + ($space + $stage-standard-border-width * 2) (one border & padding per left/right side).
 
         @todo This is in place to prevent "doubling up" of horizontal scrollbars in narrow windows, but there are likely
         much better ways to solve that (e.g. undo #2124, remove this flex-basis entirely). However, they run their own
         risks of breaking things, so let's just leave this as-is for the time being.
     */
     flex-basis: calc(
-        1024px - 408px - (($space + $stage-standard-border-width) * 2)
+        64rem - 25.5rem - (($space + $stage-standard-border-width) * 2)
     );
     flex-grow: 1;
     flex-shrink: 0;
@@ -62,7 +64,7 @@
 
 .tab-list {
     height: $stage-menu-height;
-    width: 250px; /* Match width of the toolbox */
+    width: 15.625rem; /* Match width of the toolbox */
     display: flex;
     align-items: flex-end;
     flex-shrink: 0;
@@ -201,11 +203,11 @@
 }
 
 .stage-and-target-wrapper {
-    width: 300px;
-    padding: 30px 17px 14px;
+    width: 18.75rem;
+    padding: 1.875rem 1.0625rem 0.875rem;
     background: rgba(159, 138, 255, 0);
-    box-shadow: inset 0 1px 10px 0 $motion-primary;
-    border-radius: 20px;
+    box-shadow: inset 0 1px 0.625rem 0 $motion-primary;
+    border-radius: 1.25rem;
 
     display: flex;
     flex-direction: column;
@@ -243,18 +245,18 @@
     border: 1px solid $motion-primary;
     box-sizing: content-box; /* To match scratch-block vertical toolbox borders */
 
-    width: 70px;
+    width: 4.375rem;
     box-sizing: border-box;
 }
 
-$fade-out-distance: 15px;
+$fade-out-distance: 0.9375rem;
 
 .extension-button-container:before {
     display: none;
     content: "";
     position: absolute;
     top: calc(calc(-1 * $fade-out-distance) - 1px);
-    left: -1px;
+    left: -0.0625rem;
     background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15));
     height: $fade-out-distance;
     width: calc(100% + 0.5px);
@@ -311,7 +313,7 @@ $fade-out-distance: 15px;
     width: 100%;
     z-index: $z-index-alerts;
     position: absolute;
-    margin-top: 53px;
+    margin-top: 3.3125rem;
     pointer-events: none;
 }
 

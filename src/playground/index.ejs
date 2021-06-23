@@ -1,98 +1,121 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
-  <meta name="google" value="notranslate">
-  <link rel="shortcut icon" href="static/favicon.ico">
-  <title>豌豆编程</title>
-  <base href="<%= htmlWebpackPlugin.options.PUBLIC_PATH %>" />
-  <script>
-    // fix <base> pushState
-    history._pushState = history.pushState
-    history.pushState = function (state, title, url) {
-      url = /:\/\//.test(url)? url: location.origin + String(url).replace(/^\/?/, '/')
-      return history._pushState.apply(this, arguments)
-    }
-  </script>
-  <!-- <script src="https://cdn.jsdelivr.net/gh/wusfen/console.js@0.0.10/dist/console.js"></script> -->
-  <!-- <script> document.onclick = e => { console.show = 2 } </script> -->
-  <!-- <script src="https://unpkg.com/vconsole/dist/vconsole.min.js"></script> -->
-  <!-- <script> var vConsole = new window.VConsole();</script> -->
-  <script>
-    function showConsole(e) {
-      if (e.touches && e.touches.length === 3) {
-        if (document.__f12) return
-        document.__f12 = true
-
-        var script = document.createElement('script')
-        script.src = "https://cdn.jsdelivr.net/gh/wusfen/console.js@0.0.10/dist/console.js"
-        document.body.appendChild(script)
-        console.show = 2
-      }
-    }
-    
-    document.addEventListener('touchstart', showConsole)
-    document.addEventListener('contextmenu', showConsole)
-  </script>
-
-  <script>
-    function nativeCall(options) {
-      console.log('[nativeCall]', options)
-
-      // ios
-      try {
-        window["webkit"].messageHandlers.webCall.postMessage(JSON.stringify(options), "*");
-      } catch (e) { }
-
-      // android
-      try {
-        native.call(JSON.stringify(options))
-      } catch (e) { }
-
-      // pc(iframe)
-      try {
-        parent.postMessage(options, "*")
-      } catch (e) { }
-    }
-
-    addEventListener('exit', function () {
-      console.log('[exit]')
-
-      nativeCall({
-        "code": 0,
-        "protocol": 200134,
-        "data": {
-          "operType": 1,
-          "param": 1
-        }
-      })
-    })
-  </script>
-
-  <script>
-      // arrayBuffer polyfill
-      (function () {
-        File.prototype.arrayBuffer = File.prototype.arrayBuffer || myArrayBuffer;
-        Blob.prototype.arrayBuffer = Blob.prototype.arrayBuffer || myArrayBuffer;
-
-        function myArrayBuffer() {
-          var blob = this
-          return new Promise(function(resolve) {
-            let fr = new FileReader();
-            fr.onload = function(e) {
-              resolve(fr.result);
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"
+        />
+        <meta name="google" value="notranslate" />
+        <link rel="shortcut icon" href="static/favicon.ico" />
+        <title>豌豆编程</title>
+        <base href="<%= htmlWebpackPlugin.options.PUBLIC_PATH %>" />
+        <script>
+            // fix <base> pushState
+            history._pushState = history.pushState;
+            history.pushState = function (state, title, url) {
+                url = /:\/\//.test(url)
+                    ? url
+                    : location.origin + String(url).replace(/^\/?/, "/");
+                return history._pushState.apply(this, arguments);
             };
-            fr.readAsArrayBuffer(blob);
-          })
-        }
-      })();
-  </script>
-</head>
+        </script>
 
-<body>
-</body>
+        <!-- <script src="https://cdn.jsdelivr.net/gh/wusfen/console.js@0.0.10/dist/console.js"></script> -->
+        <!-- <script> document.onclick = e => { console.show = 2 } </script> -->
+        <!-- <script src="https://unpkg.com/vconsole/dist/vconsole.min.js"></script> -->
+        <!-- <script> var vConsole = new window.VConsole();</script> -->
+        <script>
+            function showConsole(e) {
+                if (e.touches && e.touches.length === 3) {
+                    if (document.__f12) return;
+                    document.__f12 = true;
 
+                    var script = document.createElement("script");
+                    script.src =
+                        "https://cdn.jsdelivr.net/gh/wusfen/console.js@0.0.10/dist/console.js";
+                    document.body.appendChild(script);
+                    console.show = 2;
+                }
+            }
+
+            document.addEventListener("touchstart", showConsole);
+            document.addEventListener("contextmenu", showConsole);
+        </script>
+
+        <script>
+            function nativeCall(options) {
+                console.log("[nativeCall]", options);
+
+                // ios
+                try {
+                    window["webkit"].messageHandlers.webCall.postMessage(
+                        JSON.stringify(options),
+                        "*"
+                    );
+                } catch (e) {}
+
+                // android
+                try {
+                    native.call(JSON.stringify(options));
+                } catch (e) {}
+
+                // pc(iframe)
+                try {
+                    parent.postMessage(options, "*");
+                } catch (e) {}
+            }
+
+            addEventListener("exit", function () {
+                console.log("[exit]");
+
+                nativeCall({
+                    code: 0,
+                    protocol: 200134,
+                    data: {
+                        operType: 1,
+                        param: 1,
+                    },
+                });
+            });
+        </script>
+
+        <script>
+            function resize() {
+                document.documentElement.style.setProperty(
+                    "--STAGE_CSS_WIDTH",
+                    Math.min(
+                        375,
+                        266 / (1024 / window.innerWidth),
+                        266 / (768 / window.innerHeight)
+                    )
+                );
+            }
+            resize();
+            addEventListener("resize", resize);
+        </script>
+
+        <script>
+            // arrayBuffer polyfill
+            (function () {
+                File.prototype.arrayBuffer =
+                    File.prototype.arrayBuffer || myArrayBuffer;
+                Blob.prototype.arrayBuffer =
+                    Blob.prototype.arrayBuffer || myArrayBuffer;
+
+                function myArrayBuffer() {
+                    var blob = this;
+                    return new Promise(function (resolve) {
+                        let fr = new FileReader();
+                        fr.onload = function (e) {
+                            resolve(fr.result);
+                        };
+                        fr.readAsArrayBuffer(blob);
+                    });
+                }
+            })();
+        </script>
+    </head>
+
+    <body></body>
 </html>

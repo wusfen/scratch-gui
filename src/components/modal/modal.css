@@ -8,6 +8,10 @@
     left: 0;
     right: 0;
     bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     z-index: $z-index-modal;
     background-color: $ui-modal-overlay;
 }
@@ -17,9 +21,9 @@
 }
 
 .modal-content {
-    margin: 100px auto;
+    margin: 6.25rem auto;
     outline: none;
-    border: 4px solid $ui-white-transparent;
+    border: 0.25rem solid $ui-white-transparent;
     padding: 0;
     border-radius: $space;
     user-select: none;
@@ -37,7 +41,7 @@
     width: 100%;
 
     overflow-y: auto;
-    -webkit-overflow-scrolling: 'touch';
+    -webkit-overflow-scrolling: "touch";
     user-select: none;
 
     background-color: $ui-secondary;
@@ -47,7 +51,6 @@
     border: none;
     border-radius: 0;
 }
-
 
 /*
     Modal header has 3 items:
@@ -102,7 +105,7 @@ $sides: 20rem;
     flex-shrink: 0;
     justify-content: center;
     user-select: none;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.025rem;
     cursor: default;
 }
 

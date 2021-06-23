@@ -18,16 +18,17 @@
     */
     box-sizing: border-box;
     height: $menu-bar-height;
+    margin-bottom: 0.5rem;
 
     /*
-        @todo: This adds ~20px in Chrome, when scrolling to the right,
+        @todo: This adds ~1.25rem in Chrome, when scrolling to the right,
         but fixes [FFx + Safari] [resize window down + scroll to the right] bug.
         width: 100%;
     */
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: $menu-bar-standard-font-size;
     font-weight: bold;
-    background-color: $ui-primary;
+    /* background-color: $ui-primary; */
     color: $ui-white;
 
     align-items: center;
@@ -46,10 +47,10 @@
     height: 1.6rem;
     vertical-align: middle;
 
-    width: 156px;
-    height: 73.5px;
+    width: 9.75rem;
+    height: 4.59375rem;
     position: relative;
-    top: 10px;
+    top: 0.625rem;
 }
 
 .scratch-logo.clickable {
@@ -129,12 +130,12 @@
 
 .feedback-button {
     background-color: $ui-white;
-    height: 34px;
+    height: 2.125rem;
 }
 
 .divider {
     margin: 0 0.5rem;
-    height: 34px;
+    height: 2.125rem;
 }
 
 .author-info {
@@ -212,11 +213,11 @@
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 45%;
-    padding-right: 10px;
-    padding-left: 10px;
-    width: 30px;
+    padding-right: 0.625rem;
+    padding-left: 0.625rem;
+    width: 1.875rem;
     overflow: hidden;
-    text-indent: 50px;
+    text-indent: 3.125rem;
     white-space: nowrap;
 }
 .mystuff > a:hover {
@@ -236,8 +237,8 @@
 /* == */
 .icon {
     display: inline-block;
-    width: 22px;
-    height: 22px;
+    width: 1.375rem;
+    height: 1.375rem;
     vertical-align: middle;
 }
 
@@ -252,17 +253,17 @@
 }
 
 .skip-button {
-    width: 60px;
-    height: 28px;
+    min-width: 3.75rem;
+    height: 1.75rem;
     background: #ff457f;
-    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.33),
-        inset 0px 1px 12px 0px rgba(255, 176, 200, 1);
-    border-radius: 10px;
-    font-size: 12px;
+    box-shadow: 0rem 1px 0.25rem 0rem rgba(0, 0, 0, 0.33),
+        inset 0rem 1px 0.75rem 0rem rgba(255, 176, 200, 1);
+    border-radius: 0.625rem;
+    font-size: 0.75rem;
     font-family: SourceHanSansCN-Medium, SourceHanSansCN;
     font-weight: 500;
     color: #ffffff;
-    line-height: 18px;
+    line-height: 1.125rem;
     animation: delay30Show 0.3s 30s backwards;
 }
 @keyframes delay30Show {
@@ -280,14 +281,15 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 68px;
-    height: 28px;
-    line-height: 28px;
+    min-width: 4.25rem;
+    height: 1.75rem;
+    line-height: 1.75rem;
     background: #fff690;
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.33), inset 0 1px 12px 0 #f7b500;
-    border-radius: 10px;
+    box-shadow: 0 1px 0.25rem 0 rgba(0, 0, 0, 0.33),
+        inset 0 1px 0.75rem 0 #f7b500;
+    border-radius: 0.625rem;
     font-family: SourceHanSansCN-Medium;
-    font-size: 12px;
+    font-size: 0.75rem;
     color: #9678ff;
     letter-spacing: 0;
     text-align: center;
@@ -295,9 +297,9 @@
 }
 
 .publish-button:before {
-    width: 18px;
-    height: 18px;
-    margin-right: 3px;
+    width: 1.125rem;
+    height: 1.125rem;
+    margin-right: 0.1875rem;
     content: "";
     display: inline-block;
     background: center no-repeat url("../../assets/icons/publish.png");

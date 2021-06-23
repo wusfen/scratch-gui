@@ -2,8 +2,8 @@
 @import "../../css/units.css";
 
 .modal-content {
-    width: 700px;
-    margin: 50px auto; /* This modal is taller than most, reduce top margin */
+    width: 43.75rem;
+    margin: 3.125rem auto; /* This modal is taller than most, reduce top margin */
 }
 
 .body {
@@ -13,16 +13,16 @@
 
 .body input[type="checkbox"],
 .body input[type="radio"] {
-    margin: 3px;
+    margin: 0.1875rem;
 }
 
 /* Blocks workspace for custom procedure declaration editor */
 .workspace {
-    min-height: 200px;
+    min-height: 12.5rem;
     position: relative;
 }
 
-.workspace :global(.injectionDiv){
+.workspace :global(.injectionDiv) {
     position: absolute;
     top: 0;
     right: 0;
@@ -42,19 +42,19 @@
 
 .option-card {
     background: white;
-    border: 2px solid $ui-black-transparent;
+    border: 0.125rem solid $ui-black-transparent;
     border-radius: $space;
     padding: calc($space * 2);
     text-align: center;
     flex-grow: 1;
     cursor: pointer;
     transition: all 0.2s;
-    flex-basis: 100px;
+    flex-basis: 6.25rem;
 }
 
 .option-card:hover {
-    border: 2px solid $motion-primary;
-    box-shadow: 0px 0px 0px 4px $motion-transparent;
+    border: 0.125rem solid $motion-primary;
+    box-shadow: 0rem 0rem 0rem 0.25rem $motion-transparent;
 }
 
 .option-card + .option-card {
@@ -62,7 +62,7 @@
 }
 
 .option-icon {
-    max-height: 48px;
+    max-height: 3rem;
     margin-bottom: 0.5rem;
 }
 

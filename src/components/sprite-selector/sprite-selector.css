@@ -72,14 +72,14 @@
     overflow-x: hidden;
 
     justify-content: center;
-    padding-bottom: 70px;
+    padding-bottom: 4.375rem;
 }
 
 .add-button {
     position: absolute;
     bottom: 0.75rem;
 
-    right: -85px;
+    right: -5.3125rem;
 }
 
 [dir="ltr"] .add-button {
@@ -132,10 +132,10 @@
 
 @keyframes glowing {
     10% {
-        box-shadow: 0 0 10px #7fff1e;
+        box-shadow: 0 0 0.625rem #7fff1e;
     }
     90% {
-        box-shadow: 0 0 10px #7fff1e;
+        box-shadow: 0 0 0.625rem #7fff1e;
     }
     100% {
         box-shadow: none;

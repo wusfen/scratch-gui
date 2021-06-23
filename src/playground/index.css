@@ -30,6 +30,22 @@ html {
 
 /* ================ */
 html {
+    font-size: 16px;
+}
+// ja max 375: 375/266 * 1024
+@media all and (max-width: 1443px) {
+    html {
+        font-size: calc(100vw / (1024 / 16));
+    }
+}
+@media all and (max-height: 1080px) {
+    html {
+        font-size: calc(100vh / (768 / 16));
+    }
+}
+
+/* ================ */
+html {
     -webkit-tap-highlight-color: transparent;
     -webkit-user-select: none;
 }
