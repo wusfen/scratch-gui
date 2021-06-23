@@ -21,6 +21,38 @@ export default function (vm) {
         return variable_list;
     }
 
+    //判断模块是否需要隐藏
+    const needHide = function(xmlNode){
+        if(window.MODE === 'teacher'){
+            return false;
+        }
+        if(!xmlNode.getElementsByTagName){
+            return false;
+        }
+        var fields = xmlNode.getElementsByTagName("field");
+        var fieldCount = fields.length;
+        if(fieldCount > 0){
+            for(var j = 0; j < fieldCount; j++){
+                var field = fields[j];
+                if(field.getAttribute('name') === 'VARIABLE'){
+                    var name = field.innerHTML;
+                    if(0 == name.indexOf('#') && name.length - 1 == name.indexOf('*')){
+                        return true;
+                    }
+                }
+            }
+        }else{
+            var childCount = xmlNode.childNodes.length;
+            for(var i = 0; i < childCount; i++){
+                if(needHide(xmlNode.childNodes[i])){
+                    return true;
+                }
+            }
+        }
+        return false;
+        
+    }
+
 
     const jsonForMenuBlock = function (name, menuOptionsFn, colors, start) {
         return {
@@ -493,6 +525,103 @@ export default function (vm) {
       
         return options;
       };
+
+      ScratchBlocks.Xml.domToBlock = function(xmlBlock, workspace) {
+        if (xmlBlock instanceof ScratchBlocks.Workspace) {
+          var swap = xmlBlock;
+          xmlBlock = workspace;
+          workspace = swap;
+          console.warn('Deprecated call to Blockly.Xml.domToBlock, ' +
+                       'swap the arguments.');
+        }
+        // Create top-level block.
+        ScratchBlocks.Events.disable();
+        var variablesBeforeCreation = workspace.getAllVariables();
+        try {
+          var topBlock = ScratchBlocks.Xml.domToBlockHeadless_(xmlBlock, workspace);
+          // Generate list of all blocks.
+          var blocks = topBlock.getDescendants(false);
+          if (workspace.rendered) {
+            // Hide connections to speed up assembly.
+            topBlock.setConnectionsHidden(true);
+            // Render each block.
+            var hide = [];
+            for (var i = blocks.length - 1; i >= 0; i--) {
+                hide[i] = needHide(xmlBlock);
+            }
+            for (var i = blocks.length - 1; i >= 0; i--) {
+                blocks[i].initSvg(hide[i]);
+            }
+            for (var i = blocks.length - 1; i >= 0; i--) {
+                if(!hide[i]){
+                    blocks[i].render(false);
+                }
+            }
+            // Populating the connection database may be deferred until after the
+            // blocks have rendered.
+            if (!workspace.isFlyout) {
+              setTimeout(function() {
+                if (topBlock.workspace) {  // Check that the block hasn't been deleted.
+                  topBlock.setConnectionsHidden(false);
+                }
+              }, 1);
+            }
+            topBlock.updateDisabled();
+            // Allow the scrollbars to resize and move based on the new contents.
+            // TODO(@picklesrus): #387. Remove when domToBlock avoids resizing.
+            workspace.resizeContents();
+          } else {
+            for (var i = blocks.length - 1; i >= 0; i--) {
+              blocks[i].initModel();
+            }
+          }
+        } finally {
+            ScratchBlocks.Events.enable();
+        }
+        if (ScratchBlocks.Events.isEnabled()) {
+          var newVariables = ScratchBlocks.Variables.getAddedVariables(workspace,
+              variablesBeforeCreation);
+          // Fire a VarCreate event for each (if any) new variable created.
+          for (var i = 0; i < newVariables.length; i++) {
+            var thisVariable = newVariables[i];
+            ScratchBlocks.Events.fire(new ScratchBlocks.Events.VarCreate(thisVariable));
+          }
+          // Block events come after var events, in case they refer to newly created
+          // variables.
+          ScratchBlocks.Events.fire(new ScratchBlocks.Events.BlockCreate(topBlock));
+        }
+        return topBlock;
+      };
+
+
+      ScratchBlocks.BlockSvg.prototype.initSvg = function(needHide) {
+        //goog.asserts.assert(this.workspace.rendered, 'Workspace is headless.');
+        if (!this.isInsertionMarker()) { // Insertion markers not allowed to have inputs or icons
+          // Input shapes are empty holes drawn when a value input is not connected.
+          for (var i = 0, input; input = this.inputList[i]; i++) {
+            input.init();
+            input.initOutlinePath(this.svgGroup_);
+          }
+          var icons = this.getIcons();
+          for (i = 0; i < icons.length; i++) {
+            icons[i].createIcon();
+          }
+        }
+        this.updateColour();
+        this.updateMovable();
+        if (!this.workspace.options.readOnly && !this.eventsInit_) {
+            ScratchBlocks.bindEventWithChecks_(
+              this.getSvgRoot(), 'mousedown', this, this.onMouseDown_);
+        }
+        this.eventsInit_ = true;
+        if(needHide){
+            return;
+        }
+        if (!this.getSvgRoot().parentNode) {
+          this.workspace.getCanvas().appendChild(this.getSvgRoot());
+        }
+      };
+
 
     return ScratchBlocks;
 }
