@@ -3,7 +3,7 @@ variables:
     imageTag: $CI_PROJECT_NAME-$CI_COMMIT_REF_NAME-$DEPLOY_TIME_TAG-$CI_PIPELINE_ID
 
 stages:
-    - lint_code
+    - build
     - push_image
     - push_oss
     - deploy
@@ -13,9 +13,9 @@ cache:
     paths:
         - dist
 
-lint_code:
+build:
     image: registry-sz.vipthink.net/devops-base/node-sonar:1.3
-    stage: lint_code
+    stage: build
     before_script:
         - if [ ! -f .env ]; then touch .env; fi
         - if [ "$IS_PUSH_OSS" == "1" ]; then echo -e "$CI_ENV_VARIBLES" > .env && echo -e "PUBLIC_PATH=$PUBLIC_PATH" >> .env; fi
@@ -33,6 +33,9 @@ lint_code:
         expire_in: 3 hrs
         paths:
             - ./dist
+    only:
+        variables:
+            - $IS_PUSH_OSS == "1"
 
 push_image:
     variables:
