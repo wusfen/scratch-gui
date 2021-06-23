@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {defineMessages, injectIntl, intlShape} from 'react-intl';
+import { defineMessages, injectIntl, intlShape } from 'react-intl';
 
 import GreenFlag from '../green-flag/green-flag.jsx';
 import StopAll from '../stop-all/stop-all.jsx';
@@ -53,15 +53,15 @@ const Controls = function (props) {
                 onClick={onStopAllClick}
             />
             <button
-                className={classNames(styles.button)}
+                className={!active?classNames(styles.button):classNames(styles.stopButton)}
                 type="button"
                 onClick={active ? onStopAllClick : onGreenFlagClick}
             >
                 <img
-                    src={require('../../assets/icons/star.svg')}
+                    src={!active ? require('../../assets/icons/star.svg') : require('../../assets/icons/stop.png')}
                     alt=""
                 />
-                {active ? '结束' : '开始'}
+                {active ? '停止' : '开始'}
             </button>
         </div>
     );
