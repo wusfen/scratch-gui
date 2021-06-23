@@ -85,3 +85,11 @@ button:not(:active) {
 :global(.Popover-tipShape) {
     fill: #fff;
 }
+
+/* TODO 临时隐藏绿旗 */
+:global(.injectionDiv)
+    [data-shapes="hat"]
+    > g
+    > image[width="24px"][height="24px"]:first-child:last-child {
+    opacity: 0;
+}
