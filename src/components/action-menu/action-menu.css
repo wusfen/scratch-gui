@@ -42,17 +42,21 @@ button::-moz-focus-inner {
 }
 
 .main-button {
-    border-radius: 100%;
-    width: $main-button-size;
-    height: $main-button-size;
-    box-shadow: 0 0 0 4px $motion-transparent;
-    z-index: $z-index-add-button;
-    transition: transform, box-shadow 0.5s;
+    min-width: 3.75rem;
+    height: 1.75rem;
+    background: #ff457f;
+    box-shadow: 0rem 1px 0.25rem 0rem rgba(0, 0, 0, 0.33),
+        inset 0rem 1px 0.75rem 0rem rgba(255, 176, 200, 1);
+    border-radius: 0.625rem;
+    font-size: 1.2rem;
+    font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+    font-weight: bold;
+    color: #ffffff;
+    line-height: 1.125rem;
 }
 
-.main-button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 0 6px $motion-transparent;
+.main-button:hover{
+    background: #ff457f;
 }
 
 .main-icon {
@@ -72,18 +76,19 @@ button::-moz-focus-inner {
     */
     overflow-y: hidden;
 
-    background: $motion-tertiary;
-    border-top-left-radius: $more-button-size;
-    border-top-right-radius: $more-button-size;
-    width: $more-button-size;
+    /* border-top-left-radius: $more-button-size;
+    border-top-right-radius: $more-button-size; */
+    width: calc($more-button-size + 2.75rem);
     margin-left: calc(($main-button-size - $more-button-size) / 2);
     margin-right: calc(($main-button-size - $more-button-size) / 2);
-
+    background: $motion-tertiary;
     position: absolute;
-    bottom: calc($main-button-size);
+    top: calc($main-button-size);
+    left: -0.85rem;
 
     margin-bottom: calc($main-button-size / -2);
-    padding-bottom: calc($main-button-size / 2);
+    z-index: 9;
+    /* padding-bottom: calc($main-button-size / 2); */
 }
 
 .more-buttons {
@@ -108,19 +113,26 @@ button::-moz-focus-inner {
 }
 
 .more-buttons:first-child { /* Round off top button */
-    border-top-right-radius: $more-button-size;
-    border-top-left-radius: $more-button-size;
+    /* border-top-right-radius: $more-button-size;
+    border-top-left-radius: $more-button-size; */
 }
 
 .more-button {
-    width: $more-button-size;
-    height: $more-button-size;
+    width: calc($more-button-size + 2.75rem);
+    height: calc($more-button-size + 1.5rem);
     background: $motion-tertiary;
 }
 
+.tip-text {
+    font-size: 0.5rem;
+    color: #fff;
+}
+
 .more-icon {
-    width: calc($more-button-size - 1rem);
-    height: calc($more-button-size - 1rem);
+    /* width: calc($more-button-size - 1rem);
+    height: calc($more-button-size - 1rem); */
+    width: 1.6rem;
+    height: 1.6rem;
 }
 
 .coming-soon .more-icon {
@@ -198,3 +210,4 @@ $arrow-rounding: 0.125rem;
     top: $arrow-inset !important;
     transform: rotate(-45deg) !important;
 }
+

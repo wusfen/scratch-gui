@@ -18,7 +18,8 @@ class ActionMenu extends React.Component {
             'handleTouchStart',
             'handleTouchOutside',
             'setButtonRef',
-            'setContainerRef'
+            'setContainerRef',
+            'setIconRef'
         ]);
         this.state = {
             isOpen: false,
@@ -51,6 +52,7 @@ class ActionMenu extends React.Component {
             this.setState({isOpen: false});
             this.closeTimeoutId = null;
         }, CLOSE_DELAY);
+        this.iconRef.style.transform=`rotate(0deg)`
     }
     handleToggleOpenState () {
         // Mouse enter back in after timeout was started prevents it from closing.
@@ -63,6 +65,7 @@ class ActionMenu extends React.Component {
                 forceHide: false
             });
         }
+        this.iconRef.style.transform=`rotate(45deg)`
     }
     handleTouchOutside (e) {
         if (this.state.isOpen && !this.containerRef.contains(e.target)) {
@@ -99,6 +102,9 @@ class ActionMenu extends React.Component {
     setContainerRef (ref) {
         this.containerRef = ref;
     }
+    setIconRef (ref) {
+        this.iconRef = ref;
+    }
     render () {
         const {
             className,
@@ -127,11 +133,12 @@ class ActionMenu extends React.Component {
                     ref={this.setButtonRef}
                     onClick={this.clickDelayer(onClick)}
                 >
-                    <img
+                    <span ref={this.setIconRef} className={styles.addIcon}>+</span>
+                    {/* <img
                         className={styles.mainIcon}
                         draggable={false}
                         src={mainImg}
-                    />
+                    /> */}
                 </button>
                 <ReactTooltip
                     className={styles.tooltip}
@@ -162,6 +169,7 @@ class ActionMenu extends React.Component {
                                             draggable={false}
                                             src={img}
                                         />
+                                        <span className={styles.tipText}>{title}</span>
                                         {hasFileInput ? (
                                             <input
                                                 accept={fileAccept}
@@ -172,14 +180,14 @@ class ActionMenu extends React.Component {
                                                 onChange={fileChange}
                                             />) : null}
                                     </button>
-                                    <ReactTooltip
+                                    {/* <ReactTooltip
                                         className={classNames(styles.tooltip, {
                                             [styles.comingSoonTooltip]: isComingSoon
                                         })}
                                         effect="solid"
                                         id={tooltipId}
                                         place={tooltipPlace || 'left'}
-                                    />
+                                    /> */}
                                 </div>
                             );
                         })}
