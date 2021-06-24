@@ -11,12 +11,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: $motion-primary;
+    background-color: #FFFAEA;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-align: center;
     color: white;
-
-    background-color: rgba(0, 0, 0, 0.3);
     /* backdrop-filter: blur(5px); */
 }
 
@@ -182,4 +180,8 @@
 .message {
     height: 20px;
     margin: 5px 0;
+}
+
+.loading-video {
+    width: 15.81rem;
 }

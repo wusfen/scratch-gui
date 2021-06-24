@@ -101,7 +101,7 @@ const config = {
                 ]
             },
             {
-                test: /\.(svg|png|wav|gif|jpg|mp3)$/,
+                test: /\.(svg|png|wav|gif|jpg|mp3|mp4)$/,
                 use: [
                     {
                         loader: 'file-loader',
