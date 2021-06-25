@@ -64,6 +64,11 @@ import {
 import collectMetadata from '../../lib/collect-metadata';
 
 import styles from './menu-bar.css';
+import commonStyles from '../../css/common.css';
+const c = {
+    ...styles,
+    ...commonStyles,
+};
 
 import helpIcon from '../../lib/assets/icon--tutorials.svg';
 import mystuffIcon from './icon--mystuff.png';
@@ -82,6 +87,7 @@ import folderIcon from '../../assets/icons/folder.svg';
 import setupIcon from '../../assets/icons/set up.svg';
 
 import {ajax} from '../../lib/ajax.js';
+import {param} from '../../lib/param.js';
 
 const ariaMessages = defineMessages({
     language: {
@@ -167,6 +173,10 @@ class MenuBar extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
+            'handleInput',
+            'handleSave',
+            'handleExit',
+            'handleSaveExit',
             'handleSkip',
             'handleSubmit',
             'handleClickNew',
@@ -183,8 +193,8 @@ class MenuBar extends React.Component {
         ]);
 
         this.state = {
+            workName: '',
             isShowSkipButton: !false,
-            isShowPublishButton: !false
         };
 
     }
@@ -349,22 +359,54 @@ class MenuBar extends React.Component {
             this.props.onRequestCloseAbout();
         };
     }
+    getProjectCover () {
+        return this.props.vm.renderer.canvas.toDataURL();
+    }
+    async uploadSb3 () {
+        const blob = await this.props.vm.saveProjectSb3();
+        let formData = new FormData();
+        formData.append('file', blob, 'project.sb3');
+
+        // TODO remove
+        if (/mock/.test(location)) {
+            formData = null;
+        }
+
+        // {domain, path}
+        const {data} = await ajax.post('/file/upload', formData);
+        return data;
+    }
+    handleInput (e) {
+        this.setState({
+            workName: e.target.value
+        });
+    }
+    async handleSave () {
+        const sb3PathInfo = await this.uploadSb3();
+        await ajax.put('/hwUserWork/submitIdeaWork', {
+            id: param('id'),
+            // workCoverPath: this.getProjectCover(),
+            workName: this.state.workName,
+            workPath: sb3PathInfo.path,
+        });
+
+        alert('保存成功');
+    }
+    handleExit () {
+        dispatchEvent(new Event('exit'));
+    }
+    async handleSaveExit () {
+        await this.handleSave();
+        dispatchEvent(new Event('exit'));
+    }
     async handleSubmit () {
         dispatchEvent(new Event('submit:提交中'));
         const timeoutTimer = setTimeout(() => {
             dispatchEvent(new Event('submit:提交中超时'));
         }, 1000 * 15);
 
-        const blob = await this.props.vm.saveProjectSb3();
-        let formData = new FormData();
-        formData.append('file', blob);
-        // TODO remove
-        if (/mock/.test(location)) {
-            formData = null;
-        }
-
         // 上传文件
-        const {data: fileData} = await ajax.post('/file/upload', formData);
+        const fileData = await this.uploadSb3();
 
         // TODO 临时存值
         const workInfo = window._workInfo;
@@ -376,7 +418,7 @@ class MenuBar extends React.Component {
             // analystStatus: undefined,
             workId: workInfo.analystStatus === -1 ? workInfo.workId : ''
         });
-        
+
         // 轮询批改结果
         const checkStartTime = new Date();
         // eslint-disable-next-line func-style, require-jsdoc
@@ -860,17 +902,38 @@ class MenuBar extends React.Component {
                 <div
                     className={styles.buttons}
                 >
+                    <div className={`${c.withIconRight}`}>
+                        <input
+                            type="text"
+                            className={`${c.input}`}
+                            placeholder="作品名称"
+                            onInput={this.handleInput}
+                        />
+                        <i className={c.iEdit} />
+                    </div>
+                    
                     <button
-                        hidden={!this.state.isShowSkipButton}
-                        className={styles.skipButton}
+                        className={c.button}
+                        onClick={this.handleSave}
+                    >{'保存'}</button>
+
+                    <button
+                        className={`${c.button} ${c.pink} ${c.zHigher}`}
+                        onClick={this.handleExit}
+                    >{'退出'}</button>
+
+                    <button
+                        className={`${c.button} ${c.pink} ${c.zHigher}`}
                         onClick={this.handleSkip}
                     >{'跳过'}</button>
 
                     <button
-                        hidden={!this.state.isShowPublishButton}
-                        className={styles.publishButton}
+                        className={`${c.button} ${c.yellow}`}
                         onClick={this.handleSubmit}
-                    >{'提交'}</button>
+                    >
+                        <i className={`${c.iSend} ${c.iSizeL}`} />
+                        {'提交'}
+                    </button>
                 </div>
             </Box>
         );
