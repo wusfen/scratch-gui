@@ -48,3 +48,12 @@
 .wrapper [class*="scrollbar-wrapper"] {
     opacity: 0.48;
 }
+
+.close-btn {
+    position: absolute;
+    width: 1.81rem;
+    right: -0.1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
