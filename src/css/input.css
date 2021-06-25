@@ -1,0 +1,18 @@
+.input {
+    width: 10.88rem;
+    height: 1.75rem;
+    padding: 0.5rem;
+    background: #9678ff;
+    border: 0;
+    border-radius: 0.63rem;
+    font-size: 0.75rem;
+    font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+    font-weight: 500;
+    color: #ffffff;
+    line-height: 1.13rem;
+    outline: none;
+}
+.input::placeholder {
+    color: #ffffff;
+    opacity: 0.8;
+}

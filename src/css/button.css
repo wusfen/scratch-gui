@@ -1,0 +1,31 @@
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 3.75rem;
+    height: 1.75rem;
+    padding: 0 0.75rem;
+    background: #9678ff;
+    box-shadow: 0rem 0.03rem 0.66rem 0rem #886dff;
+    border-radius: 0.63rem;
+    font-size: 0.75rem;
+    font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.button.pink {
+    background: #ff457f;
+    box-shadow: 0rem 1px 0.25rem 0rem rgba(0, 0, 0, 0.33),
+        inset 0rem 1px 0.75rem 0rem rgba(255, 176, 200, 1);
+    border-radius: 0.625rem;
+}
+
+.button.yellow {
+    background: #fff690;
+    box-shadow: 0 1px 0.25rem 0 rgba(0, 0, 0, 0.33),
+        inset 0 1px 0.75rem 0 #f7b500;
+    border-radius: 0.625rem;
+    font-family: SourceHanSansCN-Medium;
+    color: #9678ff;
+}

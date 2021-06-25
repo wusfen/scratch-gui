@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import c from './icon.css';
 
 const getIcon = name => require(`./${name}.svg`);
 
 const Icon = props => (
     <img
-        style={{
-            width: '1em', height: '1em'
-        }}
+        className={`${c.iIcon}`}
         src={getIcon(props.name)}
         {...props}
     />

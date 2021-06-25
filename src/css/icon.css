@@ -1,0 +1,41 @@
+.with-icon-right {
+    position: relative;
+}
+.with-icon-right [class^="i-"]:before,
+.with-icon-right [class*=" i-"]:before,
+.with-icon-right [class*="_i-"]:before {
+    position: absolute;
+    right: 0.5rem;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    pointer-events: none;
+}
+
+[class^="i-"],
+[class*=" i-"],
+[class*="_i-"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+[class^="i-"]:before,
+[class*=" i-"]:before,
+[class*="_i-"]:before {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    width: 1.13rem;
+    height: 1.13rem;
+    background: center no-repeat url("../assets/icons/show.svg");
+    background-size: contain;
+}
+
+.i-edit:before {
+    background-image: url("../assets/icons/edit.svg");
+}
+
+.i-send:before {
+    background-image: url("../assets/icons/publish.png");
+}
