@@ -1,4 +1,7 @@
 import ScratchBlocks from 'scratch-blocks';
+import fixBugs from './blocks_fix_bugs';
+
+fixBugs(ScratchBlocks);
 
 window.MODE = (new URL(location)).searchParams.get('mode');
 
@@ -655,39 +658,39 @@ export default function (vm) {
         }
         var categories = tree.getElementsByTagName('category');
         var teacherMode = window.MODE === 'teacher';
-        if(ScratchBlocks.vcode_toolbox && !teacherMode){
+        if(ScratchBlocks.vcode_toolbox){
             for(var i = categories.length - 1; i >= 0; i--){
                 var category = categories[i];
                 var had = ScratchBlocks.vcode_toolbox[category.getAttribute("name")];
                 if(!had || had.length == 0){
-                    // if(!teacherMode){
+                    if(!teacherMode){
                         tree.removeChild(category);
-                    // }else{
-                    //     var blocks = category.getElementsByTagName('block');
-                    //     for(var j = blocks.length - 1; j >= 0; j--){
-                    //         blocks[j].setAttribute("opacity", "0.6")
-                    //     }
-                    // }
+                    }else{
+                        var blocks = category.getElementsByTagName('block');
+                        for(var j = blocks.length - 1; j >= 0; j--){
+                            blocks[j].setAttribute("opacity", "0.5");
+                        }
+                    }
                 }else{
                     var blocks = category.getElementsByTagName('block');
                     var remove = true;
                     for(var j = blocks.length - 1; j >= 0; j--){
                         var block = blocks[j];
                         if(!had[block.getAttribute("type")]){
-                            teacherMode?block.setAttribute("opacity", "0.6"):category.removeChild(block);
+                            teacherMode?block.setAttribute("opacity", "0.5"):category.removeChild(block);
                         }else{
                             remove = false;
                         }
                     }
                     if(remove){
-                        //if(!teacherMode){
+                        if(!teacherMode){
                             tree.removeChild(category);
-                        // }else{
-                        //     var blocks = category.getElementsByTagName('block');
-                        //     for(var j = blocks.length - 1; j >= 0; j--){
-                        //         blocks[j].setAttribute("opacity", "0.6")
-                        //     }
-                        // }
+                        }else{
+                            var blocks = category.getElementsByTagName('block');
+                            for(var j = blocks.length - 1; j >= 0; j--){
+                                blocks[j].setAttribute("opacity", "0.5");
+                            }
+                        }
                     }
                 }
             }
@@ -708,178 +711,180 @@ export default function (vm) {
         }
       };
 
-    //   ScratchBlocks.Xml.domToBlockHeadless_ = function(xmlBlock, workspace) {
-    //     var block = null;
-    //     var prototypeName = xmlBlock.getAttribute('type');
-    //     // goog.asserts.assert(
-    //     //     prototypeName, 'Block type unspecified: %s', xmlBlock.outerHTML);
-    //     var id = xmlBlock.getAttribute('id');
-    //     block = workspace.newBlock(prototypeName, id);
+      ScratchBlocks.Xml.domToBlockHeadless_ = function(xmlBlock, workspace) {
+        var block = null;
+        var prototypeName = xmlBlock.getAttribute('type');
+        // goog.asserts.assert(
+        //     prototypeName, 'Block type unspecified: %s', xmlBlock.outerHTML);
+        var id = xmlBlock.getAttribute('id');
+        block = workspace.newBlock(prototypeName, id);
       
-    //     var blockChild = null;
-    //     for (var i = 0, xmlChild; xmlChild = xmlBlock.childNodes[i]; i++) {
-    //       if (xmlChild.nodeType == 3) {
-    //         // Ignore any text at the <block> level.  It's all whitespace anyway.
-    //         continue;
-    //       }
-    //       var input;
+        var blockChild = null;
+        for (var i = 0, xmlChild; xmlChild = xmlBlock.childNodes[i]; i++) {
+          if (xmlChild.nodeType == 3) {
+            // Ignore any text at the <block> level.  It's all whitespace anyway.
+            continue;
+          }
+          var input;
       
-    //       // Find any enclosed blocks or shadows in this tag.
-    //       var childBlockElement = null;
-    //       var childShadowElement = null;
-    //       for (var j = 0, grandchild; grandchild = xmlChild.childNodes[j]; j++) {
-    //         if (grandchild.nodeType == 1) {
-    //           if (grandchild.nodeName.toLowerCase() == 'block') {
-    //             childBlockElement = /** @type {!Element} */ (grandchild);
-    //           } else if (grandchild.nodeName.toLowerCase() == 'shadow') {
-    //             childShadowElement = /** @type {!Element} */ (grandchild);
-    //           }
-    //         }
-    //       }
-    //       // Use the shadow block if there is no child block.
-    //       if (!childBlockElement && childShadowElement) {
-    //         childBlockElement = childShadowElement;
-    //       }
+          // Find any enclosed blocks or shadows in this tag.
+          var childBlockElement = null;
+          var childShadowElement = null;
+          for (var j = 0, grandchild; grandchild = xmlChild.childNodes[j]; j++) {
+            if (grandchild.nodeType == 1) {
+              if (grandchild.nodeName.toLowerCase() == 'block') {
+                childBlockElement = /** @type {!Element} */ (grandchild);
+              } else if (grandchild.nodeName.toLowerCase() == 'shadow') {
+                childShadowElement = /** @type {!Element} */ (grandchild);
+              }
+            }
+          }
+          // Use the shadow block if there is no child block.
+          if (!childBlockElement && childShadowElement) {
+            childBlockElement = childShadowElement;
+          }
       
-    //       var name = xmlChild.getAttribute('name');
-    //       switch (xmlChild.nodeName.toLowerCase()) {
-    //         case 'mutation':
-    //           // Custom data for an advanced block.
-    //           if (block.domToMutation) {
-    //             block.domToMutation(xmlChild);
-    //             if (block.initSvg) {
-    //               // Mutation may have added some elements that need initializing.
-    //               block.initSvg();
-    //             }
-    //           }
-    //           break;
-    //         case 'comment':
-    //           var commentId = xmlChild.getAttribute('id');
-    //           var bubbleX = parseInt(xmlChild.getAttribute('x'), 10);
-    //           var bubbleY = parseInt(xmlChild.getAttribute('y'), 10);
-    //           var minimized = xmlChild.getAttribute('minimized') || false;
+          var name = xmlChild.getAttribute('name');
+          switch (xmlChild.nodeName.toLowerCase()) {
+            case 'mutation':
+              // Custom data for an advanced block.
+              if (block.domToMutation) {
+                block.domToMutation(xmlChild);
+                if (block.initSvg) {
+                  // Mutation may have added some elements that need initializing.
+                  block.initSvg();
+                }
+              }
+              break;
+            case 'comment':
+              var commentId = xmlChild.getAttribute('id');
+              var bubbleX = parseInt(xmlChild.getAttribute('x'), 10);
+              var bubbleY = parseInt(xmlChild.getAttribute('y'), 10);
+              var minimized = xmlChild.getAttribute('minimized') || false;
       
-    //           // Note bubbleX and bubbleY can be NaN, but the ScratchBlockComment
-    //           // constructor will handle that.
-    //           block.setCommentText(xmlChild.textContent, commentId, bubbleX, bubbleY,
-    //               minimized == 'true');
+              // Note bubbleX and bubbleY can be NaN, but the ScratchBlockComment
+              // constructor will handle that.
+              block.setCommentText(xmlChild.textContent, commentId, bubbleX, bubbleY,
+                  minimized == 'true');
       
-    //           var visible = xmlChild.getAttribute('pinned');
-    //           if (visible && !block.isInFlyout) {
-    //             // Give the renderer a millisecond to render and position the block
-    //             // before positioning the comment bubble.
-    //             setTimeout(function() {
-    //               if (block.comment && block.comment.setVisible) {
-    //                 block.comment.setVisible(visible == 'true');
-    //               }
-    //             }, 1);
-    //           }
-    //           var bubbleW = parseInt(xmlChild.getAttribute('w'), 10);
-    //           var bubbleH = parseInt(xmlChild.getAttribute('h'), 10);
-    //           if (!isNaN(bubbleW) && !isNaN(bubbleH) &&
-    //               block.comment && block.comment.setVisible) {
-    //             if (block.comment instanceof Blockly.ScratchBlockComment) {
-    //               block.comment.setSize(bubbleW, bubbleH);
-    //             } else {
-    //               block.comment.setBubbleSize(bubbleW, bubbleH);
-    //             }
-    //           }
-    //           break;
-    //         case 'data':
-    //           block.data = xmlChild.textContent;
-    //           break;
-    //         case 'title':
-    //           // Titles were renamed to field in December 2013.
-    //           // Fall through.
-    //         case 'field':
-    //             ScratchBlocks.Xml.domToField_(block, name, xmlChild);
-    //           break;
-    //         case 'value':
-    //         case 'statement':
-    //           input = block.getInput(name);
-    //           if (!input) {
-    //             console.warn('Ignoring non-existent input ' + name + ' in block ' +
-    //                          prototypeName);
-    //             break;
-    //           }
-    //           if (childShadowElement) {
-    //             input.connection.setShadowDom(childShadowElement);
-    //           }
-    //           if (childBlockElement) {
-    //             blockChild = ScratchBlocks.Xml.domToBlockHeadless_(childBlockElement,
-    //                 workspace);
-    //             if (blockChild.outputConnection) {
-    //               input.connection.connect(blockChild.outputConnection);
-    //             } else if (blockChild.previousConnection) {
-    //               input.connection.connect(blockChild.previousConnection);
-    //             } else {
-    //               goog.asserts.fail(
-    //                   'Child block does not have output or previous statement.');
-    //             }
-    //           }
-    //           break;
-    //         case 'next':
-    //           if (childShadowElement && block.nextConnection) {
-    //             block.nextConnection.setShadowDom(childShadowElement);
-    //           }
-    //           if (childBlockElement) {
-    //             // goog.asserts.assert(block.nextConnection,
-    //             //     'Next statement does not exist.');
-    //             // // If there is more than one XML 'next' tag.
-    //             // goog.asserts.assert(!block.nextConnection.isConnected(),
-    //             //     'Next statement is already connected.');
-    //             blockChild = ScratchBlocks.Xml.domToBlockHeadless_(childBlockElement,
-    //                 workspace);
-    //             // goog.asserts.assert(blockChild.previousConnection,
-    //             //     'Next block does not have previous statement.');
-    //             block.nextConnection.connect(blockChild.previousConnection);
-    //           }
-    //           break;
-    //         default:
-    //           // Unknown tag; ignore.  Same principle as HTML parsers.
-    //           console.warn('Ignoring unknown tag: ' + xmlChild.nodeName);
-    //       }
-    //     }
+              var visible = xmlChild.getAttribute('pinned');
+              if (visible && !block.isInFlyout) {
+                // Give the renderer a millisecond to render and position the block
+                // before positioning the comment bubble.
+                setTimeout(function() {
+                  if (block.comment && block.comment.setVisible) {
+                    block.comment.setVisible(visible == 'true');
+                  }
+                }, 1);
+              }
+              var bubbleW = parseInt(xmlChild.getAttribute('w'), 10);
+              var bubbleH = parseInt(xmlChild.getAttribute('h'), 10);
+              if (!isNaN(bubbleW) && !isNaN(bubbleH) &&
+                  block.comment && block.comment.setVisible) {
+                if (block.comment instanceof Blockly.ScratchBlockComment) {
+                  block.comment.setSize(bubbleW, bubbleH);
+                } else {
+                  block.comment.setBubbleSize(bubbleW, bubbleH);
+                }
+              }
+              break;
+            case 'data':
+              block.data = xmlChild.textContent;
+              break;
+            case 'title':
+              // Titles were renamed to field in December 2013.
+              // Fall through.
+            case 'field':
+                ScratchBlocks.Xml.domToField_(block, name, xmlChild);
+              break;
+            case 'value':
+            case 'statement':
+              input = block.getInput(name);
+              if (!input) {
+                console.warn('Ignoring non-existent input ' + name + ' in block ' +
+                             prototypeName);
+                break;
+              }
+              if (childShadowElement) {
+                input.connection.setShadowDom(childShadowElement);
+              }
+              if (childBlockElement) {
+                blockChild = ScratchBlocks.Xml.domToBlockHeadless_(childBlockElement,
+                    workspace);
+                if (blockChild.outputConnection) {
+                  input.connection.connect(blockChild.outputConnection);
+                } else if (blockChild.previousConnection) {
+                  input.connection.connect(blockChild.previousConnection);
+                } else {
+                  goog.asserts.fail(
+                      'Child block does not have output or previous statement.');
+                }
+              }
+              break;
+            case 'next':
+              if (childShadowElement && block.nextConnection) {
+                block.nextConnection.setShadowDom(childShadowElement);
+              }
+              if (childBlockElement) {
+                // goog.asserts.assert(block.nextConnection,
+                //     'Next statement does not exist.');
+                // // If there is more than one XML 'next' tag.
+                // goog.asserts.assert(!block.nextConnection.isConnected(),
+                //     'Next statement is already connected.');
+                blockChild = ScratchBlocks.Xml.domToBlockHeadless_(childBlockElement,
+                    workspace);
+                // goog.asserts.assert(blockChild.previousConnection,
+                //     'Next block does not have previous statement.');
+                block.nextConnection.connect(blockChild.previousConnection);
+              }
+              break;
+            default:
+              // Unknown tag; ignore.  Same principle as HTML parsers.
+              console.warn('Ignoring unknown tag: ' + xmlChild.nodeName);
+          }
+        }
       
-    //     var inline = xmlBlock.getAttribute('inline');
-    //     if (inline) {
-    //       block.setInputsInline(inline == 'true');
-    //     }
-    //     var disabled = xmlBlock.getAttribute('disabled');
-    //     if (disabled) {
-    //       block.setDisabled(disabled == 'true' || disabled == 'disabled');
-    //     }
-    //     var deletable = xmlBlock.getAttribute('deletable');
-    //     if (deletable) {
-    //       block.setDeletable(deletable == 'true');
-    //     }
-    //     var movable = xmlBlock.getAttribute('movable');
-    //     if (movable) {
-    //       block.setMovable(movable == 'true');
-    //     }
-    //     var editable = xmlBlock.getAttribute('editable');
-    //     if (editable) {
-    //       block.setEditable(editable == 'true');
-    //     }
-    //     var collapsed = xmlBlock.getAttribute('collapsed');
-    //     if (collapsed) {
-    //       block.setCollapsed(collapsed == 'true');
-    //     }
-    //     var opacity = xmlBlock.getAttribute('opacity');
-    //     if (opacity) {
-    //       block.setOpacity(opacity);
-    //     }
-    //     if (xmlBlock.nodeName.toLowerCase() == 'shadow') {
-    //       // Ensure all children are also shadows.
-    //       var children = block.getChildren(false);
-    //       for (var i = 0, child; child = children[i]; i++) {
-    //         goog.asserts.assert(
-    //             child.isShadow(), 'Shadow block not allowed non-shadow child.');
-    //       }
-    //       block.setShadow(true);
-    //     }
-    //     return block;
-    //   };
+        var inline = xmlBlock.getAttribute('inline');
+        if (inline) {
+          block.setInputsInline(inline == 'true');
+        }
+        var disabled = xmlBlock.getAttribute('disabled');
+        if (disabled) {
+          block.setDisabled(disabled == 'true' || disabled == 'disabled');
+        }
+        var deletable = xmlBlock.getAttribute('deletable');
+        if (deletable) {
+          block.setDeletable(deletable == 'true');
+        }
+        var movable = xmlBlock.getAttribute('movable');
+        if (movable) {
+          block.setMovable(movable == 'true');
+        }
+        var editable = xmlBlock.getAttribute('editable');
+        if (editable) {
+          block.setEditable(editable == 'true');
+        }
+        var collapsed = xmlBlock.getAttribute('collapsed');
+        if (collapsed) {
+          block.setCollapsed(collapsed == 'true');
+        }
+        var opacity = xmlBlock.getAttribute('opacity');
+        if (opacity) {
+          block.setOpacity(opacity);
+        }
+        if (xmlBlock.nodeName.toLowerCase() == 'shadow') {
+          // Ensure all children are also shadows.
+          var children = block.getChildren(false);
+          for (var i = 0, child; child = children[i]; i++) {
+            goog.asserts.assert(
+                child.isShadow(), 'Shadow block not allowed non-shadow child.');
+          }
+          block.setShadow(true);
+        }
+        return block;
+      };
+
+    
 
 
     return ScratchBlocks;
