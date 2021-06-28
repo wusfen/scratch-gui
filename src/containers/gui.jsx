@@ -48,13 +48,7 @@ class GUI extends React.Component {
         this.props.onStorageInit(storage);
         this.props.onVmInit(this.props.vm);
 
-        // 舞台背景色
-        const stageBgColor = '#c3b6ff';
-        this.props.vm.runtime.renderer.setBackgroundColor(
-            parseInt(stageBgColor.slice(1, 3), 16) / 255,
-            parseInt(stageBgColor.slice(3, 5), 16) / 255,
-            parseInt(stageBgColor.slice(5, 7), 16) / 255
-        );
+
     }
     componentDidUpdate (prevProps) {
         if (this.props.projectId !== prevProps.projectId && this.props.projectId !== null) {

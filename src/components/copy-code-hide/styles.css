@@ -1,0 +1,138 @@
+.overlay {
+    position       : fixed;
+    z-index        : 999;
+    top            : 0;
+    left           : 0;
+    right          : 0;
+    bottom         : 0;
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
+    background     : rgba(0, 0, 0, 0.75);
+    color          : #fff;
+}
+
+.container {
+    position     : relative;
+    width        : 43.75rem;
+    height       : 37.5rem;
+    background   : #F1E0FF;
+    border-radius: 1.25rem;
+}
+
+
+
+
+
+.type-btn {
+    display: inline-block;
+    width        : 8.13rem;
+    height       : 2.5rem;
+    background   : #E0C6FF;
+    border-radius: 0.63rem;
+    font-size    : 1rem;
+    font-family  : SourceHanSansCN-Normal, SourceHanSansCN;
+    font-weight  : 400;
+    color        : #6D57DC;
+    line-height  : 2.5rem;
+    text-align   : center;
+    margin-bottom: 0.75rem;
+
+
+}
+
+
+.type-btn-sel{
+    display: inline-block;
+    width        : 8.13rem;
+    height       : 2.5rem;
+    background   : #9678FF;
+    border-radius: 0.63rem;
+    font-size    : 1rem;
+    font-family  : SourceHanSansCN-Normal, SourceHanSansCN;
+    font-weight  : 400;
+    color        : #FFFFFF;
+    line-height  : 2.5rem;
+    text-align   : center;
+    margin-bottom: 0.75rem;
+
+
+}
+
+.code-btn {
+    font-size  : 1rem;
+    font-family: SourceHanSansCN-Normal, SourceHanSansCN;
+    font-weight: 400;
+    color      : #7650ff;
+    margin     : 0.6rem 1.2rem;
+}
+
+.type-list-container {
+    position: absolute;
+    top     : 4.75rem;
+    left    : 3.16rem;
+    height  : 28.38rem;
+
+
+}
+.type-list-container input[type="checkbox"] {
+    width: 1.38rem;
+    height: 1.38rem;
+    margin-right: 0.44rem;
+    vertical-align: middle;
+}
+
+.code-list-container {
+    position     : absolute;
+    top          : 4.78rem;
+    left         : 15.19rem;
+    width        : 27.13rem;
+    height       : 28.38rem;
+    background   : #FFFFFF;
+    border-radius: 0.63rem;
+    overflow     : scroll;
+}
+
+.code-list-container input[type="checkbox"] {
+    width: 1.38rem;
+    height: 1.38rem;
+    margin-right: 1.38rem;
+    vertical-align: middle;
+}
+
+.title {
+    font-size  : 1.44rem;
+    font-family: SourceHanSansCN-Bold, SourceHanSansCN;
+    font-weight: bold;
+    color      : #6D57DC;
+    line-height: 2.16rem;
+    text-align : center;
+    margin-top : 1.75rem;
+}
+
+
+.close {
+    position  : absolute;
+    right     : 0;
+    top       : -1.75rem;
+    width     : 1.38rem;
+    height    : 1.38rem;
+    background: center/contain no-repeat url("./img/close.svg");
+    color     : transparent;
+}
+
+.button {
+    width        : 6.56rem;
+    height       : 2.5rem;
+    background   : #FF457F;
+    box-shadow   : 0rem 0.06rem 0.25rem 0rem rgba(0, 0, 0, 0.33), 0rem 0.03rem 0.75rem 0rem #FFB0C8;
+    border-radius: 0.63rem;
+    position     : absolute;
+    top          : 34.09rem;
+    left         : 35.75rem;
+    font-size    : 1rem;
+    font-family  : SourceHanSansCN-Medium, SourceHanSansCN;
+    font-weight  : 500;
+    color        : #FFFFFF;
+    line-height  : 1.5rem;
+}
