@@ -7,7 +7,7 @@ import styles from './styles.css';
 const codeBlocks = [
     {
         label: "运动",
-        code: "motion",
+        code: "%{BKY_CATEGORY_MOTION}",
         checked: false,
         list: [
             { label: "移动(--)步", value: "motion_movesteps", checked: false },
@@ -60,7 +60,7 @@ const codeBlocks = [
     },
     {
         label: "外观",
-        code: "looks",
+        code: "%{BKY_CATEGORY_LOOKS}",
         checked: false,
         list: [
             { label: "说(xx)(x)秒", value: "looks_sayforsecs", checked: false },
@@ -163,7 +163,7 @@ const codeBlocks = [
     },
     {
         label: "事件",
-        code: "event",
+        code: "%{BKY_CATEGORY_EVENTS}",
         checked: false,
         list: [
             {
@@ -211,7 +211,7 @@ const codeBlocks = [
     },
     {
         label: "控制",
-        code: "control",
+        code: "%{BKY_CATEGORY_CONTROL}",
         checked: false,
         list: [
             { label: "等待(--)秒", value: "control_wait", checked: false },
@@ -241,7 +241,7 @@ const codeBlocks = [
     },
     {
         label: "侦测",
-        code: "sensing",
+        code: "%{BKY_CATEGORY_SENSING}",
         checked: false,
         list: [
             { label: "碰到(--)?", value: "sensing_touchingobject", checked: false },
@@ -290,7 +290,7 @@ const codeBlocks = [
     },
     {
         label: "运算",
-        code: "operator",
+        code: "%{BKY_CATEGORY_OPERATORS}",
         checked: false,
         list: [
             { label: "加", value: "operator_add", checked: false },
@@ -323,13 +323,13 @@ const codeBlocks = [
     },
     {
         label: "变量",
-        code: "variables",
+        code: "%{BKY_CATEGORY_VARIABLES}",
         checked: false,
         list: [{ label: "全部", value: "variables", checked: false }],
     },
     {
         label: "自制积木",
-        code: "myBlocks",
+        code: "%{BKY_CATEGORY_MYBLOCKS}",
         checked: false,
         list: [{ label: "全部", value: "myBlocks", checked: false }],
     },
@@ -341,6 +341,7 @@ class Component extends React.Component {
         this.state = this.getInitState();
         bindAll(this, [
             'handleClose',
+            'enterHandler'
         ]);
 
         addEventListener(`menu:hideCode`, e => {
@@ -352,6 +353,7 @@ class Component extends React.Component {
     getInitState() {
         return {
             isShow: false,
+            allSelectCode: false,
             curSelTypeIndex: -1,
             codeBlocks: codeBlocks,
             curSelCodeList: [],
@@ -363,11 +365,99 @@ class Component extends React.Component {
 
     }
     clickTypeBtnHandler(selObj, clickIndex) {
-        selObj.checked = true;
-        
         this.setState({
             curSelCodeList: selObj.list,
-            curSelTypeIndex:clickIndex
+            curSelTypeIndex: clickIndex
+        })
+    }
+    //全选&反选代码块
+    clickAllSelCodeHandler() {
+        this.state.allSelectCode = !this.state.allSelectCode;
+        var totalCheckedNum = 0;
+        this.state.curSelCodeList.map(e => {
+            if (e.checked) {
+                totalCheckedNum++;
+            }
+
+        })
+        if (totalCheckedNum == this.state.curSelCodeList.length) {
+            this.state.curSelCodeList.map(e => {
+                e.checked = false;
+                this.state.allSelectCode = false
+            })
+        }
+        else {
+            this.state.curSelCodeList.map(e => {
+                e.checked = true;
+                this.state.allSelectCode = true;
+            })
+        }
+
+
+
+        this.setState({
+            allSelectCode: this.state.allSelectCode,
+            curSelCodeList: this.state.curSelCodeList,
+        })
+    }
+    clickCodeBtnHandler(selObj) {
+        selObj.checked = !selObj.checked;
+        this.setState({
+            curSelCodeList: this.state.curSelCodeList,
+        })
+    }
+    enterHandler() {
+        const {
+            codeBlocks
+        } = this.state;
+
+        var configJson = this.getConfigJson();
+        var canConfig = true;
+        if (Object.getOwnPropertyNames(configJson).length == 0) {
+            canConfig = false;
+        }
+        for (var i in configJson) {
+            if (Object.getOwnPropertyNames(configJson[i]).length == 0) {
+                canConfig = false;
+            }
+        }
+
+        console.log(configJson);
+        if (canConfig) {
+            console.log("==>保存配置成功");
+        }
+        else {
+            console.log("==>保存配置失败");
+        }
+    }
+
+    getConfigJson() {
+        const {
+            codeBlocks
+        } = this.state;
+
+
+        var configJson = {};
+        for (let i = 0; i < codeBlocks.length; i++) {
+            if (codeBlocks[i].checked) {
+                configJson[codeBlocks[i].code] = {};
+                for (let j = 0; j < codeBlocks[i].list.length; j++) {
+                    if (codeBlocks[i].list[j].checked) {
+                        configJson[codeBlocks[i].code][codeBlocks[i].list[j].value] = true;
+                    }
+
+                }
+            }
+        }
+        return configJson;
+    }
+
+    clickTypeChecked(selTypesBlock) {
+
+        selTypesBlock.checked = !selTypesBlock.checked
+        console.log(selTypesBlock.checked)
+        this.setState({
+            codeBlocks: this.state.codeBlocks
         })
     }
 
@@ -376,17 +466,19 @@ class Component extends React.Component {
             isShow,
             curSelTypeIndex,
             curSelCodeList,
+            allSelectCode,
+            codeBlocks
         } = this.state;
 
         const blocksTypeList = [];
         for (let i = 0; i < codeBlocks.length; i++) {
-            blocksTypeList.push(<div><input  type="checkbox" /><div className={curSelTypeIndex==i?classNames(styles.typeBtnSel):classNames(styles.typeBtn)} tabindex={i} onClick={this.clickTypeBtnHandler.bind(this, codeBlocks[i], i)} key={i}> {codeBlocks[i].label}</div></div>)
+            blocksTypeList.push(<div key={i}><input type="checkbox" onChange={this.clickTypeChecked.bind(this, codeBlocks[i])} checked={codeBlocks[i].checked} /><div className={curSelTypeIndex == i ? classNames(styles.typeBtnSel) : classNames(styles.typeBtn)} onClick={this.clickTypeBtnHandler.bind(this, codeBlocks[i], i)} > {codeBlocks[i].label}</div></div>)
         }
 
-        const blocksCodeList = [];
+        const blocksCodeList = [<div key={"j00"} className={classNames(styles.codeBtn)} ><input type="checkbox" checked={allSelectCode} onChange={this.clickAllSelCodeHandler.bind(this)} />反选</div>];
 
         for (let j = 0; j < curSelCodeList.length; j++) {
-            blocksCodeList.push(<div className={classNames(styles.codeBtn)} key={j}><input  type="checkbox" />{curSelCodeList[j].label}</div>)
+            blocksCodeList.push(<div key={j} className={classNames(styles.codeBtn)}><input type="checkbox" onChange={this.clickCodeBtnHandler.bind(this, curSelCodeList[j])} checked={curSelCodeList[j].checked} />{curSelCodeList[j].label}</div>)
         }
         return (
             <div
@@ -407,7 +499,7 @@ class Component extends React.Component {
                     <button
                         type="button"
                         className={classNames(styles.button)}
-                        onClick={this.handleClose}
+                        onClick={this.enterHandler}
                     >
                         确定隐藏
                     </button>
