@@ -44,6 +44,7 @@ import costumesIcon from './icon--costumes.svg';
 import soundsIcon from './icon--sounds.svg';
 
 import SubmitResultDialog from '../submit-result-dialog/index.jsx';
+import Keyboard from '../keyboard/index.jsx';
 
 const messages = defineMessages({
     addExtension: {
@@ -374,6 +375,7 @@ const GUIComponent = props => {
                 <DragLayer />
 
                 <SubmitResultDialog />
+                <Keyboard vm={vm} />
             </Box>
         );
     }}</MediaQuery>);
