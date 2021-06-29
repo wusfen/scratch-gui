@@ -8,7 +8,7 @@ import VMScratchBlocks from '../../lib/blocks';
 const codeBlocks = [
     {
         label: "运动",
-        code: "%{BKY_CATEGORY_MOTION}",
+        value: "%{BKY_CATEGORY_MOTION}",
         checked: false,
         list: [
             { label: "移动(--)步", value: "motion_movesteps", checked: false },
@@ -61,7 +61,7 @@ const codeBlocks = [
     },
     {
         label: "外观",
-        code: "%{BKY_CATEGORY_LOOKS}",
+        value: "%{BKY_CATEGORY_LOOKS}",
         checked: false,
         list: [
             { label: "说(xx)(x)秒", value: "looks_sayforsecs", checked: false },
@@ -132,7 +132,7 @@ const codeBlocks = [
     },
     {
         label: "声音",
-        code: "sound",
+        value: "sound",
         checked: false,
         list: [
             {
@@ -164,7 +164,7 @@ const codeBlocks = [
     },
     {
         label: "事件",
-        code: "%{BKY_CATEGORY_EVENTS}",
+        value: "%{BKY_CATEGORY_EVENTS}",
         checked: false,
         list: [
             {
@@ -212,7 +212,6 @@ const codeBlocks = [
     },
     {
         label: "控制",
-        code: "%{BKY_CATEGORY_CONTROL}",
         checked: false,
         list: [
             { label: "等待(--)秒", value: "control_wait", checked: false },
@@ -242,7 +241,7 @@ const codeBlocks = [
     },
     {
         label: "侦测",
-        code: "%{BKY_CATEGORY_SENSING}",
+        value: "%{BKY_CATEGORY_SENSING}",
         checked: false,
         list: [
             { label: "碰到(--)?", value: "sensing_touchingobject", checked: false },
@@ -291,7 +290,7 @@ const codeBlocks = [
     },
     {
         label: "运算",
-        code: "%{BKY_CATEGORY_OPERATORS}",
+        value: "%{BKY_CATEGORY_OPERATORS}",
         checked: false,
         list: [
             { label: "加", value: "operator_add", checked: false },
@@ -324,13 +323,13 @@ const codeBlocks = [
     },
     {
         label: "变量",
-        code: "%{BKY_CATEGORY_VARIABLES}",
+        value: "%{BKY_CATEGORY_VARIABLES}",
         checked: false,
         list: [],
     },
     {
         label: "自制积木",
-        code: "%{BKY_CATEGORY_MYBLOCKS}",
+        value: "%{BKY_CATEGORY_MYBLOCKS}",
         checked: false,
         list: [],
     },
@@ -352,6 +351,35 @@ class Component extends React.Component {
         });
     }
     getInitState() {
+
+        // VMScratchBlocks.vcode_toolbox = {
+        //     "%{BKY_CATEGORY_LOOKS}": {
+        //         "looks_sayforsecs": true,
+        //     }
+        // }
+        for (var i in VMScratchBlocks.vcode_toolbox) {
+            for (var j = 0; j < codeBlocks.length; j++) {
+                if (codeBlocks[j].value == i) {
+                    codeBlocks[j].checked = true;
+                    break;
+                }
+            }
+
+        }
+        for (i in VMScratchBlocks.vcode_toolbox) {
+            for (var k in VMScratchBlocks.vcode_toolbox[i]) {
+                for (var j = 0; j < codeBlocks.length; j++) {
+                    for (var m = 0; m < codeBlocks[j].list.length; m++) {
+
+                        if (codeBlocks[j].list[m].value == k) {
+                            codeBlocks[j].list[m].checked = true;
+
+                        }
+                    }
+                }
+            }
+        }
+        console.log(codeBlocks)
         return {
             isShow: false,
             allSelectCode: false,
@@ -431,7 +459,7 @@ class Component extends React.Component {
             this.setState(this.getInitState());
         }
         else {
-            console.log("==>保存配置失败");
+            alert("最少要保留一个模块。里面有一个代码块哦")
         }
     }
 
@@ -444,10 +472,10 @@ class Component extends React.Component {
         var configJson = {};
         for (let i = 0; i < codeBlocks.length; i++) {
             if (codeBlocks[i].checked) {
-                configJson[codeBlocks[i].code] = {};
+                configJson[codeBlocks[i].value] = {};
                 for (let j = 0; j < codeBlocks[i].list.length; j++) {
                     if (codeBlocks[i].list[j].checked) {
-                        configJson[codeBlocks[i].code][codeBlocks[i].list[j].value] = true;
+                        configJson[codeBlocks[i].value][codeBlocks[i].list[j].value] = true;
                     }
 
                 }
