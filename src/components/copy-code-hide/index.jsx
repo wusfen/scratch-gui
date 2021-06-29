@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import bindAll from 'lodash.bindall';
 import styles from './styles.css';
-import VMScratchBlocks from '../../lib/blocks';
 
 const codeBlocks = [
     {
@@ -213,6 +212,7 @@ const codeBlocks = [
     {
         label: "控制",
         checked: false,
+        value: '%{BKY_CATEGORY_CONTROL}',
         list: [
             { label: "等待(--)秒", value: "control_wait", checked: false },
             { label: "重复执行(--)次", value: "control_repeat", checked: false },
@@ -352,34 +352,44 @@ class Component extends React.Component {
     }
     getInitState() {
 
-        // VMScratchBlocks.vcode_toolbox = {
+        // window.vcode_toolbox = {
         //     "%{BKY_CATEGORY_LOOKS}": {
         //         "looks_sayforsecs": true,
         //     }
         // }
-        for (var i in VMScratchBlocks.vcode_toolbox) {
+        for (var j = 0; j < codeBlocks.length; j++) {
+            codeBlocks[j].checked = true;
+            for (var m = 0; m < codeBlocks[j].list.length; m++) {
+                codeBlocks[j].list[m].checked = true;
+            }
+        }
+        for (var i in window.vcode_toolbox) {
             for (var j = 0; j < codeBlocks.length; j++) {
                 if (codeBlocks[j].value == i) {
-                    codeBlocks[j].checked = true;
+                    codeBlocks[j].checked = false;
                     break;
                 }
             }
 
         }
-        for (i in VMScratchBlocks.vcode_toolbox) {
-            for (var k in VMScratchBlocks.vcode_toolbox[i]) {
+        for (i in window.vcode_toolbox) {
+            for (var k in window.vcode_toolbox[i]) {
+                var found = false;
                 for (var j = 0; j < codeBlocks.length; j++) {
-                    for (var m = 0; m < codeBlocks[j].list.length; m++) {
-
-                        if (codeBlocks[j].list[m].value == k) {
-                            codeBlocks[j].list[m].checked = true;
-
+                    if(codeBlocks[j].value == i){
+                        found = true;
+                        for (var m = 0; m < codeBlocks[j].list.length; m++) {
+                            if (codeBlocks[j].list[m].value == k) {
+                                codeBlocks[j].list[m].checked = false;
+                                break;
+                            }
                         }
+                        if(found) break;
                     }
                 }
             }
         }
-        console.log(codeBlocks)
+
         return {
             isShow: false,
             allSelectCode: false,
@@ -389,7 +399,7 @@ class Component extends React.Component {
         };
     }
     handleClose() {
-        dispatchEvent(new Event('exit'));
+        //dispatchEvent(new Event('exit'));
         this.setState(this.getInitState());
 
     }
@@ -442,20 +452,20 @@ class Component extends React.Component {
 
         var configJson = this.getConfigJson();
         var canConfig = true;
-        if (Object.getOwnPropertyNames(configJson).length == 0) {
-            canConfig = false;
-        }
-        for (var i in configJson) {
-            if (Object.getOwnPropertyNames(configJson[i]).length == 0) {
-                canConfig = false;
-            }
-        }
+        // if (Object.getOwnPropertyNames(configJson).length == 0) {
+        //     canConfig = false;
+        // }
+        // for (var i in configJson) {
+        //     if (Object.getOwnPropertyNames(configJson[i]).length == 0) {
+        //         canConfig = false;
+        //     }
+        // }
 
         console.log(configJson);
         if (canConfig) {
             console.log("==>保存配置成功");
-            VMScratchBlocks.vcode_toolbox = configJson;
-            dispatchEvent(new Event('exit'));
+            window.vcode_toolbox = configJson;
+            dispatchEvent(new Event('updateToolBox'));
             this.setState(this.getInitState());
         }
         else {
@@ -471,10 +481,10 @@ class Component extends React.Component {
 
         var configJson = {};
         for (let i = 0; i < codeBlocks.length; i++) {
-            if (codeBlocks[i].checked) {
+            if (!codeBlocks[i].checked) {
                 configJson[codeBlocks[i].value] = {};
                 for (let j = 0; j < codeBlocks[i].list.length; j++) {
-                    if (codeBlocks[i].list[j].checked) {
+                    if (!codeBlocks[i].list[j].checked) {
                         configJson[codeBlocks[i].value][codeBlocks[i].list[j].value] = true;
                     }
 

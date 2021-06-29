@@ -264,14 +264,12 @@ export default function(Blockly, vm){
         }
       };
 
-    Blockly.vcode_toolbox = undefined;
-
     const orgToJSON = vm.toJSON.bind(vm);
     // 保存toolbox配置
     vm.toJSON = function(){
         var prj = orgToJSON();
-        if(Blockly.vcode_toolbox){
-            prj = prj.substr(0, prj.length - 1) + ", \"toolbox\":" + JSON.stringify(Blockly.vcode_toolbox) + "}";
+        if(window.vcode_toolbox){
+            prj = prj.substr(0, prj.length - 1) + ", \"toolbox\":" + JSON.stringify(window.vcode_toolbox) + "}";
         }
         return prj;
     }
@@ -279,8 +277,8 @@ export default function(Blockly, vm){
     const orgDeserializeProject = vm.deserializeProject.bind(vm);
 
     vm.deserializeProject = function(projectJSON, zip) {
-        Blockly.vcode_toolbox = projectJSON.toolbox;
-        //Blockly.vcode_toolbox = {"%{BKY_CATEGORY_MOTION}":{},"%{BKY_CATEGORY_LOOKS}":{"looks_switchbackdropto":true, "looks_switchbackdroptoandwait":true, "looks_nextbackdrop":true,"looks_changeeffectby":true}};
+        window.vcode_toolbox = projectJSON.toolbox;
+        //window.vcode_toolbox = {"%{BKY_CATEGORY_MOTION}":{},"%{BKY_CATEGORY_LOOKS}":{"looks_switchbackdropto":true, "looks_switchbackdroptoandwait":true, "looks_nextbackdrop":true,"looks_changeeffectby":true}};
         return orgDeserializeProject(projectJSON, zip)
     }
 
@@ -297,10 +295,10 @@ export default function(Blockly, vm){
         }
         var categories = tree.getElementsByTagName('category');
         var teacherMode = window.MODE === 'teacher';
-        if(Blockly.vcode_toolbox){
+        if(window.vcode_toolbox){
             for(var i = categories.length - 1; i >= 0; i--){
                 var category = categories[i];
-                var had = Blockly.vcode_toolbox[category.getAttribute("name")];
+                var had = window.vcode_toolbox[category.getAttribute("name")];
                 if(!had || had.length == 0){
                     if(!teacherMode){
                         tree.removeChild(category);
