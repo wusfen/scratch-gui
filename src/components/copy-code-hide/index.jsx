@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import bindAll from 'lodash.bindall';
 import styles from './styles.css';
+import VMScratchBlocks from '../../lib/blocks';
 
 const codeBlocks = [
     {
@@ -325,13 +326,13 @@ const codeBlocks = [
         label: "变量",
         code: "%{BKY_CATEGORY_VARIABLES}",
         checked: false,
-        list: [{ label: "全部", value: "variables", checked: false }],
+        list: [],
     },
     {
         label: "自制积木",
         code: "%{BKY_CATEGORY_MYBLOCKS}",
         checked: false,
-        list: [{ label: "全部", value: "myBlocks", checked: false }],
+        list: [],
     },
 ];
 
@@ -425,6 +426,9 @@ class Component extends React.Component {
         console.log(configJson);
         if (canConfig) {
             console.log("==>保存配置成功");
+            VMScratchBlocks.vcode_toolbox = configJson;
+            dispatchEvent(new Event('exit'));
+            this.setState(this.getInitState());
         }
         else {
             console.log("==>保存配置失败");
@@ -494,7 +498,7 @@ class Component extends React.Component {
                         {blocksTypeList}
                     </div>
                     <div className={classNames(styles.codeListContainer)}>
-                        {blocksCodeList}
+                        {blocksCodeList.length != 1 ? blocksCodeList : ""}
                     </div>
                     <button
                         type="button"

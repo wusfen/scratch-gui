@@ -864,6 +864,11 @@ class MenuBar extends React.Component {
                 <div
                     className={styles.buttons}
                 >
+                      <button
+                        className={styles.hideButton}
+                        onClick={this.clickHideCode}
+                    >{'隐藏盒子'}</button>
+
                     <button
                         hidden={!this.state.isShowSkipButton}
                         className={styles.skipButton}
@@ -876,10 +881,6 @@ class MenuBar extends React.Component {
                         onClick={this.handleSubmit}
                     >{'提交'}</button>
 
-                    <button
-                        className={styles.publishButton}
-                        onClick={this.clickHideCode}
-                    >{'隐藏盒子'}</button>
 
                 </div>
             </Box>
