@@ -3,10 +3,11 @@
     z-index: 10000099;
     left: 0;
     right: 0;
-    bottom: 1.5625rem;
-    left: 0.75rem;
-    right: 0.75rem;
+    bottom: 0;
+    left: 0;
+    right: 0;
     height: 8.28rem;
+    margin: calc(16 * 1px) 0.75rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -15,6 +16,7 @@
     background: rgb(0 0 0 / 43%);
     border-radius: 1.25rem;
     box-shadow: 0px 1px 0.25rem rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
 }
 
 .direction {
