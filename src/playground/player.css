@@ -1,5 +1,10 @@
+body {
+    margin: 0px;
+}
+
 .stage-only {
     width: calc(480px + 1rem);
+
 }
 
 .editor {
@@ -13,3 +18,31 @@
 .stage-only * {
     box-sizing: border-box;
 }
+
+.stage-only [class*="stage-header-wrapper"] {
+    display: none;
+}
+
+.stage-only [class*="stage-wrapper"] {
+    overflow: hidden !important;
+    width: 100vw !important;
+    height: 100vh !important;
+}
+
+.stage-only [class*="stage"] {
+    overflow: initial;
+}
+
+.stage-only [class*="stage"] canvas {
+    width: 100vw !important;
+    height: 100vh !important;
+}
+
+.stage-only [class*="green-flag-overlay"] img {
+    content: url('./start.svg');
+    padding-left: 0.6rem;
+    width: 3.5rem;
+    height: 3.5rem;
+}
+
+
