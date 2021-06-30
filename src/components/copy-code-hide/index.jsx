@@ -131,7 +131,7 @@ const codeBlocks = [
     },
     {
         label: "声音",
-        value: "sound",
+        value: "%{BKY_CATEGORY_SOUND}",
         checked: false,
         list: [
             {
@@ -358,16 +358,20 @@ class Component extends React.Component {
         //         "looks_sayforsecs": true,
         //     }
         // }
-        for (var j = 0; j < codeBlocks.length; j++) {
-            codeBlocks[j].checked = true;
-            for (var m = 0; m < codeBlocks[j].list.length; m++) {
-                codeBlocks[j].list[m].checked = true;
-            }
-        }
+        console.log(" window.vcode_toolbox===>")
+        console.log(window.vcode_toolbox)
+       
+        // for (var j = 0; j < codeBlocks.length; j++) {
+        //     codeBlocks[j].checked = true;
+        //     for (var m = 0; m < codeBlocks[j].list.length; m++) {
+        //         codeBlocks[j].list[m].checked = true;
+        //     }
+        // }
+
         for (var i in window.vcode_toolbox) {
             for (var j = 0; j < codeBlocks.length; j++) {
                 if (codeBlocks[j].value == i) {
-                    codeBlocks[j].checked = false;
+                    codeBlocks[j].checked = true;
                     break;
                 }
             }
@@ -381,7 +385,7 @@ class Component extends React.Component {
                         found = true;
                         for (var m = 0; m < codeBlocks[j].list.length; m++) {
                             if (codeBlocks[j].list[m].value == k) {
-                                codeBlocks[j].list[m].checked = false;
+                                codeBlocks[j].list[m].checked = true;
                                 break;
                             }
                         }
@@ -453,14 +457,14 @@ class Component extends React.Component {
 
         var configJson = this.getConfigJson();
         var canConfig = true;
-        // if (Object.getOwnPropertyNames(configJson).length == 0) {
-        //     canConfig = false;
-        // }
-        // for (var i in configJson) {
-        //     if (Object.getOwnPropertyNames(configJson[i]).length == 0) {
-        //         canConfig = false;
-        //     }
-        // }
+        if (Object.getOwnPropertyNames(configJson).length == 0) {
+            canConfig = false;
+        }
+        for (var i in configJson) {
+            if (Object.getOwnPropertyNames(configJson[i]).length == 0) {
+                canConfig = false;
+            }
+        }
 
         console.log(configJson);
         if (canConfig) {
@@ -482,10 +486,10 @@ class Component extends React.Component {
 
         var configJson = {};
         for (let i = 0; i < codeBlocks.length; i++) {
-            if (!codeBlocks[i].checked) {
+            if (codeBlocks[i].checked) {
                 configJson[codeBlocks[i].value] = {};
                 for (let j = 0; j < codeBlocks[i].list.length; j++) {
-                    if (!codeBlocks[i].list[j].checked) {
+                    if (codeBlocks[i].list[j].checked) {
                         configJson[codeBlocks[i].value][codeBlocks[i].list[j].value] = true;
                     }
 
