@@ -373,7 +373,7 @@ const GUIComponent = props => {
                 </Box>
                 <DragLayer />
 
-                <SubmitResultDialog />
+                <SubmitResultDialog vm={vm}/>
             </Box>
         );
     }}</MediaQuery>);

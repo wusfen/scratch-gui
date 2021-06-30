@@ -1,21 +1,24 @@
-import bindAll from "lodash.bindall";
-import PropTypes from "prop-types";
-import React from "react";
-import VM from "scratch-vm";
-import { connect } from "react-redux";
+import bindAll from 'lodash.bindall';
+import PropTypes from 'prop-types';
+import React from 'react';
+import VM from 'scratch-vm';
+import {connect} from 'react-redux';
 
-import ControlsComponent from "../components/controls/controls.jsx";
+import ControlsComponent from '../components/controls/controls.jsx';
 
 class Controls extends React.Component {
-    constructor(props) {
+    constructor (props) {
         super(props);
-        bindAll(this, ["handleGreenFlagClick", "handleStopAllClick"]);
-        this.setOnNativeCallJsInWindow();
+        bindAll(this, [
+            'handleGreenFlagClick',
+            'handleStopAllClick'
+        ]);
+        this.setOnNativeCallJsInWindow()
     }
 
     setOnNativeCallJsInWindow() {
         window.onNativeCallJs = (mess) => {
-            console.log("onNativeCallJs params---", mess);
+            console.log('onNativeCallJs params---', mess);
             try {
                 var code = mess.code;
                 var data = mess.data;
@@ -23,13 +26,13 @@ class Controls extends React.Component {
                     case 1:
                         //1：生命周期协议
                         var life = data.lifecycle;
-                        if ("onPause" === life) {
+                        if ('onPause' === life) {
                             //webview页面暂停，即将进入后台
-                            console.log("to stop");
+                            console.log('to stop');
                             this.props.vm.stopAll();
-                        } else if ("onResume" === life) {
+                        } else if ('onResume' === life) {
                             //webview页面即将进入前台
-                            console.log("to start");
+                            console.log('to start');
                             this.props.vm.start();
                         }
                         break;
@@ -37,12 +40,12 @@ class Controls extends React.Component {
                         break;
                 }
             } catch (error) {
-                console.error("onNativeCallJs error---", error);
+                console.error('onNativeCallJs error---', error);
             }
         };
     }
 
-    handleGreenFlagClick(e) {
+    handleGreenFlagClick (e) {
         e.preventDefault();
         if (e.shiftKey) {
             this.props.vm.setTurboMode(!this.props.turbo);
@@ -53,11 +56,11 @@ class Controls extends React.Component {
             this.props.vm.greenFlag();
         }
     }
-    handleStopAllClick(e) {
+    handleStopAllClick (e) {
         e.preventDefault();
         this.props.vm.stopAll();
     }
-    render() {
+    render () {
         const {
             vm, // eslint-disable-line no-unused-vars
             isStarted, // eslint-disable-line no-unused-vars
@@ -81,13 +84,13 @@ Controls.propTypes = {
     isStarted: PropTypes.bool.isRequired,
     projectRunning: PropTypes.bool.isRequired,
     turbo: PropTypes.bool.isRequired,
-    vm: PropTypes.instanceOf(VM),
+    vm: PropTypes.instanceOf(VM)
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     isStarted: state.scratchGui.vmStatus.running,
     projectRunning: state.scratchGui.vmStatus.running,
-    turbo: state.scratchGui.vmStatus.turbo,
+    turbo: state.scratchGui.vmStatus.turbo
 });
 // no-op function to prevent dispatch prop being passed to component
 const mapDispatchToProps = () => ({});
