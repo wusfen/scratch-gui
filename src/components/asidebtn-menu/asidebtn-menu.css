@@ -1,0 +1,31 @@
+.aside-btn-wrapper {
+    position: fixed;
+    right: 4rem;
+    bottom: 2.7rem;
+    z-index: 9;
+}
+
+.aside-btn-wrapper span {
+    cursor: pointer;
+    margin: 0 0.5rem;
+}
+
+.undo {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.38rem;
+    background: url("./revoke.svg") no-repeat center;
+    background-size: 100% 100%;
+}
+
+.redo {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.38rem;
+    background: url("./reform.svg") no-repeat center;
+    background-size: 100% 100%;
+}
+
+/* .disable {  
+    cursor: no-drop !important;
+} */
