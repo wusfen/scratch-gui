@@ -244,6 +244,16 @@ class TargetPane$ extends React.Component {
             }
         }
     }
+    clickDirBtn (dir) {
+        const ele = document.getElementsByClassName('sprite-selector_scroll-wrapper_3qlZ7 box_box_tWy-0')[0];
+        if (dir == 'up') {
+            ele.scrollTop -= 100;
+           
+        } else {
+            ele.scrollTop += 100;
+        }
+    }
+
     render () {
         /* eslint-disable no-unused-vars */
         const {
@@ -274,7 +284,7 @@ class TargetPane$ extends React.Component {
             stage,
             stageSize,
             sprites,
-            
+
             dispatchUpdateRestore,
             onActivateTab,
             onCloseImporting,
@@ -292,10 +302,19 @@ class TargetPane$ extends React.Component {
                     classNames(styles.list)
                 }
             >
+                <img
+                    className={
+                        classNames(styles.dirBtn, styles.upBtn)
+                    }
+                    onClick={this.clickDirBtn.bind(this, 'up')}
+                    src={require('../assets/icons/slist_up_btn.png')}
+                    alt=""
+                />
+
                 <StageSelector
                     asset={
                         stage.costume &&
-                    stage.costume.asset
+                        stage.costume.asset
                     }
                     backdropCount={stage.costumeCount || 0}
                     id={stage.id}
@@ -313,6 +332,15 @@ class TargetPane$ extends React.Component {
                     onDuplicateSprite={this.handleDuplicateSprite}
                     onExportSprite={this.handleExportSprite}
                     onSelectSprite={this.handleSelectSprite}
+                />
+
+                <img
+                    onClick={this.clickDirBtn.bind(this, 'down')}
+                    className={
+                        classNames(styles.dirBtn, styles.downBtn)
+                    }
+                    src={require('../assets/icons/slist_down_btn.png')}
+                    alt=""
                 />
             </div>
 
