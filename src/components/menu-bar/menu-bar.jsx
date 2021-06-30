@@ -28,6 +28,7 @@ import SB3Downloader from '../../containers/sb3-downloader.jsx';
 import DeletionRestorer from '../../containers/deletion-restorer.jsx';
 import TurboMode from '../../containers/turbo-mode.jsx';
 import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
+import Confirm from '../dialog/confirm/index.jsx';
 
 import {openTipsLibrary} from '../../reducers/modals';
 import {setPlayer} from '../../reducers/mode';
@@ -64,6 +65,7 @@ import {
 import collectMetadata from '../../lib/collect-metadata';
 
 import styles from './menu-bar.css';
+const c = styles;
 
 import helpIcon from '../../lib/assets/icon--tutorials.svg';
 import mystuffIcon from './icon--mystuff.png';
@@ -80,6 +82,7 @@ import sharedMessages from '../../lib/shared-messages';
 
 import folderIcon from '../../assets/icons/folder.svg';
 import setupIcon from '../../assets/icons/set up.svg';
+import resetIcon from '../../assets/icons/redo.svg';
 
 import {ajax} from '../../lib/ajax.js';
 
@@ -169,6 +172,7 @@ class MenuBar extends React.Component {
         bindAll(this, [
             'handleSkip',
             'handleSubmit',
+            'handleClickResetFile',
             'handleClickNew',
             'handleClickRemix',
             'handleClickSave',
@@ -181,11 +185,15 @@ class MenuBar extends React.Component {
             'getSaveToComputerHandler',
             'restoreOptionMessage'
         ]);
+        const searchParams = new URL(location).searchParams;
 
         this.state = {
+            file: searchParams.get('file'),
+            isShowResetFileButton: searchParams.get('file'),
             isShowSkipButton: !false,
-            isShowPublishButton: !false
+            isShowPublishButton: !false,
         };
+
 
     }
     componentDidMount () {
@@ -348,6 +356,25 @@ class MenuBar extends React.Component {
             callback();
             this.props.onRequestCloseAbout();
         };
+    }
+    async handleClickResetFile () {
+        const fileUrl = this.state.file;
+
+        if (fileUrl) {
+            const bufferPromise = new Promise(async r => {
+                const res = await fetch(fileUrl);
+                const blob = await res.blob();
+                const buffer = await blob.arrayBuffer();
+                r(buffer);
+            });
+
+            await Confirm.confirm({
+                title: '重做确认',
+                content: '将会清空当前作品记录，重新开始创作哦，是否确定重做？'
+            });
+
+            this.props.vm.loadProject(await bufferPromise);
+        }
     }
     async handleSubmit () {
         dispatchEvent(new Event('submit:提交中'));
@@ -621,6 +648,20 @@ class MenuBar extends React.Component {
                                 </MenuSection>
                             </MenuBarMenu>
                         </div>
+                        {/* redo */}
+                        <button
+                            hidden={!(this.state.isShowResetFileButton)}
+                            type="button"
+                            className={`${c.menuBarItem}`}
+                            onClick={this.handleClickResetFile}
+                        >
+                            <img
+                                className={styles.icon}
+                                src={resetIcon}
+                                alt="reset"
+                            />
+                        </button>
+                    
                     </div>
 
                     {/* <Divider className={classNames(styles.divider)} /> */}
