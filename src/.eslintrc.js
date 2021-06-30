@@ -24,6 +24,9 @@ module.exports = {
         'comma-dangle': 0,
         'import/no-commonjs': 0,
         'no-alert': 1,
+        'react/self-closing-comp': 0,
+        'react/jsx-no-bind': 0,
+        'react/jsx-no-literals': 0,
     },
     settings: {
         react: {
