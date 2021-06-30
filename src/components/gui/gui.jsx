@@ -374,7 +374,7 @@ const GUIComponent = props => {
                 </Box>
                 <DragLayer />
 
-                <SubmitResultDialog />
+                <SubmitResultDialog vm={vm} />
                 <Keyboard vm={vm} />
             </Box>
         );
