@@ -91,7 +91,8 @@
     make the change here instead of in scratch-blocks.
 */
 .blocks :global(.scratchCategoryMenuItemLabel) {
-    font-size: 0.65rem;
+    font-size: 0.5rem;
+    color: #6D57DC;
 }
 
 .blocks :global(.blocklyMinimalBody) {
@@ -130,7 +131,7 @@
 }
 
 .blocks :global(.scratchCategoryMenuRow) {
-    height: 3.4375rem;
+    height: 3.8rem;
 }
 
 .blocks :global(.blocklyFlyout) {
@@ -198,4 +199,14 @@
 
 .blocks :global(.blocklyZoom) {
     opacity: 0.25;
+}
+
+.blocks :global(.scratchCategoryMenuItem) {
+    padding: 0.1rem 0;
+}
+
+.blocks :global(.scratchCategoryItemIcon) {
+    height: 2.2rem;
+    width: 2.2rem;
+    background-size: 100% 100%;
 }

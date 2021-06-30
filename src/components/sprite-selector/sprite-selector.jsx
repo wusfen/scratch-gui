@@ -19,7 +19,7 @@ import searchIcon from '../action-menu/icon--search.svg';
 
 const messages = defineMessages({
     addSpriteFromLibrary: {
-        id: 'gui.spriteSelector.addSpriteFromLibrary',
+        id: 'paint.selectMode.select',
         description: 'Button to add a sprite in the target pane from library',
         defaultMessage: 'Choose a Sprite'
     },
@@ -34,9 +34,9 @@ const messages = defineMessages({
         defaultMessage: 'Surprise'
     },
     addSpriteFromFile: {
-        id: 'gui.spriteSelector.addSpriteFromFile',
+        id: 'gui.costumeTab.fileUpload',
         description: 'Button to add a sprite in the target pane from file',
-        defaultMessage: 'Upload Sprite'
+        defaultMessage: 'Upload'
     }
 });
 
@@ -117,6 +117,21 @@ const SpriteSelectorComponent = function (props) {
                 img={spriteIcon}
                 moreButtons={[
                     {
+                        title: intl.formatMessage(messages.addSpriteFromLibrary),
+                        img: searchIcon,
+                        onClick: onNewSpriteClick
+                    },
+                    {
+                        title: intl.formatMessage(messages.addSpriteFromPaint),
+                        img: paintIcon,
+                        onClick: onPaintSpriteClick // TODO need real function for this
+                    }, 
+                    {
+                        title: intl.formatMessage(messages.addSpriteFromSurprise),
+                        img: surpriseIcon,
+                        onClick: onSurpriseSpriteClick // TODO need real function for this
+                    },
+                    {
                         title: intl.formatMessage(messages.addSpriteFromFile),
                         img: fileUploadIcon,
                         onClick: onFileUploadClick,
@@ -124,18 +139,6 @@ const SpriteSelectorComponent = function (props) {
                         fileChange: onSpriteUpload,
                         fileInput: spriteFileInput,
                         fileMultiple: true
-                    }, {
-                        title: intl.formatMessage(messages.addSpriteFromSurprise),
-                        img: surpriseIcon,
-                        onClick: onSurpriseSpriteClick // TODO need real function for this
-                    }, {
-                        title: intl.formatMessage(messages.addSpriteFromPaint),
-                        img: paintIcon,
-                        onClick: onPaintSpriteClick // TODO need real function for this
-                    }, {
-                        title: intl.formatMessage(messages.addSpriteFromLibrary),
-                        img: searchIcon,
-                        onClick: onNewSpriteClick
                     }
                 ]}
                 title={intl.formatMessage(messages.addSpriteFromLibrary)}

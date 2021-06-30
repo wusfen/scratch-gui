@@ -76,10 +76,10 @@
 }
 
 .add-button {
-    position: absolute;
-    bottom: 0.75rem;
-
-    right: -5.3125rem;
+    position: fixed;
+    top: 4rem;
+    left: 20.4rem;
+    z-index: 99;
 }
 
 [dir="ltr"] .add-button {
