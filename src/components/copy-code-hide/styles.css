@@ -20,12 +20,24 @@
     border-radius: 1.25rem;
 }
 
+.tips {
+    position   : absolute;
+    left       : 15.25rem;
+    top        : 33.72rem;
+    width      : 13.5rem;
+    height     : 2.25rem;
+    font-size  : 0.75rem;
+    font-family: SourceHanSansCN-Normal, SourceHanSansCN;
+    font-weight: 400;
+    color      : #6D57DC;
+    line-height: 1.13rem;
+}
 
 
 
 
 .type-btn {
-    display: inline-block;
+    display      : inline-block;
     width        : 8.13rem;
     height       : 2.5rem;
     background   : #E0C6FF;
@@ -42,8 +54,8 @@
 }
 
 
-.type-btn-sel{
-    display: inline-block;
+.type-btn-sel {
+    display      : inline-block;
     width        : 8.13rem;
     height       : 2.5rem;
     background   : #9678FF;
@@ -75,10 +87,11 @@
 
 
 }
+
 .type-list-container input[type="checkbox"] {
-    width: 1.38rem;
-    height: 1.38rem;
-    margin-right: 0.44rem;
+    width         : 1.38rem;
+    height        : 1.38rem;
+    margin-right  : 0.44rem;
     vertical-align: middle;
 }
 
@@ -94,9 +107,9 @@
 }
 
 .code-list-container input[type="checkbox"] {
-    width: 1.38rem;
-    height: 1.38rem;
-    margin-right: 1.38rem;
+    width         : 1.38rem;
+    height        : 1.38rem;
+    margin-right  : 1.38rem;
     vertical-align: middle;
 }
 

@@ -529,6 +529,9 @@ class Component extends React.Component {
                     <div className={classNames(styles.codeListContainer)}>
                         {blocksCodeList.length != 1 ? blocksCodeList : ""}
                     </div>
+                    <div className={classNames(styles.tips)}>
+                    注意：不论是针对代码盒子，还是针对代码块，均为勾选是显示，不勾选是隐藏
+                    </div>
                     <button
                         type="button"
                         className={classNames(styles.button)}
