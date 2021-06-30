@@ -18,6 +18,7 @@
     */
     box-sizing: border-box;
     height: $menu-bar-height;
+    margin-bottom: 0.5rem;
 
     /*
         @todo: This adds ~1.25rem in Chrome, when scrolling to the right,
@@ -27,7 +28,7 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: $menu-bar-standard-font-size;
     font-weight: bold;
-    background-color: $ui-primary;
+    /* background-color: $ui-primary; */
     color: $ui-white;
 
     align-items: center;

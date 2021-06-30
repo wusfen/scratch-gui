@@ -9,6 +9,17 @@
         <meta name="google" value="notranslate" />
         <link rel="shortcut icon" href="static/favicon.ico" />
         <title>豌豆编程</title>
+        <base href="<%= htmlWebpackPlugin.options.PUBLIC_PATH %>" />
+        <script>
+            // fix <base> pushState
+            history._pushState = history.pushState;
+            history.pushState = function (state, title, url) {
+                url = /:\/\//.test(url)
+                    ? url
+                    : location.origin + String(url).replace(/^\/?/, "/");
+                return history._pushState.apply(this, arguments);
+            };
+        </script>
 
         <!-- <script src="https://cdn.jsdelivr.net/gh/wusfen/console.js@0.0.10/dist/console.js"></script> -->
         <!-- <script> document.onclick = e => { console.show = 2 } </script> -->
@@ -74,6 +85,7 @@
                 document.documentElement.style.setProperty(
                     "--STAGE_CSS_WIDTH",
                     Math.min(
+                        375,
                         266 / (1024 / window.innerWidth),
                         266 / (768 / window.innerHeight)
                     )
