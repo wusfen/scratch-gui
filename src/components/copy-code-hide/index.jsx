@@ -212,6 +212,7 @@ const codeBlocks = [
     },
     {
         label: "控制",
+        value: "%{BKY_CATEGORY_CONTROL}",
         checked: false,
         list: [
             { label: "等待(--)秒", value: "control_wait", checked: false },
@@ -455,7 +456,7 @@ class Component extends React.Component {
         if (canConfig) {
             console.log("==>保存配置成功");
             VMScratchBlocks.vcode_toolbox = configJson;
-            dispatchEvent(new Event('exit'));
+           // dispatchEvent(new Event('exit'));
             this.setState(this.getInitState());
         }
         else {
