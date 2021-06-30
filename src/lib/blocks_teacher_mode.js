@@ -294,6 +294,7 @@ export default function(Blockly, vm){
           throw 'Existing toolbox is null.  Can\'t create new toolbox.';
         }
         var categories = tree.getElementsByTagName('category');
+        var length = categories.length;
         var teacherMode = window.MODE === 'teacher';
         if(window.vcode_toolbox){
             for(var i = categories.length - 1; i >= 0; i--){
@@ -332,7 +333,7 @@ export default function(Blockly, vm){
                 }
             }
         }
-        if (categories.length) {
+        if (length) {
           if (!this.toolbox_) {
             throw 'Existing toolbox has no categories.  Can\'t change mode.';
           }
