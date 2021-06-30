@@ -3,8 +3,7 @@ body {
 }
 
 .stage-only {
-    width: calc(480px + 1rem);
-
+    width: 100%;
 }
 
 .editor {
@@ -39,10 +38,8 @@ body {
 }
 
 .stage-only [class*="green-flag-overlay"] img {
-    content: url('./start.svg');
+    content: url("./start.svg");
     padding-left: 0.6rem;
     width: 3.5rem;
     height: 3.5rem;
 }
-
-
