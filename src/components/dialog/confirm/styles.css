@@ -1,0 +1,78 @@
+.container {
+    position: fixed;
+    z-index: 100000999;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.dialog {
+    position: relative;
+    width: 25rem;
+    background: #f1e0ff;
+    box-shadow: 0rem 0.03rem 0.44rem 0rem #d096ff;
+    border-radius: 1.25rem;
+}
+
+.close {
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    margin-bottom: 0.75rem;
+    width: 1.38rem;
+    height: 1.38rem;
+    background: center/contain no-repeat
+        url("../../../assets/icons/POP-up windows close.svg");
+    color: transparent;
+}
+
+.title {
+    margin: 2.69rem 1rem 0.66rem;
+    font-size: 1.25rem;
+    font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+    font-weight: 500;
+    color: #6d57dc;
+    text-align: center;
+}
+
+.content {
+    margin: 0.66rem 4rem 2.38rem;
+    font-size: 1rem;
+    font-family: SourceHanSansCN-Normal, SourceHanSansCN;
+    font-weight: 400;
+    color: #6d57dc;
+    line-height: 1.5rem;
+    text-align: center;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem;
+}
+
+.buttons button {
+    width: 6.56rem;
+    height: 2.5rem;
+    margin: 0 0.75rem;
+    background: #9678ff;
+    box-shadow: 0rem 0.03rem 0.66rem 0rem #886dff;
+    border-radius: 0.63rem;
+    font-size: 1rem;
+    font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+    font-weight: 500;
+    color: #ffffff;
+    line-height: 1.5rem;
+}
+
+button.primary {
+    background: #ff457f;
+    box-shadow: 0rem 0.06rem 0.25rem 0rem rgba(0, 0, 0, 0.33),
+        0rem 0.03rem 0.75rem 0rem #ffb0c8;
+}
