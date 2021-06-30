@@ -244,6 +244,20 @@ class TargetPane$ extends React.Component {
             }
         }
     }
+    clickDirBtn(dir)
+    {
+        var ele = document.getElementsByClassName("sprite-selector_scroll-wrapper_3qlZ7 box_box_tWy-0")[0];
+        if(dir=="up")
+        {
+            ele.scrollTop-=100;
+           
+        }
+        else 
+        {
+            ele.scrollTop+=100;
+        }
+    }
+
     render() {
         /* eslint-disable no-unused-vars */
         const {
@@ -295,6 +309,7 @@ class TargetPane$ extends React.Component {
                 <img className={
                     classNames(styles.dirBtn, styles.upBtn)
                 }
+                onClick={this.clickDirBtn.bind(this,"up")}
                     src={require('../assets/icons/slist_up_btn.png')}
                     alt=""
                 />
@@ -323,6 +338,7 @@ class TargetPane$ extends React.Component {
                 />
 
                 <img
+                 onClick={this.clickDirBtn.bind(this,"down")}
                     className={
                         classNames(styles.dirBtn, styles.downBtn)
                     }

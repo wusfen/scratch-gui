@@ -12,13 +12,13 @@
 .dir-btn
 {
     text-align: center;
+    cursor:pointer
 }
-.dir-btn .up-btn
+.up-btn
 {
-
     margin-top: 5px;
 }
-.dir-btn .down-btn
+.down-btn
 {
  position:relative;   
  top:-40px;
