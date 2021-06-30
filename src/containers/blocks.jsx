@@ -193,6 +193,10 @@ class Blocks extends React.Component {
         if (this.props.isVisible) {
             this.setLocale();
         }
+
+        addEventListener('updateToolBox', e => {
+            this.updateToolbox();
+        });
     }
     shouldComponentUpdate (nextProps, nextState) {
         return (
@@ -261,7 +265,8 @@ class Blocks extends React.Component {
     requestToolboxUpdate () {
         clearTimeout(this.toolboxUpdateTimeout);
         this.toolboxUpdateTimeout = setTimeout(() => {
-            this.updateToolbox();
+            this.workspace.updateToolbox(this.props.toolboxXML);
+            this._renderedToolboxXML = this.props.toolboxXML;
         }, 0);
     }
     setLocale () {

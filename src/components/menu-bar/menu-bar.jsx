@@ -376,6 +376,9 @@ class MenuBar extends React.Component {
             this.props.vm.loadProject(await bufferPromise);
         }
     }
+    clickHideCode () {
+        dispatchEvent(new Event('menu:hideCode'));
+    }
     async handleSubmit () {
         dispatchEvent(new Event('submit:提交中'));
         const timeoutTimer = setTimeout(() => {
@@ -403,7 +406,7 @@ class MenuBar extends React.Component {
             // analystStatus: undefined,
             workId: workInfo.analystStatus === -1 ? workInfo.workId : ''
         });
-        
+
         // 轮询批改结果
         const checkStartTime = new Date();
         // eslint-disable-next-line func-style, require-jsdoc
@@ -606,7 +609,7 @@ class MenuBar extends React.Component {
                                     description="Text for edit dropdown menu"
                                     id="gui.menuBar.edit"
                                 /> */}
-                                
+
                                 <img
                                     className={styles.icon}
                                     src={setupIcon}
@@ -665,7 +668,7 @@ class MenuBar extends React.Component {
                     </div>
 
                     {/* <Divider className={classNames(styles.divider)} /> */}
-                    
+
                     <div
                         hidden
                         aria-label={this.props.intl.formatMessage(ariaMessages.tutorials)}
@@ -720,7 +723,7 @@ class MenuBar extends React.Component {
                                                 onClick={() => {
                                                     this.handleClickShare(waitForUpdate);
                                                 }}
-                                                /* eslint-enable react/jsx-no-bind */
+                                            /* eslint-enable react/jsx-no-bind */
                                             />
                                         )
                                     }
@@ -750,7 +753,7 @@ class MenuBar extends React.Component {
                                                 onClick={() => {
                                                     this.handleClickSeeCommunity(waitForUpdate);
                                                 }}
-                                                /* eslint-enable react/jsx-no-bind */
+                                            /* eslint-enable react/jsx-no-bind */
                                             />
                                         )
                                     }
@@ -902,6 +905,11 @@ class MenuBar extends React.Component {
                     className={styles.buttons}
                 >
                     <button
+                        className={styles.hideButton}
+                        onClick={this.clickHideCode}
+                    >{'隐藏盒子'}</button>
+
+                    <button
                         hidden={!this.state.isShowSkipButton}
                         className={styles.skipButton}
                         onClick={this.handleSkip}
@@ -912,6 +920,8 @@ class MenuBar extends React.Component {
                         className={styles.publishButton}
                         onClick={this.handleSubmit}
                     >{'提交'}</button>
+
+
                 </div>
             </Box>
         );
@@ -993,7 +1003,7 @@ MenuBar.propTypes = {
 
 MenuBar.defaultProps = {
     logo: scratchLogo,
-    onShare: () => {}
+    onShare: () => { }
 };
 
 const mapStateToProps = (state, ownProps) => {

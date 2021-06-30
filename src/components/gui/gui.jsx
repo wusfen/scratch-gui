@@ -45,6 +45,7 @@ import soundsIcon from './icon--sounds.svg';
 
 import SubmitResultDialog from '../submit-result-dialog/index.jsx';
 import Keyboard from '../keyboard/index.jsx';
+import CopyCodeHideModal from '../copy-code-hide/index.jsx';
 
 const messages = defineMessages({
     addExtension: {
@@ -376,6 +377,7 @@ const GUIComponent = props => {
 
                 <SubmitResultDialog vm={vm} />
                 <Keyboard vm={vm} />
+                <CopyCodeHideModal></CopyCodeHideModal>
             </Box>
         );
     }}</MediaQuery>);

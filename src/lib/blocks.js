@@ -1,4 +1,9 @@
 import ScratchBlocks from 'scratch-blocks';
+import fixBugs from './blocks_fix_bugs';
+import teacherMode from './blocks_teacher_mode';
+
+fixBugs(ScratchBlocks);
+
 
 /**
  * Connect scratch blocks with the vm
@@ -6,6 +11,8 @@ import ScratchBlocks from 'scratch-blocks';
  * @return {ScratchBlocks} ScratchBlocks connected with the vm
  */
 export default function (vm) {
+
+    teacherMode(ScratchBlocks, vm);
 
     const jsonForMenuBlock = function (name, menuOptionsFn, colors, start) {
         return {
@@ -358,6 +365,8 @@ export default function (vm) {
     ScratchBlocks.utils.is3dSupported = function () {
         return true;
     };
+    
+
 
     return ScratchBlocks;
 }
