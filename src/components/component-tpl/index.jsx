@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import bindAll from 'lodash.bindall';
+import {connect} from 'react-redux';
 
 import styles from './styles.css';
+const c = styles;
 
 class Component extends React.Component{
     constructor (props) {
@@ -32,14 +34,19 @@ class Component extends React.Component{
                 hidden={!isShow}
                 className={classNames(styles.container)}
             >
-                {children}
+                {children || 'content'}
             </div>
         );
     }
 }
 
 Component.propTypes = {
-    children: PropTypes.node
+    children: PropTypes.node,
 };
 
-export default Component;
+const mapStateToProps = state => ({
+});
+const mapDispatchToProps = () => ({
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Component);

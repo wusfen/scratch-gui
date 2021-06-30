@@ -1,0 +1,96 @@
+.container {
+    position: absolute;
+    z-index: 10000099;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 8.28rem;
+    margin: calc(16 * 1px) 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.75);
+    border-radius: 1.25rem 1.25rem 0rem 0rem;
+    background: rgb(0 0 0 / 43%);
+    border-radius: 1.25rem;
+    box-shadow: 0px 1px 0.25rem rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.direction {
+    flex: none;
+    position: relative;
+    width: 7.69rem;
+    height: 7.69rem;
+    margin-left: 6.28rem;
+    margin-left: calc(1.56rem);
+    background: #ffffff center/2.34rem no-repeat;
+    /* background-image: url("./img/round.svg"); */
+    border-radius: 50%;
+    box-shadow: 0 0 0.16rem 0.06rem rgba(0, 0, 0, 0.5);
+}
+
+.arrow {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    background: center/1.63rem no-repeat;
+    background-image: url("./img/up.svg");
+    width: 2.5rem;
+    height: 2.5rem;
+    color: transparent;
+    overflow: hidden;
+}
+.arrow.up {
+    bottom: auto;
+    background-image: url("./img/up.svg");
+}
+.arrow.down {
+    top: auto;
+    background-image: url("./img/down.svg");
+}
+.arrow.left {
+    right: auto;
+    background-image: url("./img/left.svg");
+}
+.arrow.right {
+    left: auto;
+    background-image: url("./img/right.svg");
+}
+.arrow.center {
+    background-image: url("./img/round.svg");
+    background-size: contain;
+    opacity: 0.5;
+}
+
+.keys {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap-reverse;
+    align-items: flex-start;
+    justify-content: center;
+    height: 100%;
+    margin-right: calc(1.56rem - (0.94rem / 2));
+}
+
+.key {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.25rem;
+    height: 2.5rem;
+    margin: calc(0.94rem / 2) calc(1.25rem / 2);
+    background: #ac9afe;
+    box-shadow: 0rem 0.03rem 0.66rem 0rem #886dff;
+    border-radius: 0.63rem;
+    font-size: 1.13rem;
+    font-family: Arial-BoldMT, Arial;
+    font-weight: normal;
+    color: #ffffff;
+    line-height: 1.31rem;
+}
