@@ -87,7 +87,8 @@ class CostumeTab extends React.Component {
             'handleFileUploadClick',
             'handleCostumeUpload',
             'handleDrop',
-            'setFileInput'
+            'setFileInput',
+            'hideEditingTarget'
         ]);
         const {
             editingTarget,
@@ -241,6 +242,9 @@ class CostumeTab extends React.Component {
         // https://github.com/LLK/scratch-flash/blob/9fbac92ef3d09ceca0c0782f8a08deaa79e4df69/src/ui/media/MediaInfo.as#L224-L237
         return `${Math.ceil(size[0] / resolution)} x ${Math.ceil(size[1] / resolution)}`;
     }
+    hideEditingTarget () {
+        document.querySelector('[role="tablist"]').children[0].click();
+    }
     render () {
         const {
             dispatchUpdateRestore, // eslint-disable-line no-unused-vars
@@ -316,6 +320,7 @@ class CostumeTab extends React.Component {
                 onDuplicateClick={this.handleDuplicateCostume}
                 onExportClick={this.handleExportCostume}
                 onItemClick={this.handleSelectCostume}
+                onCloseBtn={this.hideEditingTarget}
             >
                 {target.costumes ?
                     <PaintEditorWrapper

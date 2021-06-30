@@ -124,15 +124,15 @@ button::-moz-focus-inner {
 }
 
 .tip-text {
-    font-size: 0.5rem;
+    font-size: 0.75rem;
     color: #fff;
 }
 
 .more-icon {
     /* width: calc($more-button-size - 1rem);
     height: calc($more-button-size - 1rem); */
-    width: 1.6rem;
-    height: 1.6rem;
+    width: 1.75rem;
+    height: 1.75rem;
 }
 
 .coming-soon .more-icon {
