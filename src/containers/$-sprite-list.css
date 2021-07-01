@@ -12,7 +12,9 @@
 .dir-btn
 {
     text-align: center;
-    cursor:pointer
+    cursor:pointer;
+    width: 0.75rem;
+    height: 0.59rem;
 }
 .up-btn
 {
