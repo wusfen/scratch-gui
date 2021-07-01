@@ -25,7 +25,7 @@ class Component extends React.Component{
     }
     getKeys () {
         const vm = this.props.vm;
-        const keys = [];
+        let keys = [];
 
         vm.runtime.targets.forEach(e => {
             for (const id in e.blocks._blocks) {
@@ -37,7 +37,8 @@ class Component extends React.Component{
             }
         });
 
-        return [...new Set(keys)];
+        keys = [...new Set(keys)];
+        return keys;
     }
     toShowKey (key) {
         return {
