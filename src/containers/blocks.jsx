@@ -26,6 +26,8 @@ import {closeExtensionLibrary, openSoundRecorder, openConnectionModal} from '../
 import {activateCustomProcedures, deactivateCustomProcedures} from '../reducers/custom-procedures';
 import {setConnectionModalExtensionId} from '../reducers/connection-modal';
 import {updateMetrics} from '../reducers/workspace-metrics';
+import classNames from 'classnames';
+import styles from './blocks.css';
 
 import {
     activateTab,
@@ -85,6 +87,7 @@ class Blocks extends React.Component {
         this.onTargetsUpdate = debounce(this.onTargetsUpdate, 100);
         this.toolboxUpdateQueue = [];
     }
+
     componentDidMount () {
         this.ScratchBlocks.FieldColourSlider.activateEyedropper_ = this.props.onActivateColorPicker;
         this.ScratchBlocks.Procedures.externalProcedureDefCallback = this.props.onActivateCustomProcedures;
@@ -214,11 +217,7 @@ class Blocks extends React.Component {
         // 切换角色 xml 也会变化
         // 切换角色 Category 也会变化
 
-        // TODO 变化时再将 setSelectedItem(Category)? 是否可行
-
-        // console.log('prevProps:', prevProps.toolboxXML);
-        // console.log('===================================');
-        console.log('this.props.toolboxXML:', prevProps.toolboxXML === this.props.toolboxXML);
+        // console.log('this.props.toolboxXML:', prevProps.toolboxXML === this.props.toolboxXML);
         
         // If any modals are open, call hideChaff to close z-indexed field editors
         if (this.props.anyModalVisible && !prevProps.anyModalVisible) {
@@ -283,7 +282,6 @@ class Blocks extends React.Component {
     }
 
     updateToolbox () {
-        console.log('updateToolbox', this.workspace.toolbox_.flyout_.isVisible_);
         this.toolboxUpdateTimeout = false;
 
         // FIXED: autoClose 时 toolbox 关闭时，从舞台切换到角色，有些块（如当开始被点击）变成无法拖动
@@ -595,6 +593,15 @@ class Blocks extends React.Component {
                 this.updateToolbox(); // To show new variables/custom blocks
             });
     }
+    clickDirBtn (dir) {
+        const ele = document.getElementsByClassName('blocklyToolboxDiv')[0];
+        if (dir == 'up') {
+            ele.scrollTop -= 100;
+           
+        } else {
+            ele.scrollTop += 100;
+        }
+    }
     render () {
         /* eslint-disable no-unused-vars */
         const {
@@ -622,11 +629,26 @@ class Blocks extends React.Component {
         /* eslint-enable no-unused-vars */
         return (
             <React.Fragment>
+                <img
+                    className={
+                        classNames(styles.dirBtn, styles.upBtn)
+                    }
+                    onClick={this.clickDirBtn.bind(this, 'up')}
+                    src={require('../assets/icons/clist_up.png')}
+                ></img>
+                <img
+                    className={
+                        classNames(styles.dirBtn, styles.downBtn)
+                    }
+                    onClick={this.clickDirBtn.bind(this, 'down')}
+                    src={require('../assets/icons/clist_down.png')}
+                ></img>
                 <DroppableBlocks
                     componentRef={this.setBlocks}
                     onDrop={this.handleDrop}
                     {...props}
                 />
+                
                 {this.state.prompt ? (
                     <Prompt
                         defaultValue={this.state.prompt.defaultValue}
