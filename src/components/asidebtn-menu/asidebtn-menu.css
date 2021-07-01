@@ -1,8 +1,8 @@
 .aside-btn-wrapper {
-    position: fixed;
-    right: 4rem;
-    bottom: 2.7rem;
+    position: absolute;
     z-index: 9;
+    right: 4rem;
+    bottom: 1.7rem;
 }
 
 .aside-btn-wrapper span {

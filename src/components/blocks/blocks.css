@@ -93,7 +93,7 @@
 .blocks :global(.scratchCategoryMenuItemLabel) {
     font-size: 0.75rem;
     line-height: 1.13rem;
-    color: #6D57DC;
+    color: #6d57dc;
 }
 
 .blocks :global(.blocklyMinimalBody) {
@@ -134,7 +134,7 @@
 
 .blocks :global(.scratchCategoryMenuRow) {
     height: 3.75rem;
-    margin-top: 0.85rem;
+    margin: 0.5rem 0;
 }
 
 .blocks :global(.blocklyFlyout) {
@@ -148,6 +148,22 @@
     background: rgba(255, 255, 255, 0.8);
     box-shadow: 0.625rem 1px 0.625rem -0.625rem rgba(0, 0, 0, 0.18);
     border-radius: 0 1.25rem 1.25rem 0;
+    backdrop-filter: blur(5px);
+    animation: flyout 0.5s;
+}
+@supports (backdrop-filter: blur(5px)) {
+    .blocks :global(.blocklyFlyout) {
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(5px);
+    }
+}
+@keyframes flyout {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 .blocks :global(.blocklyFlyoutBackground) {
@@ -189,7 +205,7 @@
 }
 
 .blocks :global(.categorySelected) {
-    background: #fff;
+    background: rgba(255, 255, 255, 0.8);
 }
 
 .blocks :global(.blocklySvg) {
@@ -211,5 +227,7 @@
 .blocks :global(.scratchCategoryItemIcon) {
     height: 2.75rem;
     width: 2.75rem;
+    height: 2rem;
+    width: 2rem;
     background-size: 100% 100%;
 }
