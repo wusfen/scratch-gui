@@ -332,11 +332,12 @@ const GUIComponent = props => {
                                             title={intl.formatMessage(messages.addExtension)}
                                             onClick={onExtensionButtonClick}
                                         >
-                                            <img
+                                            {/* <img
                                                 className={styles.extensionButtonIcon}
                                                 draggable={false}
                                                 src={addExtensionIcon}
-                                            />
+                                            /> */}
+                                            <span>+</span>
                                         </button>
                                     </Box>
                                     <Box className={styles.watermark}>
