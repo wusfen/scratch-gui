@@ -1,6 +1,6 @@
 .dir-btn {
     position  : absolute;
-    z-index   : 9999;
+    z-index   : 100;
     text-align: center;
     cursor    : pointer;
     width     : 0.75rem;
@@ -9,9 +9,10 @@
 }
 
 .up-btn {
-    top: 4.75rem;
+    top: 0.5rem;
 }
 
 .down-btn {
+    display: none;
     bottom: 0.5rem;
 }
