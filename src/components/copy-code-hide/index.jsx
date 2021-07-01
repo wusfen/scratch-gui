@@ -1,3 +1,6 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-negated-condition */
+/* eslint-disable prefer-const */
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -368,8 +371,8 @@ class Component extends React.Component {
         //     }
         // }
 
-        for (var i in window.vcode_toolbox) {
-            for (var j = 0; j < codeBlocks.length; j++) {
+        for (let i in window.vcode_toolbox) {
+            for (let j = 0; j < codeBlocks.length; j++) {
                 if (codeBlocks[j].value == i) {
                     codeBlocks[j].checked = true;
                     break;
@@ -377,7 +380,7 @@ class Component extends React.Component {
             }
 
         }
-        for (i in window.vcode_toolbox) {
+        for (let i in window.vcode_toolbox) {
             for (const k in window.vcode_toolbox[i]) {
                 let found = false;
                 for (var j = 0; j < codeBlocks.length; j++) {
@@ -416,6 +419,8 @@ class Component extends React.Component {
     }
     // 全选&反选代码块
     clickAllSelCodeHandler () {
+        /* eslint-disable react/no-direct-mutation-state */
+        /* eslint-disable array-callback-return */
         this.state.allSelectCode = !this.state.allSelectCode;
         let totalCheckedNum = 0;
         this.state.curSelCodeList.map(e => {
@@ -450,6 +455,7 @@ class Component extends React.Component {
     }
     enterHandler () {
         const {
+            // eslint-disable-next-line no-shadow
             codeBlocks
         } = this.state;
 
@@ -529,21 +535,24 @@ class Component extends React.Component {
         const blocksCodeList = [<div
             key={'j00'}
             className={classNames(styles.codeBtn)}
-        ><input
+        >
+            <input
                 type="checkbox"
-            checked={allSelectCode}
-            onChange={this.clickAllSelCodeHandler.bind(this)}
+                checked={allSelectCode}
+                onChange={this.clickAllSelCodeHandler.bind(this)}
             />反选</div>];
 
         for (let j = 0; j < curSelCodeList.length; j++) {
-            blocksCodeList.push(<div
-                key={j}
-                className={classNames(styles.codeBtn)}
-            ><input
-                    type="checkbox"
-                onChange={this.clickCodeBtnHandler.bind(this, curSelCodeList[j])}
-                checked={curSelCodeList[j].checked}
-                />{curSelCodeList[j].label}</div>);
+            blocksCodeList.push(
+                <div
+                    key={j}
+                    className={classNames(styles.codeBtn)}
+                >
+                    <input
+                        type="checkbox"
+                        onChange={this.clickCodeBtnHandler.bind(this, curSelCodeList[j])}
+                        checked={curSelCodeList[j].checked}
+                    />{curSelCodeList[j].label}</div>);
         }
         return (
             <div

@@ -32,6 +32,8 @@ module.exports = {
         'no-dupe-keys': 1,
         'no-var': 0,
         'react/jsx-handler-names': 1,
+        'no-unused-expressions': 0,
+        'no-undefined': 1,
     },
     settings: {
         react: {
