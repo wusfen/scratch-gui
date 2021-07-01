@@ -31,6 +31,7 @@ module.exports = {
         'eqeqeq': 1,
         'no-dupe-keys': 1,
         'no-var': 0,
+        'react/jsx-handler-names': 1,
     },
     settings: {
         react: {

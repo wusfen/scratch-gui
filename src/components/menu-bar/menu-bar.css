@@ -278,24 +278,23 @@
         opacity: 1;
     }
 }
-.hide-button
-{
-display        : inline-flex;
- align-items    : center;
- justify-content: center;
- letter-spacing : 0;
- text-align     : center;
- border         : none;
- width          : 4.25rem;
- height         : 1.75rem;
- background     : #9678FF;
- box-shadow     : 0rem 0.03rem 0.66rem 0rem #886DFF;
- border-radius  : 0.63rem;
- font-size: 0.75rem;
-font-family: SourceHanSansCN-Medium, SourceHanSansCN;
-font-weight: 500;
-color: #FFFFFF;
-line-height: 1.13rem;
+.blue-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0;
+    text-align: center;
+    border: none;
+    min-width: 4.25rem;
+    height: 1.75rem;
+    background: #9678ff;
+    box-shadow: 0rem 0.03rem 0.66rem 0rem #886dff;
+    border-radius: 0.63rem;
+    font-size: 0.75rem;
+    font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+    font-weight: 500;
+    color: #ffffff;
+    line-height: 1.13rem;
 }
 
 .publish-button {
