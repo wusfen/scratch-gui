@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import React from 'react';
 import Box from '../box/box.jsx';
 import styles from './blocks.css';
-import AsideBtnMenu from '../asidebtn-menu/asidebtn-menu.jsx'
+import AsideBtnMenu from '../asidebtn-menu/asidebtn-menu.jsx';
 
 const BlocksComponent = props => {
     const {
@@ -19,7 +19,7 @@ const BlocksComponent = props => {
             {...componentProps}
             componentRef={containerRef}
         >
-            <AsideBtnMenu/>
+            <AsideBtnMenu />
         </Box>
     );
 };

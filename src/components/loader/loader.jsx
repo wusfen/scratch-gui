@@ -154,12 +154,13 @@ class LoaderComponent extends React.Component {
                     [styles.fullscreen]: this.props.isFullScreen
                 })}
             >
-                <video 
+                <video
                     className={styles.loadingVideo}
                     src={loadingVideo}
                     autoPlay="autoplay"
                     loop="loop"
-                    muted>
+                    muted
+                >
                 </video>
                 {/* <div className={styles.container}>
                     <div className={styles.blockAnimation}>

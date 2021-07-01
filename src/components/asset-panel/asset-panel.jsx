@@ -5,7 +5,7 @@ import Selector from './selector.jsx';
 import styles from './asset-panel.css';
 import closeBtnIcon from './icon--close-btn.svg';
 
-const AssetPanel = function(props) {
+const AssetPanel = function (props) {
     const {
         onCloseBtn
     } = props;
@@ -18,9 +18,13 @@ const AssetPanel = function(props) {
             <Box className={styles.detailArea}>
                 {props.children}
             </Box>
-            <img src={closeBtnIcon} onClick={onCloseBtn} className={styles.closeBtn}/>
+            <img
+                src={closeBtnIcon}
+                onClick={onCloseBtn}
+                className={styles.closeBtn}
+            />
         </Box>
-    )
+    );
 };
 
 AssetPanel.propTypes = {

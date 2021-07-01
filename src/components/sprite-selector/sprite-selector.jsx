@@ -125,7 +125,7 @@ const SpriteSelectorComponent = function (props) {
                         title: intl.formatMessage(messages.addSpriteFromPaint),
                         img: paintIcon,
                         onClick: onPaintSpriteClick // TODO need real function for this
-                    }, 
+                    },
                     {
                         title: intl.formatMessage(messages.addSpriteFromSurprise),
                         img: surpriseIcon,

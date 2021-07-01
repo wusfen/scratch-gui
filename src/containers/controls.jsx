@@ -13,31 +13,31 @@ class Controls extends React.Component {
             'handleGreenFlagClick',
             'handleStopAllClick'
         ]);
-        this.setOnNativeCallJsInWindow()
+        this.setOnNativeCallJsInWindow();
     }
 
-    setOnNativeCallJsInWindow() {
-        window.onNativeCallJs = (mess) => {
+    setOnNativeCallJsInWindow () {
+        window.onNativeCallJs = mess => {
             console.log('onNativeCallJs params---', mess);
             try {
-                var code = mess.code;
-                var data = mess.data;
+                const code = mess.code;
+                const data = mess.data;
                 switch (code) {
-                    case 1:
-                        //1：生命周期协议
-                        var life = data.lifecycle;
-                        if ('onPause' === life) {
-                            //webview页面暂停，即将进入后台
-                            console.log('to stop');
-                            this.props.vm.stopAll();
-                        } else if ('onResume' === life) {
-                            //webview页面即将进入前台
-                            console.log('to start');
-                            this.props.vm.start();
-                        }
-                        break;
-                    default:
-                        break;
+                case 1:
+                    // 1：生命周期协议
+                    var life = data.lifecycle;
+                    if (life === 'onPause') {
+                        // webview页面暂停，即将进入后台
+                        console.log('to stop');
+                        this.props.vm.stopAll();
+                    } else if (life === 'onResume') {
+                        // webview页面即将进入前台
+                        console.log('to start');
+                        this.props.vm.start();
+                    }
+                    break;
+                default:
+                    break;
                 }
             } catch (error) {
                 console.error('onNativeCallJs error---', error);

@@ -8,10 +8,10 @@ import Input from '../forms/input.jsx';
 import BufferedInputHOC from '../forms/buffered-input-hoc.jsx';
 import DirectionPicker from '../../containers/direction-picker.jsx';
 
-import { injectIntl, intlShape, defineMessages, FormattedMessage } from 'react-intl';
+import {injectIntl, intlShape, defineMessages, FormattedMessage} from 'react-intl';
 
-import { STAGE_DISPLAY_SIZES } from '../../lib/layout-constants.js';
-import { isWideLocale } from '../../lib/locale-utils.js';
+import {STAGE_DISPLAY_SIZES} from '../../lib/layout-constants.js';
+import {isWideLocale} from '../../lib/locale-utils.js';
 
 import styles from './sprite-info.css';
 import Icon from '../../assets/icons/icon.jsx';
@@ -26,7 +26,6 @@ import rotateIcon from './rotate.svg';
 import isometricIcon from './isometric.svg';
 
 
-
 const BufferedInput = BufferedInputHOC(Input);
 
 const messages = defineMessages({
@@ -38,7 +37,7 @@ const messages = defineMessages({
 });
 
 class SpriteInfo extends React.Component {
-    shouldComponentUpdate(nextProps) {
+    shouldComponentUpdate (nextProps) {
         return (
             this.props.rotationStyle !== nextProps.rotationStyle ||
             this.props.disabled !== nextProps.disabled ||
@@ -52,7 +51,7 @@ class SpriteInfo extends React.Component {
             Math.round(this.props.y) !== Math.round(nextProps.y)
         );
     }
-    render() {
+    render () {
         const {
             stageSize
         } = this.props;
@@ -178,7 +177,7 @@ class SpriteInfo extends React.Component {
                     <div className={styles.group}>
                         <Label
                             above={labelAbove}
-                            text=''
+                            text=""
                         >
                             <img
                                 className={styles.iconWrapperAbs}
@@ -197,7 +196,7 @@ class SpriteInfo extends React.Component {
                         <Label
                             secondary
                             above={labelAbove}
-                            text=''
+                            text=""
                         >
                             <img
                                 className={styles.iconWrapperAbs}
@@ -218,7 +217,7 @@ class SpriteInfo extends React.Component {
                     <div className={styles.group}>
                         <Label
                             above={labelAbove}
-                            text=''
+                            text=""
                         >
                             <img
                                 className={styles.iconWrapperAbs}

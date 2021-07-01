@@ -8,21 +8,21 @@ class Component extends React.Component{
         this.state = {
             undoStack: false,
             redoStack: false
-        }
+        };
     }
     
     undo (type) {
         Blockly.getMainWorkspace().undo(type);
-        this.initState()
+        this.initState();
     }
 
     initState () {
-        let getUndoStack = Blockly.getMainWorkspace().hasUndoStack();
-        let getRedoStack = Blockly.getMainWorkspace().hasRedoStack();
+        const getUndoStack = Blockly.getMainWorkspace().hasUndoStack();
+        const getRedoStack = Blockly.getMainWorkspace().hasRedoStack();
         this.setState({
             undoStack: getUndoStack,
             redoStack: getRedoStack
-        })
+        });
     }
 
     render () {
@@ -33,13 +33,15 @@ class Component extends React.Component{
 
         return (
             <div className={classNames(styles.asideBtnWrapper)}>
-                <span 
-                    className={undoStack?classNames(styles.undo):classNames(styles.undo, styles.disable)} 
-                    onClick={this.undo.bind(this,false)}>
+                <span
+                    className={undoStack ? classNames(styles.undo) : classNames(styles.undo, styles.disable)}
+                    onClick={this.undo.bind(this, false)}
+                >
                 </span>
-                <span 
-                    className={redoStack?classNames(styles.redo):classNames(styles.redo, styles.disable)} 
-                    onClick={this.undo.bind(this,true)}>
+                <span
+                    className={redoStack ? classNames(styles.redo) : classNames(styles.redo, styles.disable)}
+                    onClick={this.undo.bind(this, true)}
+                >
                 </span>
             </div>
         );
