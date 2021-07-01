@@ -170,6 +170,7 @@ class MenuBar extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
+            'handleTeacherPreview',
             'handleSkip',
             'handleSubmit',
             'handleClickResetFile',
@@ -192,7 +193,8 @@ class MenuBar extends React.Component {
             isShowResetFileButton: searchParams.get('file'),
             isShowSkipButton: !false,
             isShowPublishButton: !false,
-            mode: searchParams.get('mode')
+            mode: searchParams.get('mode'),
+            isTeacherPreview: false, // true: 老师切学生
         };
 
 
@@ -217,6 +219,14 @@ class MenuBar extends React.Component {
             this.props.onClickNew(this.props.canSave && this.props.canCreateNew);
         }
         this.props.onRequestCloseFile();
+    }
+    handleTeacherPreview () {
+        var isTeacherPreview = this.state.isTeacherPreview;
+        this.setState({
+            isTeacherPreview: !isTeacherPreview,
+        });
+        isTeacherPreview ?window.MODE = 'teacher':window.MODE = undefined;
+        dispatchEvent(new Event('updateWorkspace_'));
     }
     handleClickRemix () {
         this.props.onClickRemix();
@@ -907,7 +917,15 @@ class MenuBar extends React.Component {
                 >
                     <button
                         hidden={this.state.mode != 'teacher'}
-                        className={styles.hideButton}
+                        className={styles.blueButton}
+                        onClick={this.handleTeacherPreview}
+                    >
+                        { this.state.isTeacherPreview ? '返回老师模式' : '切换学生模式' }
+                    </button>
+
+                    <button
+                        hidden={this.state.mode != 'teacher'}
+                        className={styles.blueButton}
                         onClick={this.clickHideCode}
                     >{'隐藏盒子'}</button>
 
