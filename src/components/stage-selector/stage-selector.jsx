@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -126,13 +127,13 @@ const StageSelector = props => {
                         img: surpriseIcon,
                         onClick: onSurpriseBackdropClick
 
-                    }
-                    , {
+                    },
+                    {
                         title: intl.formatMessage(messages.addBackdropFromPaint),
                         img: paintIcon,
                         onClick: onEmptyBackdropClick
-                    }
-                    , {
+                    },
+                    {
                         title: intl.formatMessage(messages.addBackdropFromLibrary),
                         img: searchIcon,
                         onClick: onNewBackdropClick

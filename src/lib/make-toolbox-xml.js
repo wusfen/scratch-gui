@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import ScratchBlocks from 'scratch-blocks';
 
 const categorySeparator = '<sep gap="36"/>';

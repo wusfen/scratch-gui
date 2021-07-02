@@ -365,7 +365,6 @@ export default function (vm) {
     ScratchBlocks.utils.is3dSupported = function () {
         return true;
     };
-    
 
 
     return ScratchBlocks;

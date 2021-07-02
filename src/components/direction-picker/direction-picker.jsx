@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Popover from 'react-popover';
-import { injectIntl, intlShape, defineMessages, FormattedMessage } from 'react-intl';
+import {injectIntl, intlShape, defineMessages, FormattedMessage} from 'react-intl';
 
 import Label from '../forms/label.jsx';
 import Input from '../forms/input.jsx';
@@ -56,10 +56,10 @@ const DirectionPicker = props => (
         above={props.labelAbove}
         text=""
     >
-          <img
-                className={styles.iconWrapperAbs}
-                src={rotateIcon}
-            />
+        <img
+            className={styles.iconWrapperAbs}
+            src={rotateIcon}
+        />
         <Popover
             body={
                 <div>

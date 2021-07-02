@@ -198,7 +198,12 @@ class Blocks extends React.Component {
         }
 
         addEventListener('updateToolBox', e => {
-            this.updateToolbox();
+            this.requestToolboxUpdate();
+        });
+
+        addEventListener('updateWorkspace_', e => {
+            this.props.vm.refreshWorkspace();
+            this.requestToolboxUpdate();
         });
     }
     shouldComponentUpdate (nextProps, nextState) {

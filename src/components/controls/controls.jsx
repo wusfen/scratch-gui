@@ -1,7 +1,8 @@
+/* eslint-disable no-negated-condition */
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { defineMessages, injectIntl, intlShape } from 'react-intl';
+import {defineMessages, injectIntl, intlShape} from 'react-intl';
 
 import GreenFlag from '../green-flag/green-flag.jsx';
 import StopAll from '../stop-all/stop-all.jsx';
@@ -53,7 +54,7 @@ const Controls = function (props) {
                 onClick={onStopAllClick}
             />
             <button
-                className={!active?classNames(styles.button):classNames(styles.stopButton)}
+                className={!active ? classNames(styles.button) : classNames(styles.stopButton)}
                 type="button"
                 onClick={active ? onStopAllClick : onGreenFlagClick}
             >
