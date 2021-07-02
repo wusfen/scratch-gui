@@ -412,10 +412,27 @@ class Component extends React.Component {
 
     }
     clickTypeBtnHandler (selObj, clickIndex) {
+
+        let _allSelectCode = true;
+
+        for(var i =0;i<selObj.list.length;i++)
+        {
+            if(!selObj.list[i].checked)
+            {
+             _allSelectCode = false;
+             break;   
+            }
+        }
+        console.log(selObj)
+
         this.setState({
             curSelCodeList: selObj.list,
-            curSelTypeIndex: clickIndex
+            curSelTypeIndex: clickIndex,
+            allSelectCode:_allSelectCode
         });
+        console.log(this.state.allSelectCode)
+
+
     }
     // 全选&反选代码块
     clickAllSelCodeHandler () {
