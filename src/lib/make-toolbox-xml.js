@@ -4,14 +4,14 @@ const categorySeparator = '<sep gap="36"/>';
 
 const blockSeparator = '<sep gap="36"/>'; // At default scale, about 28px
 
-const Group = require("./../assets/blocks-icon/Group.png");
-const Group2 = require("./../assets/blocks-icon/Group2.png");
-const Group3 = require("./../assets/blocks-icon/Group3.png");
-const Group4 = require("./../assets/blocks-icon/Group4.png");
-const Group5 = require("./../assets/blocks-icon/Group5.png");
-const Group10 = require("./../assets/blocks-icon/Group10.png");
-const Group11 = require("./../assets/blocks-icon/Group11.png");
-const Group13 = require("./../assets/blocks-icon/Group13.png");
+const Group = require('./../assets/blocks-icon/Group.png');
+const Group2 = require('./../assets/blocks-icon/Group2.png');
+const Group3 = require('./../assets/blocks-icon/Group3.png');
+const Group4 = require('./../assets/blocks-icon/Group4.png');
+const Group5 = require('./../assets/blocks-icon/Group5.png');
+const Group10 = require('./../assets/blocks-icon/Group10.png');
+const Group11 = require('./../assets/blocks-icon/Group11.png');
+const Group13 = require('./../assets/blocks-icon/Group13.png');
 
 
 /* eslint-disable no-unused-vars */
