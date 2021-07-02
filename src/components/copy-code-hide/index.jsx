@@ -170,7 +170,7 @@ const codeBlocks = [
         checked: false,
         list: [
             {
-                label: '当绿旗被点击',
+                label: '当开始被点击',
                 value: 'event_whenflagclicked',
                 checked: false,
             },
