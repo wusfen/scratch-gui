@@ -28,7 +28,8 @@ export default function (Blockly, vm){
         if (fieldCount > 0){
             for (let j = 0; j < fieldCount; j++){
                 const field = fields[j];
-                if (field.getAttribute('name') === 'VARIABLE'){
+                const name = field.getAttribute('name');
+                if (name === 'VARIABLE'|| name === 'BROADCAST_OPTION'){
                     const name = field.innerHTML;
                     if (name.indexOf('#') == 0 && name.length - 1 == name.indexOf('*')){
                         return true;
@@ -519,6 +520,92 @@ export default function (Blockly, vm){
             block.setShadow(true);
         }
         return block;
+    };
+
+
+    Blockly.Variables.createVariable = function(workspace, opt_callback, opt_type) {
+        // Decide on a modal message based on the opt_type. If opt_type was not
+        // provided, default to the original message for scalar variables.
+        var newMsg, modalTitle;
+        if (opt_type == Blockly.BROADCAST_MESSAGE_VARIABLE_TYPE) {
+          newMsg = Blockly.Msg.NEW_BROADCAST_MESSAGE_TITLE;
+          modalTitle = Blockly.Msg.BROADCAST_MODAL_TITLE;
+        } else if (opt_type == Blockly.LIST_VARIABLE_TYPE) {
+          newMsg = Blockly.Msg.NEW_LIST_TITLE;
+          modalTitle = Blockly.Msg.LIST_MODAL_TITLE;
+        } else {
+          // Note: this case covers 1) scalar variables, 2) any new type of
+          // variable not explicitly checked for above, and 3) a null or undefined
+          // opt_type -- turns a falsey opt_type into ''
+          // TODO (#1251) Warn developers that they didn't provide an opt_type/provided
+          // a falsey opt_type
+          opt_type = opt_type ? opt_type : '';
+          newMsg = Blockly.Msg.NEW_VARIABLE_TITLE;
+          modalTitle = Blockly.Msg.VARIABLE_MODAL_TITLE;
+        }
+        var validate = Blockly.Variables.nameValidator_.bind(null, opt_type);
+      
+        // Prompt the user to enter a name for the variable
+        Blockly.prompt(newMsg, '',
+            function(text, additionalVars, variableOptions) {
+              variableOptions = variableOptions || {};
+              var scope = variableOptions.scope;
+              var isLocal = (scope === 'local') || false;
+              var isCloud = variableOptions.isCloud || false;
+              // Default to [] if additionalVars is not provided
+              additionalVars = additionalVars || [];
+              // Only use additionalVars for global variable creation.
+              var additionalVarNames = isLocal ? [] : additionalVars;
+      
+              var validatedText = validate(text, workspace, additionalVarNames, isCloud, opt_callback);
+              if (validatedText) {
+                // The name is valid according to the type, create the variable
+                var potentialVarMap = workspace.getPotentialVariableMap();
+                var variable;
+                // This check ensures that if a new variable is being created from a
+                // workspace that already has a variable of the same name and type as
+                // a potential variable, that potential variable gets turned into a
+                // real variable and thus there aren't duplicate options in the field_variable
+                // dropdown.
+                if (potentialVarMap && opt_type) {
+                  variable = Blockly.Variables.realizePotentialVar(validatedText,
+                      opt_type, workspace, false);
+                }
+                if (!variable) {
+                  variable = workspace.createVariable(validatedText, opt_type, null, isLocal, isCloud);
+                }
+      
+                var flyout = workspace.isFlyout ? workspace : workspace.getFlyout();
+                var variableBlockId = variable.getId();
+                var hide = validatedText.indexOf('#') === 0 && validatedText.length - 1 === validatedText.indexOf('*');
+                if (flyout.setCheckboxState) {
+                    flyout.setCheckboxState(variableBlockId, !hide);
+                }
+      
+                if (opt_callback) {
+                    if(window.MODE === 'teacher' || !hide){
+                        opt_callback(variableBlockId);
+                    }
+                }
+              } else {
+                // User canceled prompt without a value.
+                if (opt_callback) {
+                  opt_callback(null);
+                }
+              }
+            }, modalTitle, opt_type);
+      };
+
+    //广播默认值
+    Blockly.FieldVariable.prototype.initFlyoutBroadcast_ = function(workspace) {
+        // Using shorter name for this constant
+        var broadcastMsgType = Blockly.BROADCAST_MESSAGE_VARIABLE_TYPE;
+        var broadcastVars = getVariablesOfType(workspace, broadcastMsgType);
+        if(workspace.isFlyout && this.defaultType_ == broadcastMsgType &&
+            broadcastVars.length != 0) {
+          broadcastVars.sort(Blockly.VariableModel.compareByName);
+          return broadcastVars[0];
+        }
     };
 
     
