@@ -52,6 +52,7 @@ export default function (Blockly, vm){
             return false;
         }
         const html = xmlNode.innerHTML;
+        //自定义积木
         let start = html.indexOf("proccode=\"");
         if(- 1 !== start){
             start += 10;
@@ -317,8 +318,11 @@ export default function (Blockly, vm){
         if (window.vcode_toolbox){
             for (let i = categories.length - 1; i >= 0; i--){
                 const category = categories[i];
-                const had = window.vcode_toolbox[category.getAttribute('name')];
-                if (!had || had.length == 0){
+                const categoryName = category.getAttribute('name');
+                const had = window.vcode_toolbox[categoryName];
+                if(had && categoryName === '%{BKY_CATEGORY_MYBLOCKS}' || categoryName === '%{BKY_CATEGORY_VARIABLES}'){
+                    continue;
+                }else if (!had || had.length == 0){
                     if (!teacherMode){
                         tree.removeChild(category);
                     } else {

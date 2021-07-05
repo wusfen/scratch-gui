@@ -266,7 +266,7 @@ const codeBlocks = [
             },
             {
                 label: '到(--)的距离',
-                value: 'sensing_distancetomenu',
+                value: 'sensing_distanceto',
                 checked: false,
             },
             {
