@@ -79,6 +79,11 @@ const codeBlocks = [
                 value: 'looks_switchbackdropto',
                 checked: false,
             },
+            {
+                label: '换成(--)背景并等待',
+                value: 'looks_switchbackdroptoandwait',
+                checked: false,
+            },            
             { label: '下一个背景', value: 'looks_nextbackdrop', checked: false },
             {
                 label: '换成(xx)造型',
