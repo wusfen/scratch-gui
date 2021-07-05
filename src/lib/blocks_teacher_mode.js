@@ -14,12 +14,8 @@ export default function (Blockly, vm){
         }
         return variable_list;
     };
-
-    // 判断模块是否需要隐藏
-    const needHide = function (xmlNode){
-        if (window.MODE === 'teacher'){
-            return false;
-        }
+    
+    const needHide_ = function(xmlNode){
         if (!xmlNode.getElementsByTagName){
             return false;
         }
@@ -39,12 +35,34 @@ export default function (Blockly, vm){
         } else {
             const childCount = xmlNode.childNodes.length;
             for (let i = 0; i < childCount; i++){
-                if (needHide(xmlNode.childNodes[i])){
+                if (needHide_(xmlNode.childNodes[i])){
                     return true;
                 }
             }
         }
-        return false;
+        return false; 
+    }
+
+    // 判断模块是否需要隐藏
+    const needHide = function (xmlNode){
+        if (window.MODE === 'teacher'){
+            return false;
+        }
+        if (!xmlNode.getElementsByTagName){
+            return false;
+        }
+        const html = xmlNode.innerHTML;
+        let start = html.indexOf("proccode=\"");
+        if(- 1 !== start){
+            start += 10;
+            const end = html.indexOf("\"", start);
+            const name = html.substring(start, end);
+            if (name.indexOf('#') == 0 && -1 !== name.indexOf('*')){
+                return true;
+            }
+        }
+        return needHide_(xmlNode);
+        
       
     };
 
@@ -454,8 +472,8 @@ export default function (Blockly, vm){
                     } else if (blockChild.previousConnection) {
                         input.connection.connect(blockChild.previousConnection);
                     } else {
-                        goog.asserts.fail(
-                            'Child block does not have output or previous statement.');
+                        // goog.asserts.fail(
+                        //     'Child block does not have output or previous statement.');
                     }
                 }
                 break;
@@ -514,8 +532,8 @@ export default function (Blockly, vm){
             // Ensure all children are also shadows.
             const children = block.getChildren(false);
             for (var i = 0, child; child = children[i]; i++) {
-                goog.asserts.assert(
-                    child.isShadow(), 'Shadow block not allowed non-shadow child.');
+                // goog.asserts.assert(
+                //     child.isShadow(), 'Shadow block not allowed non-shadow child.');
             }
             block.setShadow(true);
         }
