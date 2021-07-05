@@ -1,3 +1,6 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-negated-condition */
+/* eslint-disable prefer-const */
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -10,10 +13,10 @@ const codeBlocks = [
         value: '%{BKY_CATEGORY_MOTION}',
         checked: false,
         list: [
-            {label: '移动(--)步', value: 'motion_movesteps', checked: false},
-            {label: '右转(--)度', value: 'motion_turnright', checked: false},
-            {label: '左转(--)度', value: 'motion_turnleft', checked: false},
-            {label: '移动到(--)位置', value: 'motion_goto', checked: false},
+            { label: '移动(--)步', value: 'motion_movesteps', checked: false },
+            { label: '右转(--)度', value: 'motion_turnright', checked: false },
+            { label: '左转(--)度', value: 'motion_turnleft', checked: false },
+            { label: '移动到(--)位置', value: 'motion_goto', checked: false },
             {
                 label: '移动到x:(--) y:(--)',
                 value: 'motion_gotoxy',
@@ -39,10 +42,10 @@ const codeBlocks = [
                 value: 'motion_pointtowards',
                 checked: false,
             },
-            {label: '将x坐标增加(--)', value: 'motion_changexby', checked: false},
-            {label: '将y坐标增加(--)', value: 'motion_changeyby', checked: false},
-            {label: '将x坐标设为(--)', value: 'motion_setx', checked: false},
-            {label: '将y坐标设为(--)', value: 'motion_sety', checked: false},
+            { label: '将x坐标增加(--)', value: 'motion_changexby', checked: false },
+            { label: '将y坐标增加(--)', value: 'motion_changeyby', checked: false },
+            { label: '将x坐标设为(--)', value: 'motion_setx', checked: false },
+            { label: '将y坐标设为(--)', value: 'motion_sety', checked: false },
             {
                 label: '碰到边缘就反弹',
                 value: 'motion_ifonedgebounce',
@@ -53,9 +56,9 @@ const codeBlocks = [
                 value: 'motion_setrotationstyle',
                 checked: false,
             },
-            {label: 'x坐标', value: 'motion_xposition', checked: false},
-            {label: 'y坐标', value: 'motion_yposition', checked: false},
-            {label: '方向', value: 'motion_direction', checked: false},
+            { label: 'x坐标', value: 'motion_xposition', checked: false },
+            { label: 'y坐标', value: 'motion_yposition', checked: false },
+            { label: '方向', value: 'motion_direction', checked: false },
         ],
     },
     {
@@ -63,32 +66,37 @@ const codeBlocks = [
         value: '%{BKY_CATEGORY_LOOKS}',
         checked: false,
         list: [
-            {label: '说(xx)(x)秒', value: 'looks_sayforsecs', checked: false},
-            {label: '说(xx)', value: 'looks_say', checked: false},
+            { label: '说(xx)(x)秒', value: 'looks_sayforsecs', checked: false },
+            { label: '说(xx)', value: 'looks_say', checked: false },
             {
                 label: '思考(x...)(x)秒',
                 value: 'looks_thinkforsecs',
                 checked: false,
             },
-            {label: '思考(x...)', value: 'looks_think', checked: false},
+            { label: '思考(x...)', value: 'looks_think', checked: false },
             {
                 label: '换成(--)背景',
                 value: 'looks_switchbackdropto',
                 checked: false,
             },
-            {label: '下一个背景', value: 'looks_nextbackdrop', checked: false},
+            {
+                label: '换成(--)背景并等待',
+                value: 'looks_switchbackdroptoandwait',
+                checked: false,
+            },            
+            { label: '下一个背景', value: 'looks_nextbackdrop', checked: false },
             {
                 label: '换成(xx)造型',
                 value: 'looks_switchcostumeto',
                 checked: false,
             },
-            {label: '下一个造型', value: 'looks_nextcostume', checked: false},
+            { label: '下一个造型', value: 'looks_nextcostume', checked: false },
             {
                 label: '将大小增加(--)',
                 value: 'looks_changesizeby',
                 checked: false,
             },
-            {label: '将大小设为(--)', value: 'looks_setsizeto', checked: false},
+            { label: '将大小设为(--)', value: 'looks_setsizeto', checked: false },
             {
                 label: '将(--)特效增加(--)',
                 value: 'looks_changeeffectby',
@@ -104,8 +112,8 @@ const codeBlocks = [
                 value: 'looks_cleargraphiceffects',
                 checked: false,
             },
-            {label: '显示', value: 'looks_show', checked: false},
-            {label: '隐藏', value: 'looks_hide', checked: false},
+            { label: '显示', value: 'looks_show', checked: false },
+            { label: '隐藏', value: 'looks_hide', checked: false },
             {
                 label: '移动到最(前面)',
                 value: 'looks_gotofrontback',
@@ -126,7 +134,7 @@ const codeBlocks = [
                 value: 'looks_backdropnumbername',
                 checked: false,
             },
-            {label: '大小', value: 'looks_size', checked: false},
+            { label: '大小', value: 'looks_size', checked: false },
         ],
     },
     {
@@ -139,8 +147,8 @@ const codeBlocks = [
                 value: 'sound_playuntildone',
                 checked: false,
             },
-            {label: '播放声音(--)', value: 'sound_play', checked: false},
-            {label: '停止所有声音', value: 'sound_stopallsounds', checked: false},
+            { label: '播放声音(--)', value: 'sound_play', checked: false },
+            { label: '停止所有声音', value: 'sound_stopallsounds', checked: false },
             {
                 label: '将(--)音效增加(--)',
                 value: 'sound_changeeffectby',
@@ -151,14 +159,14 @@ const codeBlocks = [
                 value: 'sound_seteffectto',
                 checked: false,
             },
-            {label: '清除音效', value: 'sound_cleareffects', checked: false},
+            { label: '清除音效', value: 'sound_cleareffects', checked: false },
             {
                 label: '将音量增加(--)',
                 value: 'sound_changevolumeby',
                 checked: false,
             },
-            {label: '将音量设为(--)', value: 'sound_setvolumeto', checked: false},
-            {label: '音量', value: 'sound_volume', checked: false},
+            { label: '将音量设为(--)', value: 'sound_setvolumeto', checked: false },
+            { label: '音量', value: 'sound_volume', checked: false },
         ],
     },
     {
@@ -167,7 +175,7 @@ const codeBlocks = [
         checked: false,
         list: [
             {
-                label: '当绿旗被点击',
+                label: '当开始被点击',
                 value: 'event_whenflagclicked',
                 checked: false,
             },
@@ -201,7 +209,7 @@ const codeBlocks = [
                 value: 'event_whenbroadcastreceived',
                 checked: false,
             },
-            {label: '广播(--)', value: 'event_broadcast', checked: false},
+            { label: '广播(--)', value: 'event_broadcast', checked: false },
             {
                 label: '广播(--)并等待',
                 value: 'event_broadcastandwait',
@@ -215,19 +223,19 @@ const codeBlocks = [
         checked: false,
         value: '%{BKY_CATEGORY_CONTROL}',
         list: [
-            {label: '等待(--)秒', value: 'control_wait', checked: false},
-            {label: '重复执行(--)次', value: 'control_repeat', checked: false},
-            {label: '重复执行', value: 'control_forever', checked: false},
-            {label: '如果()那么', value: 'control_if', checked: false},
-            {label: '如果()那么 否则', value: 'control_if_else', checked: false},
-            {label: '等待()', value: 'control_wait_until', checked: false},
+            { label: '等待(--)秒', value: 'control_wait', checked: false },
+            { label: '重复执行(--)次', value: 'control_repeat', checked: false },
+            { label: '重复执行', value: 'control_forever', checked: false },
+            { label: '如果()那么', value: 'control_if', checked: false },
+            { label: '如果()那么 否则', value: 'control_if_else', checked: false },
+            { label: '等待()', value: 'control_wait_until', checked: false },
             {
                 label: '重复执行直到',
                 value: 'control_repeat_until',
                 checked: false,
             },
-            {label: '停止(--)', value: 'control_stop', checked: false},
-            {label: '克隆(--)', value: 'control_create_clone_of', checked: false},
+            { label: '停止(--)', value: 'control_stop', checked: false },
+            { label: '克隆(--)', value: 'control_create_clone_of', checked: false },
             {
                 label: '当作为克隆体启动时',
                 value: 'control_start_as_clone',
@@ -245,7 +253,7 @@ const codeBlocks = [
         value: '%{BKY_CATEGORY_SENSING}',
         checked: false,
         list: [
-            {label: '碰到(--)?', value: 'sensing_touchingobject', checked: false},
+            { label: '碰到(--)?', value: 'sensing_touchingobject', checked: false },
             {
                 label: '碰到颜色(--)?',
                 value: 'sensing_touchingcolor',
@@ -266,27 +274,27 @@ const codeBlocks = [
                 value: 'sensing_askandwait',
                 checked: false,
             },
-            {label: '回答', value: 'sensing_answer', checked: false},
-            {label: '按下(--)键?', value: 'sensing_keypressed', checked: false},
-            {label: '按下鼠标?', value: 'sensing_mousedown', checked: false},
-            {label: '鼠标的x坐标', value: 'sensing_mousex', checked: false},
-            {label: '鼠标的y坐标', value: 'sensing_mousey', checked: false},
+            { label: '回答', value: 'sensing_answer', checked: false },
+            { label: '按下(--)键?', value: 'sensing_keypressed', checked: false },
+            { label: '按下鼠标?', value: 'sensing_mousedown', checked: false },
+            { label: '鼠标的x坐标', value: 'sensing_mousex', checked: false },
+            { label: '鼠标的y坐标', value: 'sensing_mousey', checked: false },
             {
                 label: '将拖动模式设为(--)',
                 value: 'sensing_setdragmode',
                 checked: false,
             },
-            {label: '响度', value: 'sensing_loudness', checked: false},
-            {label: '计时器', value: 'sensing_timer', checked: false},
-            {label: '计时器归零', value: 'sensing_resettimer', checked: false},
-            {label: '(--)的(--)', value: 'sensing_of', checked: false},
-            {label: '当前时间的(--)', value: 'sensing_current', checked: false},
+            { label: '响度', value: 'sensing_loudness', checked: false },
+            { label: '计时器', value: 'sensing_timer', checked: false },
+            { label: '计时器归零', value: 'sensing_resettimer', checked: false },
+            { label: '(--)的(--)', value: 'sensing_of', checked: false },
+            { label: '当前时间的(--)', value: 'sensing_current', checked: false },
             {
                 label: '2000年至今的天数',
                 value: 'sensing_dayssince2000',
                 checked: false,
             },
-            {label: '用户名', value: 'sensing_username', checked: false},
+            { label: '用户名', value: 'sensing_username', checked: false },
         ],
     },
     {
@@ -294,32 +302,32 @@ const codeBlocks = [
         value: '%{BKY_CATEGORY_OPERATORS}',
         checked: false,
         list: [
-            {label: '加', value: 'operator_add', checked: false},
-            {label: '减', value: 'operator_subtract', checked: false},
-            {label: '乘', value: 'operator_multiply', checked: false},
-            {label: '除', value: 'operator_divide', checked: false},
+            { label: '加', value: 'operator_add', checked: false },
+            { label: '减', value: 'operator_subtract', checked: false },
+            { label: '乘', value: 'operator_multiply', checked: false },
+            { label: '除', value: 'operator_divide', checked: false },
             {
                 label: '在(--)和(--)之间取随机数',
                 value: 'operator_random',
                 checked: false,
             },
-            {label: '大于', value: 'operator_gt', checked: false},
-            {label: '小于', value: 'operator_lt', checked: false},
-            {label: '等于', value: 'operator_equals', checked: false},
-            {label: '与', value: 'operator_and', checked: false},
-            {label: '或', value: 'operator_or', checked: false},
-            {label: '不成立', value: 'operator_not', checked: false},
-            {label: '连接(--)和(--)', value: 'operator_join', checked: false},
+            { label: '大于', value: 'operator_gt', checked: false },
+            { label: '小于', value: 'operator_lt', checked: false },
+            { label: '等于', value: 'operator_equals', checked: false },
+            { label: '与', value: 'operator_and', checked: false },
+            { label: '或', value: 'operator_or', checked: false },
+            { label: '不成立', value: 'operator_not', checked: false },
+            { label: '连接(--)和(--)', value: 'operator_join', checked: false },
             {
                 label: '(--)的第(--)个字符',
                 value: 'operator_letter_of',
                 checked: false,
             },
-            {label: '(--)的字符数', value: 'operator_length', checked: false},
-            {label: '(--)包含(--)?', value: 'operator_contains', checked: false},
-            {label: '(--)除以(--)的余数', value: 'operator_mod', checked: false},
-            {label: '四舍五入(--)', value: 'operator_round', checked: false},
-            {label: '绝对值(--)', value: 'operator_mathop', checked: false},
+            { label: '(--)的字符数', value: 'operator_length', checked: false },
+            { label: '(--)包含(--)?', value: 'operator_contains', checked: false },
+            { label: '(--)除以(--)的余数', value: 'operator_mod', checked: false },
+            { label: '四舍五入(--)', value: 'operator_round', checked: false },
+            { label: '绝对值(--)', value: 'operator_mathop', checked: false },
         ],
     },
     {
@@ -337,7 +345,7 @@ const codeBlocks = [
 ];
 
 class Component extends React.Component {
-    constructor (props) {
+    constructor(props) {
         super(props);
         this.state = this.getInitState();
         bindAll(this, [
@@ -351,7 +359,7 @@ class Component extends React.Component {
             });
         });
     }
-    getInitState () {
+    getInitState() {
 
         // window.vcode_toolbox = {
         //     "%{BKY_CATEGORY_LOOKS}": {
@@ -360,7 +368,7 @@ class Component extends React.Component {
         // }
         console.log(' window.vcode_toolbox===>');
         console.log(window.vcode_toolbox);
-       
+
         // for (var j = 0; j < codeBlocks.length; j++) {
         //     codeBlocks[j].checked = true;
         //     for (var m = 0; m < codeBlocks[j].list.length; m++) {
@@ -368,8 +376,8 @@ class Component extends React.Component {
         //     }
         // }
 
-        for (var i in window.vcode_toolbox) {
-            for (var j = 0; j < codeBlocks.length; j++) {
+        for (let i in window.vcode_toolbox) {
+            for (let j = 0; j < codeBlocks.length; j++) {
                 if (codeBlocks[j].value == i) {
                     codeBlocks[j].checked = true;
                     break;
@@ -377,11 +385,11 @@ class Component extends React.Component {
             }
 
         }
-        for (i in window.vcode_toolbox) {
+        for (let i in window.vcode_toolbox) {
             for (const k in window.vcode_toolbox[i]) {
                 let found = false;
                 for (var j = 0; j < codeBlocks.length; j++) {
-                    if (codeBlocks[j].value == i){
+                    if (codeBlocks[j].value == i) {
                         found = true;
                         for (let m = 0; m < codeBlocks[j].list.length; m++) {
                             if (codeBlocks[j].list[m].value == k) {
@@ -403,19 +411,36 @@ class Component extends React.Component {
             curSelCodeList: [],
         };
     }
-    handleClose () {
+    handleClose() {
         // dispatchEvent(new Event('exit'));
         this.setState(this.getInitState());
 
     }
-    clickTypeBtnHandler (selObj, clickIndex) {
+    clickTypeBtnHandler(selObj, clickIndex) {
+
+        let _allSelectCode = true;
+
+        for (var i = 0; i < selObj.list.length; i++) {
+            if (!selObj.list[i].checked) {
+                _allSelectCode = false;
+                break;
+            }
+        }
+        console.log(selObj)
+
         this.setState({
             curSelCodeList: selObj.list,
-            curSelTypeIndex: clickIndex
+            curSelTypeIndex: clickIndex,
+            allSelectCode: _allSelectCode
         });
+        console.log(this.state.allSelectCode)
+
+
     }
     // 全选&反选代码块
-    clickAllSelCodeHandler () {
+    clickAllSelCodeHandler() {
+        /* eslint-disable react/no-direct-mutation-state */
+        /* eslint-disable array-callback-return */
         this.state.allSelectCode = !this.state.allSelectCode;
         let totalCheckedNum = 0;
         this.state.curSelCodeList.map(e => {
@@ -442,14 +467,15 @@ class Component extends React.Component {
             curSelCodeList: this.state.curSelCodeList,
         });
     }
-    clickCodeBtnHandler (selObj) {
+    clickCodeBtnHandler(selObj) {
         selObj.checked = !selObj.checked;
         this.setState({
             curSelCodeList: this.state.curSelCodeList,
         });
     }
-    enterHandler () {
+    enterHandler() {
         const {
+            // eslint-disable-next-line no-shadow
             codeBlocks
         } = this.state;
 
@@ -458,10 +484,15 @@ class Component extends React.Component {
         if (Object.getOwnPropertyNames(configJson).length == 0) {
             canConfig = false;
         }
+
+
         for (const i in configJson) {
-            if (Object.getOwnPropertyNames(configJson[i]).length == 0) {
-                canConfig = false;
+            if (i != "%{BKY_CATEGORY_VARIABLES}" && i != "%{BKY_CATEGORY_MYBLOCKS}") {
+                if (Object.getOwnPropertyNames(configJson[i]).length == 0) {
+                    canConfig = false;
+                }
             }
+
         }
 
         console.log(configJson);
@@ -475,7 +506,7 @@ class Component extends React.Component {
         }
     }
 
-    getConfigJson () {
+    getConfigJson() {
         const {
             codeBlocks
         } = this.state;
@@ -496,7 +527,7 @@ class Component extends React.Component {
         return configJson;
     }
 
-    clickTypeChecked (selTypesBlock) {
+    clickTypeChecked(selTypesBlock) {
 
         selTypesBlock.checked = !selTypesBlock.checked;
         console.log(selTypesBlock.checked);
@@ -505,7 +536,7 @@ class Component extends React.Component {
         });
     }
 
-    render () {
+    render() {
         const {
             isShow,
             curSelTypeIndex,
@@ -529,21 +560,24 @@ class Component extends React.Component {
         const blocksCodeList = [<div
             key={'j00'}
             className={classNames(styles.codeBtn)}
-        ><input
+        >
+            <input
                 type="checkbox"
-            checked={allSelectCode}
-            onChange={this.clickAllSelCodeHandler.bind(this)}
+                checked={allSelectCode}
+                onChange={this.clickAllSelCodeHandler.bind(this)}
             />反选</div>];
 
         for (let j = 0; j < curSelCodeList.length; j++) {
-            blocksCodeList.push(<div
-                key={j}
-                className={classNames(styles.codeBtn)}
-            ><input
-                    type="checkbox"
-                onChange={this.clickCodeBtnHandler.bind(this, curSelCodeList[j])}
-                checked={curSelCodeList[j].checked}
-                />{curSelCodeList[j].label}</div>);
+            blocksCodeList.push(
+                <div
+                    key={j}
+                    className={classNames(styles.codeBtn)}
+                >
+                    <input
+                        type="checkbox"
+                        onChange={this.clickCodeBtnHandler.bind(this, curSelCodeList[j])}
+                        checked={curSelCodeList[j].checked}
+                    />{curSelCodeList[j].label}</div>);
         }
         return (
             <div
@@ -569,7 +603,7 @@ class Component extends React.Component {
                         className={classNames(styles.button)}
                         onClick={this.enterHandler}
                     >
-                        确定隐藏
+                        保存配置
                     </button>
                     <button
                         type="button"

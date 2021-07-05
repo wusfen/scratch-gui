@@ -225,7 +225,7 @@ class MenuBar extends React.Component {
         this.setState({
             isTeacherPreview: !isTeacherPreview,
         });
-        isTeacherPreview ?window.MODE = 'teacher':window.MODE = undefined;
+        isTeacherPreview ? window.MODE = 'teacher' : window.MODE = undefined;
         dispatchEvent(new Event('updateWorkspace_'));
     }
     handleClickRemix () {

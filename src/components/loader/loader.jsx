@@ -203,6 +203,7 @@ class LoaderComponent extends React.Component {
 
 LoaderComponent.propTypes = {
     isFullScreen: PropTypes.bool,
+    // eslint-disable-next-line react/no-unused-prop-types
     messageId: PropTypes.string
 };
 LoaderComponent.defaultProps = {
