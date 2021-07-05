@@ -16,11 +16,15 @@ class Component extends React.Component{
             isShow: !false,
             keys: [],
         };
+        this.arrowRef = React.createRef();
 
         bindAll(this, [
             'handleMouseDown',
             'handleMouseUp',
             'handleClick',
+            'handleArrowStart',
+            'handleArrowMove',
+            'handleArrowEnd',
         ]);
     }
     getKeys () {
@@ -66,6 +70,11 @@ class Component extends React.Component{
             '→': 'ArrowRight',
         }[name] || name;
     }
+    handleArrowStart () {
+        // TODO
+    }
+    handleArrowMove (){}
+    handleArrowEnd (){}
     handleMouseDown (e) {
         // e.preventDefault();
 
@@ -120,6 +129,7 @@ class Component extends React.Component{
             ...state
         } = this.state;
         keys = this.getKeys();
+        var hasArrow = keys.join().match(/arrow/i);
 
         return (
             <div
@@ -127,7 +137,14 @@ class Component extends React.Component{
                 className={classNames(styles.container)}
                 onTouchEnd={e => e.preventDefault()}
             >
-                <div className={`${c.direction}`} >
+                <div
+                    hidden={!(hasArrow)}
+                    className={`${c.direction}`}
+                    ref={this.arrowRef}
+                    onTouchStart={this.handleArrowStart}
+                    onTouchMove={this.handleArrowMove}
+                    onTouchEnd={this.handleArrowEnd}
+                >
                     <button
                         type="button"
                         className={`${c.arrow} ${c.up}`}

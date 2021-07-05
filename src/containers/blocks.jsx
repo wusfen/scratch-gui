@@ -269,8 +269,7 @@ class Blocks extends React.Component {
     requestToolboxUpdate () {
         clearTimeout(this.toolboxUpdateTimeout);
         this.toolboxUpdateTimeout = setTimeout(() => {
-            this.workspace.updateToolbox(this.props.toolboxXML);
-            this._renderedToolboxXML = this.props.toolboxXML;
+            this.updateToolbox();
         }, 0);
     }
     setLocale () {
