@@ -123,7 +123,7 @@
     border: 0;
     border-top-left-radius: inherit;
     border-bottom-left-radius: inherit;
-    box-shadow: 2px 0 0 #e6c8ff;
+    box-shadow: 1px 0 0.4375rem #e6c8ff;
 }
 
 .blocks :global(.scratchCategoryMenu) {
