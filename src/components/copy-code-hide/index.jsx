@@ -595,7 +595,7 @@ class Component extends React.Component {
                         className={classNames(styles.button)}
                         onClick={this.enterHandler}
                     >
-                        确定隐藏
+                        保存配置
                     </button>
                     <button
                         type="button"
