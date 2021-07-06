@@ -25,7 +25,7 @@ export default function (Blockly, vm){
             for (let j = 0; j < fieldCount; j++){
                 const field = fields[j];
                 const name = field.getAttribute('name');
-                if (name === 'VARIABLE'|| name === 'BROADCAST_OPTION'){
+                if (name === 'VARIABLE'|| name === 'BROADCAST_OPTION' || name === 'LIST'){
                     const name = field.innerHTML;
                     if (name.indexOf('#') == 0 && name.length - 1 == name.indexOf('*')){
                         return true;
