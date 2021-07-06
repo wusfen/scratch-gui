@@ -26,21 +26,29 @@
         <!-- <script src="https://unpkg.com/vconsole/dist/vconsole.min.js"></script> -->
         <!-- <script> var vConsole = new window.VConsole();</script> -->
         <script>
-            function showConsole(e) {
-                if (e.touches && e.touches.length === 3) {
-                    if (document.__f12) return;
-                    document.__f12 = true;
+            function showConsole() {
+                if (document.__f12) return;
+                document.__f12 = true;
 
-                    var script = document.createElement("script");
-                    script.src =
-                        "https://cdn.jsdelivr.net/gh/wusfen/console.js@0.0.10/dist/console.js";
-                    document.body.appendChild(script);
-                    console.show = 2;
+                var script = document.createElement("script");
+                script.src =
+                    "https://cdn.jsdelivr.net/gh/wusfen/console.js@0.0.11/dist/console.js";
+                document.head.appendChild(script);
+                console.show = 1;
+            }
+
+            if (/mobile/i.test(navigator.userAgent)) {
+                if (/\/(dev|uat)\/|\/\/1/.test(location)) {
+                    showConsole();
                 }
             }
 
-            document.addEventListener("touchstart", showConsole);
-            document.addEventListener("contextmenu", showConsole);
+            document.addEventListener("touchstart", function (e) {
+                if (e.touches && e.touches.length === 3) {
+                    showConsole();
+                    console.show = 2;
+                }
+            });
         </script>
 
         <script>
