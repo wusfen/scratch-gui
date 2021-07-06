@@ -245,7 +245,9 @@ class TargetPane$ extends React.Component {
         }
     }
     clickDirBtn (dir) {
-        const ele = document.getElementsByClassName('sprite-selector_scroll-wrapper_3qlZ7 box_box_tWy-0')[0];
+
+        //const ele = document.getElementsByClassName('sprite-selector_scroll-wrapper_3qlZ7 box_box_tWy-0')[0];
+        const ele = document.getElementById("spriteList");
         if (dir == 'up') {
             ele.scrollTop -= 100;
            
