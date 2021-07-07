@@ -6,6 +6,7 @@ const categorySeparator = '<sep gap="36"/>';
 const blockSeparator = '<sep gap="36"/>'; // At default scale, about 28px
 
 const Group = require('./../assets/blocks-icon/Group.png');
+const Group1 = require('./../assets/blocks-icon/Group1.png');
 const Group2 = require('./../assets/blocks-icon/Group2.png');
 const Group3 = require('./../assets/blocks-icon/Group3.png');
 const Group4 = require('./../assets/blocks-icon/Group4.png');
@@ -447,7 +448,7 @@ const control = function (isInitialSetup, isStage) {
 const sensing = function (isInitialSetup, isStage) {
     const name = ScratchBlocks.ScratchMsgs.translate('SENSING_ASK_TEXT', 'What\'s your name?');
     return `
-    <category name="%{BKY_CATEGORY_SENSING}" id="sensing" colour="#4CBFE6" secondaryColour="#2E8EB8" iconURI="${Group2}">
+    <category name="%{BKY_CATEGORY_SENSING}" id="sensing" colour="#4CBFE6" secondaryColour="#2E8EB8" iconURI="${Group1}">
         ${isStage ? '' : `
             <block type="sensing_touchingobject">
                 <value name="TOUCHINGOBJECTMENU">
