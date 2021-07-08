@@ -124,6 +124,9 @@ export default function (Blockly){
                         // Do not enable these blocks as a result of capacity filtering.
                         this.permanentlyDisabled_.push(curBlock);
                     }
+                    if(!curBlock.rendered){
+                        continue;
+                    }
                     contents.push({type: 'block', block: curBlock});
                     const gap = parseInt(xml.getAttribute('gap'), 10);
                     gaps.push(isNaN(gap) ? default_gap : gap);
