@@ -44,6 +44,8 @@ import costumesIcon from './icon--costumes.svg';
 import soundsIcon from './icon--sounds.svg';
 
 import SubmitResultDialog from '../submit-result-dialog/index.jsx';
+import Keyboard from '../keyboard/index.jsx';
+import CopyCodeHideModal from '../copy-code-hide/index.jsx';
 
 const messages = defineMessages({
     addExtension: {
@@ -145,20 +147,24 @@ const GUIComponent = props => {
 
     return (<MediaQuery minWidth={layout.fullSizeMinWidth}>{isFullSize => {
         const stageSize = resolveStageSize(stageSizeMode, isFullSize);
+        console.log('isPlayerOnly:', isPlayerOnly);
 
         return isPlayerOnly ? (
-            <StageWrapper
-                isFullScreen={isFullScreen}
-                isRendererSupported={isRendererSupported}
-                isRtl={isRtl}
-                loading={loading}
-                stageSize={STAGE_SIZE_MODES.large}
-                vm={vm}
-            >
-                {alertsVisible ? (
-                    <Alerts className={styles.alertsContainer} />
-                ) : null}
-            </StageWrapper>
+            <div >
+                <StageWrapper
+                    isFullScreen={isFullScreen}
+                    isRendererSupported={isRendererSupported}
+                    isRtl={isRtl}
+                    loading={loading}
+                    stageSize={STAGE_SIZE_MODES.large}
+                    vm={vm}
+                >
+                    {alertsVisible ? (
+                        <Alerts className={styles.alertsContainer} />
+                    ) : null}
+                </StageWrapper>
+                <Keyboard vm={vm} />
+            </div>
         ) : (
             <Box
                 className={styles.pageWrapper}
@@ -326,11 +332,12 @@ const GUIComponent = props => {
                                             title={intl.formatMessage(messages.addExtension)}
                                             onClick={onExtensionButtonClick}
                                         >
-                                            <img
+                                            {/* <img
                                                 className={styles.extensionButtonIcon}
                                                 draggable={false}
                                                 src={addExtensionIcon}
-                                            />
+                                            /> */}
+                                            <span>+</span>
                                         </button>
                                     </Box>
                                     <Box className={styles.watermark}>
@@ -373,7 +380,9 @@ const GUIComponent = props => {
                 </Box>
                 <DragLayer />
 
-                <SubmitResultDialog />
+                <SubmitResultDialog vm={vm} />
+                <Keyboard vm={vm} />
+                <CopyCodeHideModal></CopyCodeHideModal>
             </Box>
         );
     }}</MediaQuery>);

@@ -7,7 +7,8 @@ module.exports = {
         node: true,
     },
     globals: {
-        process: true
+        process: true,
+        Blockly: true,
     },
     rules: {
         'import/no-mutable-exports': 'error',
@@ -24,6 +25,15 @@ module.exports = {
         'comma-dangle': 0,
         'import/no-commonjs': 0,
         'no-alert': 1,
+        'react/self-closing-comp': 0,
+        'react/jsx-no-bind': 0,
+        'react/jsx-no-literals': 0,
+        'eqeqeq': 1,
+        'no-dupe-keys': 1,
+        'no-var': 0,
+        'react/jsx-handler-names': 1,
+        'no-unused-expressions': 0,
+        'no-undefined': 1,
     },
     settings: {
         react: {

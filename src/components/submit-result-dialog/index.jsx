@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -82,7 +83,8 @@ class Component extends React.Component{
         if (this.state.isShowBackButton) {
             dispatchEvent(new Event('exit'));
         }
-
+        console.log('to stopAll');
+        this.props.vm.stopAll();
         this.setState(this.getInitState());
         clearInterval(this.timer);
     }

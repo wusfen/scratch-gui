@@ -37,6 +37,7 @@ const SpriteList = function (props) {
 
     return (
         <Box
+            id="spriteList"
             className={classNames(styles.scrollWrapper, {
                 [styles.scrollWrapperDragging]: draggingType === DragConstants.BACKPACK_SPRITE
             })}

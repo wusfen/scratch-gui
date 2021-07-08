@@ -14,6 +14,7 @@ import styles from './direction-picker.css';
 import allAroundIcon from './icon--all-around.svg';
 import leftRightIcon from './icon--left-right.svg';
 import dontRotateIcon from './icon--dont-rotate.svg';
+import rotateIcon from './rotate.svg';
 
 const BufferedInput = BufferedInputHOC(Input);
 
@@ -53,8 +54,12 @@ const DirectionPicker = props => (
     <Label
         secondary
         above={props.labelAbove}
-        text={directionLabel}
+        text=""
     >
+        <img
+            className={styles.iconWrapperAbs}
+            src={rotateIcon}
+        />
         <Popover
             body={
                 <div>
@@ -106,6 +111,7 @@ const DirectionPicker = props => (
             preferPlace="above"
             onOuterAction={props.onClosePopover}
         >
+          
             <BufferedInput
                 small
                 disabled={props.disabled}

@@ -41,7 +41,7 @@ let messages = defineMessages({
     addLibraryBackdropMsg: {
         defaultMessage: 'Choose a Backdrop',
         description: 'Button to add a backdrop in the editor tab',
-        id: 'gui.costumeTab.addBackdropFromLibrary'
+        id: 'paint.selectMode.select'
     },
     addLibraryCostumeMsg: {
         defaultMessage: 'Choose a Costume',
@@ -61,7 +61,7 @@ let messages = defineMessages({
     addFileBackdropMsg: {
         defaultMessage: 'Upload Backdrop',
         description: 'Button to add a backdrop by uploading a file in the editor tab',
-        id: 'gui.costumeTab.addFileBackdrop'
+        id: 'gui.costumeTab.fileUpload'
     },
     addFileCostumeMsg: {
         defaultMessage: 'Upload Costume',
@@ -87,7 +87,8 @@ class CostumeTab extends React.Component {
             'handleFileUploadClick',
             'handleCostumeUpload',
             'handleDrop',
-            'setFileInput'
+            'setFileInput',
+            'hideEditingTarget'
         ]);
         const {
             editingTarget,
@@ -241,6 +242,9 @@ class CostumeTab extends React.Component {
         // https://github.com/LLK/scratch-flash/blob/9fbac92ef3d09ceca0c0782f8a08deaa79e4df69/src/ui/media/MediaInfo.as#L224-L237
         return `${Math.ceil(size[0] / resolution)} x ${Math.ceil(size[1] / resolution)}`;
     }
+    hideEditingTarget () {
+        document.querySelector('[role="tablist"]').children[0].click();
+    }
     render () {
         const {
             dispatchUpdateRestore, // eslint-disable-line no-unused-vars
@@ -258,8 +262,10 @@ class CostumeTab extends React.Component {
         const isStage = vm.editingTarget.isStage;
         const target = vm.editingTarget.sprite;
 
-        const addLibraryMessage = isStage ? messages.addLibraryBackdropMsg : messages.addLibraryCostumeMsg;
-        const addFileMessage = isStage ? messages.addFileBackdropMsg : messages.addFileCostumeMsg;
+        // const addLibraryMessage = isStage ? messages.addLibraryBackdropMsg : messages.addLibraryCostumeMsg;
+        const addLibraryMessage = messages.addLibraryBackdropMsg;
+        // const addFileMessage = isStage ? messages.addFileBackdropMsg : messages.addFileCostumeMsg;
+        const addFileMessage = messages.addFileBackdropMsg;
         const addSurpriseFunc = isStage ? this.handleSurpriseBackdrop : this.handleSurpriseCostume;
         const addLibraryFunc = isStage ? onNewLibraryBackdropClick : onNewLibraryCostumeClick;
         const addLibraryIcon = isStage ? addLibraryBackdropIcon : addLibraryCostumeIcon;
@@ -278,6 +284,22 @@ class CostumeTab extends React.Component {
                         img: addLibraryIcon,
                         onClick: addLibraryFunc
                     },
+                    
+                    {
+                        title: intl.formatMessage(addLibraryMessage),
+                        img: searchIcon,
+                        onClick: addLibraryFunc
+                    },
+                    {
+                        title: intl.formatMessage(messages.addBlankCostumeMsg),
+                        img: paintIcon,
+                        onClick: this.handleNewBlankCostume
+                    },
+                    {
+                        title: intl.formatMessage(messages.addSurpriseCostumeMsg),
+                        img: surpriseIcon,
+                        onClick: addSurpriseFunc
+                    },
                     {
                         title: intl.formatMessage(addFileMessage),
                         img: fileUploadIcon,
@@ -286,21 +308,6 @@ class CostumeTab extends React.Component {
                         fileChange: this.handleCostumeUpload,
                         fileInput: this.setFileInput,
                         fileMultiple: true
-                    },
-                    {
-                        title: intl.formatMessage(messages.addSurpriseCostumeMsg),
-                        img: surpriseIcon,
-                        onClick: addSurpriseFunc
-                    },
-                    {
-                        title: intl.formatMessage(messages.addBlankCostumeMsg),
-                        img: paintIcon,
-                        onClick: this.handleNewBlankCostume
-                    },
-                    {
-                        title: intl.formatMessage(addLibraryMessage),
-                        img: searchIcon,
-                        onClick: addLibraryFunc
                     }
                 ]}
                 dragType={DragConstants.COSTUME}
@@ -313,6 +320,7 @@ class CostumeTab extends React.Component {
                 onDuplicateClick={this.handleDuplicateCostume}
                 onExportClick={this.handleExportCostume}
                 onItemClick={this.handleSelectCostume}
+                onCloseBtn={this.hideEditingTarget}
             >
                 {target.costumes ?
                     <PaintEditorWrapper

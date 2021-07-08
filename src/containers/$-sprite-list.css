@@ -7,4 +7,19 @@
     background: #9678ff;
     box-shadow: inset 0 1px 0.6875rem 0 #886dff;
     border-radius: 1.25rem;
+    padding-top: 2.65rem;
+    text-align: center;
+}
+.dir-btn {
+    text-align: center;
+    cursor: pointer;
+    width: 0.75rem;
+    height: 0.59rem;
+}
+.up-btn {
+    margin-top: 5px;
+}
+.down-btn {
+    position: relative;
+    top: -40px;
 }

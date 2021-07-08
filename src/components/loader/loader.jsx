@@ -7,6 +7,8 @@ import PropTypes from 'prop-types';
 import topBlock from './top-block.svg';
 import middleBlock from './middle-block.svg';
 import bottomBlock from './bottom-block.svg';
+import loadingVideo from './loading.mp4';
+
 const messages = [
     {
         message: (
@@ -152,7 +154,15 @@ class LoaderComponent extends React.Component {
                     [styles.fullscreen]: this.props.isFullScreen
                 })}
             >
-                <div className={styles.container}>
+                <video
+                    className={styles.loadingVideo}
+                    src={loadingVideo}
+                    autoPlay="autoplay"
+                    loop="loop"
+                    muted
+                >
+                </video>
+                {/* <div className={styles.container}>
                     <div className={styles.blockAnimation}>
                         <img
                             className={styles.topBlock}
@@ -185,7 +195,7 @@ class LoaderComponent extends React.Component {
                             ))}
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         );
     }
@@ -193,6 +203,7 @@ class LoaderComponent extends React.Component {
 
 LoaderComponent.propTypes = {
     isFullScreen: PropTypes.bool,
+    // eslint-disable-next-line react/no-unused-prop-types
     messageId: PropTypes.string
 };
 LoaderComponent.defaultProps = {

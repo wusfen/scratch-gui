@@ -28,6 +28,7 @@ import SB3Downloader from '../../containers/sb3-downloader.jsx';
 import DeletionRestorer from '../../containers/deletion-restorer.jsx';
 import TurboMode from '../../containers/turbo-mode.jsx';
 import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
+import Confirm from '../dialog/confirm/index.jsx';
 
 import {openTipsLibrary} from '../../reducers/modals';
 import {setPlayer} from '../../reducers/mode';
@@ -85,6 +86,7 @@ import sharedMessages from '../../lib/shared-messages';
 
 import folderIcon from '../../assets/icons/folder.svg';
 import setupIcon from '../../assets/icons/set up.svg';
+import resetIcon from '../../assets/icons/redo.svg';
 
 import {ajax} from '../../lib/ajax.js';
 import {param} from '../../lib/param.js';
@@ -177,8 +179,10 @@ class MenuBar extends React.Component {
             'handleSave',
             'handleExit',
             'handleSaveExit',
+            'handleTeacherPreview',
             'handleSkip',
             'handleSubmit',
+            'handleClickResetFile',
             'handleClickNew',
             'handleClickRemix',
             'handleClickSave',
@@ -191,11 +195,19 @@ class MenuBar extends React.Component {
             'getSaveToComputerHandler',
             'restoreOptionMessage'
         ]);
+        const searchParams = new URL(location).searchParams;
 
         this.state = {
             workName: '',
             isShowSkipButton: !false,
+            file: searchParams.get('file'),
+            isShowResetFileButton: searchParams.get('file'),
+            isShowSkipButton: !false,
+            isShowPublishButton: !false,
+            mode: searchParams.get('mode'),
+            isTeacherPreview: false, // true: 老师切学生
         };
+
 
     }
     componentDidMount () {
@@ -218,6 +230,14 @@ class MenuBar extends React.Component {
             this.props.onClickNew(this.props.canSave && this.props.canCreateNew);
         }
         this.props.onRequestCloseFile();
+    }
+    handleTeacherPreview () {
+        var isTeacherPreview = this.state.isTeacherPreview;
+        this.setState({
+            isTeacherPreview: !isTeacherPreview,
+        });
+        isTeacherPreview ? window.MODE = 'teacher' : window.MODE = undefined;
+        dispatchEvent(new Event('updateWorkspace_'));
     }
     handleClickRemix () {
         this.props.onClickRemix();
@@ -361,6 +381,28 @@ class MenuBar extends React.Component {
     }
     getProjectCover () {
         return this.props.vm.renderer.canvas.toDataURL();
+    }
+    async handleClickResetFile () {
+        const fileUrl = this.state.file;
+
+        if (fileUrl) {
+            const bufferPromise = new Promise(async r => {
+                const res = await fetch(fileUrl);
+                const blob = await res.blob();
+                const buffer = await blob.arrayBuffer();
+                r(buffer);
+            });
+
+            await Confirm.confirm({
+                title: '重做确认',
+                content: '将会清空当前作品记录，重新开始创作哦，是否确定重做？'
+            });
+
+            this.props.vm.loadProject(await bufferPromise);
+        }
+    }
+    clickHideCode () {
+        dispatchEvent(new Event('menu:hideCode'));
     }
     async uploadSb3 () {
         const blob = await this.props.vm.saveProjectSb3();
@@ -621,7 +663,7 @@ class MenuBar extends React.Component {
                                     description="Text for edit dropdown menu"
                                     id="gui.menuBar.edit"
                                 /> */}
-                                
+
                                 <img
                                     className={styles.icon}
                                     src={setupIcon}
@@ -663,10 +705,24 @@ class MenuBar extends React.Component {
                                 </MenuSection>
                             </MenuBarMenu>
                         </div>
+                        {/* redo */}
+                        <button
+                            hidden={!(this.state.isShowResetFileButton)}
+                            type="button"
+                            className={`${c.menuBarItem}`}
+                            onClick={this.handleClickResetFile}
+                        >
+                            <img
+                                className={styles.icon}
+                                src={resetIcon}
+                                alt="reset"
+                            />
+                        </button>
+
                     </div>
 
                     {/* <Divider className={classNames(styles.divider)} /> */}
-                    
+
                     <div
                         hidden
                         aria-label={this.props.intl.formatMessage(ariaMessages.tutorials)}
@@ -721,7 +777,7 @@ class MenuBar extends React.Component {
                                                 onClick={() => {
                                                     this.handleClickShare(waitForUpdate);
                                                 }}
-                                                /* eslint-enable react/jsx-no-bind */
+                                            /* eslint-enable react/jsx-no-bind */
                                             />
                                         )
                                     }
@@ -751,7 +807,7 @@ class MenuBar extends React.Component {
                                                 onClick={() => {
                                                     this.handleClickSeeCommunity(waitForUpdate);
                                                 }}
-                                                /* eslint-enable react/jsx-no-bind */
+                                            /* eslint-enable react/jsx-no-bind */
                                             />
                                         )
                                     }
@@ -924,6 +980,21 @@ class MenuBar extends React.Component {
 
                     <button
                         className={`${c.button} ${c.pink} ${c.zHigher}`}
+                        hidden={this.state.mode != 'teacher'}
+                        onClick={this.handleTeacherPreview}
+                    >
+                        { this.state.isTeacherPreview ? '返回老师模式' : '切换学生模式' }
+                    </button>
+
+                    <button
+                        hidden={this.state.mode != 'teacher'}
+                        className={c.button}
+                        onClick={this.clickHideCode}
+                    >{'隐藏盒子'}</button>
+
+                    <button
+                        hidden={!this.state.isShowSkipButton}
+                        className={`${c.button} ${c.pink} ${c.zHigher}`}
                         onClick={this.handleSkip}
                     >{'跳过'}</button>
 
@@ -1015,7 +1086,7 @@ MenuBar.propTypes = {
 
 MenuBar.defaultProps = {
     logo: scratchLogo,
-    onShare: () => {}
+    onShare: () => { }
 };
 
 const mapStateToProps = (state, ownProps) => {

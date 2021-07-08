@@ -26,7 +26,8 @@ const config = {
         port: process.env.PORT || 8601
     },
     entry: {
-        gui: './src/playground/index.jsx'
+        gui: './src/playground/index.jsx',
+        player: './src/playground/player.jsx',
     },
     output: isProduction ?
         {
@@ -101,7 +102,7 @@ const config = {
                 ]
             },
             {
-                test: /\.(svg|png|wav|gif|jpg|mp3)$/,
+                test: /\.(svg|png|wav|gif|jpg|mp3|mp4)$/,
                 use: [
                     {
                         loader: 'file-loader',
@@ -138,11 +139,18 @@ const config = {
                     `"${process.env.GA_ID || 'UA-000000-01'}"`
         }),
         new HtmlWebpackPlugin({
+            chunks: ['lib', 'gui'],
             template: 'src/playground/index.ejs',
             title: '',
+            PUBLIC_PATH: process.env.PUBLIC_PATH || '',
             sentryConfig: process.env.SENTRY_CONFIG ?
                 `"${process.env.SENTRY_CONFIG}"` :
                 null
+        }),
+        new HtmlWebpackPlugin({
+            chunks: ['lib', 'player'],
+            template: 'src/playground/index.ejs',
+            filename: 'player.html',
         }),
         new CopyWebpackPlugin([
             {

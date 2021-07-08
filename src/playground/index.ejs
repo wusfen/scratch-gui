@@ -9,27 +9,46 @@
         <meta name="google" value="notranslate" />
         <link rel="shortcut icon" href="static/favicon.ico" />
         <title>豌豆编程</title>
+        <base href="<%= htmlWebpackPlugin.options.PUBLIC_PATH %>" />
+        <script>
+            // fix <base> pushState
+            history._pushState = history.pushState;
+            history.pushState = function (state, title, url) {
+                url = /:\/\//.test(url)
+                    ? url
+                    : location.origin + String(url).replace(/^\/?/, "/");
+                return history._pushState.apply(this, arguments);
+            };
+        </script>
 
         <!-- <script src="https://cdn.jsdelivr.net/gh/wusfen/console.js@0.0.10/dist/console.js"></script> -->
         <!-- <script> document.onclick = e => { console.show = 2 } </script> -->
         <!-- <script src="https://unpkg.com/vconsole/dist/vconsole.min.js"></script> -->
         <!-- <script> var vConsole = new window.VConsole();</script> -->
         <script>
-            function showConsole(e) {
-                if (e.touches && e.touches.length === 3) {
-                    if (document.__f12) return;
-                    document.__f12 = true;
+            function showConsole() {
+                if (document.__f12) return;
+                document.__f12 = true;
 
-                    var script = document.createElement("script");
-                    script.src =
-                        "https://cdn.jsdelivr.net/gh/wusfen/console.js@0.0.10/dist/console.js";
-                    document.body.appendChild(script);
-                    console.show = 2;
+                var script = document.createElement("script");
+                script.src =
+                    "https://cdn.jsdelivr.net/gh/wusfen/console.js@master/src/console.min.js";
+                document.head.appendChild(script);
+                console.show = 1;
+            }
+
+            if (/mobile/i.test(navigator.userAgent)) {
+                if (/\/(dev|uat)\/|\/\/1/.test(location)) {
+                    showConsole();
                 }
             }
 
-            document.addEventListener("touchstart", showConsole);
-            document.addEventListener("contextmenu", showConsole);
+            document.addEventListener("touchstart", function (e) {
+                if (e.touches && e.touches.length === 3) {
+                    showConsole();
+                    console.show = 2;
+                }
+            });
         </script>
 
         <script>
@@ -74,6 +93,7 @@
                 document.documentElement.style.setProperty(
                     "--STAGE_CSS_WIDTH",
                     Math.min(
+                        375,
                         266 / (1024 / window.innerWidth),
                         266 / (768 / window.innerHeight)
                     )

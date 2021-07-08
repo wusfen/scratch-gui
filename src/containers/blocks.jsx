@@ -26,6 +26,8 @@ import {closeExtensionLibrary, openSoundRecorder, openConnectionModal} from '../
 import {activateCustomProcedures, deactivateCustomProcedures} from '../reducers/custom-procedures';
 import {setConnectionModalExtensionId} from '../reducers/connection-modal';
 import {updateMetrics} from '../reducers/workspace-metrics';
+import classNames from 'classnames';
+import styles from './blocks.css';
 
 import {
     activateTab,
@@ -85,6 +87,7 @@ class Blocks extends React.Component {
         this.onTargetsUpdate = debounce(this.onTargetsUpdate, 100);
         this.toolboxUpdateQueue = [];
     }
+
     componentDidMount () {
         this.ScratchBlocks.FieldColourSlider.activateEyedropper_ = this.props.onActivateColorPicker;
         this.ScratchBlocks.Procedures.externalProcedureDefCallback = this.props.onActivateCustomProcedures;
@@ -100,7 +103,8 @@ class Blocks extends React.Component {
             zoom: {
                 controls: true,
                 wheel: true,
-                startScale: .75,
+                // startScale: .75,
+                startScale: Math.max(0.5, Math.min(.75 * (window.innerHeight / 768), 1)), // todo add
                 maxScale: 3,
                 minScale: 0.3,
                 scaleSpeed: 1.2
@@ -111,7 +115,48 @@ class Blocks extends React.Component {
         this.props.options,
         {rtl: this.props.isRtl, toolbox: this.props.toolboxXML}
         );
+
         this.workspace = this.ScratchBlocks.inject(this.blocks, workspaceConfig);
+        window.ScratchBlocks = this.ScratchBlocks;
+        window.workspace = this.workspace;
+        const workspace = this.workspace;
+        const toolbox_ = workspace.toolbox_;
+
+        const startScale = workspaceConfig.zoom.startScale * (1 / .75);
+        toolbox_.flyout_.DEFAULT_WIDTH = 250 * startScale;
+        toolbox_.width = toolbox_.flyout_.DEFAULT_WIDTH + (50 * startScale);
+        toolbox_.flyout_.autoClose = true;
+        // // autoClose 时会执行它
+        toolbox_.clearSelection = function () {
+            // console.log('clearSelection:', 'clearSelection');
+            // null 后，更新 toolbox xml 时，不能走依赖 selectedItem 的逻辑
+            // this.setSelectedItem(null);
+
+            // 只改变样式，以免影响到 toolbox xml
+            toolbox_.flyout_.setVisible(false);
+            const categorySelected = document.querySelector('.scratchCategoryMenuItem.categorySelected');
+            if (categorySelected) {
+                categorySelected.classList.remove('categorySelected');
+            }
+        };
+        // toolbox_.clearSelection(); // 初始关闭
+
+        // 修正 toolbox 边界，以前是往左延伸，影响到代码拖动到另一角色
+        const rect = toolbox_.getClientRect();
+        toolbox_.getClientRect = function () {
+            const toolboxRect = this.HtmlDiv.getBoundingClientRect();
+            const x = toolboxRect.left;
+            const y = toolboxRect.top;
+            const width = toolboxRect.width;
+            const height = toolboxRect.height;
+  
+            return Object.assign(rect, {
+                left: x,
+                top: y,
+                width: width,
+                height: height,
+            });
+        };
 
         // Register buttons under new callback keys for creating variables,
         // lists, and procedures from extensions.
@@ -151,6 +196,15 @@ class Blocks extends React.Component {
         if (this.props.isVisible) {
             this.setLocale();
         }
+
+        addEventListener('updateToolBox', e => {
+            this.requestToolboxUpdate();
+        });
+
+        addEventListener('updateWorkspace_', e => {
+            this.props.vm.refreshWorkspace();
+            this.requestToolboxUpdate();
+        });
     }
     shouldComponentUpdate (nextProps, nextState) {
         return (
@@ -165,6 +219,11 @@ class Blocks extends React.Component {
         );
     }
     componentDidUpdate (prevProps) {
+        // 切换角色 xml 也会变化
+        // 切换角色 Category 也会变化
+
+        // console.log('this.props.toolboxXML:', prevProps.toolboxXML === this.props.toolboxXML);
+        
         // If any modals are open, call hideChaff to close z-indexed field editors
         if (this.props.anyModalVisible && !prevProps.anyModalVisible) {
             this.ScratchBlocks.hideChaff();
@@ -229,6 +288,19 @@ class Blocks extends React.Component {
     updateToolbox () {
         this.toolboxUpdateTimeout = false;
 
+        // FIXED: autoClose 时 toolbox 关闭时，从舞台切换到角色，有些块（如当开始被点击）变成无法拖动
+        //        切换前没有的块可以，广播消息也可以
+        this.workspace.toolbox_.flyout_.setVisible(true);
+
+        // TODO 有问题，暂不设置 selectedItem_ = null
+        // 只更新 xml ，不能走依赖 selectedItem_ 的逻辑
+        if (!this.workspace.toolbox_.selectedItem_) {
+            const tree = this.ScratchBlocks.Options.parseToolboxTree(this.props.toolboxXML);
+            this.workspace.toolbox_.categoryMenu_.populate(tree);
+            this.workspace.toolbox_.showAll_();
+            return;
+        }
+
         const categoryId = this.workspace.toolbox_.getSelectedCategoryId();
         const offset = this.workspace.toolbox_.getCategoryScrollOffset();
         this.workspace.updateToolbox(this.props.toolboxXML);
@@ -250,6 +322,7 @@ class Blocks extends React.Component {
         const queue = this.toolboxUpdateQueue;
         this.toolboxUpdateQueue = [];
         queue.forEach(fn => fn());
+
     }
 
     withToolboxUpdates (fn) {
@@ -524,6 +597,15 @@ class Blocks extends React.Component {
                 this.updateToolbox(); // To show new variables/custom blocks
             });
     }
+    clickDirBtn (dir) {
+        const ele = document.getElementsByClassName('blocklyToolboxDiv')[0];
+        if (dir == 'up') {
+            ele.scrollTop -= 100;
+           
+        } else {
+            ele.scrollTop += 100;
+        }
+    }
     render () {
         /* eslint-disable no-unused-vars */
         const {
@@ -551,11 +633,26 @@ class Blocks extends React.Component {
         /* eslint-enable no-unused-vars */
         return (
             <React.Fragment>
+                <img
+                    className={
+                        classNames(styles.dirBtn, styles.upBtn)
+                    }
+                    onClick={this.clickDirBtn.bind(this, 'up')}
+                    src={require('../assets/icons/clist_up.png')}
+                ></img>
+                <img
+                    className={
+                        classNames(styles.dirBtn, styles.downBtn)
+                    }
+                    onClick={this.clickDirBtn.bind(this, 'down')}
+                    src={require('../assets/icons/clist_down.png')}
+                ></img>
                 <DroppableBlocks
                     componentRef={this.setBlocks}
                     onDrop={this.handleDrop}
                     {...props}
                 />
+                
                 {this.state.prompt ? (
                     <Prompt
                         defaultValue={this.state.prompt.defaultValue}

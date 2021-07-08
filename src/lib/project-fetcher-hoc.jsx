@@ -71,8 +71,8 @@ const ProjectFetcherHOC = function (WrappedComponent) {
         }
         async fetchProject (projectId, loadingState) {
             // ?id 用户作业id
-            const url = new URL(location);
-            const id = url.searchParams.get('id');
+            const searchParams = new URL(location).searchParams;
+            const id = searchParams.get('id');
             let fileUrl = '';
             if (id) {
                 const {data} = await ajax.get(`/hwUserWork/getWorkInfo/${id}`);
@@ -82,10 +82,15 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             }
 
             // ?file
-            fileUrl = fileUrl || url.searchParams.get('file');
+            fileUrl = fileUrl || searchParams.get('file');
 
-            // default.sb3
-            fileUrl = fileUrl || require('!file-loader!../lib/default-project/default.sb3');
+            // sb3
+            const sb3Map = {
+                default: require('!file-loader!../lib/default-project/sb3/default.sb3'),
+                keyboard: require('!file-loader!../lib/default-project/sb3/keyboard.sb3'),
+            };
+            fileUrl = sb3Map[fileUrl] || fileUrl || sb3Map.default;
+
             console.info('[load sb3]', fileUrl);
             
             // fetch

@@ -1,0 +1,18 @@
+.dir-btn {
+    position  : absolute;
+    z-index   : 100;
+    text-align: center;
+    cursor    : pointer;
+    width     : 0.75rem;
+    height    : 0.59rem;
+    left: 1.83rem;
+}
+
+.up-btn {
+    top: 3.28rem;
+}
+
+.down-btn {
+    display: none;
+    bottom: 0.5rem;
+}

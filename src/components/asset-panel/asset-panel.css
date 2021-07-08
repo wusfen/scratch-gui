@@ -28,6 +28,9 @@
     flex-grow: 1;
     flex-shrink: 1;
     overflow: visible;
+    background: #ffffff;
+    box-shadow: 0px 1px 9px 0px rgb(0 0 0 / 18%);
+    border-radius: 0 1.25rem 1.25rem 0;
 }
 
 [dir="ltr"] .detail-area {
@@ -44,4 +47,13 @@
 
 .wrapper [class*="scrollbar-wrapper"] {
     opacity: 0.48;
+}
+
+.close-btn {
+    position: absolute;
+    width: 1.81rem;
+    right: -0.1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
 }

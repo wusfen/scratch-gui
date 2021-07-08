@@ -91,7 +91,9 @@
     make the change here instead of in scratch-blocks.
 */
 .blocks :global(.scratchCategoryMenuItemLabel) {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
+    line-height: 1.13rem;
+    color: #6d57dc;
 }
 
 .blocks :global(.blocklyMinimalBody) {
@@ -116,29 +118,52 @@
     left: 0;
     width: 4.375rem;
     height: auto;
-    padding-top: 1.25rem;
+    padding-top: 2.25rem;
     padding-bottom: 4.375rem;
     border: 0;
     border-top-left-radius: inherit;
     border-bottom-left-radius: inherit;
+    box-shadow: 1px 0 0.4375rem #e6c8ff;
 }
 
 .blocks :global(.scratchCategoryMenu) {
     width: 100%;
     background: none;
+    margin-top: 2.19rem;
 }
 
 .blocks :global(.scratchCategoryMenuRow) {
-    height: 3.4375rem;
+    height: 3.75rem;
+    margin: 0.5rem 0;
 }
 
 .blocks :global(.blocklyFlyout) {
+    /* overflow: visible; */
+    /* width: 15.625rem; */
+    /* max-width: 320px; */
+    /* min-width: 150px; */
+    z-index: 41;
+    transform: translate(calc(4.375rem - 1px), 0rem) !important;
     border: 0;
-    background: #ffffff;
-    box-shadow: 0 1px 0.5625rem 0 rgba(0, 0, 0, 0.18);
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0.625rem 1px 0.625rem -0.625rem rgba(0, 0, 0, 0.18);
     border-radius: 0 1.25rem 1.25rem 0;
-    transform: translate(4.125rem, 0rem) !important;
-    width: 15.625rem;
+    backdrop-filter: blur(5px);
+    animation: flyout 0.5s;
+}
+@supports (backdrop-filter: blur(5px)) {
+    .blocks :global(.blocklyFlyout) {
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(5px);
+    }
+}
+@keyframes flyout {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 .blocks :global(.blocklyFlyoutBackground) {
@@ -180,7 +205,7 @@
 }
 
 .blocks :global(.categorySelected) {
-    background: #fff;
+    background: rgba(255, 255, 255, 0.8);
 }
 
 .blocks :global(.blocklySvg) {
@@ -193,4 +218,16 @@
 
 .blocks :global(.blocklyZoom) {
     opacity: 0.25;
+}
+
+.blocks :global(.scratchCategoryMenuItem) {
+    padding: 0.1rem 0 0 0;
+}
+
+.blocks :global(.scratchCategoryItemIcon) {
+    height: 2.75rem;
+    width: 2.75rem;
+    height: 2rem;
+    width: 2rem;
+    background-size: 100% 100%;
 }

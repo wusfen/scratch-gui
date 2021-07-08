@@ -1,3 +1,4 @@
+/* eslint-disable no-negated-condition */
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -53,15 +54,15 @@ const Controls = function (props) {
                 onClick={onStopAllClick}
             />
             <button
-                className={classNames(styles.button)}
+                className={!active ? classNames(styles.button) : classNames(styles.stopButton)}
                 type="button"
                 onClick={active ? onStopAllClick : onGreenFlagClick}
             >
                 <img
-                    src={require('../../assets/icons/star.svg')}
+                    src={!active ? require('../../assets/icons/star.svg') : require('../../assets/icons/stop.png')}
                     alt=""
                 />
-                {active ? '结束' : '开始'}
+                {active ? '停止' : '开始'}
             </button>
         </div>
     );

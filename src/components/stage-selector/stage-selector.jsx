@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -31,7 +32,7 @@ const messages = defineMessages({
         defaultMessage: 'Surprise'
     },
     addBackdropFromFile: {
-        id: 'gui.stageSelector.addBackdropFromFile',
+        id: 'gui.costumeTab.fileUpload',
         description: 'Button to add a stage in the target pane from file',
         defaultMessage: 'Upload Backdrop'
     }
@@ -122,6 +123,22 @@ const StageSelector = props => {
                 img={backdropIcon}
                 moreButtons={[
                     {
+                        title: intl.formatMessage(messages.addBackdropFromSurprise),
+                        img: surpriseIcon,
+                        onClick: onSurpriseBackdropClick
+
+                    },
+                    {
+                        title: intl.formatMessage(messages.addBackdropFromPaint),
+                        img: paintIcon,
+                        onClick: onEmptyBackdropClick
+                    },
+                    {
+                        title: intl.formatMessage(messages.addBackdropFromLibrary),
+                        img: searchIcon,
+                        onClick: onNewBackdropClick
+                    },
+                    {
                         title: intl.formatMessage(messages.addBackdropFromFile),
                         img: fileUploadIcon,
                         onClick: onBackdropFileUploadClick,
@@ -129,19 +146,6 @@ const StageSelector = props => {
                         fileChange: onBackdropFileUpload,
                         fileInput: fileInputRef,
                         fileMultiple: true
-                    }, {
-                        title: intl.formatMessage(messages.addBackdropFromSurprise),
-                        img: surpriseIcon,
-                        onClick: onSurpriseBackdropClick
-
-                    }, {
-                        title: intl.formatMessage(messages.addBackdropFromPaint),
-                        img: paintIcon,
-                        onClick: onEmptyBackdropClick
-                    }, {
-                        title: intl.formatMessage(messages.addBackdropFromLibrary),
-                        img: searchIcon,
-                        onClick: onNewBackdropClick
                     }
                 ]}
                 title={intl.formatMessage(messages.addBackdropFromLibrary)}
