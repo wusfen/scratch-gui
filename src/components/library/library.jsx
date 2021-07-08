@@ -160,10 +160,10 @@ class LibraryComponent extends React.Component {
     render () {
         return (
             <Modal
-                fullScreen
                 contentLabel={this.props.title}
                 id={this.props.id}
                 onRequestClose={this.handleClose}
+                className={classNames(styles.libraryWrapper)}
             >
                 {(this.props.filterable || this.props.tags) && (
                     <div className={styles.filterBar}>

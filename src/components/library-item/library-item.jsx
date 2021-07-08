@@ -41,14 +41,14 @@ class LibraryItemComponent extends React.PureComponent {
                         src={this.props.iconURL}
                     />
                 </div>
-                {this.props.insetIconURL ? (
+                {/* {this.props.insetIconURL ? (
                     <div className={styles.libraryItemInsetImageContainer}>
                         <img
                             className={styles.libraryItemInsetImage}
                             src={this.props.insetIconURL}
                         />
                     </div>
-                ) : null}
+                ) : null} */}
                 <div
                     className={this.props.extensionId ?
                         classNames(styles.featuredExtensionText, styles.featuredText) : styles.featuredText
@@ -58,7 +58,7 @@ class LibraryItemComponent extends React.PureComponent {
                     <br />
                     <span className={styles.featuredDescription}>{this.props.description}</span>
                 </div>
-                {this.props.bluetoothRequired || this.props.internetConnectionRequired || this.props.collaborator ? (
+                {/* {this.props.bluetoothRequired || this.props.internetConnectionRequired || this.props.collaborator ? (
                     <div className={styles.featuredExtensionMetadata}>
                         <div className={styles.featuredExtensionRequirement}>
                             {this.props.bluetoothRequired || this.props.internetConnectionRequired ? (
@@ -102,7 +102,7 @@ class LibraryItemComponent extends React.PureComponent {
                             ) : null}
                         </div>
                     </div>
-                ) : null}
+                ) : null} */}
             </div>
         ) : (
             <Box
