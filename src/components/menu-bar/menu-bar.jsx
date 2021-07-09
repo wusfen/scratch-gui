@@ -200,7 +200,7 @@ class MenuBar extends React.Component {
 
         this.state = {
             workName: '',
-            isShowSkipButton: !false,
+            isShowSkipButton: false,
             file: searchParams.get('file'),
             isShowResetFileButton: searchParams.get('file'),
             isShowPublishButton: !false,
@@ -208,7 +208,11 @@ class MenuBar extends React.Component {
             isTeacherPreview: false, // true: 老师切学生
         };
 
-
+        setTimeout(() => {
+            this.setState({
+                isShowSkipButton: true,
+            });
+        }, 30 * 1000);
     }
     componentDidMount () {
         document.addEventListener('keydown', this.handleKeyPress);
@@ -1026,6 +1030,7 @@ class MenuBar extends React.Component {
                         mode === 'course' ? (
                             <>
                                 <button
+                                    hidden={!state.isShowSkipButton}
                                     className={`${c.button} ${c.blue}`}
                                     onClick={this.handleSkip}
                                 >{'跳过'}</button>
