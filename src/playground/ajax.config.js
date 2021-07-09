@@ -1,6 +1,7 @@
 /* eslint-disable prefer-const */
 /* eslint-disable comma-dangle */
 import {ajax} from '../lib/ajax.js';
+import Loading from '../components/loading/index.jsx';
 
 const params = new URL(location).searchParams;
 
@@ -35,6 +36,9 @@ ajax.setSettings({
         token,
     },
     base,
+    onloadstart () {
+        Loading.show();
+    },
     onload (res) {
         if (!/^(0|200)$/.test(res.code)) {
             alert(res.detail || res.code);
@@ -43,6 +47,9 @@ ajax.setSettings({
     },
     onerror (res) {
         alert('接口异常');
+    },
+    onloadend () {
+        Loading.hide();
     }
 });
 // for console
