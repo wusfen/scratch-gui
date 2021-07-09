@@ -38,6 +38,8 @@ const param = function (name, value) {
     
 };
 
+window.param = param;
+
 export {
     param,
     getParam,

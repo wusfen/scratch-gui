@@ -178,6 +178,7 @@ class MenuBar extends React.Component {
         bindAll(this, [
             'handleInput',
             'handleSave',
+            'handleSaveAs',
             'handleExit',
             'handleSaveExit',
             'handleTeacherPreview',
@@ -199,6 +200,7 @@ class MenuBar extends React.Component {
         const searchParams = new URL(location).searchParams;
 
         this.state = {
+            id: param('id'),
             workName: '',
             isShowSkipButton: false,
             file: searchParams.get('file'),
@@ -414,7 +416,7 @@ class MenuBar extends React.Component {
     async uploadSb3 () {
         const blob = await this.props.vm.saveProjectSb3();
         let formData = new FormData();
-        formData.append('file', blob, `${this.state.workName || 'project'}.sb3`);
+        formData.append('file', blob, `${this.props.projectTitle || 'project'}.sb3`);
 
         // TODO remove
         if (/mock/.test(location)) {
@@ -429,23 +431,35 @@ class MenuBar extends React.Component {
         this.props.setProjectTitle(e.target.value);
     }
     async handleSave () {
+        const id = this.state.id;
+
         const workName = this.props.projectTitle || param('workName');
         
         const sb3PathInfo = await this.uploadSb3();
-        await ajax.put('/hwUserWork/submitIdeaWork', {
-            id: param('id'),
+        var {data} = await ajax.put('/hwUserWork/submitIdeaWork', {
+            id: id,
             // workCoverPath: this.getProjectCover(),
             workName: workName,
             workPath: sb3PathInfo.path,
         });
+        this.state.id = data;
 
         this.props.onProjectSaved({
             title: workName
         });
 
-        await Confirm.confirm({
-            title: '保存成功'
+        Confirm.confirm({
+            title: '保存成功！'
         });
+    }
+    async handleSaveAs () {
+        await Confirm.confirm({
+            title: '是否将作品另存为自由创作？'
+        });
+        
+        this.state.id = null;
+        await this.handleSave();
+        param('id', this.state.id);
     }
     async handleExit () {
         if (this.props.projectChanged) {
@@ -528,6 +542,7 @@ class MenuBar extends React.Component {
     render () {
         var state = this.state;
         var {mode} = state;
+        var workInfo = window._workInfo || {};
         
         const saveNowMessage = (
             <FormattedMessage
@@ -1009,12 +1024,21 @@ class MenuBar extends React.Component {
                                     />
                                     <i className={c.iEdit} />
                                 </div>
-                            
+
                                 <button
-                                    className={c.button}
+                                    hidden={!(/IDEA/i.test(workInfo.workType))}
+                                    className={`${c.button} ${c.yellow}`}
                                     onClick={this.handleSave}
                                 >
                                     {'保存'}
+                                </button>
+
+                                <button
+                                    hidden={!(!/TODO|IDEA/i.test(workInfo.workType))}
+                                    className={`${c.button} ${c.yellow}`}
+                                    onClick={this.handleSaveAs}
+                                >
+                                    {'另存为'}
                                 </button>
 
                                 <button

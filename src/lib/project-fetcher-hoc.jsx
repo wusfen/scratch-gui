@@ -146,7 +146,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             } = this.props;
             return (
                 <WrappedComponent
-                    projectTitle="projectTitle"
+                    projectTitle=""
                     isShowingWithoutId={false}
                     fetchingProject={isFetchingWithIdProp}
                     {...componentProps}
