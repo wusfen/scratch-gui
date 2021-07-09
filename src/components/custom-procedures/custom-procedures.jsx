@@ -101,11 +101,14 @@ const CustomProcedures = props => (
             </div>
             <div className={styles.checkboxRow}>
                 <label>
-                    <input
-                        checked={props.warp}
-                        type="checkbox"
-                        onChange={props.onToggleWarp}
-                    />
+                    <div className={styles.inputBox}>
+                        <input
+                            checked={props.warp}
+                            type="checkbox"
+                            onChange={props.onToggleWarp}
+                        />
+                        <span></span>
+                    </div>
                     <FormattedMessage
                         defaultMessage="Run without screen refresh"
                         description="Label for checkbox to run without screen refresh"
