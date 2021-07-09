@@ -99,13 +99,26 @@ Component.confirm = function (options) {
     const el = document.createElement('div');
     document.body.appendChild(el);
     
-    const close = function () {
+    const unmount = function () {
         ReactDOM.unmountComponentAtNode(el);
         document.body.removeChild(el);
     };
+
+    const close = function () {
+        unmount();
+        options.onClose && options.onClose(rs);
+    };
+    const cancel = function () {
+        unmount();
+        options.onCancel && options.onCancel(rs);
+    };
     const confirm = function () {
-        rs();
-        close();
+        unmount();
+        if (options.onConfirm) {
+            options.onConfirm(rs);
+        } else {
+            rs();
+        }
     };
 
     ReactDOM.render((
@@ -113,7 +126,7 @@ Component.confirm = function (options) {
             title={options.title}
             content={options.content}
             onClose={close}
-            onCancel={close}
+            onCancel={cancel}
             onConfirm={confirm}
         />
     ), el);
