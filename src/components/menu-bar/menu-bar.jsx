@@ -401,8 +401,15 @@ class MenuBar extends React.Component {
             this.props.vm.loadProject(await bufferPromise);
         }
     }
-    clickHideCode () {
+    handleHideCode () {
         dispatchEvent(new Event('menu:hideCode'));
+    }
+    handleSiderBtn () {
+        window.nativeCall({
+            protocol: 200135,
+            data: {
+            },
+        });
     }
     async uploadSb3 () {
         const blob = await this.props.vm.saveProjectSb3();
@@ -954,9 +961,8 @@ class MenuBar extends React.Component {
                 </div>
 
                 {aboutButton}
-
                 <div
-                    className={styles.buttons}
+                    className={this.state.mode === 'course' ? classNames(styles.buttons, styles.buttonsCourse) : classNames(styles.buttons)}
                 >
                     <div className={`${c.withIconRight}`}>
                         <input
@@ -983,13 +989,13 @@ class MenuBar extends React.Component {
                         hidden={this.state.mode != 'teacher'}
                         onClick={this.handleTeacherPreview}
                     >
-                        { this.state.isTeacherPreview ? '返回老师模式' : '切换学生模式' }
+                        {this.state.isTeacherPreview ? '返回老师模式' : '切换学生模式'}
                     </button>
 
                     <button
                         hidden={this.state.mode != 'teacher'}
                         className={c.button}
-                        onClick={this.clickHideCode}
+                        onClick={this.handleHideCode}
                     >{'隐藏盒子'}</button>
 
                     <button
@@ -1006,6 +1012,13 @@ class MenuBar extends React.Component {
                         {'提交'}
                     </button>
                 </div>
+                <button
+                    hidden={this.state.mode !== 'course'}
+                    className={styles.siderButton}
+                    onClick={this.handleSiderBtn}
+                >
+                </button>
+
             </Box>
         );
     }
