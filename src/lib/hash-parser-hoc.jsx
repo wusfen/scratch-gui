@@ -8,6 +8,8 @@ import {
     getIsFetchingWithoutId,
     setProjectId
 } from '../reducers/project-state';
+import {setProjectTitle} from '../reducers/project-title';
+
 
 /* Higher Order Component to get the project id from location.hash
  * @param {React.Component} WrappedComponent: component to render
@@ -72,7 +74,10 @@ const HashParserHOC = function (WrappedComponent) {
     const mapDispatchToProps = dispatch => ({
         setProjectId: projectId => {
             dispatch(setProjectId(projectId));
-        }
+        },
+        setProjectTitle: title => {
+            dispatch(setProjectTitle(title));
+        },
     });
     // Allow incoming props to override redux-provided props. Used to mock in tests.
     const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(

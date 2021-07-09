@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import bindAll from 'lodash.bindall';
 import React from 'react';
 
+import {setProjectChanged, setProjectUnchanged} from '../reducers/project-changed';
+import {setProjectTitle} from '../reducers/project-title';
+
+
 const MenuBarHOC = function (WrappedComponent) {
     class MenuBarContainer extends React.PureComponent {
         constructor (props) {
@@ -30,9 +34,11 @@ const MenuBarHOC = function (WrappedComponent) {
                 /* eslint-enable no-unused-vars */
                 ...props
             } = this.props;
+            console.log('projectChanged:', projectChanged);
             return (<WrappedComponent
                 confirmReadyToReplaceProject={this.confirmReadyToReplaceProject}
                 shouldSaveBeforeTransition={this.shouldSaveBeforeTransition}
+                projectChanged={projectChanged}
                 {...props}
             />);
         }
@@ -51,7 +57,12 @@ const MenuBarHOC = function (WrappedComponent) {
     const mapStateToProps = state => ({
         projectChanged: state.scratchGui.projectChanged
     });
-    const mapDispatchToProps = () => ({});
+    const mapDispatchToProps = dispatch => ({
+        onProjectSaved: data => {
+            dispatch(setProjectUnchanged());
+            return dispatch(setProjectTitle(data.title));
+        },
+    });
     // Allow incoming props to override redux-provided props. Used to mock in tests.
     const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(
         {}, stateProps, dispatchProps, ownProps

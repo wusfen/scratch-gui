@@ -41,6 +41,7 @@ import {
     remixProject,
     saveProjectAsCopy
 } from '../../reducers/project-state';
+import {setProjectTitle} from '../../reducers/project-title';
 import {
     openAboutMenu,
     closeAboutMenu,
@@ -202,9 +203,8 @@ class MenuBar extends React.Component {
             isShowSkipButton: !false,
             file: searchParams.get('file'),
             isShowResetFileButton: searchParams.get('file'),
-            isShowSkipButton: !false,
             isShowPublishButton: !false,
-            mode: searchParams.get('mode'),
+            mode: searchParams.get('mode') || 'normal',
             isTeacherPreview: false, // true: 老师切学生
         };
 
@@ -405,16 +405,12 @@ class MenuBar extends React.Component {
         dispatchEvent(new Event('menu:hideCode'));
     }
     handleSiderBtn () {
-        window.nativeCall({
-            protocol: 200135,
-            data: {
-            },
-        });
+        window.bridge.emit('showCourseSidebar');
     }
     async uploadSb3 () {
         const blob = await this.props.vm.saveProjectSb3();
         let formData = new FormData();
-        formData.append('file', blob, 'project.sb3');
+        formData.append('file', blob, `${this.state.workName || 'project'}.sb3`);
 
         // TODO remove
         if (/mock/.test(location)) {
@@ -426,29 +422,54 @@ class MenuBar extends React.Component {
         return data;
     }
     handleInput (e) {
-        this.setState({
-            workName: e.target.value
-        });
+        this.props.setProjectTitle(e.target.value);
     }
     async handleSave () {
+        const workName = this.props.projectTitle || param('workName');
+        
         const sb3PathInfo = await this.uploadSb3();
         await ajax.put('/hwUserWork/submitIdeaWork', {
             id: param('id'),
             // workCoverPath: this.getProjectCover(),
-            workName: this.state.workName,
+            workName: workName,
             workPath: sb3PathInfo.path,
         });
 
-        alert('保存成功');
+        this.props.onProjectSaved({
+            title: workName
+        });
+
+        await Confirm.confirm({
+            title: '保存成功'
+        });
     }
-    handleExit () {
-        dispatchEvent(new Event('exit'));
+    async handleExit () {
+        if (this.props.projectChanged) {
+            await Confirm.confirm({
+                title: '还未保存作品哦，是否保存作品？',
+                onCancel () {
+                    window.bridge.emit('exitEditor');
+                }
+            });
+
+            await this.handleSave();
+        }
+        
+        window.bridge.emit('exitEditor');
     }
     async handleSaveExit () {
         await this.handleSave();
-        dispatchEvent(new Event('exit'));
+        window.bridge.emit('exitEditor');
     }
     async handleSubmit () {
+        // TODO 临时存值
+        const workInfo = window._workInfo || {};
+        if (!workInfo.id) {
+            await Confirm.confirm({
+                title: '缺少id!'
+            });
+        }
+
         dispatchEvent(new Event('submit:提交中'));
         const timeoutTimer = setTimeout(() => {
             dispatchEvent(new Event('submit:提交中超时'));
@@ -457,8 +478,6 @@ class MenuBar extends React.Component {
         // 上传文件
         const fileData = await this.uploadSb3();
 
-        // TODO 临时存值
-        const workInfo = window._workInfo;
         // 提交
         const {data: workId} = await ajax.put('/hwUserWork/submitWork', {
             id: workInfo.id,
@@ -503,6 +522,9 @@ class MenuBar extends React.Component {
         dispatchEvent(new Event('submit:跳过'));
     }
     render () {
+        var state = this.state;
+        var {mode} = state;
+        
         const saveNowMessage = (
             <FormattedMessage
                 defaultMessage="Save now"
@@ -756,6 +778,7 @@ class MenuBar extends React.Component {
                             >
                                 <ProjectTitleInput
                                     className={classNames(styles.titleFieldGrowable)}
+                                    projectTitle="fuck"
                                 />
                             </MenuBarItemTooltip>
                         </div>
@@ -962,62 +985,85 @@ class MenuBar extends React.Component {
 
                 {aboutButton}
                 <div
-                    className={this.state.mode === 'course' ? classNames(styles.buttons, styles.buttonsCourse) : classNames(styles.buttons)}
+                    className={
+                        this.state.mode === 'course' ?
+                            classNames(styles.buttons, styles.buttonsCourse) :
+                            classNames(styles.buttons)
+                    }
                 >
-                    <div className={`${c.withIconRight}`}>
-                        <input
-                            type="text"
-                            className={`${c.input}`}
-                            placeholder="作品名称"
-                            onInput={this.handleInput}
-                        />
-                        <i className={c.iEdit} />
-                    </div>
-                    
-                    <button
-                        className={c.button}
-                        onClick={this.handleSave}
-                    >{'保存'}</button>
+                    {
+                        mode === 'normal' ? (
+                            <>
+                                <div className={`${c.withIconRight}`}>
+                                    <input
+                                        type="text"
+                                        className={`${c.input}`}
+                                        placeholder="作品名称"
+                                        maxLength={20}
+                                        value={this.props.projectTitle}
+                                        onInput={this.handleInput}
+                                    />
+                                    <i className={c.iEdit} />
+                                </div>
+                            
+                                <button
+                                    className={c.button}
+                                    onClick={this.handleSave}
+                                >
+                                    {'保存'}
+                                </button>
 
-                    <button
-                        className={`${c.button} ${c.pink} ${c.zHigher}`}
-                        onClick={this.handleExit}
-                    >{'退出'}</button>
+                                <button
+                                    className={`${c.button} ${c.pink}`}
+                                    onClick={this.handleExit}
+                                >
+                                    {'退出'}
+                                </button>
+                            </>
+                        ) : null
+                    }
+                    {
+                        mode === 'course' ? (
+                            <>
+                                <button
+                                    className={`${c.button} ${c.blue}`}
+                                    onClick={this.handleSkip}
+                                >{'跳过'}</button>
 
-                    <button
-                        className={`${c.button} ${c.pink} ${c.zHigher}`}
-                        hidden={this.state.mode != 'teacher'}
-                        onClick={this.handleTeacherPreview}
-                    >
-                        {this.state.isTeacherPreview ? '返回老师模式' : '切换学生模式'}
-                    </button>
+                                <button
+                                    className={`${c.button} ${c.yellow}`}
+                                    onClick={this.handleSubmit}
+                                >
+                                    <i className={`${c.iSend} ${c.iSizeL}`} />
+                                    {'提交'}
+                                </button>
 
-                    <button
-                        hidden={this.state.mode != 'teacher'}
-                        className={c.button}
-                        onClick={this.handleHideCode}
-                    >{'隐藏盒子'}</button>
+                                <button
+                                    className={styles.siderButton}
+                                    onClick={this.handleSiderBtn}
+                                >
+                                </button>
+                            </>
+                        ) : null
+                    }
+                    {
+                        mode === 'teacher' ? (
+                            <>
+                                <button
+                                    className={`${c.button} ${c.pink}`}
+                                    onClick={this.handleTeacherPreview}
+                                >
+                                    {this.state.isTeacherPreview ? '返回老师模式' : '切换学生模式'}
+                                </button>
 
-                    <button
-                        hidden={!this.state.isShowSkipButton}
-                        className={`${c.button} ${c.pink} ${c.zHigher}`}
-                        onClick={this.handleSkip}
-                    >{'跳过'}</button>
-
-                    <button
-                        className={`${c.button} ${c.yellow}`}
-                        onClick={this.handleSubmit}
-                    >
-                        <i className={`${c.iSend} ${c.iSizeL}`} />
-                        {'提交'}
-                    </button>
+                                <button
+                                    className={c.button}
+                                    onClick={this.handleHideCode}
+                                >{'隐藏盒子'}</button>
+                            </>
+                        ) : null
+                    }
                 </div>
-                <button
-                    hidden={this.state.mode !== 'course'}
-                    className={styles.siderButton}
-                    onClick={this.handleSiderBtn}
-                >
-                </button>
 
             </Box>
         );
@@ -1094,7 +1140,10 @@ MenuBar.propTypes = {
     showComingSoon: PropTypes.bool,
     userOwnsProject: PropTypes.bool,
     username: PropTypes.string,
-    vm: PropTypes.instanceOf(VM).isRequired
+    vm: PropTypes.instanceOf(VM).isRequired,
+    projectChanged: PropTypes.bool,
+    onProjectSaved: PropTypes.func,
+    setProjectTitle: PropTypes.func,
 };
 
 MenuBar.defaultProps = {
@@ -1144,7 +1193,8 @@ const mapDispatchToProps = dispatch => ({
     onClickRemix: () => dispatch(remixProject()),
     onClickSave: () => dispatch(manualUpdateProject()),
     onClickSaveAsCopy: () => dispatch(saveProjectAsCopy()),
-    onSeeCommunity: () => dispatch(setPlayer(true))
+    onSeeCommunity: () => dispatch(setPlayer(true)),
+    setProjectTitle: title => dispatch(setProjectTitle(title)),
 });
 
 export default compose(
