@@ -28,7 +28,9 @@ function emit (action, data) {
 
     // pc(iframe)
     try {
-        parent.postMessage(options, '*');
+        if (window !== parent) {
+            parent.postMessage(options, '*');
+        }
     } catch (e) {}
 }
 

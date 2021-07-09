@@ -31,7 +31,7 @@
             }
 
             if ("ontouchstart" in window) {
-                if (/\/(dev|uat)\/|\/\/1|[?&]f12\b/.test(location)) {
+                if (/\/(dev|uat)\/|[?&]f12\b/.test(location)) {
                     loadConsole();
                 }
             }
