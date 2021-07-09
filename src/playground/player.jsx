@@ -17,6 +17,8 @@ if (process.env.NODE_ENV === 'production' && typeof window === 'object') {
     window.onbeforeunload = () => true;
 }
 
+import './index.js';
+
 import styles from './player.css';
 
 // 禁止触摸滚动
