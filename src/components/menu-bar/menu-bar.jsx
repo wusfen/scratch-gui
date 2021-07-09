@@ -205,9 +205,9 @@ class MenuBar extends React.Component {
             isShowSkipButton: false,
             file: searchParams.get('file'),
             isShowResetFileButton: searchParams.get('file'),
-            isShowPublishButton: !false,
             mode: searchParams.get('mode') || 'normal',
             isTeacherPreview: false, // true: 老师切学生
+            isSaveAsChanged: false,
         };
 
         setTimeout(() => {
@@ -460,6 +460,9 @@ class MenuBar extends React.Component {
         this.state.id = null;
         await this.handleSave();
         param('id', this.state.id);
+        this.setState({
+            isSaveAsChanged: true,
+        });
     }
     async handleExit () {
         if (this.props.projectChanged) {
@@ -543,7 +546,11 @@ class MenuBar extends React.Component {
         var state = this.state;
         var {mode} = state;
         var workInfo = window._workInfo || {};
-        
+        var isSaveAs = workInfo.id && !/IDEA/i.test(workInfo.workType);
+        if (state.isSaveAsChanged) {
+            isSaveAs = false;
+        }
+
         const saveNowMessage = (
             <FormattedMessage
                 defaultMessage="Save now"
@@ -1025,8 +1032,10 @@ class MenuBar extends React.Component {
                                     <i className={c.iEdit} />
                                 </div>
 
+                                {/* TODO 没有 token 不能保存和提交 */}
+
                                 <button
-                                    hidden={!(/IDEA/i.test(workInfo.workType))}
+                                    hidden={!(!isSaveAs)}
                                     className={`${c.button} ${c.yellow}`}
                                     onClick={this.handleSave}
                                 >
@@ -1034,7 +1043,7 @@ class MenuBar extends React.Component {
                                 </button>
 
                                 <button
-                                    hidden={!(!/TODO|IDEA/i.test(workInfo.workType))}
+                                    hidden={!(isSaveAs)}
                                     className={`${c.button} ${c.yellow}`}
                                     onClick={this.handleSaveAs}
                                 >
