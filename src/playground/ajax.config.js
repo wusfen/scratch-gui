@@ -4,7 +4,7 @@ import {ajax} from '../lib/ajax.js';
 
 const params = new URL(location).searchParams;
 
-// ?base=dev
+// ?base=prod
 const baseMap = {
     dev: 'https://dev-icode.vipthink.cn/v1/homework/',
     uat: 'https://uat-icode.vipthink.cn/v1/homework',
@@ -12,7 +12,15 @@ const baseMap = {
     mock: 'https://yapi.vipthink.net/mock/1788/',
 };
 
+// default
 let base = baseMap.prod;
+
+// auto
+if (/\/uat-|\/uat\/|\/\/1/.test(location)) {
+    base = baseMap.uat;
+}
+
+// ?base=prod
 if (params.get('base')) {
     base = baseMap[params.get('base')] || params.get('base');
 }
@@ -27,7 +35,6 @@ ajax.setSettings({
         token,
     },
     base,
-    // base: 'http://yapi.vipthink.net/mock/1788/',
     onload (res) {
         if (!/^(0|200)$/.test(res.code)) {
             alert(res.detail || res.code);
