@@ -215,6 +215,11 @@ class MenuBar extends React.Component {
                 isShowSkipButton: true,
             });
         }, 30 * 1000);
+
+        window.bridge.on('requireExitEditor', async e => {
+            await this.handleSave();
+            window.bridge.emit('requireExitEditor');
+        });
     }
     componentDidMount () {
         document.addEventListener('keydown', this.handleKeyPress);
