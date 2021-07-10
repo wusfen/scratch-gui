@@ -28,7 +28,7 @@ import SB3Downloader from '../../containers/sb3-downloader.jsx';
 import DeletionRestorer from '../../containers/deletion-restorer.jsx';
 import TurboMode from '../../containers/turbo-mode.jsx';
 import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
-import Confirm from '../dialog/confirm/index.jsx';
+import Dialog from '../dialog/index.jsx';
 
 import {openTipsLibrary} from '../../reducers/modals';
 import {setPlayer} from '../../reducers/mode';
@@ -402,7 +402,7 @@ class MenuBar extends React.Component {
                 r(buffer);
             });
 
-            await Confirm.confirm({
+            await Dialog.confirm({
                 title: '重做确认',
                 content: '将会清空当前作品记录，重新开始创作哦，是否确定重做？'
             });
@@ -455,9 +455,7 @@ class MenuBar extends React.Component {
         alert('保存成功');
     }
     async handleSaveAs () {
-        await Confirm.confirm({
-            title: '是否将作品另存为自由创作？'
-        });
+        await Dialog.confirm('是否将作品另存为自由创作？');
         
         this.state.id = null;
         await this.handleSave();
@@ -468,7 +466,7 @@ class MenuBar extends React.Component {
     }
     async handleExit (e = 'exitEditor') {
         if (this.props.projectChanged) {
-            await Confirm.confirm({
+            await Dialog.confirm({
                 title: '还未保存作品哦，是否保存作品？',
                 onCancel () {
                     window.bridge.emit(e);
@@ -488,7 +486,7 @@ class MenuBar extends React.Component {
         // TODO 临时存值
         const workInfo = window._workInfo || {};
         if (!workInfo.id) {
-            await Confirm.confirm({
+            await Dialog.confirm({
                 title: '缺少id!'
             });
         }

@@ -1,4 +1,4 @@
-@import url("../../../css/animate.css");
+@import url("../../css/animate.css");
 
 .container {
     position: fixed;
@@ -37,7 +37,7 @@
     width: 1.38rem;
     height: 1.38rem;
     background: center/contain no-repeat
-        url("../../../assets/icons/POP-up windows close.svg");
+        url("../../assets/icons/POP-up windows close.svg");
     color: transparent;
 }
 
