@@ -180,7 +180,6 @@ class MenuBar extends React.Component {
             'handleSave',
             'handleSaveAs',
             'handleExit',
-            'handleSaveExit',
             'handleTeacherPreview',
             'handleSkip',
             'handleSubmit',
@@ -216,9 +215,8 @@ class MenuBar extends React.Component {
             });
         }, 30 * 1000);
 
-        window.bridge.on('requireExitEditor', async e => {
-            await this.handleSave();
-            window.bridge.emit('requireExitEditor');
+        window.bridge.on('requireExitEditor', e => {
+            this.handleExit('requireExitEditor');
         });
     }
     componentDidMount () {
@@ -448,14 +446,13 @@ class MenuBar extends React.Component {
             workPath: sb3PathInfo.path,
         });
         this.state.id = data;
+        param('id', this.state.id);
 
         this.props.onProjectSaved({
             title: workName
         });
 
-        Confirm.confirm({
-            title: '保存成功！'
-        });
+        alert('保存成功');
     }
     async handleSaveAs () {
         await Confirm.confirm({
@@ -469,25 +466,25 @@ class MenuBar extends React.Component {
             isSaveAsChanged: true,
         });
     }
-    async handleExit () {
+    async handleExit (e = 'exitEditor') {
         if (this.props.projectChanged) {
             await Confirm.confirm({
                 title: '还未保存作品哦，是否保存作品？',
                 onCancel () {
-                    window.bridge.emit('exitEditor');
+                    window.bridge.emit(e);
                 }
             });
 
-            await this.handleSave();
+            if (this.state.mode === 'course') {
+                await this.handleSubmit('noCheckResult');
+            } else {
+                await this.handleSave();
+            }
         }
-        
-        window.bridge.emit('exitEditor');
+
+        window.bridge.emit(e);
     }
-    async handleSaveExit () {
-        await this.handleSave();
-        window.bridge.emit('exitEditor');
-    }
-    async handleSubmit () {
+    async handleSubmit (isNoCheckResult) {
         // TODO 临时存值
         const workInfo = window._workInfo || {};
         if (!workInfo.id) {
@@ -495,11 +492,6 @@ class MenuBar extends React.Component {
                 title: '缺少id!'
             });
         }
-
-        dispatchEvent(new Event('submit:提交中'));
-        const timeoutTimer = setTimeout(() => {
-            dispatchEvent(new Event('submit:提交中超时'));
-        }, 1000 * 15);
 
         // 上传文件
         const fileData = await this.uploadSb3();
@@ -513,12 +505,17 @@ class MenuBar extends React.Component {
             workId: workInfo.analystStatus === -1 ? workInfo.workId : ''
         });
 
+        if (isNoCheckResult) {
+            return;
+        }
+
+        dispatchEvent(new Event('submit:提交中'));
+
         // 轮询批改结果
         const checkStartTime = new Date();
         // eslint-disable-next-line func-style, require-jsdoc
         async function checkResult () {
             const {data} = await ajax.get(`/hwUserWork/getWorkData/${workId}`);
-            clearTimeout(timeoutTimer);
 
             if (data.analystStatus === 1) {
                 dispatchEvent(new Event('submit:已提交正确'));
@@ -1057,7 +1054,7 @@ class MenuBar extends React.Component {
 
                                 <button
                                     className={`${c.button} ${c.pink}`}
-                                    onClick={this.handleExit}
+                                    onClick={e => this.handleExit()}
                                 >
                                     {'退出'}
                                 </button>
@@ -1075,7 +1072,7 @@ class MenuBar extends React.Component {
 
                                 <button
                                     className={`${c.button} ${c.yellow}`}
-                                    onClick={this.handleSubmit}
+                                    onClick={e => this.handleSubmit()}
                                 >
                                     <i className={`${c.iSend} ${c.iSizeL}`} />
                                     {'提交'}
