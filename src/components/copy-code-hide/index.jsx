@@ -412,7 +412,6 @@ class Component extends React.Component {
         };
     }
     handleClose() {
-        // dispatchEvent(new Event('exit'));
         this.setState(this.getInitState());
 
     }

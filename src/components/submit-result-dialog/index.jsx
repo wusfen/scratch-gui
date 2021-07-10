@@ -80,10 +80,8 @@ class Component extends React.Component{
         };
     }
     handleClose () {
-        if (this.state.isShowBackButton) {
-            dispatchEvent(new Event('exit'));
-        }
-        console.log('to stopAll');
+        window.bridge.emit('exitEditor');
+
         this.props.vm.stopAll();
         this.setState(this.getInitState());
         clearInterval(this.timer);

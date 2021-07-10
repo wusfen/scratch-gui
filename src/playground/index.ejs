@@ -45,43 +45,6 @@
         </script>
 
         <script>
-            function nativeCall(options) {
-                console.log("[nativeCall]", options);
-
-                // ios
-                try {
-                    window["webkit"].messageHandlers.webCall.postMessage(
-                        JSON.stringify(options),
-                        "*"
-                    );
-                } catch (e) {}
-
-                // android
-                try {
-                    native.call(JSON.stringify(options));
-                } catch (e) {}
-
-                // pc(iframe)
-                try {
-                    parent.postMessage(options, "*");
-                } catch (e) {}
-            }
-
-            addEventListener("exit", function () {
-                console.log("[exit]");
-
-                nativeCall({
-                    code: 0,
-                    protocol: 200134,
-                    data: {
-                        operType: 1,
-                        param: 1,
-                    },
-                });
-            });
-        </script>
-
-        <script>
             function resize() {
                 document.documentElement.style.setProperty(
                     "--STAGE_CSS_WIDTH",

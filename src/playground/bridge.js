@@ -35,6 +35,8 @@ function emit (action, data) {
 }
 
 function on (action, cb) {
+    // TODO add once
+
     addEventListener(`bridge:${action}`, e => {
         cb(e.data);
     });
