@@ -395,8 +395,9 @@ class MenuBar extends React.Component {
         const formData = new FormData();
         formData.append('file', blob, `${this.props.projectTitle || 'project'}.png`);
         const {data} = await ajax.post('/file/upload', formData);
-        
-        return `${data.domain}${data.path}`;
+
+        // return `${data.domain}${data.path}`;
+        return data.path;
     }
     async handleClickResetFile () {
         const fileUrl = this.state.file;
@@ -444,7 +445,7 @@ class MenuBar extends React.Component {
         const id = this.state.id;
 
         const workName = this.props.projectTitle || param('workName') || '';
-        
+
         const sb3PathInfo = await this.uploadSb3();
         var {data} = await ajax.put('/hwUserWork/submitIdeaWork', {
             id: id,
@@ -463,7 +464,7 @@ class MenuBar extends React.Component {
     }
     async handleSaveAs () {
         await Dialog.confirm('是否将作品另存为自由创作？');
-        
+
         this.state.id = null;
         await this.handleSave();
         param('id', this.state.id);

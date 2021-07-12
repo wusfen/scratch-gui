@@ -34,6 +34,9 @@ module.exports = {
         'react/jsx-handler-names': 1,
         'no-unused-expressions': 0,
         'no-undefined': 1,
+        'no-trailing-spaces': [1, {
+            "skipBlankLines": false,
+        }]
     },
     settings: {
         react: {
