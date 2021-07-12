@@ -24,6 +24,7 @@ const messages = defineMessages({
 });
 
 const Controls = function (props) {
+    
     const {
         active,
         className,
@@ -33,6 +34,14 @@ const Controls = function (props) {
         turbo,
         ...componentProps
     } = props;
+    
+
+    addEventListener('超过60秒无操作', e => {
+        // 显示引导提示
+        if (String(e.type) === '超过60秒无操作') {
+            //处理
+        }
+    });
     return (
         <div
             className={classNames(styles.controlsContainer, className)}
