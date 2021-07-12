@@ -80,7 +80,9 @@ class Component extends React.Component{
         };
     }
     handleClose () {
-        window.bridge.emit('exitEditor');
+        if (this.state.isShowBackButton) {
+            window.bridge.emit('exitEditor');
+        }
 
         this.props.vm.stopAll();
         this.setState(this.getInitState());

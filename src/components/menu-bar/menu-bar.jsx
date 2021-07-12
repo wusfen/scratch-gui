@@ -388,8 +388,15 @@ class MenuBar extends React.Component {
             this.props.onRequestCloseAbout();
         };
     }
-    getProjectCover () {
-        return this.props.vm.renderer.canvas.toDataURL();
+    async getProjectCover () {
+        var dataURL = this.props.vm.renderer.canvas.toDataURL();
+        var blob = await (await fetch(dataURL)).blob();
+
+        const formData = new FormData();
+        formData.append('file', blob, `${this.props.projectTitle || 'project'}.png`);
+        const {data} = await ajax.post('/file/upload', formData);
+        
+        return `${data.domain}${data.path}`;
     }
     async handleClickResetFile () {
         const fileUrl = this.state.file;
@@ -441,7 +448,7 @@ class MenuBar extends React.Component {
         const sb3PathInfo = await this.uploadSb3();
         var {data} = await ajax.put('/hwUserWork/submitIdeaWork', {
             id: id,
-            // workCoverPath: this.getProjectCover(),
+            workCoverPath: await this.getProjectCover(),
             workName: workName,
             workPath: sb3PathInfo.path,
         });
@@ -498,6 +505,7 @@ class MenuBar extends React.Component {
         const {data: workId} = await ajax.put('/hwUserWork/submitWork', {
             id: workInfo.id,
             submitType: 2,
+            workCoverPath: await this.getProjectCover(),
             workPath: fileData.path,
             // analystStatus: undefined,
             workId: workInfo.analystStatus === -1 ? workInfo.workId : ''
