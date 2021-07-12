@@ -2,6 +2,7 @@
 /* eslint-disable comma-dangle */
 import {ajax} from '../lib/ajax.js';
 import Loading from '../components/loading/index.jsx';
+import Dialog from '../components/dialog/index.jsx';
 
 const params = new URL(location).searchParams;
 
@@ -41,12 +42,16 @@ ajax.setSettings({
     },
     onload (res) {
         if (!/^(0|200)$/.test(res.code)) {
-            alert(res.detail || res.code);
+            Dialog.alert(`${res.code} ${res.detail}`).then(e => {
+                window.bridge.emit('exitEditor');
+            });
+
             return Promise.reject(res.detail || res.code);
         }
     },
-    onerror (res) {
-        alert('接口异常');
+    async onerror (res) {
+        await alert('接口异常');
+        window.bridge.emit('exitEditor');
     },
     onloadend () {
         Loading.hide();
