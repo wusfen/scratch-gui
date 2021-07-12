@@ -1,5 +1,3 @@
-@import url("../../css/animate.css");
-
 .container {
     position: fixed;
     z-index: 499;
@@ -11,8 +9,32 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: hsl(0deg 0% 0% / 50%);
+    background: rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(3px);
     color: #fff;
-    animation: fadeIn 0.5s 0.5s backwards;
+    animation: loadingCover 10s both;
+}
+
+@keyframes loadingCover {
+    0%,
+    2% {
+        background: rgba(0, 0, 0, 0);
+        backdrop-filter: none;
+        opacity: 0;
+    }
+    10%,
+    30% {
+        opacity: 1;
+        background: rgba(0, 0, 0, 0.05);
+        backdrop-filter: blur(1px);
+    }
+    35%,
+    50% {
+        backdrop-filter: blur(3px);
+        background: rgba(0, 0, 0, 0.1);
+    }
+    100% {
+        background: rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(5px);
+    }
 }
