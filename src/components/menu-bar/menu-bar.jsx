@@ -436,7 +436,7 @@ class MenuBar extends React.Component {
     async handleSave () {
         const id = this.state.id;
 
-        const workName = this.props.projectTitle || param('workName');
+        const workName = this.props.projectTitle || param('workName') || '';
         
         const sb3PathInfo = await this.uploadSb3();
         var {data} = await ajax.put('/hwUserWork/submitIdeaWork', {
