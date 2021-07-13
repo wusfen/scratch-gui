@@ -9,11 +9,35 @@ import ControlsComponent from '../components/controls/controls.jsx';
 class Controls extends React.Component {
     constructor (props) {
         super(props);
+        this.state = this.getInitState();
         bindAll(this, [
             'handleGreenFlagClick',
             'handleStopAllClick'
         ]);
         this.setOnNativeCallJsInWindow();
+        
+
+        this.initGuide();
+    }
+    
+    getInitState () {
+        return {
+            guide: false,
+        };
+    }
+    initGuide () {
+        this.setState({
+            guide: false
+        });
+        this.addEventListener('超过60秒无操作', e => {
+            // 显示引导提示
+            if (String(e.type) === '超过60秒无操作') {
+                // 处理
+                this.setState({
+                    guide: true
+                });
+            }
+        });
     }
 
     setOnNativeCallJsInWindow () {
@@ -72,6 +96,7 @@ class Controls extends React.Component {
             <ControlsComponent
                 {...props}
                 active={projectRunning}
+                guide={this.stage.guide}
                 turbo={turbo}
                 onGreenFlagClick={this.handleGreenFlagClick}
                 onStopAllClick={this.handleStopAllClick}

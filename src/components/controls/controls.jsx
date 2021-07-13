@@ -26,6 +26,7 @@ const messages = defineMessages({
 const Controls = function (props) {
     
     const {
+        guide,
         active,
         className,
         intl,
@@ -34,14 +35,7 @@ const Controls = function (props) {
         turbo,
         ...componentProps
     } = props;
-    
-
-    addEventListener('超过60秒无操作', e => {
-        // 显示引导提示
-        if (String(e.type) === '超过60秒无操作') {
-            //处理
-        }
-    });
+ 
     return (
         <div
             className={classNames(styles.controlsContainer, className)}
@@ -79,6 +73,7 @@ const Controls = function (props) {
 
 Controls.propTypes = {
     active: PropTypes.bool,
+    guide: PropTypes.bool,
     className: PropTypes.string,
     intl: intlShape.isRequired,
     onGreenFlagClick: PropTypes.func.isRequired,
@@ -88,7 +83,8 @@ Controls.propTypes = {
 
 Controls.defaultProps = {
     active: false,
-    turbo: false
+    turbo: false,
+    guide: false
 };
 
 export default injectIntl(Controls);
