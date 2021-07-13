@@ -295,29 +295,30 @@ class Blocks extends React.Component {
         // TODO 有问题，暂不设置 selectedItem_ = null
         // 只更新 xml ，不能走依赖 selectedItem_ 的逻辑
         if (!this.workspace.toolbox_.selectedItem_) {
-            const tree = this.ScratchBlocks.Options.parseToolboxTree(this.props.toolboxXML);
-            this.workspace.toolbox_.categoryMenu_.populate(tree);
-            this.workspace.toolbox_.showAll_();
-            return;
+            this.workspace.updateToolbox(this.props.toolboxXML);
+            this._renderedToolboxXML = this.props.toolboxXML;
+            this.workspace.toolboxRefreshEnabled_ = true;
+        }else{
+            const categoryId = this.workspace.toolbox_.getSelectedCategoryId();
+            const offset = this.workspace.toolbox_.getCategoryScrollOffset();
+            this.workspace.updateToolbox(this.props.toolboxXML);
+            this._renderedToolboxXML = this.props.toolboxXML;
+
+            // In order to catch any changes that mutate the toolbox during "normal runtime"
+            // (variable changes/etc), re-enable toolbox refresh.
+            // Using the setter function will rerender the entire toolbox which we just rendered.
+            this.workspace.toolboxRefreshEnabled_ = true;
+
+            const currentCategoryPos = this.workspace.toolbox_.getCategoryPositionById(categoryId);
+            const currentCategoryLen = this.workspace.toolbox_.getCategoryLengthById(categoryId);
+            if (offset < currentCategoryLen) {
+                this.workspace.toolbox_.setFlyoutScrollPos(currentCategoryPos + offset);
+            } else {
+                this.workspace.toolbox_.setFlyoutScrollPos(currentCategoryPos);
+            }
         }
 
-        const categoryId = this.workspace.toolbox_.getSelectedCategoryId();
-        const offset = this.workspace.toolbox_.getCategoryScrollOffset();
-        this.workspace.updateToolbox(this.props.toolboxXML);
-        this._renderedToolboxXML = this.props.toolboxXML;
-
-        // In order to catch any changes that mutate the toolbox during "normal runtime"
-        // (variable changes/etc), re-enable toolbox refresh.
-        // Using the setter function will rerender the entire toolbox which we just rendered.
-        this.workspace.toolboxRefreshEnabled_ = true;
-
-        const currentCategoryPos = this.workspace.toolbox_.getCategoryPositionById(categoryId);
-        const currentCategoryLen = this.workspace.toolbox_.getCategoryLengthById(categoryId);
-        if (offset < currentCategoryLen) {
-            this.workspace.toolbox_.setFlyoutScrollPos(currentCategoryPos + offset);
-        } else {
-            this.workspace.toolbox_.setFlyoutScrollPos(currentCategoryPos);
-        }
+        
 
         const queue = this.toolboxUpdateQueue;
         this.toolboxUpdateQueue = [];
