@@ -1020,11 +1020,7 @@ class MenuBar extends React.Component {
 
                 {aboutButton}
                 <div
-                    className={
-                        this.state.mode === 'course' ?
-                            classNames(styles.buttons, styles.buttonsCourse) :
-                            classNames(styles.buttons)
-                    }
+                    className={classNames(styles.buttons)}
                 >
                     {
                         mode === 'normal' ? (
@@ -1086,6 +1082,7 @@ class MenuBar extends React.Component {
                                 </button>
 
                                 <button
+                                    hidden
                                     className={styles.siderButton}
                                     onClick={this.handleSiderBtn}
                                 >

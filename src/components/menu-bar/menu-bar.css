@@ -251,11 +251,6 @@
     font-size: 1rem;
 }
 
-.buttons-course
-{
-    margin-right: 6.38rem;
-}
-
 .buttons button {
     margin-left: 1em;
 }
@@ -264,24 +259,20 @@
     z-index: 999999;
 }
 
-.sider-button
-{
-position: fixed;
-right: 0px;
-width: 3.75rem;
-height: 2.5rem;
-background: #9678FF;
-border-radius: 0.63rem 0rem 0rem 0.63rem;
+.sider-button {
+    width: 3.75rem;
+    height: 2.5rem;
+    margin-right: -0.75rem;
+    background: #9678ff;
+    border-radius: 0.63rem 0rem 0rem 0.63rem;
 }
-.sider-button::before
-{
-width:0.88rem;
-height: 1.41rem;
-background: #FFFFFF;
-content: "";
-display: inline-block;
-background: center no-repeat url("../../assets/icons/sider_left.png");
-background-size: contain;
-margin-right: 0.94rem;
+.sider-button::before {
+    width: 0.88rem;
+    height: 1.41rem;
+    background: #ffffff;
+    content: "";
+    display: inline-block;
+    background: center no-repeat url("../../assets/icons/sider_left.png");
+    background-size: contain;
+    margin-right: 0.94rem;
 }
-
