@@ -599,7 +599,7 @@ class Blocks extends React.Component {
     }
     clickDirBtn (dir) {
         const ele = document.getElementsByClassName('blocklyToolboxDiv')[0];
-        if (dir == 'up') {
+        if (dir === 'up') {
             ele.scrollTop -= 100;
            
         } else {

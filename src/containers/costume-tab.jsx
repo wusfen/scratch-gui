@@ -322,12 +322,12 @@ class CostumeTab extends React.Component {
                 onItemClick={this.handleSelectCostume}
                 onCloseBtn={this.hideEditingTarget}
             >
-                {target.costumes ?
+                {/* {target.costumes ?
                     <PaintEditorWrapper
                         selectedCostumeIndex={this.state.selectedCostumeIndex}
                     /> :
                     null
-                }
+                } */}
             </AssetPanel>
         );
     }
