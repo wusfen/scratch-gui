@@ -149,7 +149,7 @@ class Blocks extends React.Component {
             const y = toolboxRect.top;
             const width = toolboxRect.width;
             const height = toolboxRect.height;
-  
+
             return Object.assign(rect, {
                 left: x,
                 top: y,
@@ -223,7 +223,7 @@ class Blocks extends React.Component {
         // 切换角色 Category 也会变化
 
         // console.log('this.props.toolboxXML:', prevProps.toolboxXML === this.props.toolboxXML);
-        
+
         // If any modals are open, call hideChaff to close z-indexed field editors
         if (this.props.anyModalVisible && !prevProps.anyModalVisible) {
             this.ScratchBlocks.hideChaff();
@@ -294,11 +294,12 @@ class Blocks extends React.Component {
 
         // TODO 有问题，暂不设置 selectedItem_ = null
         // 只更新 xml ，不能走依赖 selectedItem_ 的逻辑
+        // eslint-disable-next-line no-negated-condition
         if (!this.workspace.toolbox_.selectedItem_) {
             this.workspace.updateToolbox(this.props.toolboxXML);
             this._renderedToolboxXML = this.props.toolboxXML;
             this.workspace.toolboxRefreshEnabled_ = true;
-        }else{
+        } else {
             const categoryId = this.workspace.toolbox_.getSelectedCategoryId();
             const offset = this.workspace.toolbox_.getCategoryScrollOffset();
             this.workspace.updateToolbox(this.props.toolboxXML);
@@ -318,7 +319,6 @@ class Blocks extends React.Component {
             }
         }
 
-        
 
         const queue = this.toolboxUpdateQueue;
         this.toolboxUpdateQueue = [];
@@ -602,7 +602,7 @@ class Blocks extends React.Component {
         const ele = document.getElementsByClassName('blocklyToolboxDiv')[0];
         if (dir == 'up') {
             ele.scrollTop -= 100;
-           
+
         } else {
             ele.scrollTop += 100;
         }
@@ -653,7 +653,7 @@ class Blocks extends React.Component {
                     onDrop={this.handleDrop}
                     {...props}
                 />
-                
+
                 {this.state.prompt ? (
                     <Prompt
                         defaultValue={this.state.prompt.defaultValue}
