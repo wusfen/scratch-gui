@@ -5,6 +5,7 @@ import VM from 'scratch-vm';
 import {connect} from 'react-redux';
 
 import ControlsComponent from '../components/controls/controls.jsx';
+import startBgS from '../assets/sounds/begin.mp3';
 
 class Controls extends React.Component {
     constructor (props) {
@@ -19,6 +20,10 @@ class Controls extends React.Component {
 
         this.initGuide();
     }
+    playSound () {
+        var _audio = new Audio(startBgS);
+        _audio.play(); // 播放 mp3这个音频对象
+    }
     
     getInitState () {
         return {
@@ -26,16 +31,11 @@ class Controls extends React.Component {
         };
     }
     initGuide () {
-        this.setState({
-            guide: false
-        });
-        this.addEventListener('超过60秒无操作', e => {
+        addEventListener('超过60秒无操作', e => {
             // 显示引导提示
             if (String(e.type) === '超过60秒无操作') {
                 // 处理
-                this.setState({
-                    guide: true
-                });
+                this.playSound();
             }
         });
     }
@@ -96,7 +96,6 @@ class Controls extends React.Component {
             <ControlsComponent
                 {...props}
                 active={projectRunning}
-                guide={this.stage.guide}
                 turbo={turbo}
                 onGreenFlagClick={this.handleGreenFlagClick}
                 onStopAllClick={this.handleStopAllClick}
