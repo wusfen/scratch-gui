@@ -194,10 +194,22 @@ class MenuBar extends React.Component {
             isShowResetFileButton: searchParams.get('file'),
             isShowSkipButton: !false,
             isShowPublishButton: !false,
+            isShowPublishButtonBling: false,
             mode: searchParams.get('mode'),
             isTeacherPreview: false, // true: 老师切学生
         };
 
+        addEventListener('运行时判断正确', e => {
+            this.setState({
+                isShowPublishButtonBling: true,
+            });
+            new Audio(require('../../assets/sounds/批改正确.mp3')).play();
+        });
+        addEventListener('运行时判断不正确', e => {
+            this.setState({
+                isShowPublishButtonBling: false,
+            });
+        });
 
     }
     componentDidMount () {
@@ -392,6 +404,10 @@ class MenuBar extends React.Component {
         dispatchEvent(new Event('menu:hideCode'));
     }
     async handleSubmit () {
+        this.setState({
+            isShowPublishButtonBling: false,
+        });
+        
         dispatchEvent(new Event('submit:提交中'));
         const timeoutTimer = setTimeout(() => {
             dispatchEvent(new Event('submit:提交中超时'));
@@ -940,7 +956,7 @@ class MenuBar extends React.Component {
                         hidden={!this.state.isShowPublishButton}
                         className={classNames({
                             [styles.publishButton]: true,
-                            [styles.blingBling]: true, // TODO 按钮动效，切换 true false
+                            [styles.blingBling]: this.state.isShowPublishButtonBling,
                         })}
                         onClick={this.handleSubmit}
                     >{'提交'}</button>
