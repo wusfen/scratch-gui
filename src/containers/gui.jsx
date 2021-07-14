@@ -39,8 +39,14 @@ import cloudManagerHOC from '../lib/cloud-manager-hoc.jsx';
 
 import GUIComponent from '../components/gui/gui.jsx';
 import {setIsScratchDesktop} from '../lib/isScratchDesktop.js';
-
+import {getParam} from '../lib/param'
+import Timer from '../components/timer/index'
+import {timerType} from '../components/timer/data'
 class GUI extends React.Component {
+    state = {
+        videoSrc: '',
+        promptAreaShow: false
+    }
     componentDidMount () {
         window.gui = this;
 
@@ -55,6 +61,38 @@ class GUI extends React.Component {
             parseInt(stageBgColor.slice(3, 5), 16) / 255,
             parseInt(stageBgColor.slice(5, 7), 16) / 255
         );
+        this.initTimer() // 初始化计时器
+        this.handleVideoSrc() // 获取引导video
+    }
+    initTimer = () => {
+        window.operateTimer = new Timer(timerType.OPERATE) // 操作计时器
+        window.codeTimer = new Timer(timerType.CODE) // 代码计时器
+        window.addEventListener('createOperateTimer', () => { // 监听创建操作计时器事件
+            window.operateTimer.createTimer() // 开始计时
+        });
+        window.addEventListener('createCodeTimer', () => { // 监听创建代码计时器事件
+            window.codeTimer.createTimer() // 开始计时
+        });
+        window.addEventListener('pauseOperateTimer', () => { // 监听终止操作计时器事件
+            window.operateTimer.pauseTimer() // 终止计时器
+        });
+        window.addEventListener('pauseCodeTimer', () => { // 监听终止代码计时器事件
+            window.codeTimer.pauseTimer() // 终止计时器
+        });
+    }
+    componentWillUnmount() {
+        this.detroyListener()
+    }
+    handleVideoSrc = () => {
+        let videoSrc = getParam('tipVideo')
+        if(videoSrc){ // 有初始引导
+            this.setState({'promptAreaShow': true})
+        } else {
+            videoSrc = ''
+            window.dispatchEvent(new Event('createOperateTimer')) // 没有初始引导直接创建计时器
+            window.dispatchEvent(new Event('createCodeTimer'))
+        }
+        this.setState({'videoSrc': videoSrc})
     }
     componentDidUpdate (prevProps) {
         if (this.props.projectId !== prevProps.projectId && this.props.projectId !== null) {
@@ -65,6 +103,9 @@ class GUI extends React.Component {
             // At this time the project view in www doesn't need to know when a project is unloaded
             this.props.onProjectLoaded();
         }
+    }
+    closePromptArea = () => {
+        this.setState({promptAreaShow: false})
     }
     render () {
         if (this.props.isError) {
@@ -92,10 +133,14 @@ class GUI extends React.Component {
             loadingStateVisible,
             ...componentProps
         } = this.props;
+        const {videoSrc, promptAreaShow} = this.state
         return (
             <GUIComponent
                 loading={fetchingProject || isLoading || loadingStateVisible}
                 {...componentProps}
+                videoSrc={videoSrc}
+                promptAreaShow={promptAreaShow}
+                closePromptArea={this.closePromptArea}
             >
                 {children}
             </GUIComponent>
