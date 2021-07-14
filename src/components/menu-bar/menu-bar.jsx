@@ -66,6 +66,7 @@ import collectMetadata from '../../lib/collect-metadata';
 
 import styles from './menu-bar.css';
 const c = styles;
+Object.assign(c, require('../../css/animate.css'));
 
 import helpIcon from '../../lib/assets/icon--tutorials.svg';
 import mystuffIcon from './icon--mystuff.png';
@@ -937,7 +938,10 @@ class MenuBar extends React.Component {
 
                     <button
                         hidden={!this.state.isShowPublishButton}
-                        className={styles.publishButton}
+                        className={classNames({
+                            [styles.publishButton]: true,
+                            [styles.blingBling]: true, // TODO 按钮动效，切换 true false
+                        })}
                         onClick={this.handleSubmit}
                     >{'提交'}</button>
 

@@ -6,3 +6,29 @@
         opacity: 1;
     }
 }
+
+.blingBling {
+    position: relative;
+}
+.blingBling::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: inherit;
+    animation: blingBling 1.3s both infinite;
+}
+@keyframes blingBling {
+    0% {
+        box-shadow: 0 0 0px 1px #ffffff, 0 0 5px 5px #fff59d;
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        box-shadow: none;
+        transform: scale(1.25);
+        opacity: 0;
+    }
+}
