@@ -36,12 +36,19 @@ class Controls extends React.Component {
         });
         addEventListener('超过60秒无操作', e => {
             // 显示引导提示
-            if (String(e.type) === '超过60秒无操作') {
+            if (String(e.type) === '超过60秒无操作' && !this.state.guide) {
                 // 处理
                 this.playSound();
                 this.setState({
                     guide: true
                 });
+                
+                setTimeout(() => {
+                    this.setState({
+                        guide: false
+                    });
+                }, 13000);
+                
             }
         });
     }
