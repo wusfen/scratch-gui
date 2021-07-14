@@ -50,7 +50,6 @@ class PromptArea extends React.Component{
             this.setState({isScale: true})
         }
         let {style} = this.state
-        console.log('获取到的-------', style);
         // 阻止事件冒泡
         e.stopPropagation();
         this.setState({isDown: true})
@@ -83,14 +82,12 @@ class PromptArea extends React.Component{
                 if((newStyle.width < 200 && offsetX<=0) || (newStyle.width > 800 && offsetX>=0)) return
                 // if((newStyle.width/newStyle.height) !== rate) return
             }
-            console.log('--------------------------------',newStyle);
             this.setState({style: newStyle})
         }
     }
     
     // 手指抬起
     onTouchEnd = (e) => {
-        console.log(e, 'onTouchEnd');
         this.setState({isDown: false})
         this.state.isScale && this.setState({isScale: !this.state.isScale})
     }
