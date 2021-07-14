@@ -82,6 +82,7 @@ class Dial extends React.Component {
         // Because the drag handle is not a single point, there is some initial
         // difference between the current sprite direction and the direction to the mouse
         // Store this offset to prevent jumping when the mouse is moved.
+        console.log(888);
         this.directionOffset = this.props.direction - this.directionToMouseEvent(e);
         window.addEventListener('mousemove', this.handleMouseMove);
         window.addEventListener('mouseup', this.unbindMouseEvents);

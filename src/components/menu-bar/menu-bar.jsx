@@ -391,6 +391,7 @@ class MenuBar extends React.Component {
         dispatchEvent(new Event('menu:hideCode'));
     }
     async handleSubmit () {
+        dispatchEvent(new Event('pauseAudioCourse')) // 终止读题语音
         dispatchEvent(new Event('submit:提交中'));
         const timeoutTimer = setTimeout(() => {
             dispatchEvent(new Event('submit:提交中超时'));
