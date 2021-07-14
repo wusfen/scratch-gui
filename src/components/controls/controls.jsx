@@ -61,7 +61,7 @@ const Controls = function (props) {
                 className={classNames({
                     [styles.button]: true,
                     [styles.stopButton]: active,
-                    [styles.blingBling]: true, // TODO 按钮动效，切换 true false
+                    [styles.blingBling]: guide, // TODO 按钮动效，切换 true false
                 })}
                 type="button"
                 onClick={active ? onStopAllClick : onGreenFlagClick}
@@ -71,7 +71,6 @@ const Controls = function (props) {
                     alt=""
                 />
                 {active ? '停止' : '开始'}
-                {/* {guide ? 'true' : 'false'} */}
             </button>
         </div>
     );
