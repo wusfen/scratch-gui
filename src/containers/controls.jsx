@@ -31,11 +31,17 @@ class Controls extends React.Component {
         };
     }
     initGuide () {
+        this.setState({
+            guide: false
+        });
         addEventListener('超过60秒无操作', e => {
             // 显示引导提示
             if (String(e.type) === '超过60秒无操作') {
                 // 处理
                 this.playSound();
+                this.setState({
+                    guide: true
+                });
             }
         });
     }
@@ -95,6 +101,7 @@ class Controls extends React.Component {
         return (
             <ControlsComponent
                 {...props}
+                guide={this.state.guide}
                 active={projectRunning}
                 turbo={turbo}
                 onGreenFlagClick={this.handleGreenFlagClick}

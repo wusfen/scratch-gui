@@ -24,7 +24,6 @@ const messages = defineMessages({
 });
 
 const Controls = function (props) {
-    
     const {
         guide,
         active,
@@ -66,6 +65,7 @@ const Controls = function (props) {
                     alt=""
                 />
                 {active ? '停止' : '开始'}
+                {/* {guide ? 'true' : 'false'} */}
             </button>
         </div>
     );
@@ -83,8 +83,7 @@ Controls.propTypes = {
 
 Controls.defaultProps = {
     active: false,
-    turbo: false,
-    guide: false
+    turbo: false
 };
 
 export default injectIntl(Controls);
