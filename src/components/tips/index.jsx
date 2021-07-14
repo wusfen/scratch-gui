@@ -8,6 +8,7 @@ import styles from './styles.css';
 import tipIcon from './tip.svg'
 import {getParam} from '../../lib/param'
 import PromptArea from '../prompt-area/prompt-area.jsx'
+import testPng from './test.png'
 const c = styles;
 
 class Tips extends React.Component{
@@ -16,13 +17,15 @@ class Tips extends React.Component{
 
         this.state = {
             promptAreaShow: false,
-            videoSrc: ''
+            videoSrc: '',
+            imageSrc: testPng
         };
         this.audio = null
         bindAll(this, [
         ]);
     }
     componentDidMount() {
+        
         // this.createAudio()
         // window.addEventListener('pauseAudioCourse', () => {
         //     this.closeAudio()
@@ -37,6 +40,7 @@ class Tips extends React.Component{
         this.audio.src = src ? src : ''
     }
     clickTips = () => {
+        window.operateTimer.pauseTimer()
         this.setState({
             promptAreaShow: true
         })
@@ -55,6 +59,7 @@ class Tips extends React.Component{
         const {
             promptAreaShow,
             videoSrc,
+            imageSrc,
             ...state
         } = this.state;
         
@@ -63,7 +68,7 @@ class Tips extends React.Component{
                 className={classNames(styles.container)}
             >
                 <img className={styles.tipIcon} src={tipIcon} alt="" onClick={this.clickTips}/>
-                {promptAreaShow ? <PromptArea closePromptArea={this.closePromptArea} videoSrc={videoSrc} type={'图文'}/> : null}
+                {promptAreaShow ? <PromptArea closePromptArea={this.closePromptArea} imageSrc={imageSrc} type={'图文'}/> : null}
             </div>
         );
     }

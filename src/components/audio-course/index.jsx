@@ -7,8 +7,9 @@ import {connect} from 'react-redux';
 import styles from './styles.css';
 import audioIcon from './audio.svg'
 import {getParam} from '../../lib/param'
-import {TIME_1, TIME_2, timerType} from '../timer/data'
+import {OPERATE_TIME_1, OPERATE_TIME_2, timerType} from '../timer/data'
 import {setTipAudioSrc} from '../../reducers/tipAudio';
+import tipAudioSource from '../../assets/sounds/tipAudio.mp3'
 const c = styles;
 
 class AudioCourse extends React.Component{
@@ -19,21 +20,36 @@ class AudioCourse extends React.Component{
             isPlay: false
         };
         this.audio = null
+        this.titleAudioSrc = null
         bindAll(this, [
         ]);
     }
     componentDidMount() {
+        this.titleAudioSrc = getParam('tipAudio')
         this.createAudio()
         window.addEventListener('pauseAudioCourse', this.closeAudio)// 终止音频
-        window.addEventListener(`noAction:${TIME_1}:${timerType.OPERATE}`, this.openAudio) // 连续*秒无任何操作
+        window.addEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_1}`, this.openTitleAudio) // 连续10秒无任何操作
+        window.addEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_2}`, this.openTipAudio) // 连续30秒无任何操作
     }
     
     createAudio = () => {
         const {tipAudio} = this.props
         this.audio = document.createElement('audio')
-        this.audio.src = tipAudio.tipAudioSrc
     }
-    openAudio = () => {
+    openTitleAudio = () => {
+        // console.log(999);
+        this.audio.pause()
+        if(this.titleAudioSrc){
+            this.audio.src = this.titleAudioSrc
+            this.setState({
+                isPlay: true
+            })
+            this.audio.play()
+        }
+    }
+    openTipAudio = () => {
+        this.audio.pause()
+        this.audio.src = tipAudioSource
         this.setState({
             isPlay: true
         })
@@ -46,8 +62,9 @@ class AudioCourse extends React.Component{
         this.audio.pause()
     }
     componentWillUnmount() {
-        window.removeEventListener('pauseAudioCourse', this.openAudio)
-        window.removeEventListener(`noAction:${TIME_1}:${timerType.OPERATE}`, this.closeAudio)
+        window.removeEventListener('pauseAudioCourse', this.closeAudio)
+        window.removeEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_1}`, this.openTitleAudio)
+        window.removeEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_2}`, this.openTipAudio)
     }
     render () {
         const {
@@ -64,7 +81,7 @@ class AudioCourse extends React.Component{
             <div
                 className={classNames(styles.container)}
             >
-                <img className={isPlay ? `${styles.audioIcon} ${styles.playing}` : styles.audioIcon} src={audioIcon} alt="" onClick={this.openAudio}/>
+                <img className={isPlay ? `${styles.audioIcon} ${styles.playing}` : styles.audioIcon} src={audioIcon} alt='' onClick={this.openTitleAudio}/>
             </div>
         );
     }

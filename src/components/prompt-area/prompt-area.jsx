@@ -5,7 +5,6 @@ import bindAll from 'lodash.bindall';
 import {connect} from 'react-redux';
 import styles from './prompt-area.css';
 import scaleIcon from './scale.svg'
-import testPng from './test.png'
 import { scale } from 'twgl.js';
 const c = styles;
 
@@ -179,6 +178,7 @@ class PromptArea extends React.Component{
         const {
             children,
             videoSrc,
+            imageSrc,
             closePromptArea,
             type,
             ...props
@@ -192,7 +192,7 @@ class PromptArea extends React.Component{
             ...state
         } = this.state;
         let styleImg = {
-            backgroundImage: `url(${testPng})`,
+            backgroundImage: `url(${imageSrc})`,
             backgroundRepeat:'no-repeat',
             backgroundSize: 'contain', // contain的优点是会保留背景图片的宽高比，不会被拉伸变形，所以适用于保留背景图片宽高比的需求
             backgroundPositionX: 'center',
@@ -228,7 +228,8 @@ PromptArea.propTypes = {
     children: PropTypes.node,
     videoSrc: PropTypes.string,
     closePromptArea: PropTypes.func,
-    type: PropTypes.string
+    type: PropTypes.string,
+    imageSrc: PropTypes.string,
 };
 
 const mapStateToProps = state => ({
