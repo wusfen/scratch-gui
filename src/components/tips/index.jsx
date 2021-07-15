@@ -6,10 +6,12 @@ import {connect} from 'react-redux';
 
 import styles from './styles.css';
 import tipIcon from './tip.svg'
+import tipAudio from './tips.mp3'
 import {getParam} from '../../lib/param'
 import PromptArea from '../prompt-area/prompt-area.jsx'
 import testPng from './test.png'
 const c = styles;
+Object.assign(c, require('../../css/animate.css'));
 
 class Tips extends React.Component{
     constructor (props) {
@@ -18,14 +20,16 @@ class Tips extends React.Component{
         this.state = {
             promptAreaShow: false,
             videoSrc: '',
-            imageSrc: testPng
+            imageSrc: testPng,
+            showState: false,
+            timeOutEvent: null
         };
         this.audio = null
         bindAll(this, [
         ]);
     }
     componentDidMount() {
-        
+        let s = this;
         // this.createAudio()
         // window.addEventListener('pauseAudioCourse', () => {
         //     this.closeAudio()
@@ -33,10 +37,28 @@ class Tips extends React.Component{
         // window.addEventListener('noAction:operate', () => { // 连续10秒无任何操作
         //     this.openAudio()
         // });
+        window.addEventListener("超过30秒无操作", () => {
+            s.setState({
+                showState: true
+            });
+            this.createAudio(tipAudio);
+            this.audio.play();
+            s.timeOutEvent = setTimeout(()=>{
+                s.setState({
+                    showState: false
+                })
+                s.audio.pause();
+            },12000)
+        })
     }
-    createAudio = () => {
+    componentWillUnmount() {
+        clearTimeout(this.timeOutEvent);
+        this.audio.pause();
+        this.audio = null;
+    }
+    createAudio = (tipSrc) => {
         this.audio = document.createElement('audio')
-        let src = getParam('tipAudio')
+        let src = tipSrc ? tipSrc : getParam('tipAudio')
         this.audio.src = src ? src : ''
     }
     clickTips = () => {
@@ -60,12 +82,15 @@ class Tips extends React.Component{
             promptAreaShow,
             videoSrc,
             imageSrc,
+            showState,
             ...state
         } = this.state;
         
         return (
             <div
-                className={classNames(styles.container)}
+                className={classNames({ 
+                    [styles.container]: true,
+                    [styles.blingBling]: showState})}
             >
                 <img className={styles.tipIcon} src={tipIcon} alt="" onClick={this.clickTips}/>
                 {promptAreaShow ? <PromptArea closePromptArea={this.closePromptArea} imageSrc={imageSrc} type={'图文'}/> : null}
