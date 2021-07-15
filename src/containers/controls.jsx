@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 
 import ControlsComponent from '../components/controls/controls.jsx';
 import startBgS from '../assets/sounds/begin.mp3';
+import {CODE_TIME_1, timerType} from '../components/timer/data';
 
 class Controls extends React.Component {
     constructor (props) {
@@ -34,9 +35,9 @@ class Controls extends React.Component {
         this.setState({
             guide: false
         });
-        addEventListener('超过60秒无操作', e => {
+        window.addEventListener(`noAction:${timerType.OPERATE}:${CODE_TIME_1}`, () => {
             // 显示引导提示
-            if (String(e.type) === '超过60秒无操作' && !this.state.guide) {
+            if (!this.state.guide) {
                 // 处理
                 this.playSound();
                 this.setState({
@@ -92,7 +93,7 @@ class Controls extends React.Component {
             }
             this.props.vm.greenFlag();
         }
-        dispatchEvent(new Event('pauseAudioCourse')) // 终止读题语音
+        dispatchEvent(new Event('pauseAudioCourse')); // 终止读题语音
     }
     handleStopAllClick (e) {
         e.preventDefault();
