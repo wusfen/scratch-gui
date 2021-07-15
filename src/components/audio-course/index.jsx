@@ -7,11 +7,11 @@ import {connect} from 'react-redux';
 import styles from './styles.css';
 import audioIcon from './audio.svg'
 import {getParam} from '../../lib/param'
-import {OPERATE_TIME_1, OPERATE_TIME_2, timerType} from '../timer/data'
+import {OPERATE_TIME_1, OPERATE_TIME_2, CODE_TIME_1,timerType} from '../timer/data'
 import {setTipAudioSrc} from '../../reducers/tipAudio';
 import tipAudioSource from '../../assets/sounds/tipAudio.mp3'
 const c = styles;
-
+Object.assign(c, require('../../css/animate.css'));
 class AudioCourse extends React.Component{
     constructor (props) {
         super(props);
@@ -29,12 +29,13 @@ class AudioCourse extends React.Component{
         this.createAudio()
         window.addEventListener('pauseAudioCourse', this.closeAudio)// 终止音频
         window.addEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_1}`, this.openTitleAudio) // 连续10秒无任何操作
-        window.addEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_2}`, this.openTipAudio) // 连续30秒无任何操作
+        // window.addEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_2}`, this.openTipAudio) // 连续30秒无任何操作
     }
     
     createAudio = () => {
         const {tipAudio} = this.props
         this.audio = document.createElement('audio')
+        this.audio.addEventListener('ended', this.closeAudio);
     }
     openTitleAudio = () => {
         this.audio.pause()
@@ -43,6 +44,7 @@ class AudioCourse extends React.Component{
             this.setState({
                 isPlay: true
             })
+            this.audio.currentTime = 0;
             this.audio.play()
         }
     }
@@ -52,6 +54,7 @@ class AudioCourse extends React.Component{
         this.setState({
             isPlay: true
         })
+        this.audio.currentTime = 0;
         this.audio.play()
     }
     closeAudio = () => {
@@ -64,6 +67,7 @@ class AudioCourse extends React.Component{
         window.removeEventListener('pauseAudioCourse', this.closeAudio)
         window.removeEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_1}`, this.openTitleAudio)
         window.removeEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_2}`, this.openTipAudio)
+        this.audio = null
     }
     render () {
         const {
@@ -75,12 +79,14 @@ class AudioCourse extends React.Component{
             isPlay,
             ...state
         } = this.state;
-        
         return (
             <div
-                className={classNames(styles.container)}
+                className={classNames({
+                    [styles.container]: true,
+                    [styles.blingBling]: isPlay
+                })}
             >
-                <img className={isPlay ? `${styles.audioIcon} ${styles.playing}` : styles.audioIcon} src={audioIcon} alt='' onClick={this.openTitleAudio}/>
+                <img className={styles.audioIcon} src={audioIcon} alt='' onClick={this.openTitleAudio}/>
             </div>
         );
     }

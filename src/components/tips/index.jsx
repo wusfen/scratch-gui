@@ -9,9 +9,10 @@ import tipIcon from './tip.svg'
 import tipAudio from './tips.mp3'
 import {getParam} from '../../lib/param'
 import PromptArea from '../prompt-area/prompt-area.jsx'
-import testPng from './test.png'
+import initPng from './test.png'
 const c = styles;
 Object.assign(c, require('../../css/animate.css'));
+import {OPERATE_TIME_1, OPERATE_TIME_2, timerType} from '../timer/data'
 
 class Tips extends React.Component{
     constructor (props) {
@@ -20,36 +21,45 @@ class Tips extends React.Component{
         this.state = {
             promptAreaShow: false,
             videoSrc: '',
-            imageSrc: testPng,
+            imageSrc: '',
             showState: false,
-            timeOutEvent: null
+            timeOutEvent: null,
+            type: '图文'
         };
         this.audio = null
         bindAll(this, [
         ]);
     }
     componentDidMount() {
-        this.createAudio()
+        this.createAudio(tipAudio);
+        this.judgeVideoOrImageText()
         let s = this;
-        // this.createAudio()
-        // window.addEventListener('pauseAudioCourse', () => {
-        //     this.closeAudio()
-        // })
-        // window.addEventListener('noAction:operate', () => { // 连续10秒无任何操作
-        //     this.openAudio()
-        // });
-        window.addEventListener("超过30秒无操作", () => {
+        window.addEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_2}`, () => {
             s.setState({
                 showState: true
             });
-            this.createAudio(tipAudio);
-            this.audio.play();
+            s.audio.play();
             s.timeOutEvent = setTimeout(()=>{
                 s.setState({
                     showState: false
                 })
                 s.audio.pause();
             },12000)
+        })
+    }
+    judgeVideoOrImageText = () => {
+        let tipVideo = getParam('tipVideo')
+        let tipPic = getParam('tipPic')
+        let type = '图文'
+        if (tipVideo) {
+            type = '视频'
+        } else if (tipPic) {
+            type = '图文'
+        }
+        this.setState({
+            type: type,
+            videoSrc: tipVideo,
+            imageSrc: tipPic || initPng
         })
     }
     componentWillUnmount() {
@@ -61,10 +71,11 @@ class Tips extends React.Component{
         this.audio = document.createElement('audio')
         let src = tipSrc ? tipSrc : getParam('tipAudio')
         this.audio.src = src ? src : ''
-        this.audio.play()
     }
     clickTips = () => {
-        window.operateTimer.pauseTimer()
+        if(this.state.type === '视频'){
+            dispatchEvent(new Event('pauseAudioCourse')) // 点击视频提示终止读题语音
+        }
         this.setState({
             promptAreaShow: true
         })
@@ -85,6 +96,7 @@ class Tips extends React.Component{
             videoSrc,
             imageSrc,
             showState,
+            type,
             ...state
         } = this.state;
         
@@ -95,7 +107,7 @@ class Tips extends React.Component{
                     [styles.blingBling]: showState})}
             >
                 <img className={styles.tipIcon} src={tipIcon} alt="" onClick={this.clickTips}/>
-                {promptAreaShow ? <PromptArea closePromptArea={this.closePromptArea} imageSrc={imageSrc} type={'图文'}/> : null}
+                {promptAreaShow ? <PromptArea closePromptArea={this.closePromptArea} videoSrc={videoSrc} imageSrc={imageSrc} type={type}/> : null}
             </div>
         );
     }

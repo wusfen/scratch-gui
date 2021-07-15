@@ -115,6 +115,7 @@ class TargetPane extends React.Component {
             .then(this.handleActivateBlocksTab);
     }
     handlePaintSpriteClick () {
+        window.dispatchEvent(new Event('pauseCodeTimer')) // 终止代码计时器
         const formatMessage = this.props.intl.formatMessage;
         const emptyItem = emptySprite(
             formatMessage(sharedMessages.sprite, {index: 1}),
@@ -135,6 +136,7 @@ class TargetPane extends React.Component {
             .then(this.handleActivateBlocksTab);
     }
     handleFileUploadClick () {
+        // window.dispatchEvent(new Event('pauseCodeTimer')) // 终止代码计时器
         this.fileInput.click();
     }
     handleSpriteUpload (e) {
@@ -299,6 +301,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     onNewSpriteClick: e => {
         e.preventDefault();
+        window.dispatchEvent(new Event('pauseCodeTimer')) // 终止代码计时器
         dispatch(openSpriteLibrary());
     },
     onRequestCloseSpriteLibrary: () => {

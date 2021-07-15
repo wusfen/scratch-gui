@@ -106,8 +106,6 @@ class PromptArea extends React.Component{
     videoPause = () => {
         setTimeout(() => {
             this.props.closePromptArea()
-            window.dispatchEvent(new Event('createOperateTimer')) // 创建计时器
-            window.dispatchEvent(new Event('createCodeTimer'))
         }, 1000)
         
     }

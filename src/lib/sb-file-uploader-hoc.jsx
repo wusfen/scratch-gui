@@ -64,7 +64,7 @@ const SBFileUploaderHOC = function (WrappedComponent) {
         // step 1: this is where the upload process begins
         handleStartSelectingFileUpload () {
             this.createFileObjects(); // go to step 2
-            window.dispatchEvent(new Event('pauseCodeTimer')) // 终止代码计时器
+            // window.dispatchEvent(new Event('pauseCodeTimer')) // 终止代码计时器
         }
         // step 2: create a FileReader and an <input> element, and issue a
         // pseudo-click to it. That will open the file chooser dialog.

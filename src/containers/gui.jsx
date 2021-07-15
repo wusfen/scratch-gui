@@ -47,6 +47,10 @@ class GUI extends React.Component {
         videoSrc: '',
         promptAreaShow: false
     }
+    createOperateTimer = null
+    createCodeTimer = null
+    pauseOperateTimer = null
+    pauseCodeTimer = null
     componentDidMount () {
         window.gui = this;
 
@@ -67,21 +71,40 @@ class GUI extends React.Component {
     initTimer = () => {
         window.operateTimer = new Timer(timerType.OPERATE) // 操作计时器
         window.codeTimer = new Timer(timerType.CODE) // 代码计时器
-        window.addEventListener('createOperateTimer', () => { // 监听创建操作计时器事件
+        this.createOperateTimer = () => { // 监听创建操作计时器事件
+            if(window.operateTimer.state === 'exist') return
+            console.log("创建操作计时器");
             window.operateTimer.createTimer() // 开始计时
-        });
-        window.addEventListener('createCodeTimer', () => { // 监听创建代码计时器事件
+        }
+        this.createCodeTimer = () => { // 监听创建代码计时器事件
+            if(window.codeTimer.state === 'exist') return
+            console.log("创建代码计时器");
             window.codeTimer.createTimer() // 开始计时
-        });
-        window.addEventListener('pauseOperateTimer', () => { // 监听终止操作计时器事件
+        }
+        this.pauseOperateTimer = () => { // 监听终止操作计时器事件
+            if(window.operateTimer.state === '') return
+            console.log("终止操作计时器");
             window.operateTimer.pauseTimer() // 终止计时器
-        });
-        window.addEventListener('pauseCodeTimer', () => { // 监听终止代码计时器事件
+        }
+        this.pauseCodeTimer = () => { // 监听终止代码计时器事件
+            if(window.codeTimer.state === '') return
+            console.log("终止代码计时器");
             window.codeTimer.pauseTimer() // 终止计时器
-        });
+        }
+        window.addEventListener('createOperateTimer', this.createOperateTimer);
+        window.addEventListener('createCodeTimer', this.createCodeTimer);
+        window.addEventListener('pauseOperateTimer', this.pauseOperateTimer);
+        window.addEventListener('pauseCodeTimer', this.pauseCodeTimer);
     }
+    
     componentWillUnmount() {
         this.detroyListener()
+    }
+    detroyListener = () => {
+        window.removeEventListener('createOperateTimer', this.createOperateTimer);
+        window.removeEventListener('createCodeTimer', this.createCodeTimer);
+        window.removeEventListener('pauseOperateTimer', this.pauseOperateTimer);
+        window.removeEventListener('pauseCodeTimer', this.pauseCodeTimer);
     }
     handleVideoSrc = () => {
         let videoSrc = getParam('tipVideo')
@@ -106,6 +129,8 @@ class GUI extends React.Component {
     }
     closePromptArea = () => {
         this.setState({promptAreaShow: false})
+        window.dispatchEvent(new Event('createOperateTimer')) // 关闭初始视频引导后创建计时器
+        window.dispatchEvent(new Event('createCodeTimer'))
     }
     render () {
         if (this.props.isError) {

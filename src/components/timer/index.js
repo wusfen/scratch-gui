@@ -1,13 +1,15 @@
 import {OPERATE_TIME_1, OPERATE_TIME_2, CODE_TIME_1, timerType} from './data'
 class Timer {
     constructor (type) {
+        this.state = ''
         this.codeTimer = null // 代码计时器
         this.operateTimer1 = null // 操作计时器1
         this.operateTimer2 = null // 操作计时器2
         this.type = type // 计时器类型
-        window.addEventListener('touchend', this.resetTimer.bind(this), true);
+        window.addEventListener('click', this.resetTimer.bind(this), true);
     }
-    createTimer() {
+    createTimer = () => {
+        this.state = 'exist'
         if(this.type === timerType.CODE) {
             this.codeTimer = setInterval(() => {
                 window.dispatchEvent(new Event(`noAction:${this.type}:${CODE_TIME_1}`));
@@ -23,27 +25,26 @@ class Timer {
                 }, OPERATE_TIME_2)
             }, OPERATE_TIME_1)
         }
-        
     }
-    resetTimer() {
+    resetTimer = () => {
         if(this.type === timerType.CODE) {
-            console.log(888);
             this.codeTimer && clearInterval(this.codeTimer)
         }  else if(this.type === timerType.OPERATE){
-            console.log(999);
             this.operateTimer1 && clearTimeout(this.operateTimer1)
             this.operateTimer2 && clearTimeout(this.operateTimer2)
         }
+        if(this.state === '') return
         this.createTimer()
     }
-    pauseTimer() {
+    pauseTimer = () => {
+        this.state = ''
         if(this.type === timerType.CODE) {
             this.codeTimer && clearInterval(this.codeTimer)
         }  else if(this.type === timerType.OPERATE){
             this.operateTimer1 && clearTimeout(this.operateTimer1)
             this.operateTimer2 && clearTimeout(this.operateTimer2)
         }
-        window.removeEventListener('touchend', this.resetTimer.bind(this), true);
+        window.removeEventListener('click', this.resetTimer, true);
     }
     render () {
         return ;
