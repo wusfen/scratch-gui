@@ -92,6 +92,7 @@ class Controls extends React.Component {
             }
             this.props.vm.greenFlag();
         }
+        dispatchEvent(new Event('pauseAudioCourse')) // 终止读题语音
     }
     handleStopAllClick (e) {
         e.preventDefault();
