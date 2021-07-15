@@ -195,12 +195,20 @@ class MenuBar extends React.Component {
             isShowPublishButton: !false,
             mode: searchParams.get('mode'),
             isTeacherPreview: false, // true: 老师切学生
+            workUserBlockNum: 0
         };
 
 
     }
     componentDidMount () {
         document.addEventListener('keydown', this.handleKeyPress);
+        this.props.vm.addListener('workspaceUpdate', () => {
+            this.setState({
+                workUserBlockNum: this.getUserBlocks()
+            });
+            
+        });
+
     }
     componentWillUnmount () {
         document.removeEventListener('keydown', this.handleKeyPress);
@@ -390,6 +398,20 @@ class MenuBar extends React.Component {
     clickHideCode () {
         dispatchEvent(new Event('menu:hideCode'));
     }
+    // 获取用户新增代码块
+    getUserBlocks () {
+        var curBlocksNum = 0;
+        for (let i = 0; i < this.props.vm.runtime.targets.length; i++) {
+            for (const j in this.props.vm.runtime.targets[i].blocks._blocks) {
+                if (this.props.vm.runtime.targets[i].blocks._blocks[j].shadow === false) {
+                    curBlocksNum++;
+                }
+            }
+        }
+        
+        return curBlocksNum;
+    }
+
     async handleSubmit () {
         dispatchEvent(new Event('submit:提交中'));
         const timeoutTimer = setTimeout(() => {
@@ -409,11 +431,22 @@ class MenuBar extends React.Component {
 
         // TODO 临时存值
         const workInfo = window._workInfo;
+        
+    
+        var _userBlockNum = this.getUserBlocks() - this.state.workUserBlockNum;
+
+        
+        if (_userBlockNum < 0) {
+            _userBlockNum = 0;
+        }
+        
+        
         // 提交
         const {data: workId} = await ajax.put('/hwUserWork/submitWork', {
             id: workInfo.id,
             submitType: 2,
             workPath: fileData.path,
+            userBlockNum: _userBlockNum,
             // analystStatus: undefined,
             workId: workInfo.analystStatus === -1 ? workInfo.workId : ''
         });
