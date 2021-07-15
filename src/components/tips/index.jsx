@@ -25,8 +25,7 @@ class Tips extends React.Component{
         ]);
     }
     componentDidMount() {
-        
-        // this.createAudio()
+        this.createAudio()
         // window.addEventListener('pauseAudioCourse', () => {
         //     this.closeAudio()
         // })
@@ -37,7 +36,8 @@ class Tips extends React.Component{
     createAudio = () => {
         this.audio = document.createElement('audio')
         let src = getParam('tipAudio')
-        this.audio.src = src ? src : ''
+        this.audio.src = src
+        this.audio.play()
     }
     clickTips = () => {
         window.operateTimer.pauseTimer()
