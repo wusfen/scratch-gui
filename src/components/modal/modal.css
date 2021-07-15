@@ -62,19 +62,10 @@
 $sides: 20rem;
 
 .header {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    height: $library-header-height;
-
-    box-sizing: border-box;
-    width: 100%;
-    background-color: $motion-primary;
-
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 1rem;
-    font-weight: normal;
+    position: relative;
+    background: none;
+    display: block;
+    height: 0;
 }
 
 .header-item {
@@ -107,6 +98,11 @@ $sides: 20rem;
     user-select: none;
     letter-spacing: 0.025rem;
     cursor: default;
+    position: absolute;
+    top: -3rem;
+    left: -1rem;
+    font-size: 1rem;
+    color: #C1AFFF;
 }
 
 [dir="ltr"] .header-item-title {

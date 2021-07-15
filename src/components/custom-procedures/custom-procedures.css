@@ -24,41 +24,6 @@
     margin: 0.1875rem;
 }
 
-.modal-content [class*="modal_header"] {
-    position: relative;
-    background: none;
-    display: block;
-    height: 0;
-}
-
-.modal-content [class*="modal_header-item-title"] {
-    position: absolute;
-    top: -3rem;
-    left: -1rem;
-    font-size: 1rem;
-    color: #C1AFFF;
-}
-
-.modal-content [class*="close-button_close-button"] {
-    background: none;
-    border: none;
-    box-shadow: none;
-    position: absolute;
-    top: -2rem;
-    right: 0;
-}
-
-.modal-content [class*="close-button_close-button"]:hover {
-    background: none;
-    border: none;
-    box-shadow: none;
-}
-
-.modal-content [class*="close-button_close-icon"] {
-    width: 1.38rem;
-    height: 1.38rem;
-}
-
 /* Blocks workspace for custom procedure declaration editor */
 .workspace {
     min-height: 12.5rem;
