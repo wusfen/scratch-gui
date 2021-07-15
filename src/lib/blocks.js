@@ -1,9 +1,10 @@
 import ScratchBlocks from 'scratch-blocks';
 import fixBugs from './blocks_fix_bugs';
 import teacherMode from './blocks_teacher_mode';
+import optimize from './blocks_optimize';
 
 fixBugs(ScratchBlocks);
-
+optimize(ScratchBlocks);
 
 /**
  * Connect scratch blocks with the vm

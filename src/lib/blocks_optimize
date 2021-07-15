@@ -1,0 +1,6 @@
+/* eslint-disable */
+// fix bugs
+export default function (Blockly){
+    Blockly.Workspace.prototype.MAX_UNDO = 100;
+
+}

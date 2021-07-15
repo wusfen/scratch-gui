@@ -48,7 +48,8 @@ const config = {
                     /node_modules[\\/]@vernier[\\/]godirect/,
                     /node_modules[\\/]scratch-l10n[\\/]locales/,
                     /node_modules[\\/]scratch-blocks.msg/,
-                    /node_modules[\\/]scratch-paint/
+                    /node_modules[\\/]scratch-paint/,
+                    /node_modules[\\/]scratch-render/
                 ],
                 use: [
                     'cache-loader',
