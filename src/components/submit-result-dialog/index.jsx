@@ -62,6 +62,16 @@ class Component extends React.Component{
                     this.startBackTimer();
                 }
 
+                if (/已提交/.test(status)) {
+                    if (/正确/.test(status)) {
+                        new Audio(require('./audio/批改正确.mp3')).play();
+                    } else if (/错误/.test(status)) {
+                        new Audio(require('./audio/批改错误.mp3')).play();
+                    } else {
+                        new Audio(require('./audio/没有批改结果.mp3')).play();
+                    }
+                }
+
             });
             addEventListener(`error`, e => {
                 this.setState({

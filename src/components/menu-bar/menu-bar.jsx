@@ -66,11 +66,12 @@ import {
 import collectMetadata from '../../lib/collect-metadata';
 
 import styles from './menu-bar.css';
-import commonStyles from '../../css/common.css';
-const c = {
-    ...styles,
-    ...commonStyles,
-};
+const c = styles;
+Object.assign(
+    c,
+    require('../../css/common.css'),
+    require('../../css/animate.css'),
+);
 
 import helpIcon from '../../lib/assets/icon--tutorials.svg';
 import mystuffIcon from './icon--mystuff.png';
@@ -205,6 +206,9 @@ class MenuBar extends React.Component {
             file: searchParams.get('file'),
             isShowResetFileButton: searchParams.get('file'),
             mode: searchParams.get('mode') || 'normal',
+            isShowPublishButton: !false,
+            isShowPublishButtonBling: false,
+            mode: searchParams.get('mode'),
             isTeacherPreview: false, // true: 老师切学生
             isSaveAsChanged: false,
         };
@@ -214,6 +218,17 @@ class MenuBar extends React.Component {
                 isShowSkipButton: true,
             });
         }, 30 * 1000);
+        addEventListener('运行时判断正确', e => {
+            this.setState({
+                isShowPublishButtonBling: true,
+            });
+            new Audio(require('../../assets/sounds/提交按钮.mp3')).play();
+        });
+        addEventListener('运行时判断不正确', e => {
+            this.setState({
+                isShowPublishButtonBling: false,
+            });
+        });
 
         window.bridge.on('requireExitEditor', e => {
             this.handleExit('requireExitEditor');
@@ -491,6 +506,10 @@ class MenuBar extends React.Component {
         window.bridge.emit(e);
     }
     async handleSubmit (isNoCheckResult) {
+        this.setState({
+            isShowPublishButtonBling: false,
+        });
+
         // TODO 临时存值
         const workInfo = window._workInfo || {};
         if (!workInfo.id) {
@@ -1074,7 +1093,9 @@ class MenuBar extends React.Component {
                                 >{'跳过'}</button>
 
                                 <button
-                                    className={`${c.button} ${c.yellow}`}
+                                    className={classNames(c.button, c.yellow, {
+                                        [c.blingBling]: this.state.isShowPublishButtonBling,
+                                    })}
                                     onClick={e => this.handleSubmit()}
                                 >
                                     <i className={`${c.iSend} ${c.iSizeL}`} />

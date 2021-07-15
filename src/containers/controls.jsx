@@ -6,6 +6,8 @@ import {connect} from 'react-redux';
 
 import ControlsComponent from '../components/controls/controls.jsx';
 
+import {ajax} from '../lib/ajax.js';
+
 class Controls extends React.Component {
     constructor (props) {
         super(props);
@@ -28,10 +30,33 @@ class Controls extends React.Component {
             }
             this.props.vm.greenFlag();
         }
+
+        this.checkWork();
     }
     handleStopAllClick (e) {
         e.preventDefault();
         this.props.vm.stopAll();
+    }
+    async checkWork () {
+        if (window._workInfo) {
+            var json = this.props.vm.toJSON();
+            if (this.lastVmJSON === json) {
+                return;
+            }
+            this.lastVmJSON = json;
+            
+            var {data} = await ajax.post('hwUserWork/autoAnalyst', {
+                workCode: window._workInfo.workCode,
+                projectJsonStr: json,
+            });
+
+            if (data == 1) {
+                dispatchEvent(new Event('运行时判断正确'));
+            } else {
+                dispatchEvent(new Event('运行时判断不正确'));
+            }
+        }
+
     }
     render () {
         const {
