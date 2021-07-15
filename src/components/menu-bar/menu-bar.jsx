@@ -203,7 +203,7 @@ class MenuBar extends React.Component {
             this.setState({
                 isShowPublishButtonBling: true,
             });
-            new Audio(require('../../assets/sounds/批改正确.mp3')).play();
+            new Audio(require('../../assets/sounds/提交按钮.mp3')).play();
         });
         addEventListener('运行时判断不正确', e => {
             this.setState({
