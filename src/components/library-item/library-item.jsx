@@ -54,7 +54,10 @@ class LibraryItemComponent extends React.PureComponent {
                         classNames(styles.featuredExtensionText, styles.featuredText) : styles.featuredText
                     }
                 >
-                    <span className={styles.libraryItemName}>{this.props.name}</span>
+                    <span className={classNames(
+                        styles.libraryItemName,
+                        this.props.extensionId ? styles.libraryItemExtensionName : null
+                    )}>{this.props.name}</span>
                     <br />
                     <span className={styles.featuredDescription}>{this.props.description}</span>
                 </div>

@@ -52,8 +52,6 @@
     align-items: center;
 
     overflow: hidden;  /* Mask the icon animation */
-    height: 1.25rem;
-    width: 1.25rem;
     margin: 0.3rem;
 
     border-radius: 50%;
@@ -93,6 +91,7 @@
     user-select: none;
     transform: translateX(0.5rem);
     transition: transform 0.085s cubic-bezier(0.78, 1, 1, 1);
+    width: 0.69rem;
 }
 
 /*

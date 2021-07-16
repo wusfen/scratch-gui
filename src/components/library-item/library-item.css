@@ -20,9 +20,9 @@
     border-radius: $space;
     text-align: center;
     cursor: pointer;
-    background: #FFE9AC;
     box-shadow: 0rem 0.06rem 0.53rem 0rem rgb(0 0 0 / 18%);
     border: none;
+    background: #FFE9AC;
 }
 
 .library-item-extension {
@@ -35,6 +35,10 @@
     margin: 1rem 1rem 1rem 1rem; */
     /* border-width: 0.125rem;
     border-color: $motion-primary; */
+}
+
+.library-item:hover .library-item-name {
+    width: 8.88rem;
 }
 
 .hidden {
@@ -94,20 +98,32 @@
 }
 
 .library-item-name {
-    width: 80%;
-    margin: 0.25rem 0;
+    width: 9.38rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    position: absolute;
+    bottom: -0.1rem;
     text-align: center;
-
-    /*
-        For truncating overflowing text gracefully
-        Min-width is for a bug: https://css-tricks.com/flexbox-truncated-text
-    */
     overflow: hidden;
+    -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 0.75rem;
     color: #6D57DC;
+    background: #fff;
+}
+
+.library-item-extension-name {
+    width: 80%;
+    margin: 0.25rem 0;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 1.13rem;
+    color: #6D57DC;
     line-height: 1.69rem;
+    position: initial;
 }
 
 .featured-item {
@@ -120,6 +136,7 @@
     box-shadow: 0rem 0.06rem 0.53rem 0rem rgb(0 0 0 / 18%);
     border-radius: 0.63rem;
     border: none;
+    background: #fff;
 }
 
 .featured-image-container {

@@ -21,7 +21,6 @@
 }
 
 .modal-content {
-    margin: 6.25rem auto;
     outline: none;
     border: 0.25rem solid $ui-white-transparent;
     padding: 0;

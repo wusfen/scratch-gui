@@ -2,50 +2,15 @@
 @import "../../css/colors.css";
 
 .library-wrapper {
-    width: 50rem;
-    height: 37.5rem;
+    width: 56.25rem;
+    height: 43.75rem;
     background: #F1E0FF;
     box-shadow: 0rem 0.03rem 0.44rem 0rem #d096ff;
     border-radius: 1.25rem;
     border: none;
     overflow: visible;
+    margin-top: 2rem;
 }
-
-.library-wrapper [class*="modal_header"] {
-    position: relative;
-    background: none;
-    display: block;
-    height: 0;
-    padding: 0;
-}
-
-.library-wrapper [class*="modal_header-item-title"] {
-    position: absolute;
-    top: -2rem;
-    font-size: 1rem;
-    color: #C1AFFF;
-}
-
-.library-wrapper [class*="close-button_close-button"] {
-    background: none;
-    border: none;
-    box-shadow: none;
-    position: absolute;
-    top: -2rem;
-    right: 0;
-}
-
-.library-wrapper [class*="close-button_close-button"]:hover {
-    background: none;
-    border: none;
-    box-shadow: none;
-}
-
-.library-wrapper [class*="close-button_close-icon"] {
-    width: 1.38rem;
-    height: 1.38rem;
-}
-
 
 .library-scroll-grid {
     display: flex;
@@ -57,13 +22,13 @@
     flex-wrap: wrap;
     overflow-y: auto;
     height: auto;
-    padding: 1rem 1.25rem;
+    padding: 6.5rem 4.38rem;
     height: calc(100% - $library-header-height);
 }
 
 .library-scroll-grid.withFilterBar {
     height: 31rem;
-    padding: 0rem 3rem 1rem 3rem;
+    padding: 0rem 1rem 1rem 1rem;
     background: #fff;
     margin: 0rem 1rem 1rem 1rem;
 }
@@ -71,9 +36,9 @@
 .filter-bar {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: flex-end;
     align-items: center;
-    height: calc($library-filter-bar-height + 2rem); /* padding */
+    height: 3.44rem;
     background-color: $motion-transparent;
     padding: 0 1rem;
     font-size: 0.875rem;
@@ -107,9 +72,11 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    height: $library-filter-bar-height;
     overflow: hidden;
     align-items: center;
+    background: #fff;
+    margin: 0 1rem;
+    padding: 1rem 1.5rem;
 }
 
 .spinner-wrapper {
