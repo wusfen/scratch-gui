@@ -168,6 +168,9 @@ class SoundTab extends React.Component {
             }).then(this.handleNewSound);
         }
     }
+    handleHideEditingTarget () {
+        document.querySelector('[role="tablist"]').children[0].click();
+    }
 
     setFileInput (input) {
         this.fileInput = input;
@@ -256,6 +259,7 @@ class SoundTab extends React.Component {
                 onDuplicateClick={this.handleDuplicateSound}
                 onExportClick={this.handleExportSound}
                 onItemClick={this.handleSelectSound}
+                onCloseBtn={this.handleHideEditingTarget}
             >
                 {sprite.sounds && sprite.sounds[this.state.selectedSoundIndex] ? (
                     <SoundEditor soundIndex={this.state.selectedSoundIndex} />
