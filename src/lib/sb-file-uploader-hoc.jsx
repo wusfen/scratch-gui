@@ -122,7 +122,7 @@ const SBFileUploaderHOC = function (WrappedComponent) {
                 }
                 this.props.closeFileMenu();
             }
-            // window.dispatchEvent(new Event('createCodeTimer')) // 创建代码计时器
+            // window.dispatchEvent(new Event('createCodeTimer')); // 创建代码计时器
         }
         // step 4 is below, in mapDispatchToProps
 

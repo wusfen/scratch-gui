@@ -32,7 +32,7 @@ class Tips extends React.Component{
     }
     componentDidMount() {
         this.createAudio(tipAudio);
-        this.judgeVideoOrImageText()
+        this.judgeVideoOrImageText();
         let s = this;
         window.addEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_2}`, () => {
             s.setState({
@@ -48,13 +48,13 @@ class Tips extends React.Component{
         })
     }
     judgeVideoOrImageText = () => {
-        let tipVideo = getParam('tipVideo')
-        let tipPic = getParam('tipPic')
-        let type = '图文'
+        let tipVideo = getParam('tipVideo');
+        let tipPic = getParam('tipPic');
+        let type = '';
         if (tipVideo) {
-            type = '视频'
+            type = '视频';
         } else if (tipPic) {
-            type = '图文'
+            type = '图文';
         }
         this.setState({
             type: type,
@@ -68,13 +68,13 @@ class Tips extends React.Component{
         this.audio = null;
     }
     createAudio = (tipSrc) => {
-        this.audio = document.createElement('audio')
-        let src = tipSrc ? tipSrc : getParam('tipAudio')
-        this.audio.src = src ? src : ''
+        this.audio = document.createElement('audio');
+        let src = tipSrc ? tipSrc : getParam('tipAudio');
+        this.audio.src = src ? src : '';
     }
     clickTips = () => {
         if(this.state.type === '视频'){
-            dispatchEvent(new Event('pauseAudioCourse')) // 点击视频提示终止读题语音
+            dispatchEvent(new Event('pauseAudioCourse')); // 点击视频提示终止读题语音
         }
         this.setState({
             promptAreaShow: true

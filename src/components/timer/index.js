@@ -6,48 +6,114 @@ class Timer {
         this.operateTimer1 = null // 操作计时器1
         this.operateTimer2 = null // 操作计时器2
         this.type = type // 计时器类型
-        window.addEventListener('click', this.resetTimer.bind(this), true);
+        this.createOperateTimer = null
+        this.createCodeTimer = null
+        this.pauseOperateTimer = null
+        this.pauseCodeTimer = null
+        this.initListener() // 初始化监听器
     }
+    initListener = () => {
+        window.addEventListener('click', this.resetTimer, true);
+        switch (this.type) {
+            case timerType.CODE:
+                this.createCodeTimer = () => { // 监听创建代码计时器事件
+                    if(this.state === 'exist') return;
+                    console.log('创建代码计时器');
+                   this.createTimer(); // 开始计时
+                }
+                this.pauseCodeTimer = () => { // 监听终止代码计时器事件
+                    if(this.state === '') return;
+                    console.log('终止代码计时器');
+                    this.pauseTimer(); // 终止计时器
+                }
+                window.addEventListener('createCodeTimer', this.createCodeTimer);
+                window.addEventListener('pauseCodeTimer', this.pauseCodeTimer);
+                break;
+            case timerType.OPERATE:
+                this.createOperateTimer = () => { // 监听创建操作计时器事件
+                    if(this.state === 'exist') return;
+                    console.log('创建操作计时器');
+                    this.createTimer(); // 开始计时
+                }
+                this.pauseOperateTimer = () => { // 监听终止操作计时器事件
+                    if(this.state === '') return;
+                    console.log('终止操作计时器');
+                    this.auseTimer(); // 终止计时器
+                }
+                window.addEventListener('createOperateTimer', this.createOperateTimer);
+                window.addEventListener('pauseOperateTimer', this.pauseOperateTimer);
+                break;
+        }
+    }
+   
     createTimer = () => {
-        this.state = 'exist'
-        if(this.type === timerType.CODE) {
-            this.codeTimer = setInterval(() => {
-                window.dispatchEvent(new Event(`noAction:${this.type}:${CODE_TIME_1}`));
-            }, CODE_TIME_1)
-        } else if(this.type === timerType.OPERATE){
-            this.operateTimer1 = setTimeout(() => {
-                window.dispatchEvent(new Event(`noAction:${this.type}:${OPERATE_TIME_1}`));
-                clearTimeout(this.operateTimer1)
-                this.operateTimer2 = setTimeout(() => {
-                    window.dispatchEvent(new Event(`noAction:${this.type}:${OPERATE_TIME_2}`));
-                    clearTimeout(this.operateTimer2)
-                    this.createTimer()
-                }, OPERATE_TIME_2)
-            }, OPERATE_TIME_1)
+        this.state = 'exist';
+        switch (this.type) {
+            case timerType.CODE:
+                this.codeTimer = setInterval(() => {
+                    window.dispatchEvent(new Event(`noAction:${this.type}:${CODE_TIME_1}`));
+                }, CODE_TIME_1)
+                break;
+            case timerType.OPERATE:
+                this.operateTimer1 = setTimeout(() => {
+                    window.dispatchEvent(new Event(`noAction:${this.type}:${OPERATE_TIME_1}`));
+                    clearTimeout(this.operateTimer1);
+                    this.operateTimer2 = setTimeout(() => { // OPERATE_TIME_1秒后再触发OPERATE_TIME_2后的事件
+                        window.dispatchEvent(new Event(`noAction:${this.type}:${OPERATE_TIME_2}`));
+                        clearTimeout(this.operateTimer2);
+                        this.createTimer();
+                    }, OPERATE_TIME_2)
+                }, OPERATE_TIME_1)
+                break;
+            default:
+                break;
         }
     }
     resetTimer = () => {
-        if(this.type === timerType.CODE) {
-            this.codeTimer && clearInterval(this.codeTimer)
-        }  else if(this.type === timerType.OPERATE){
-            this.operateTimer1 && clearTimeout(this.operateTimer1)
-            this.operateTimer2 && clearTimeout(this.operateTimer2)
+        switch (this.type) {
+            case timerType.CODE:
+                this.codeTimer && clearInterval(this.codeTimer);
+                break;
+            case timerType.OPERATE:
+                this.operateTimer1 && clearTimeout(this.operateTimer1);
+                this.operateTimer2 && clearTimeout(this.operateTimer2);
+                break;
+            default:
+                break;
         }
-        if(this.state === '') return
-        this.createTimer()
+        if(this.state === '') return;
+        this.createTimer();
     }
     pauseTimer = () => {
         this.state = ''
-        if(this.type === timerType.CODE) {
-            this.codeTimer && clearInterval(this.codeTimer)
-        }  else if(this.type === timerType.OPERATE){
-            this.operateTimer1 && clearTimeout(this.operateTimer1)
-            this.operateTimer2 && clearTimeout(this.operateTimer2)
+        switch (this.type) {
+            case timerType.CODE:
+                this.codeTimer && clearInterval(this.codeTimer);
+                break;
+            case timerType.OPERATE:
+                this.operateTimer1 && clearTimeout(this.operateTimer1);
+                this.operateTimer2 && clearTimeout(this.operateTimer2);
+                break;
+            default:
+                break;
         }
         window.removeEventListener('click', this.resetTimer, true);
     }
-    render () {
-        return ;
+
+    removeListener = () => {
+        switch (this.type) {
+            case timerType.CODE:
+                window.removeEventListener('createCodeTimer', this.createCodeTimer);
+                window.removeEventListener('pauseCodeTimer', this.pauseCodeTimer);
+                break;
+            case timerType.OPERATE:
+                window.removeEventListener('createOperateTimer', this.createOperateTimer);
+                window.removeEventListener('pauseOperateTimer', this.pauseOperateTimer);
+                break;
+            default:
+                break;
+        }
+        window.removeEventListener('click', this.resetTimer, true);
     }
 }
 

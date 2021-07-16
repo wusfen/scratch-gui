@@ -113,7 +113,7 @@ class TargetPane$ extends React.Component {
         if (this.props.stage && id !== this.props.stage.id) {
             this.props.onHighlightTarget(id);
         }
-        window.dispatchEvent(new Event('createCodeTimer')) // 创建代码计时器
+        window.dispatchEvent(new Event('createCodeTimer')); // 创建代码计时器
         document.querySelector('[role="tablist"]').children[0].click();
     }
     handleSurpriseSpriteClick () {
@@ -377,7 +377,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     onNewSpriteClick: e => {
         e.preventDefault();
-        window.dispatchEvent(new Event('pauseCodeTimer')) // 终止代码计时器
+        window.dispatchEvent(new Event('pauseCodeTimer')); // 终止代码计时器
         dispatch(openSpriteLibrary());
     },
     onRequestCloseSpriteLibrary: () => {

@@ -49,10 +49,10 @@ class PromptArea extends React.Component{
         if(handleName === 'scale'){
             this.setState({isScale: true})
         }
-        let {style} = this.state
+        let {style} = this.state;
         // 阻止事件冒泡
         e.stopPropagation();
-        this.setState({isDown: true})
+        this.setState({isDown: true});
         // 鼠标坐标
         const cY = e.targetTouches[0].clientY; // clientX 相对于可视化区域
         const cX = e.targetTouches[0].clientX;
@@ -62,13 +62,13 @@ class PromptArea extends React.Component{
     }
     // 手指移动
     onTouchMove = (e) => {
-        let {isDown, oriPos, editStyle, style, isScale, rate} = this.state
-        let newStyle
+        let {isDown, oriPos, editStyle, style, isScale, rate} = this.state;
+        let newStyle;
         // 判断鼠标是否按住
         if (isDown) {
             newStyle = {...oriPos};
-            let offsetY = e.targetTouches[0].clientY - oriPos.cY
-            let offsetX = e.targetTouches[0].clientX - oriPos.cX
+            let offsetY = e.targetTouches[0].clientY - oriPos.cY;
+            let offsetX = e.targetTouches[0].clientX - oriPos.cX;
             if(!isScale){ // 是否是缩放操作
                 // 元素当前位置 + 偏移量
                 const top = oriPos.top + offsetY;
@@ -79,21 +79,21 @@ class PromptArea extends React.Component{
             } else {
                 newStyle.width += offsetX;
                 newStyle.height += offsetX/rate; // 根据width和缩放比例算出height
-                if((newStyle.width < 200 && offsetX<=0) || (newStyle.width > 800 && offsetX>=0)) return
+                if((newStyle.width < 200 && offsetX<=0) || (newStyle.width > document.documentElement.clientWidth && offsetX>=0)) return;
                 // if((newStyle.width/newStyle.height) !== rate) return
             }
-            this.setState({style: newStyle})
+            this.setState({style: newStyle});
         }
     }
     
     // 手指抬起
     onTouchEnd = (e) => {
-        this.setState({isDown: false})
-        this.state.isScale && this.setState({isScale: !this.state.isScale})
+        this.setState({isDown: false});
+        this.state.isScale && this.setState({isScale: !this.state.isScale});
     }
 
     initStyle = () => {
-        let rate = this.refs.showRef.clientWidth/this.refs.showRef.clientHeight // 计算展示区的缩放比例
+        let rate = this.refs.showRef.clientWidth/this.refs.showRef.clientHeight; // 计算展示区的缩放比例
         this.setState({style: { // 将展示区定位到屏幕中心
             left: (document.documentElement.clientWidth- this.refs.myRef.clientWidth)/2,
             top: (document.documentElement.clientHeight- this.refs.myRef.clientHeight)/2,
@@ -105,7 +105,7 @@ class PromptArea extends React.Component{
 
     videoPause = () => {
         setTimeout(() => {
-            this.props.closePromptArea()
+            this.props.closePromptArea();
         }, 1000)
         
     }
@@ -126,7 +126,7 @@ class PromptArea extends React.Component{
     // }
 
     handleBig = () => {
-        const {imageTextScale, imageTextScaleRate, transformOrigin} = this.state
+        const {imageTextScale, imageTextScaleRate, transformOrigin} = this.state;
         if(imageTextScale >= 1 && transformOrigin === 'center center'){
             this.setState({
                 transformOrigin: 'left top'
@@ -138,8 +138,8 @@ class PromptArea extends React.Component{
     }
 
     handleSmall = () => {
-        const {imageTextScale, imageTextScaleRate, transformOrigin} = this.state
-        if(imageTextScale === imageTextScaleRate) return
+        const {imageTextScale, imageTextScaleRate, transformOrigin} = this.state;
+        if(imageTextScale === imageTextScaleRate) return;
         if(imageTextScale <= 1 && transformOrigin === 'left top'){
             this.setState({
                 transformOrigin: 'center center'
@@ -151,11 +151,11 @@ class PromptArea extends React.Component{
     }
 
     componentDidMount() {
-        const {title} = this.state
-        const {type} = this.props
-        this.initStyle()
-        window.addEventListener('resize', this.initStyle)
-        this.refs.videoRef && this.refs.videoRef.addEventListener('pause', this.videoPause)
+        const {title} = this.state;
+        const {type} = this.props;
+        this.initStyle();
+        window.addEventListener('resize', this.initStyle);
+        this.refs.videoRef && this.refs.videoRef.addEventListener('pause', this.videoPause);
         if(type){
             this.setState({
                 title: `${title}${type}`
@@ -164,8 +164,8 @@ class PromptArea extends React.Component{
     }
 
     componentWillUnmount(){
-        window.removeEventListener('resize', this.initStyle)
-        this.refs.videoRef && this.refs.videoRef.removeEventListener('pause', this.videoPause)
+        window.removeEventListener('resize', this.initStyle);
+        this.refs.videoRef && this.refs.videoRef.removeEventListener('pause', this.videoPause);
     }
 
 
