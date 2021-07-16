@@ -10,10 +10,23 @@ class Timer {
         this.createCodeTimer = null
         this.pauseOperateTimer = null
         this.pauseCodeTimer = null
-        this.initListener() // 初始化监听器
+        this.iniTimertListener() // 初始化计时器监听器
+        this.initUserHandleListener() // 初始化用户点击事件的监听
     }
-    initListener = () => {
-        window.addEventListener('click', this.resetTimer, true);
+    static isHasUserHandleListener = false // 避免重复初始化用户点击的监听
+    initUserHandleListener = () => {
+        if(!Timer.isHasUserHandleListener){
+            Timer.isHasUserHandleListener = true;
+            window.addEventListener('click', this.resetTimer, true);
+            console.log(document.getElementsByClassName('blocklyWorkspace')[0]);
+            let blocklyWorkspaces = Array.from(document.getElementsByClassName('blocklyWorkspace'));
+            blocklyWorkspaces.forEach(item => {
+                item.addEventListener('touchstart', this.resetTimer, true);
+            })
+        }
+    }
+
+    iniTimertListener = () => {
         switch (this.type) {
             case timerType.CODE:
                 this.createCodeTimer = () => { // 监听创建代码计时器事件
