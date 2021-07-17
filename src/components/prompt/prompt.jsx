@@ -64,28 +64,34 @@ const PromptComponent = props => (
                         </div> :
                         <Box className={styles.optionsRow}>
                             <label>
-                                <input
-                                    checked={props.globalSelected}
-                                    name="variableScopeOption"
-                                    type="radio"
-                                    value="global"
-                                    onChange={props.onScopeOptionSelection}
-                                />
+                                <div className={styles.inputBox}>
+                                    <input
+                                        checked={props.globalSelected}
+                                        name="variableScopeOption"
+                                        type="radio"
+                                        value="global"
+                                        onChange={props.onScopeOptionSelection}
+                                    />
+                                    <span></span>
+                                </div>
                                 <FormattedMessage
                                     {...messages.forAllSpritesMessage}
                                 />
                             </label>
                             <label
-                                className={classNames({[styles.disabledLabel]: props.cloudSelected})}
+                                className={classNames({[styles.disabledLabel]: props.cloudSelected}, styles.rlabel)}
                             >
-                                <input
-                                    checked={!props.globalSelected}
-                                    disabled={props.cloudSelected}
-                                    name="variableScopeOption"
-                                    type="radio"
-                                    value="local"
-                                    onChange={props.onScopeOptionSelection}
-                                />
+                                <div className={styles.inputBox}>
+                                    <input
+                                        checked={!props.globalSelected}
+                                        disabled={props.cloudSelected}
+                                        name="variableScopeOption"
+                                        type="radio"
+                                        value="local"
+                                        onChange={props.onScopeOptionSelection}
+                                    />
+                                    <span></span>
+                                </div>
                                 <FormattedMessage
                                     {...messages.forThisSpriteMessage}
                                 />

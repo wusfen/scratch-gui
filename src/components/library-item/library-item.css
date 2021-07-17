@@ -6,21 +6,23 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    flex-basis: 10rem;
+    flex-basis: 9.38rem;
     position: relative;
-    height: 10rem;
-    max-width: 10rem;
+    height: 9.38rem;
+    max-width: 9.38rem;
     margin: $space;
     padding: 1rem 1rem 0 1rem;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: $text-primary;
-    background: white;
     border-width: 0.125rem;
     border-style: solid;
     border-color: $ui-black-transparent;
     border-radius: $space;
     text-align: center;
     cursor: pointer;
+    box-shadow: 0rem 0.06rem 0.53rem 0rem rgb(0 0 0 / 18%);
+    border: none;
+    background: #FFE9AC;
 }
 
 .library-item-extension {
@@ -28,8 +30,15 @@
 }
 
 .library-item:hover {
-    border-width: 0.125rem;
-    border-color: $motion-primary;
+    border: 0.25rem solid #AC9AFE;
+    /* box-sizing: content-box;
+    margin: 1rem 1rem 1rem 1rem; */
+    /* border-width: 0.125rem;
+    border-color: $motion-primary; */
+}
+
+.library-item:hover .library-item-name {
+    width: 8.88rem;
 }
 
 .hidden {
@@ -89,26 +98,45 @@
 }
 
 .library-item-name {
+    width: 9.38rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    position: absolute;
+    bottom: -0.1rem;
+    text-align: center;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.75rem;
+    color: #6D57DC;
+    background: #fff;
+}
+
+.library-item-extension-name {
     width: 80%;
     margin: 0.25rem 0;
     text-align: center;
-
-    /*
-        For truncating overflowing text gracefully
-        Min-width is for a bug: https://css-tricks.com/flexbox-truncated-text
-    */
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    min-width: 0;
+    font-size: 1.13rem;
+    color: #6D57DC;
+    line-height: 1.69rem;
+    position: initial;
 }
 
 .featured-item {
-    flex-basis: 18.75rem;
-    max-width: 18.75rem;
-    height: auto;
+    flex-basis: 9.37rem;
+    width: 9.37rem;
+    height: 11.25rem;
+    margin: 1.25rem;
     overflow: hidden;
     padding: 0;
+    box-shadow: 0rem 0.06rem 0.53rem 0rem rgb(0 0 0 / 18%);
+    border-radius: 0.63rem;
+    border: none;
+    background: #fff;
 }
 
 .featured-image-container {
@@ -116,19 +144,24 @@
 }
 
 .featured-image {
-    width: 100%;
+    width: 9.38rem;
+    height: 7.75rem;
 }
 
 .featured-text {
     font-weight: bold;
-    padding: 0.625rem;
+    padding: 0.15rem;
     /* height: 8.75rem; */
-    width: 18.75rem;
+    width: 9.37rem;
 }
 
 [dir="ltr"] .featured-extension-text {
     text-align: left;
-    padding-left: 1.25rem;
+    padding-left: 0.41rem;
+    box-sizing: border-box;
+    color: #6D57DC;
+    font-size: 0.75rem;
+    line-height: 1.13rem;
 }
 
 [dir="rtl"] .featured-extension-text {
@@ -139,9 +172,7 @@
 .featured-description {
     display: block;
     font-weight: normal;
-    line-height: 1.375rem;
-    padding-top: 0.3125rem;
-    padding-bottom: 0.25rem;
+    line-height: 1.13rem;
 }
 
 .featured-extension-metadata {

@@ -13,11 +13,19 @@
     user-select: none;
     cursor: pointer;
     transition: all 0.15s ease-out;
+    background: none;
+    border: none;
+    box-shadow: none;
+    position: absolute;
+    top: -2rem;
+    right: 0;
 }
 
 .close-button.large:hover {
     transform: scale(1.1, 1.1);
-    box-shadow: 0 0 0 4px $ui-black-transparent;
+    background: none;
+    border: none;
+    box-shadow: none;
 }
 
 .close-button.large.orange:hover {
@@ -35,7 +43,6 @@
 .large {
     width: 1.75rem;
     height: 1.75rem;
-    box-shadow: 0 0 0 2px $ui-black-transparent;
 }
 
  .large.orange {
@@ -49,6 +56,8 @@
     user-select: none;
     transform-origin: 50%;
     transform: rotate(45deg);
+    width: 1.38rem;
+    height: 1.38rem;
 }
 
 .close-icon.orange {
@@ -61,8 +70,8 @@
 }
 
 .large .close-icon {
-    width: 0.75rem;
-    height: 0.75rem;
+    width: 1.38rem;
+    height: 1.38rem;
 }
 
 .back-icon {
