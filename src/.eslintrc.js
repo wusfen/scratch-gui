@@ -39,6 +39,9 @@ module.exports = {
         }],
         'react/no-unused-prop-types': 1,
         'prefer-rest-params': 0,
+        'func-style': 0,
+        'require-jsdoc': 0,
+        'no-invalid-this': 1,
     },
     settings: {
         react: {

@@ -66,27 +66,6 @@
             resize();
             addEventListener("resize", resize);
         </script>
-
-        <script>
-            // arrayBuffer polyfill
-            (function () {
-                File.prototype.arrayBuffer =
-                    File.prototype.arrayBuffer || myArrayBuffer;
-                Blob.prototype.arrayBuffer =
-                    Blob.prototype.arrayBuffer || myArrayBuffer;
-
-                function myArrayBuffer() {
-                    var blob = this;
-                    return new Promise(function (resolve) {
-                        let fr = new FileReader();
-                        fr.onload = function (e) {
-                            resolve(fr.result);
-                        };
-                        fr.readAsArrayBuffer(blob);
-                    });
-                }
-            })();
-        </script>
     </head>
 
     <body></body>
