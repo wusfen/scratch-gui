@@ -97,16 +97,14 @@ class GUI extends React.Component {
             this.setState({promptAreaShow: true});
         } else {
             videoSrc = '';
-            window.dispatchEvent(new Event('createOperateTimer')); // 没有初始引导直接创建计时器
-            window.dispatchEvent(new Event('createCodeTimer'));
+            window.dispatchEvent(new Event('noVideoGuide'));
         }
         this.setState({videoSrc: videoSrc});
     }
 
     closePromptArea = () => {
         this.setState({promptAreaShow: false});
-        window.dispatchEvent(new Event('createOperateTimer')); // 关闭初始视频引导后创建计时器
-        window.dispatchEvent(new Event('createCodeTimer'));
+        window.dispatchEvent(new Event('closeVideoGuide'));
     }
     
     render () {

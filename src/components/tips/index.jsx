@@ -78,7 +78,7 @@ class Tips extends React.Component{
     }
     clickTips = () => {
         if (this.state.type === '视频'){
-            dispatchEvent(new Event('pauseAudioCourse')); // 点击视频提示终止读题语音
+            dispatchEvent(new Event('clickVideoTips')); // 点击视频提示终止读题语音
         }
         this.setState({
             promptAreaShow: true

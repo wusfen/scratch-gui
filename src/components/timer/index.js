@@ -39,8 +39,15 @@ class Timer {
                 console.log('终止代码计时器');
                 this.pauseTimer(); // 终止计时器
             };
-            window.addEventListener('createCodeTimer', this.createCodeTimer);
-            window.addEventListener('pauseCodeTimer', this.pauseCodeTimer);
+            window.addEventListener('libraryBack', this.createCodeTimer); // 关闭资源库
+            window.addEventListener('selectSprite', this.createCodeTimer); // 选择精灵
+            window.addEventListener('hideEditingTarget', this.createCodeTimer); // 关闭画板界面
+            window.addEventListener('noVideoGuide', this.createCodeTimer); // 没有视频引导
+            window.addEventListener('closeVideoGuide', this.createCodeTimer); // 关闭视频引导
+            window.addEventListener('editSprite', this.pauseCodeTimer); // 编辑精灵
+            window.addEventListener('editStage', this.pauseCodeTimer); // 编辑舞台
+            window.addEventListener('onNewSpriteClick', this.pauseCodeTimer); // 选择精灵
+            window.addEventListener('paintSprite', this.pauseCodeTimer); // 绘制
             break;
         case timerType.OPERATE:
             this.createOperateTimer = () => { // 监听创建操作计时器事件
@@ -53,7 +60,8 @@ class Timer {
                 console.log('终止操作计时器');
                 this.auseTimer(); // 终止计时器
             };
-            window.addEventListener('createOperateTimer', this.createOperateTimer);
+            window.addEventListener('noVideoGuide', this.createOperateTimer); // 没有视频引导
+            window.addEventListener('closeVideoGuide', this.createOperateTimer); // 关闭视频引导
             window.addEventListener('pauseOperateTimer', this.pauseOperateTimer);
             break;
         }
@@ -116,11 +124,19 @@ class Timer {
     removeListener = () => {
         switch (this.type) {
         case timerType.CODE:
-            window.removeEventListener('createCodeTimer', this.createCodeTimer);
-            window.removeEventListener('pauseCodeTimer', this.pauseCodeTimer);
+            window.removeEventListener('libraryBack', this.createCodeTimer);
+            window.removeEventListener('selectSprite', this.createCodeTimer);
+            window.removeEventListener('hideEditingTarget', this.createCodeTimer);
+            window.removeEventListener('noVideoGuide', this.createCodeTimer);
+            window.removeEventListener('closeVideoGuide', this.createCodeTimer);
+            window.removeEventListener('editSprite', this.pauseCodeTimer);
+            window.removeEventListener('editStage', this.pauseCodeTimer);
+            window.removeEventListener('onNewSpriteClick', this.pauseCodeTimer);
+            window.removeEventListener('paintSprite', this.pauseCodeTimer);
             break;
         case timerType.OPERATE:
-            window.removeEventListener('createOperateTimer', this.createOperateTimer);
+            window.removeEventListener('noVideoGuide', this.createOperateTimer); // 没有视频引导
+            window.removeEventListener('closeVideoGuide', this.createOperateTimer); // 关闭视频引导
             window.removeEventListener('pauseOperateTimer', this.pauseOperateTimer);
             break;
         default:
