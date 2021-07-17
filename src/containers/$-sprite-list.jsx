@@ -113,7 +113,7 @@ class TargetPane$ extends React.Component {
         if (this.props.stage && id !== this.props.stage.id) {
             this.props.onHighlightTarget(id);
         }
-
+        window.dispatchEvent(new Event('selectSprite'));
         document.querySelector('[role="tablist"]').children[0].click();
     }
     handleSurpriseSpriteClick () {
@@ -246,8 +246,8 @@ class TargetPane$ extends React.Component {
     }
     clickDirBtn (dir) {
 
-        //const ele = document.getElementsByClassName('sprite-selector_scroll-wrapper_3qlZ7 box_box_tWy-0')[0];
-        const ele = document.getElementById("spriteList");
+        // const ele = document.getElementsByClassName('sprite-selector_scroll-wrapper_3qlZ7 box_box_tWy-0')[0];
+        const ele = document.getElementById('spriteList');
         if (dir == 'up') {
             ele.scrollTop -= 100;
            
@@ -377,6 +377,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     onNewSpriteClick: e => {
         e.preventDefault();
+        window.dispatchEvent(new Event('onNewSpriteClick'));
         dispatch(openSpriteLibrary());
     },
     onRequestCloseSpriteLibrary: () => {

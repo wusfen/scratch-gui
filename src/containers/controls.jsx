@@ -32,6 +32,7 @@ class Controls extends React.Component {
         }
 
         this.checkWork();
+        dispatchEvent(new Event('handleGreenFlagClick'));
     }
     handleStopAllClick (e) {
         e.preventDefault();
@@ -44,7 +45,7 @@ class Controls extends React.Component {
                 return;
             }
             this.lastVmJSON = json;
-            
+
             var {data} = await ajax.post('hwUserWork/autoAnalyst', {
                 workCode: window._workInfo.workCode,
                 projectJsonStr: json,

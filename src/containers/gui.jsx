@@ -1,3 +1,4 @@
+/* eslint-disable no-invalid-this */
 import PropTypes from 'prop-types';
 import React from 'react';
 import {compose} from 'redux';
@@ -39,11 +40,20 @@ import cloudManagerHOC from '../lib/cloud-manager-hoc.jsx';
 
 import GUIComponent from '../components/gui/gui.jsx';
 import {setIsScratchDesktop} from '../lib/isScratchDesktop.js';
-
+import {getParam} from '../lib/param';
+import Timer from '../components/timer/index';
+import {timerType} from '../components/timer/data';
 class GUI extends React.Component {
+    constructor (props) {
+        super(props);
+        this.state = {
+            videoSrc: '',
+            promptAreaShow: false
+        };
+    }
+
     componentDidMount () {
         window.gui = this;
-
         setIsScratchDesktop(this.props.isScratchDesktop);
         this.props.onStorageInit(storage);
         this.props.onVmInit(this.props.vm);
@@ -55,7 +65,10 @@ class GUI extends React.Component {
             parseInt(stageBgColor.slice(3, 5), 16) / 255,
             parseInt(stageBgColor.slice(5, 7), 16) / 255
         );
+        this.initTimer(); // 初始化计时器
+        this.handleVideoSrc(); // 获取引导video
     }
+
     componentDidUpdate (prevProps) {
         if (this.props.projectId !== prevProps.projectId && this.props.projectId !== null) {
             this.props.onUpdateProjectId(this.props.projectId);
@@ -66,6 +79,34 @@ class GUI extends React.Component {
             this.props.onProjectLoaded();
         }
     }
+
+    componentWillUnmount () {
+        window.operateTimer.removeListener();
+        window.codeTimer.removeListener();
+    }
+    
+
+    initTimer = () => {
+        window.operateTimer = new Timer(timerType.OPERATE); // 操作计时器
+        window.codeTimer = new Timer(timerType.CODE); // 代码计时器
+    }
+    
+    handleVideoSrc = () => {
+        let videoSrc = getParam('tipVideo');
+        if (videoSrc){ // 有初始引导
+            this.setState({promptAreaShow: true});
+        } else {
+            videoSrc = '';
+            window.dispatchEvent(new Event('noVideoGuide'));
+        }
+        this.setState({videoSrc: videoSrc});
+    }
+
+    closePromptArea = () => {
+        this.setState({promptAreaShow: false});
+        window.dispatchEvent(new Event('closeVideoGuide'));
+    }
+    
     render () {
         if (this.props.isError) {
             throw new Error(
@@ -92,10 +133,14 @@ class GUI extends React.Component {
             loadingStateVisible,
             ...componentProps
         } = this.props;
+        const {videoSrc, promptAreaShow} = this.state;
         return (
             <GUIComponent
                 loading={fetchingProject || isLoading || loadingStateVisible}
                 {...componentProps}
+                videoSrc={videoSrc}
+                promptAreaShow={promptAreaShow}
+                closePromptArea={this.closePromptArea}
             >
                 {children}
             </GUIComponent>
