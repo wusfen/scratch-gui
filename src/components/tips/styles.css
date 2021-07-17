@@ -3,11 +3,10 @@
     top: 1.16rem;
     right: 0.94rem;
     z-index: 499;
+    border-radius: 0.3125rem;
 }
 
 .tip-icon {
     width: 1.5rem;
     height: 2.09rem;
 }
-
-
