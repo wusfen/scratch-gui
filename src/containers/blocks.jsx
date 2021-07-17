@@ -94,6 +94,7 @@ class Blocks extends React.Component {
         this.ScratchBlocks.ScratchMsgs.setLocale(this.props.locale);
 
         const workspaceConfig = defaultsDeep({}, {
+            media: process.env.PUBLIC_PATH || './././static/media',
             grid: {
                 length: 48,
                 spacing: 48,

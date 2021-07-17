@@ -1,3 +1,9 @@
+console.info('process.env.NODE_ENV', process.env.NODE_ENV);
+console.info('process.env.DEBUG', process.env.DEBUG);
+console.info('process.env.PUBLIC_PATH', process.env.PUBLIC_PATH);
+console.info('process.env.devtool', process.env.devtool);
+
+
 /* eslint-disable no-use-before-define */
 import './ajax.config.js';
 import './bridge.js';
