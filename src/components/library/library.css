@@ -3,8 +3,8 @@
 
 .library-wrapper {
     width: 56.25rem;
-    height: 43.75rem;
-    background: #F1E0FF;
+    /* height: 43.75rem; */
+    background: #f1e0ff;
     box-shadow: 0rem 0.03rem 0.44rem 0rem #d096ff;
     border-radius: 1.25rem;
     border: none;
