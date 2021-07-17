@@ -3,6 +3,7 @@
     top: 1.13rem;
     right: 3.69rem;
     z-index: 499;
+    border-radius: 0.3125rem;
 }
 
 .audio-icon {
@@ -11,5 +12,4 @@
 }
 
 .playing {
-    
 }

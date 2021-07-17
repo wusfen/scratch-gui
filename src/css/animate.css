@@ -22,9 +22,12 @@
 }
 @keyframes blingBling {
     0% {
-        box-shadow: 0 0 0px 1px #ffffff, 0 0 5px 5px #fff59d;
+        box-shadow: 0 0 0px 1px #ffffff, 0 0 5px 5px #ffb52d;
         transform: scale(1);
         opacity: 1;
+    }
+    50% {
+        box-shadow: 0 0 0px 1px #ffffff, 0 0 5px 5px #fff59d;
     }
     100% {
         box-shadow: none;

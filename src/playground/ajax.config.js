@@ -33,14 +33,17 @@ let token = params.get('token');
 // ajax
 ajax.setSettings({
     headers: {
-        // token: '141e3837-c68f-4ccc-a7a9-61571e0cf46aRqBrSfVCiGjaYgObikaiLXJuyqiN',
         token,
     },
     base,
-    onloadstart () {
-        Loading.show();
+    onloadstart (options) {
+        if (!options.silence) {
+            Loading.show();
+        }
     },
-    onload (res) {
+    onload (res, options) {
+
+        if (options.silence) return;
         if (!/^(0|200)$/.test(res.code)) {
             Dialog.alert(`${res.code} ${res.detail}`).then(e => {
                 window.bridge.emit('exitEditor');
@@ -49,7 +52,8 @@ ajax.setSettings({
             return Promise.reject(res.detail || res.code);
         }
     },
-    async onerror (res) {
+    async onerror (e, options) {
+        if (options.silence) return;
         await alert('接口异常');
         window.bridge.emit('exitEditor');
     },

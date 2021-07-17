@@ -29,6 +29,7 @@ import DeletionRestorer from '../../containers/deletion-restorer.jsx';
 import TurboMode from '../../containers/turbo-mode.jsx';
 import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
 import Dialog from '../dialog/index.jsx';
+import Loading from '../loading/index.jsx';
 
 import {openTipsLibrary} from '../../reducers/modals';
 import {setPlayer} from '../../reducers/mode';
@@ -197,28 +198,29 @@ class MenuBar extends React.Component {
             'getSaveToComputerHandler',
             'restoreOptionMessage'
         ]);
-        const searchParams = new URL(location).searchParams;
 
         this.state = {
             id: param('id'),
+            token: param('token'),
             workName: '',
             isShowSkipButton: false,
-            file: searchParams.get('file'),
-            isShowResetFileButton: searchParams.get('file'),
-            mode: searchParams.get('mode') || 'normal',
+            file: param('file'),
+            isShowResetFileButton: !!param('file'),
+            mode: param('mode'),
             isShowPublishButton: !false,
             isShowPublishButtonBling: false,
-            mode: searchParams.get('mode'),
             isTeacherPreview: false, // true: 老师切学生
             isSaveAsChanged: false,
-            workUserBlockNum: 0
+            workUserBlockNum: 0,
+            _timeout: param('_timeout') || 30, // dev
         };
+        var state = this.state;
 
         setTimeout(() => {
             this.setState({
                 isShowSkipButton: true,
             });
-        }, 30 * 1000);
+        }, state._timeout * 1000);
         addEventListener('运行时判断正确', e => {
             this.setState({
                 isShowPublishButtonBling: true,
@@ -230,6 +232,21 @@ class MenuBar extends React.Component {
                 isShowPublishButtonBling: false,
             });
         });
+        // 30秒自动保存一次
+        // TODO 太耗资源
+        var timer = setInterval(() => {
+            console.log(`每${state._timeout}秒检查是否要自动保存`, this.props.projectChanged);
+
+            if (!(/^(normal|course)$/.test(state.mode) && state.id && state.token)) {
+                console.warn('state.mode:', state.mode);
+                console.warn('state.id:', state.id);
+                console.warn('state.token:', state.token);
+                clearInterval(timer);
+                return;
+            }
+
+            this.autoSave(true);
+        }, state._timeout * 1000);
 
         window.bridge.on('requireExitEditor', e => {
             this.handleExit('requireExitEditor');
@@ -411,13 +428,15 @@ class MenuBar extends React.Component {
             this.props.onRequestCloseAbout();
         };
     }
-    async getProjectCover () {
+    async getProjectCover (silence) {
+        if (silence) return;
+
         var dataURL = this.props.vm.renderer.canvas.toDataURL();
         var blob = await (await fetch(dataURL)).blob();
 
         const formData = new FormData();
         formData.append('file', blob, `${this.props.projectTitle || 'project'}.png`);
-        const {data} = await ajax.post('/file/upload', formData);
+        const {data} = await ajax.post('/file/upload', formData, {silence});
 
         // return `${data.domain}${data.path}`;
         return data.path;
@@ -460,7 +479,9 @@ class MenuBar extends React.Component {
 
         return curBlocksNum;
     }
-    async uploadSb3 () {
+    async uploadSb3 (silence) {
+        silence || Loading.show();
+
         const blob = await this.props.vm.saveProjectSb3();
         let formData = new FormData();
         formData.append('file', blob, `${this.props.projectTitle || 'project'}.sb3`);
@@ -471,7 +492,9 @@ class MenuBar extends React.Component {
         }
 
         // {domain, path}
-        const {data} = await ajax.post('/file/upload', formData);
+        const {data} = await ajax.post('/file/upload', formData, {silence});
+
+        Loading.hide();
         return data;
     }
     handleInput (e) {
@@ -508,6 +531,15 @@ class MenuBar extends React.Component {
             isSaveAsChanged: true,
         });
     }
+    async autoSave (silence) {
+        if (this.props.projectChanged) {
+            if (this.state.mode === 'course') {
+                await this.handleSubmit('noCheckResult', silence);
+            } else {
+                await this.handleSave(silence);
+            }
+        }
+    }
     async handleExit (e = 'exitEditor') {
         if (this.props.projectChanged) {
             await Dialog.confirm({
@@ -517,16 +549,12 @@ class MenuBar extends React.Component {
                 }
             });
 
-            if (this.state.mode === 'course') {
-                await this.handleSubmit('noCheckResult');
-            } else {
-                await this.handleSave();
-            }
+            this.autoSave();
         }
 
         window.bridge.emit(e);
     }
-    async handleSubmit (isNoCheckResult) {
+    async handleSubmit (isNoCheckResult, silence) {
         this.setState({
             isShowPublishButtonBling: false,
         });
@@ -546,17 +574,22 @@ class MenuBar extends React.Component {
         }
 
         // 上传文件
-        const fileData = await this.uploadSb3();
+        const fileData = await this.uploadSb3(silence);
 
         // 提交
         const {data: workId} = await ajax.put('/hwUserWork/submitWork', {
             id: workInfo.id,
-            submitType: 2,
-            workCoverPath: await this.getProjectCover(),
+            submitType: silence ? 1 : 2,
+            workCoverPath: await this.getProjectCover(silence),
             workPath: fileData.path,
             userBlockNum: _userBlockNum,
             // analystStatus: undefined,
             workId: workInfo.analystStatus === -1 ? workInfo.workId : ''
+        }, {silence});
+
+        // 标记已保存
+        this.props.onProjectSaved({
+            title: this.props.projectTitle || param('workName') || ''
         });
 
         if (isNoCheckResult) {
@@ -566,6 +599,7 @@ class MenuBar extends React.Component {
         dispatchEvent(new Event('submit:提交中'));
 
         // 轮询批改结果
+        // TODO hwUserWork/autoAnalyst
         const checkStartTime = new Date();
         // eslint-disable-next-line func-style, require-jsdoc
         async function checkResult () {

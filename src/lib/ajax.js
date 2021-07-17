@@ -64,7 +64,7 @@ function request (options) {
     const promise = new Promise(rs => (resolve = rs));
 
     // start
-    onloadstart.call(xhr);
+    onloadstart.call(xhr, options);
 
     xhr.onload = function (e) {
         // success
@@ -77,7 +77,7 @@ function request (options) {
             } catch (e) {}
 
             // onload = res => undefined||res||promise<res>
-            result = onload.call(this, result) || result;
+            result = onload.call(this, result, options) || result;
 
             // onload = res => new Promise(rs=>{})
             // onload = res => Promise.reject('xx')
@@ -94,12 +94,12 @@ function request (options) {
     };
 
     xhr.onerror = function (e) {
-        onerror.call(this, e);
+        onerror.call(this, e, options);
     };
 
     xhr.timeout = timeout;
     xhr.ontimeout = function (e) {
-        ontimeout.call(this, e);
+        ontimeout.call(this, e, options);
     };
 
     xhr.onloadend = onloadend;
@@ -161,11 +161,11 @@ Ajax.settings = {
     },
     responseType: 'text',
     timeout: 0,
-    onload (res) {},
-    onerror (e) {},
-    ontimeout (e) {},
+    onload (res, options) {},
+    onerror (e, options) {},
+    ontimeout (e, options) {},
     onloadstart (options) {},
-    onloadend (res) {},
+    onloadend (res, options) {},
 };
 
 const ajax = new Ajax();

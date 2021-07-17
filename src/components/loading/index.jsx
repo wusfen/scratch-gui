@@ -24,12 +24,12 @@ class Component extends React.Component{
             children,
             ...props
         } = this.props;
-        
+
         const {
             isShow,
             ...state
         } = this.state;
-        
+
         return (
             <div
                 hidden={!isShow}
@@ -61,7 +61,7 @@ Component.show = function () {
             <Component />
         ), el);
     }
-    
+
     Component.count++;
 };
 Component.hide = function () {
@@ -71,8 +71,11 @@ Component.hide = function () {
     }
     if (!Component.count && Component.unmount) {
         Component.unmount();
+        Component.unmount = null;
     }
 };
+
+window.Loading = Component;
 
 const mapStateToProps = state => ({
 });
