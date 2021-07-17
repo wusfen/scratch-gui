@@ -124,9 +124,9 @@ class PromptArea extends React.Component{
     }
 
     videoPause = () => {
-        // setTimeout(() => {
-        //     this.props.closePromptArea();
-        // }, 1000);
+        setTimeout(() => {
+            this.props.closePromptArea();
+        }, 1000);
     }
 
     handleBig = () => {
