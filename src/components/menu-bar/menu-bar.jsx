@@ -211,6 +211,7 @@ class MenuBar extends React.Component {
             mode: searchParams.get('mode'),
             isTeacherPreview: false, // true: 老师切学生
             isSaveAsChanged: false,
+            workUserBlockNum: 0
         };
 
         setTimeout(() => {
@@ -236,6 +237,13 @@ class MenuBar extends React.Component {
     }
     componentDidMount () {
         document.addEventListener('keydown', this.handleKeyPress);
+        this.props.vm.addListener('workspaceUpdate', () => {
+            this.setState({
+                workUserBlockNum: this.getUserBlocks()
+            });
+
+        });
+
     }
     componentWillUnmount () {
         document.removeEventListener('keydown', this.handleKeyPress);
@@ -439,6 +447,19 @@ class MenuBar extends React.Component {
     handleSiderBtn () {
         window.bridge.emit('showCourseSidebar');
     }
+    // 获取用户新增代码块
+    getUserBlocks () {
+        var curBlocksNum = 0;
+        for (let i = 0; i < this.props.vm.runtime.targets.length; i++) {
+            for (const j in this.props.vm.runtime.targets[i].blocks._blocks) {
+                if (this.props.vm.runtime.targets[i].blocks._blocks[j].shadow === false) {
+                    curBlocksNum++;
+                }
+            }
+        }
+
+        return curBlocksNum;
+    }
     async uploadSb3 () {
         const blob = await this.props.vm.saveProjectSb3();
         let formData = new FormData();
@@ -518,6 +539,11 @@ class MenuBar extends React.Component {
             });
         }
 
+        var _userBlockNum = this.getUserBlocks() - this.state.workUserBlockNum;
+        if (_userBlockNum < 0) {
+            _userBlockNum = 0;
+        }
+
         // 上传文件
         const fileData = await this.uploadSb3();
 
@@ -527,6 +553,7 @@ class MenuBar extends React.Component {
             submitType: 2,
             workCoverPath: await this.getProjectCover(),
             workPath: fileData.path,
+            userBlockNum: _userBlockNum,
             // analystStatus: undefined,
             workId: workInfo.analystStatus === -1 ? workInfo.workId : ''
         });
