@@ -4,6 +4,7 @@ import React from 'react';
 import Box from '../box/box.jsx';
 import styles from './blocks.css';
 import AsideBtnMenu from '../asidebtn-menu/asidebtn-menu.jsx';
+import iconDelete from './icon-delete.svg';
 
 const BlocksComponent = props => {
     const {
@@ -19,6 +20,12 @@ const BlocksComponent = props => {
             {...componentProps}
             componentRef={containerRef}
         >
+            <div
+                id="toolboxTrashcan"
+                className={styles.trashcanInitStyle}
+            >
+                <img src={iconDelete} className={styles.trashcanImg} />
+            </div>
             <AsideBtnMenu />
         </Box>
     );
