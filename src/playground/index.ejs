@@ -25,21 +25,29 @@
             function loadConsole() {
                 if (loadConsole.yes) return;
                 loadConsole.yes = true;
-                document.write(
-                    '<script src="https://cdn.jsdelivr.net/gh/wusfen/console.js@master/src/console.min.js"><\/script>'
-                );
-            }
 
-            if ("ontouchstart" in window) {
-                if (/\/(dev|uat)\/|[?&]f12\b/.test(location)) {
-                    loadConsole();
+                var src =
+                    "https://cdn.jsdelivr.net/gh/wusfen/console.js@master/src/console.min.js";
+                if (document.readyState == "complete") {
+                    var script = document.createElement("script");
+                    script.src = src;
+                    document.body.appendChild(script);
+                } else {
+                    document.write("<script src=" + src + "><\/script>");
                 }
             }
 
-            document.addEventListener("touchstart", function (e) {
-                if (e.touches && e.touches.length === 3) {
+            if ("ontouchstart" in window) {
+                if (/\/(dev|uat)\/|[?&#]f12\b/.test(location)) {
                     loadConsole();
-                    console.show = 2;
+                    console.f12 = 1;
+                }
+            }
+
+            addEventListener("touchstart", function (e) {
+                if (e.touches && e.touches.length >= 6) {
+                    loadConsole();
+                    console.f12 = 2;
                 }
             });
         </script>

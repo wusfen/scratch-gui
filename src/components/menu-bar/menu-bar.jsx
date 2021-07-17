@@ -534,9 +534,10 @@ class MenuBar extends React.Component {
         // TODO 临时存值
         const workInfo = window._workInfo || {};
         if (!workInfo.id) {
-            await Dialog.confirm({
+            Dialog.alert({
                 title: '缺少id!'
             });
+            return;
         }
 
         var _userBlockNum = this.getUserBlocks() - this.state.workUserBlockNum;
