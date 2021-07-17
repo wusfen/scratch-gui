@@ -1,3 +1,4 @@
+/* eslint-disable no-invalid-this */
 import PropTypes from 'prop-types';
 import React from 'react';
 import {compose} from 'redux';
@@ -39,16 +40,16 @@ import cloudManagerHOC from '../lib/cloud-manager-hoc.jsx';
 
 import GUIComponent from '../components/gui/gui.jsx';
 import {setIsScratchDesktop} from '../lib/isScratchDesktop.js';
-import {getParam} from '../lib/param'
-import Timer from '../components/timer/index'
-import {timerType} from '../components/timer/data'
+import {getParam} from '../lib/param';
+import Timer from '../components/timer/index';
+import {timerType} from '../components/timer/data';
 class GUI extends React.Component {
-    constructor(props) {
-        super(props)
+    constructor (props) {
+        super(props);
         this.state = {
             videoSrc: '',
             promptAreaShow: false
-        }
+        };
     }
 
     componentDidMount () {
@@ -64,30 +65,8 @@ class GUI extends React.Component {
             parseInt(stageBgColor.slice(3, 5), 16) / 255,
             parseInt(stageBgColor.slice(5, 7), 16) / 255
         );
-        this.initTimer() // 初始化计时器
-        this.handleVideoSrc() // 获取引导video
-    }
-
-    initTimer = () => {
-        window.operateTimer = new Timer(timerType.OPERATE); // 操作计时器
-        window.codeTimer = new Timer(timerType.CODE); // 代码计时器
-    }
-    
-    componentWillUnmount() {
-        window.operateTimer.removeListener();
-        window.codeTimer.removeListener();
-    }
-
-    handleVideoSrc = () => {
-        let videoSrc = getParam('tipVideo')
-        if(videoSrc){ // 有初始引导
-            this.setState({'promptAreaShow': true})
-        } else {
-            videoSrc = ''
-            window.dispatchEvent(new Event('createOperateTimer')) // 没有初始引导直接创建计时器
-            window.dispatchEvent(new Event('createCodeTimer'))
-        }
-        this.setState({'videoSrc': videoSrc})
+        this.initTimer(); // 初始化计时器
+        this.handleVideoSrc(); // 获取引导video
     }
 
     componentDidUpdate (prevProps) {
@@ -99,6 +78,29 @@ class GUI extends React.Component {
             // At this time the project view in www doesn't need to know when a project is unloaded
             this.props.onProjectLoaded();
         }
+    }
+
+    componentWillUnmount () {
+        window.operateTimer.removeListener();
+        window.codeTimer.removeListener();
+    }
+    
+
+    initTimer = () => {
+        window.operateTimer = new Timer(timerType.OPERATE); // 操作计时器
+        window.codeTimer = new Timer(timerType.CODE); // 代码计时器
+    }
+    
+    handleVideoSrc = () => {
+        let videoSrc = getParam('tipVideo');
+        if (videoSrc){ // 有初始引导
+            this.setState({promptAreaShow: true});
+        } else {
+            videoSrc = '';
+            window.dispatchEvent(new Event('createOperateTimer')); // 没有初始引导直接创建计时器
+            window.dispatchEvent(new Event('createCodeTimer'));
+        }
+        this.setState({videoSrc: videoSrc});
     }
 
     closePromptArea = () => {
@@ -133,7 +135,7 @@ class GUI extends React.Component {
             loadingStateVisible,
             ...componentProps
         } = this.props;
-        const {videoSrc, promptAreaShow} = this.state
+        const {videoSrc, promptAreaShow} = this.state;
         return (
             <GUIComponent
                 loading={fetchingProject || isLoading || loadingStateVisible}

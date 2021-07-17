@@ -25,7 +25,7 @@ import timeoutReducer, {timeoutInitialState} from './timeout';
 import toolboxReducer, {toolboxInitialState} from './toolbox';
 import vmReducer, {vmInitialState} from './vm';
 import vmStatusReducer, {vmStatusInitialState} from './vm-status';
-import tipAudioReducer, {tipAudioInitialState} from './tipAudio'
+import tipAudioReducer, {tipAudioInitialState} from './tipAudio';
 import workspaceMetricsReducer, {workspaceMetricsInitialState} from './workspace-metrics';
 import throttle from 'redux-throttle';
 

@@ -80,9 +80,9 @@ const SBFileUploaderHOC = function (WrappedComponent) {
             this.inputElement.accept = '.sb,.sb2,.sb3';
             this.inputElement.style = 'display: none;';
             this.inputElement.type = 'file';
-            this.inputElement.addEventListener('change', (e) => {
-                this.handleChange(e)
-            })
+            this.inputElement.addEventListener('change', e => {
+                this.handleChange(e);
+            });
             // this.inputElement.onchange = this.handleChange; // connects to step 3
             document.body.appendChild(this.inputElement);
             // simulate a click to open file chooser dialog

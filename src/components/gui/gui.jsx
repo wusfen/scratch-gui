@@ -46,9 +46,9 @@ import soundsIcon from './icon--sounds.svg';
 import SubmitResultDialog from '../submit-result-dialog/index.jsx';
 import Keyboard from '../keyboard/index.jsx';
 import CopyCodeHideModal from '../copy-code-hide/index.jsx';
-import PromptArea from '../prompt-area/prompt-area.jsx'
-import AudioCourse from '../audio-course/index.jsx'
-import Tips from '../Tips/index.jsx'
+import PromptArea from '../prompt-area/prompt-area.jsx';
+import AudioCourse from '../audio-course/index.jsx';
+import Tips from '../tips/index.jsx';
 
 const messages = defineMessages({
     addExtension: {
@@ -134,7 +134,7 @@ const GUIComponent = props => {
         closePromptArea,
         ...componentProps
     } = omit(props, 'dispatch');
-    let PromptAreaShow = false
+    const PromptAreaShow = false;
     if (children) {
         return <Box {...componentProps}>{children}</Box>;
     }
@@ -178,7 +178,11 @@ const GUIComponent = props => {
                 dir={isRtl ? 'rtl' : 'ltr'}
                 {...componentProps}
             >
-                {promptAreaShow ? <PromptArea closePromptArea={closePromptArea} videoSrc={videoSrc} type={'视频'}/> : null}
+                {promptAreaShow ? <PromptArea
+                    closePromptArea={closePromptArea}
+                    videoSrc={videoSrc}
+                    type={'视频'}
+                /> : null}
                 {telemetryModalVisible ? (
                     <TelemetryModal
                         isRtl={isRtl}

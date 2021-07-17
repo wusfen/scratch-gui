@@ -1,11 +1,12 @@
+/* eslint-disable no-invalid-this */
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import bindAll from 'lodash.bindall';
 import {connect} from 'react-redux';
 import styles from './prompt-area.css';
-import scaleIcon from './scale.svg'
-import { scale } from 'twgl.js';
+import scaleIcon from './scale.svg';
+import {scale} from 'twgl.js';
 const c = styles;
 
 class PromptArea extends React.Component{
@@ -19,7 +20,7 @@ class PromptArea extends React.Component{
                 left: 0,
                 top: 0,
                 width: '49rem',
-                height: '28rem'
+                height: '30rem'
             },
             editStyle: { // 可移动区域
                 left: 0,
@@ -40,138 +41,121 @@ class PromptArea extends React.Component{
             transformOrigin: 'center center'
         };
 
+        if (props.type){
+            this.state.title = `${this.state.title}${props.type}`;
+        }
         bindAll(this, [
         ]);
     }
 
+    componentDidMount () {
+        this.initStyle();
+        window.addEventListener('resize', this.initStyle);
+        this.videoRef && this.videoRef.addEventListener('pause', this.videoPause);
+    }
+
+    componentWillUnmount (){
+        window.removeEventListener('resize', this.initStyle);
+        this.videoRef && this.videoRef.removeEventListener('pause', this.videoPause);
+    }
+
     // 手指按下
-    onTouchStart = (handleName, e) => {
-        if(handleName === 'scale'){
-            this.setState({isScale: true})
+    handleTouchStart = (handleName, e) => {
+        if (handleName === 'scale'){
+            this.setState({isScale: true});
         }
-        let {style} = this.state;
+        const {style} = this.state;
         // 阻止事件冒泡
         e.stopPropagation();
         this.setState({isDown: true});
         // 鼠标坐标
         const cY = e.targetTouches[0].clientY; // clientX 相对于可视化区域
         const cX = e.targetTouches[0].clientX;
-        this.setState({oriPos:  {
+        this.setState({oriPos: {
             ...style, cX, cY
-        }})
+        }});
     }
     // 手指移动
-    onTouchMove = (e) => {
-        let {isDown, oriPos, editStyle, style, isScale, rate} = this.state;
+    handleTouchMove = e => {
+        e.stopPropagation();
+        const {isDown, oriPos, editStyle, style, isScale, rate} = this.state;
         let newStyle;
         // 判断鼠标是否按住
         if (isDown) {
             newStyle = {...oriPos};
-            let offsetY = e.targetTouches[0].clientY - oriPos.cY;
-            let offsetX = e.targetTouches[0].clientX - oriPos.cX;
-            if(!isScale){ // 是否是缩放操作
+            const offsetY = e.targetTouches[0].clientY - oriPos.cY;
+            const offsetX = e.targetTouches[0].clientX - oriPos.cX;
+            if (isScale){ // 是否是缩放操作
+                newStyle.width += offsetX;
+                newStyle.height += offsetX / rate; // 根据width和缩放比例算出height
+                if (
+                    (newStyle.width < 200 && offsetX <= 0) ||
+                     (newStyle.width > document.documentElement.clientWidth && offsetX >= 0)
+                ) return;
+                // if((newStyle.width/newStyle.height) !== rate) return
+            } else {
                 // 元素当前位置 + 偏移量
                 const top = oriPos.top + offsetY;
                 const left = oriPos.left + offsetX;
                 // 限制必须在这个范围内移动 画板的高度-元素的高度
                 newStyle.top = Math.max(0, Math.min(top, editStyle.height - style.height));
                 newStyle.left = Math.max(0, Math.min(left, editStyle.width - style.width));
-            } else {
-                newStyle.width += offsetX;
-                newStyle.height += offsetX/rate; // 根据width和缩放比例算出height
-                if((newStyle.width < 200 && offsetX<=0) || (newStyle.width > document.documentElement.clientWidth && offsetX>=0)) return;
-                // if((newStyle.width/newStyle.height) !== rate) return
             }
             this.setState({style: newStyle});
         }
     }
     
     // 手指抬起
-    onTouchEnd = (e) => {
+    handleTouchEnd = e => {
         this.setState({isDown: false});
         this.state.isScale && this.setState({isScale: !this.state.isScale});
     }
 
     initStyle = () => {
-        let rate = this.refs.showRef.clientWidth/this.refs.showRef.clientHeight; // 计算展示区的缩放比例
+        const rate = this.showRef.clientWidth / this.showRef.clientHeight; // 计算展示区的缩放比例
         this.setState({style: { // 将展示区定位到屏幕中心
-            left: (document.documentElement.clientWidth- this.refs.myRef.clientWidth)/2,
-            top: (document.documentElement.clientHeight- this.refs.myRef.clientHeight)/2,
-            width: this.refs.myRef.clientWidth,
-            height: this.refs.myRef.clientHeight
-        }, rate: rate})
+            left: (document.documentElement.clientWidth - this.myRef.clientWidth) / 2,
+            top: (document.documentElement.clientHeight - this.myRef.clientHeight) / 2,
+            width: this.myRef.clientWidth,
+            height: this.myRef.clientHeight
+        },
+        rate: rate});
 
     }
 
     videoPause = () => {
-        setTimeout(() => {
-            this.props.closePromptArea();
-        }, 1000)
-        
+        // setTimeout(() => {
+        //     this.props.closePromptArea();
+        // }, 1000);
     }
-
-    // computedMoveXY = (dom) => { // 缩放的时候保证图片展示区top和left都为0，计算需要偏移的XY
-    //     const {imageTextScale, imageTextScaleRate} = this.state
-    //     const scrollHeight = dom.scrollHeight
-    //     const clientHeight = dom.clientHeight
-    //     const scrollWidth = dom.scrollWidth
-    //     const clientWidth = dom.clientWidth
-    //     const totalHeight = scrollHeight*2 - clientHeight
-    //     const originClientHeight = clientHeight*(imageTextScale-imageTextScaleRate)
-    //     const translateY = (totalHeight - originClientHeight)/2
-    //     const totalWidth = scrollWidth*2 - clientWidth
-    //     const originClientWidth = clientWidth*(imageTextScale-imageTextScaleRate)
-    //     const translateX = (totalWidth - originClientWidth)/2
-    //     return {translateX, translateY}
-    // }
 
     handleBig = () => {
         const {imageTextScale, imageTextScaleRate, transformOrigin} = this.state;
-        if(imageTextScale >= 1 && transformOrigin === 'center center'){
+        if (imageTextScale >= 1 && transformOrigin === 'center center'){
             this.setState({
                 transformOrigin: 'left top'
-            })
+            });
         }
         this.setState({
             imageTextScale: imageTextScale + imageTextScaleRate
-        })
+        });
     }
 
     handleSmall = () => {
         const {imageTextScale, imageTextScaleRate, transformOrigin} = this.state;
-        if(imageTextScale === imageTextScaleRate) return;
-        if(imageTextScale <= 1 && transformOrigin === 'left top'){
+        if (imageTextScale === imageTextScaleRate) return;
+        if (imageTextScale <= 1 && transformOrigin === 'left top'){
             this.setState({
                 transformOrigin: 'center center'
-            })
+            });
         }
         this.setState({
             imageTextScale: imageTextScale - imageTextScaleRate
-        })
+        });
     }
-
-    componentDidMount() {
-        const {title} = this.state;
-        const {type} = this.props;
-        this.initStyle();
-        window.addEventListener('resize', this.initStyle);
-        this.refs.videoRef && this.refs.videoRef.addEventListener('pause', this.videoPause);
-        if(type){
-            this.setState({
-                title: `${title}${type}`
-            })
-        }
-    }
-
-    componentWillUnmount(){
-        window.removeEventListener('resize', this.initStyle);
-        this.refs.videoRef && this.refs.videoRef.removeEventListener('pause', this.videoPause);
-    }
-
 
     render () {
         const {
-            children,
             videoSrc,
             imageSrc,
             closePromptArea,
@@ -186,32 +170,94 @@ class PromptArea extends React.Component{
             transformOrigin,
             ...state
         } = this.state;
-        let styleImg = {
+        const styleImg = {
             backgroundImage: `url(${imageSrc})`,
-            backgroundRepeat:'no-repeat',
+            backgroundRepeat: 'no-repeat',
             backgroundSize: 'contain', // contain的优点是会保留背景图片的宽高比，不会被拉伸变形，所以适用于保留背景图片宽高比的需求
             backgroundPositionX: 'center',
             backgroundPositionY: 'center'
-        }
+        };
         return (
-            <div ref='myRef' style={style} className={c.drawingItem} onTouchStart={this.onTouchStart.bind(this,'')} onTouchEnd={this.onTouchEnd} onTouchMove={this.onTouchMove}>
-                <div className={c.title} onTouchStart={e => e.stopPropagation()}>{title}</div>
-                <img className={c.closeIcon} src={require('./close.svg')} alt="" onClick={closePromptArea}/>
-                <div ref="showRef" className={c.showContent} onTouchStart={e => e.stopPropagation()} onTouchEnd={e => e.stopPropagation()}>
-                    {type === '视频' ? (<video ref="videoRef" className={c.video} src={videoSrc} controls='controls' autoPlay>
-                    </video>) : <div ref="imageTextContent" className={c.imageTextContent}>
-                        <div className={c.imageTextContain} style={{...styleImg, transformOrigin: `${transformOrigin}`, transform: `scale(${imageTextScale})`}}>
+            <div
+                ref={r => {
+                    this.myRef = r;
+                }}
+                style={style}
+                className={c.drawingItem}
+                onTouchStart={this.handleTouchStart.bind(this, '')}
+                onTouchEnd={this.handleTouchEnd}
+                onTouchMove={this.handleTouchMove}
+            >
+                <div
+                    className={c.title}
+                    onTouchStart={e => e.stopPropagation()}
+                >{title}</div>
+                <img
+                    className={c.closeIcon}
+                    src={require('./close.svg')}
+                    alt=""
+                    onClick={closePromptArea}
+                />
+                <div
+                    ref={r => {
+                        this.showRef = r;
+                    }}
+                    className={c.showContent}
+                    onTouchStart={e => e.stopPropagation()}
+                    onTouchEnd={e => e.stopPropagation()}
+                >
+                    {type === '视频' ? (<video
+                        ref={r => {
+                            this.videoRef = r;
+                        }}
+                        className={c.video}
+                        src={videoSrc}
+                        controls="controls"
+                        autoPlay
+                    >
+                    </video>) : <div
+                        className={c.imageTextContent}
+                    >
+                        <div
+                            className={c.imageTextContain}
+                            style={
+                                {
+                                    ...styleImg,
+                                    transformOrigin: `${transformOrigin}`,
+                                    transform: `scale(${imageTextScale})`
+                                }
+                            }
+                        >
                         </div>
-                        </div>}
+                    </div>}
                 </div>
                 {
-                    type === '图文'  && 
-                    <div className={c.imageScale} onTouchStart={e => e.stopPropagation()} onTouchEnd={e => e.stopPropagation()}>
-                        <img className={c.bigIcon} src={require('./big.svg')} alt="" onClick={this.handleBig}/>
-                        <img className={c.smallIcon} src={require('./small.svg')} alt="" onClick={this.handleSmall}/>
+                    type === '图文' &&
+                    <div
+                        className={c.imageScale}
+                        onTouchStart={e => e.stopPropagation()}
+                        onTouchEnd={e => e.stopPropagation()}
+                    >
+                        <img
+                            className={c.bigIcon}
+                            src={require('./big.svg')}
+                            alt=""
+                            onClick={this.handleBig}
+                        />
+                        <img
+                            className={c.smallIcon}
+                            src={require('./small.svg')}
+                            alt=""
+                            onClick={this.handleSmall}
+                        />
                     </div>
                 }
-                <img className={c.scale} onTouchStart={this.onTouchStart.bind(this,'scale')} src={scaleIcon} alt="" />
+                <img
+                    className={c.scale}
+                    onTouchStart={this.handleTouchStart.bind(this, 'scale')}
+                    src={scaleIcon}
+                    alt=""
+                />
                 {/* <div className={c.scale} onTouchStart={this.onTouchStart.bind(this,'scale')}>
                 </div> */}
             </div>
