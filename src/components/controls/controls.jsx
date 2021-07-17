@@ -27,6 +27,7 @@ const messages = defineMessages({
 
 const Controls = function (props) {
     const {
+        guide,
         active,
         className,
         intl,
@@ -35,6 +36,7 @@ const Controls = function (props) {
         turbo,
         ...componentProps
     } = props;
+ 
     return (
         <div
             className={classNames(styles.controlsContainer, className)}
@@ -59,7 +61,7 @@ const Controls = function (props) {
                 className={classNames({
                     [styles.button]: true,
                     [styles.stopButton]: active,
-                    [styles.blingBling]: true, // TODO 按钮动效，切换 true false
+                    [styles.blingBling]: guide, // TODO 按钮动效，切换 true false
                 })}
                 type="button"
                 onClick={active ? onStopAllClick : onGreenFlagClick}
@@ -76,6 +78,7 @@ const Controls = function (props) {
 
 Controls.propTypes = {
     active: PropTypes.bool,
+    guide: PropTypes.bool,
     className: PropTypes.string,
     intl: intlShape.isRequired,
     onGreenFlagClick: PropTypes.func.isRequired,

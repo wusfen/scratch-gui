@@ -5,19 +5,56 @@ import VM from 'scratch-vm';
 import {connect} from 'react-redux';
 
 import ControlsComponent from '../components/controls/controls.jsx';
+import startBgS from '../assets/sounds/begin.mp3';
+import {CODE_TIME_1, timerType} from '../components/timer/data';
 
 import {ajax} from '../lib/ajax.js';
 
 class Controls extends React.Component {
     constructor (props) {
         super(props);
+        this.state = this.getInitState();
         bindAll(this, [
             'handleGreenFlagClick',
             'handleStopAllClick'
         ]);
 
+        this.initGuide();
+
         window.bridge.on('pause', e => {
             props.vm.stopAll();
+        });
+    }
+    playSound () {
+        var _audio = new Audio(startBgS);
+        _audio.play(); // 播放 mp3这个音频对象
+    }
+
+    getInitState () {
+        return {
+            guide: false,
+        };
+    }
+    initGuide () {
+        this.setState({
+            guide: false
+        });
+        window.addEventListener(`noAction:${timerType.OPERATE}:${CODE_TIME_1}`, () => {
+            // 显示引导提示
+            if (!this.state.guide) {
+                // 处理
+                this.playSound();
+                this.setState({
+                    guide: true
+                });
+
+                setTimeout(() => {
+                    this.setState({
+                        guide: false
+                    });
+                }, 13000);
+
+            }
         });
     }
     handleGreenFlagClick (e) {
@@ -70,6 +107,7 @@ class Controls extends React.Component {
         return (
             <ControlsComponent
                 {...props}
+                guide={this.state.guide}
                 active={projectRunning}
                 turbo={turbo}
                 onGreenFlagClick={this.handleGreenFlagClick}
