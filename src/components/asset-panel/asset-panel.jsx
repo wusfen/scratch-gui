@@ -4,6 +4,7 @@ import Box from '../box/box.jsx';
 import Selector from './selector.jsx';
 import styles from './asset-panel.css';
 import closeBtnIcon from './icon--close-btn.svg';
+import PropTypes from 'prop-types';
 
 const AssetPanel = function (props) {
     const {
@@ -20,7 +21,9 @@ const AssetPanel = function (props) {
             </Box>
             <img
                 src={closeBtnIcon}
-                onClick={onCloseBtn}
+                onClick={() => {
+                    onCloseBtn();
+                }}
                 className={styles.closeBtn}
             />
         </Box>

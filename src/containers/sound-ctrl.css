@@ -1,0 +1,51 @@
+.container {
+    position     : absolute;
+    top          : 17.53rem;
+    left         : 50%;
+    transform    : translateX(-7.5rem);
+    width        : 15rem;
+    height       : 3.75rem;
+    background   : rgba(150, 120, 255, 0.9);
+    border-radius: 0.63rem;
+    display: flex;
+    
+}
+
+.icon-container {
+    width : 3.75rem;
+    height: 2.5rem;
+    text-align: center;
+    padding-top: 0.4rem;
+}
+
+.icon-container p {
+    width      : 3.75rem;
+    height     : 0.75rem;
+    font-size  : 0.75rem;
+    font-family: SourceHanSansCN-Normal, SourceHanSansCN;
+    font-weight: 400;
+    color      : #FFFFFF;
+    line-height: 0rem
+}
+
+.icon-container img {
+    width      : 1.75rem;
+    height      : 1.75rem;
+    text-align: center;
+}
+
+
+.title {
+    position   : absolute;
+    top        : 13.22rem;
+    left       : 50%;
+    transform  : translateX(-6.5rem);
+    width      : 13rem;
+    height     : 4.69rem;
+    font-size  : 1rem;
+    font-family: SourceHanSansCN-Normal, SourceHanSansCN;
+    font-weight: 400;
+    color      : #6D57DC;
+    line-height: 1.56rem;
+    text-align : center;
+}

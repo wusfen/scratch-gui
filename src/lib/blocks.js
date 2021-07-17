@@ -90,7 +90,7 @@ export default function (vm) {
         //     ScratchBlocks.recordSoundCallback
         // ]);
         menu.push([
-            '+ 编辑',
+            '增加/编辑声音',
             function () {
                 document.querySelector('[role="tablist"]').children[2].click();
             }
