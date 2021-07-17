@@ -36,7 +36,9 @@ module.exports = {
         'no-undefined': 1,
         'no-trailing-spaces': [1, {
             "skipBlankLines": false,
-        }]
+        }],
+        'react/no-unused-prop-types': 1,
+        'prefer-rest-params': 0,
     },
     settings: {
         react: {

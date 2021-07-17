@@ -24,7 +24,10 @@ const BlocksComponent = props => {
                 id="toolboxTrashcan"
                 className={styles.trashcanInitStyle}
             >
-                <img src={iconDelete} className={styles.trashcanImg} />
+                <img
+                    src={iconDelete}
+                    className={styles.trashcanImg}
+                />
             </div>
             <AsideBtnMenu />
         </Box>

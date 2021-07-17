@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import {FormattedMessage} from 'react-intl';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -54,10 +55,12 @@ class LibraryItemComponent extends React.PureComponent {
                         classNames(styles.featuredExtensionText, styles.featuredText) : styles.featuredText
                     }
                 >
-                    <span className={classNames(
-                        styles.libraryItemName,
-                        this.props.extensionId ? styles.libraryItemExtensionName : null
-                    )}>{this.props.name}</span>
+                    <span
+                        className={classNames(
+                            styles.libraryItemName,
+                            this.props.extensionId ? styles.libraryItemExtensionName : null
+                        )}
+                    >{this.props.name}</span>
                     <br />
                     <span className={styles.featuredDescription}>{this.props.description}</span>
                 </div>
