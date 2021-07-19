@@ -257,7 +257,7 @@ export default function (Blockly){
           if (this.undoStack_.length > this.MAX_UNDO) {
             this.undoStack_.shift();
           }
-          console.log(this.undoStack_.length, "xxxxx", this.id)
+          //console.log(this.undoStack_.length, "xxxxx", this.id)
         }
        
         // Copy listeners in case a listener attaches/detaches itself.
