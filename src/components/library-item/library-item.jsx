@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import {FormattedMessage} from 'react-intl';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -41,24 +42,29 @@ class LibraryItemComponent extends React.PureComponent {
                         src={this.props.iconURL}
                     />
                 </div>
-                {this.props.insetIconURL ? (
+                {/* {this.props.insetIconURL ? (
                     <div className={styles.libraryItemInsetImageContainer}>
                         <img
                             className={styles.libraryItemInsetImage}
                             src={this.props.insetIconURL}
                         />
                     </div>
-                ) : null}
+                ) : null} */}
                 <div
                     className={this.props.extensionId ?
                         classNames(styles.featuredExtensionText, styles.featuredText) : styles.featuredText
                     }
                 >
-                    <span className={styles.libraryItemName}>{this.props.name}</span>
+                    <span
+                        className={classNames(
+                            styles.libraryItemName,
+                            this.props.extensionId ? styles.libraryItemExtensionName : null
+                        )}
+                    >{this.props.name}</span>
                     <br />
                     <span className={styles.featuredDescription}>{this.props.description}</span>
                 </div>
-                {this.props.bluetoothRequired || this.props.internetConnectionRequired || this.props.collaborator ? (
+                {/* {this.props.bluetoothRequired || this.props.internetConnectionRequired || this.props.collaborator ? (
                     <div className={styles.featuredExtensionMetadata}>
                         <div className={styles.featuredExtensionRequirement}>
                             {this.props.bluetoothRequired || this.props.internetConnectionRequired ? (
@@ -102,7 +108,7 @@ class LibraryItemComponent extends React.PureComponent {
                             ) : null}
                         </div>
                     </div>
-                ) : null}
+                ) : null} */}
             </div>
         ) : (
             <Box

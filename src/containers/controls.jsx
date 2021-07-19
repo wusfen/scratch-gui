@@ -5,46 +5,58 @@ import VM from 'scratch-vm';
 import {connect} from 'react-redux';
 
 import ControlsComponent from '../components/controls/controls.jsx';
+import startBgS from '../assets/sounds/begin.mp3';
+import {CODE_TIME_1, timerType} from '../components/timer/data';
+
+import {ajax} from '../lib/ajax.js';
 
 class Controls extends React.Component {
     constructor (props) {
         super(props);
+        this.state = this.getInitState();
         bindAll(this, [
             'handleGreenFlagClick',
             'handleStopAllClick'
         ]);
-        this.setOnNativeCallJsInWindow();
+
+        this.initGuide();
+
+        window.bridge.on('pause', e => {
+            props.vm.stopAll();
+        });
+    }
+    playSound () {
+        var _audio = new Audio(startBgS);
+        _audio.play(); // 播放 mp3这个音频对象
     }
 
-    setOnNativeCallJsInWindow () {
-        window.onNativeCallJs = mess => {
-            console.log('onNativeCallJs params---', mess);
-            try {
-                const code = mess.code;
-                const data = mess.data;
-                switch (code) {
-                case 1:
-                    // 1：生命周期协议
-                    var life = data.lifecycle;
-                    if (life === 'onPause') {
-                        // webview页面暂停，即将进入后台
-                        console.log('to stop');
-                        this.props.vm.stopAll();
-                    } else if (life === 'onResume') {
-                        // webview页面即将进入前台
-                        console.log('to start');
-                        this.props.vm.start();
-                    }
-                    break;
-                default:
-                    break;
-                }
-            } catch (error) {
-                console.error('onNativeCallJs error---', error);
-            }
+    getInitState () {
+        return {
+            guide: false,
         };
     }
+    initGuide () {
+        this.setState({
+            guide: false
+        });
+        window.addEventListener(`noAction:${timerType.OPERATE}:${CODE_TIME_1}`, () => {
+            // 显示引导提示
+            if (!this.state.guide) {
+                // 处理
+                this.playSound();
+                this.setState({
+                    guide: true
+                });
 
+                setTimeout(() => {
+                    this.setState({
+                        guide: false
+                    });
+                }, 13000);
+
+            }
+        });
+    }
     handleGreenFlagClick (e) {
         e.preventDefault();
         if (e.shiftKey) {
@@ -55,10 +67,34 @@ class Controls extends React.Component {
             }
             this.props.vm.greenFlag();
         }
+
+        this.checkWork();
+        dispatchEvent(new Event('handleGreenFlagClick'));
     }
     handleStopAllClick (e) {
         e.preventDefault();
         this.props.vm.stopAll();
+    }
+    async checkWork () {
+        if (window._workInfo) {
+            var json = this.props.vm.toJSON();
+            if (this.lastVmJSON === json) {
+                return;
+            }
+            this.lastVmJSON = json;
+
+            var {data} = await ajax.post('hwUserWork/autoAnalyst', {
+                workCode: window._workInfo.workCode,
+                projectJsonStr: json,
+            });
+
+            if (data == 1) {
+                dispatchEvent(new Event('运行时判断正确'));
+            } else {
+                dispatchEvent(new Event('运行时判断不正确'));
+            }
+        }
+
     }
     render () {
         const {
@@ -71,6 +107,7 @@ class Controls extends React.Component {
         return (
             <ControlsComponent
                 {...props}
+                guide={this.state.guide}
                 active={projectRunning}
                 turbo={turbo}
                 onGreenFlagClick={this.handleGreenFlagClick}

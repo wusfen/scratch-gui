@@ -68,6 +68,7 @@ class LibraryComponent extends React.Component {
         this.props.onItemSelected(this.getFilteredData()[id]);
     }
     handleClose () {
+        window.dispatchEvent(new Event('libraryBack'));
         this.props.onRequestClose();
     }
     handleTagClick (tag) {
@@ -160,10 +161,10 @@ class LibraryComponent extends React.Component {
     render () {
         return (
             <Modal
-                fullScreen
                 contentLabel={this.props.title}
                 id={this.props.id}
                 onRequestClose={this.handleClose}
+                className={classNames(styles.libraryWrapper)}
             >
                 {(this.props.filterable || this.props.tags) && (
                     <div className={styles.filterBar}>
@@ -180,28 +181,28 @@ class LibraryComponent extends React.Component {
                                 onClear={this.handleFilterClear}
                             />
                         )}
-                        {this.props.filterable && this.props.tags && (
+                        {/* {this.props.filterable && this.props.tags && (
                             <Divider className={classNames(styles.filterBarItem, styles.divider)} />
-                        )}
-                        {this.props.tags &&
-                            <div className={styles.tagWrapper}>
-                                {tagListPrefix.concat(this.props.tags).map((tagProps, id) => (
-                                    <TagButton
-                                        active={this.state.selectedTag === tagProps.tag.toLowerCase()}
-                                        className={classNames(
-                                            styles.filterBarItem,
-                                            styles.tagButton,
-                                            tagProps.className
-                                        )}
-                                        key={`tag-button-${id}`}
-                                        onClick={this.handleTagClick}
-                                        {...tagProps}
-                                    />
-                                ))}
-                            </div>
-                        }
+                        )} */}
                     </div>
                 )}
+                {this.props.tags &&
+                    <div className={styles.tagWrapper}>
+                        {tagListPrefix.concat(this.props.tags).map((tagProps, id) => (
+                            <TagButton
+                                active={this.state.selectedTag === tagProps.tag.toLowerCase()}
+                                className={classNames(
+                                    styles.filterBarItem,
+                                    styles.tagButton,
+                                    tagProps.className
+                                )}
+                                key={`tag-button-${id}`}
+                                onClick={this.handleTagClick}
+                                {...tagProps}
+                            />
+                        ))}
+                    </div>
+                }
                 <div
                     className={classNames(styles.libraryScrollGrid, {
                         [styles.withFilterBar]: this.props.filterable || this.props.tags

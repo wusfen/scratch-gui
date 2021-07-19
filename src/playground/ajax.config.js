@@ -1,10 +1,12 @@
 /* eslint-disable prefer-const */
 /* eslint-disable comma-dangle */
 import {ajax} from '../lib/ajax.js';
+import Loading from '../components/loading/index.jsx';
+import Dialog from '../components/dialog/index.jsx';
 
 const params = new URL(location).searchParams;
 
-// ?base=dev
+// ?base=prod
 const baseMap = {
     dev: 'https://dev-icode.vipthink.cn/v1/homework/',
     uat: 'https://uat-icode.vipthink.cn/v1/homework',
@@ -12,7 +14,15 @@ const baseMap = {
     mock: 'https://yapi.vipthink.net/mock/1788/',
 };
 
+// default
 let base = baseMap.prod;
+
+// auto
+if (/\/uat-|\/uat\/|\/\/1/.test(location)) {
+    base = baseMap.uat;
+}
+
+// ?base=prod
 if (params.get('base')) {
     base = baseMap[params.get('base')] || params.get('base');
 }
@@ -23,19 +33,32 @@ let token = params.get('token');
 // ajax
 ajax.setSettings({
     headers: {
-        // token: '141e3837-c68f-4ccc-a7a9-61571e0cf46aRqBrSfVCiGjaYgObikaiLXJuyqiN',
         token,
     },
     base,
-    // base: 'http://yapi.vipthink.net/mock/1788/',
-    onload (res) {
+    onloadstart (options) {
+        if (!options.silence) {
+            Loading.show();
+        }
+    },
+    onload (res, options) {
+
+        if (options.silence) return;
         if (!/^(0|200)$/.test(res.code)) {
-            alert(res.detail || res.code);
+            Dialog.alert(`${res.code} ${res.detail}`).then(e => {
+                window.bridge.emit('exitEditor');
+            });
+
             return Promise.reject(res.detail || res.code);
         }
     },
-    onerror (res) {
-        alert('接口异常');
+    async onerror (e, options) {
+        if (options.silence) return;
+        await alert('接口异常');
+        window.bridge.emit('exitEditor');
+    },
+    onloadend () {
+        Loading.hide();
     }
 });
 // for console

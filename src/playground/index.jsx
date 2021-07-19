@@ -12,7 +12,7 @@ import AppStateHOC from '../lib/app-state-hoc.jsx';
 import BrowserModalComponent from '../components/browser-modal/browser-modal.jsx';
 import supportedBrowser from '../lib/supported-browser';
 
-import './ajax.config.js';
+import './index.js';
 
 import styles from './index.css';
 

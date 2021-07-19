@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import bindAll from 'lodash.bindall';
+import { OPERATE_TIME_2 ,timerType} from './../timer/data';
 
 
 import styles from './styles.css';
@@ -62,6 +63,16 @@ class Component extends React.Component{
                     this.startBackTimer();
                 }
 
+                if (/已提交/.test(status)) {
+                    if (/正确/.test(status)) {
+                        new Audio(require('./audio/批改正确.mp3')).play();
+                    } else if (/错误/.test(status)) {
+                        new Audio(require('./audio/批改错误.mp3')).play();
+                    } else {
+                        new Audio(require('./audio/没有批改结果.mp3')).play();
+                    }
+                }
+
             });
             addEventListener(`error`, e => {
                 this.setState({
@@ -80,10 +91,14 @@ class Component extends React.Component{
         };
     }
     handleClose () {
-        if (this.state.isShowBackButton) {
-            dispatchEvent(new Event('exit'));
+        if(/错误/.test(this.state.status)) {
+            window.dispatchEvent(new Event(`noAction:${timerType.OPERATE}:${OPERATE_TIME_2}`));
         }
-        console.log('to stopAll');
+
+        if (this.state.isShowBackButton) {
+            window.bridge.emit('exitEditor');
+        }
+
         this.props.vm.stopAll();
         this.setState(this.getInitState());
         clearInterval(this.timer);

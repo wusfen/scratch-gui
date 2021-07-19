@@ -1,3 +1,5 @@
+@import url("../../css/animate.css");
+
 .container {
     position: fixed;
     z-index: 100000999;
@@ -9,6 +11,13 @@
     align-items: center;
     justify-content: center;
     background: rgba(0, 0, 0, 0.75);
+    animation: fadeIn 0.3s backwards;
+}
+@supports (backdrop-filter: blur(1px)) {
+    .container {
+        background: hsl(0deg 0% 0% / 50%);
+        backdrop-filter: blur(3px);
+    }
 }
 
 .dialog {
@@ -17,6 +26,7 @@
     background: #f1e0ff;
     box-shadow: 0rem 0.03rem 0.44rem 0rem #d096ff;
     border-radius: 1.25rem;
+    animation: fadeIn 0.3s backwards;
 }
 
 .close {
@@ -27,7 +37,7 @@
     width: 1.38rem;
     height: 1.38rem;
     background: center/contain no-repeat
-        url("../../../assets/icons/POP-up windows close.svg");
+        url("../../assets/icons/POP-up windows close.svg");
     color: transparent;
 }
 

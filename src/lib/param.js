@@ -17,10 +17,14 @@ const getParam = function (name) {
 
 const setParam = function (name, value) {
     let url = location.href;
-    url = url.replace(RegExp(`([?&])${name}=([^?=&#]*)`), `$1${name}=${value}`);
-    if (url === location.href) {
-        // todo
-    }
+    // --
+    url = url.replace(RegExp(`([?&])(${name})=([^?=&#]*)`, 'g'), `$1`);
+    // ++
+    url = url.replace(/$|#/, `?${name}=${value}$&`);
+    // -- ?& && ? ?
+    url = url.replace(/[?&]+/g, '&');
+    url = url.replace(/((^|#)([^&]*))&/g, '$1?');
+
     history.replaceState('', document.title, url);
 };
 
@@ -37,6 +41,8 @@ const param = function (name, value) {
     return getParam(name);
     
 };
+
+window.param = param;
 
 export {
     param,

@@ -5,7 +5,10 @@ import bindAll from 'lodash.bindall';
 import {connect} from 'react-redux';
 
 import {setProjectUnchanged} from '../reducers/project-changed';
+import {setProjectTitle} from '../reducers/project-title';
+
 import {
+    LoadingState,
     LoadingStates,
     getIsCreatingNew,
     getIsFetchingWithId,
@@ -77,6 +80,8 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             if (id) {
                 const {data} = await ajax.get(`/hwUserWork/getWorkInfo/${id}`);
                 fileUrl = data.workPath;
+                this.props.setProjectTitle(data.workName);
+
                 // TODO 临时存值
                 window._workInfo = data;
             }
@@ -141,6 +146,8 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             } = this.props;
             return (
                 <WrappedComponent
+                    projectTitle=""
+                    isShowingWithoutId={false}
                     fetchingProject={isFetchingWithIdProp}
                     {...componentProps}
                 />
@@ -163,7 +170,8 @@ const ProjectFetcherHOC = function (WrappedComponent) {
         projectHost: PropTypes.string,
         projectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         reduxProjectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-        setProjectId: PropTypes.func
+        setProjectId: PropTypes.func,
+        setProjectTitle: PropTypes.func,
     };
     ProjectFetcherComponent.defaultProps = {
         // TODO

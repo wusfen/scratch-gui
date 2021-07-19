@@ -325,7 +325,7 @@ $fade-out-distance: 0.9375rem;
 /* Menu */
 
 .menu-bar-position {
-    position: relative;
+    /* position: relative; */
     z-index: $z-index-menu-bar;
 }
 /* Alerts */

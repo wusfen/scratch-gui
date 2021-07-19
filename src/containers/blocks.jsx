@@ -149,7 +149,7 @@ class Blocks extends React.Component {
             const y = toolboxRect.top;
             const width = toolboxRect.width;
             const height = toolboxRect.height;
-  
+
             return Object.assign(rect, {
                 left: x,
                 top: y,
@@ -223,7 +223,7 @@ class Blocks extends React.Component {
         // 切换角色 Category 也会变化
 
         // console.log('this.props.toolboxXML:', prevProps.toolboxXML === this.props.toolboxXML);
-        
+
         // If any modals are open, call hideChaff to close z-indexed field editors
         if (this.props.anyModalVisible && !prevProps.anyModalVisible) {
             this.ScratchBlocks.hideChaff();
@@ -294,30 +294,31 @@ class Blocks extends React.Component {
 
         // TODO 有问题，暂不设置 selectedItem_ = null
         // 只更新 xml ，不能走依赖 selectedItem_ 的逻辑
+        // eslint-disable-next-line no-negated-condition
         if (!this.workspace.toolbox_.selectedItem_) {
-            const tree = this.ScratchBlocks.Options.parseToolboxTree(this.props.toolboxXML);
-            this.workspace.toolbox_.categoryMenu_.populate(tree);
-            this.workspace.toolbox_.showAll_();
-            return;
-        }
-
-        const categoryId = this.workspace.toolbox_.getSelectedCategoryId();
-        const offset = this.workspace.toolbox_.getCategoryScrollOffset();
-        this.workspace.updateToolbox(this.props.toolboxXML);
-        this._renderedToolboxXML = this.props.toolboxXML;
-
-        // In order to catch any changes that mutate the toolbox during "normal runtime"
-        // (variable changes/etc), re-enable toolbox refresh.
-        // Using the setter function will rerender the entire toolbox which we just rendered.
-        this.workspace.toolboxRefreshEnabled_ = true;
-
-        const currentCategoryPos = this.workspace.toolbox_.getCategoryPositionById(categoryId);
-        const currentCategoryLen = this.workspace.toolbox_.getCategoryLengthById(categoryId);
-        if (offset < currentCategoryLen) {
-            this.workspace.toolbox_.setFlyoutScrollPos(currentCategoryPos + offset);
+            this.workspace.updateToolbox(this.props.toolboxXML);
+            this._renderedToolboxXML = this.props.toolboxXML;
+            this.workspace.toolboxRefreshEnabled_ = true;
         } else {
-            this.workspace.toolbox_.setFlyoutScrollPos(currentCategoryPos);
+            const categoryId = this.workspace.toolbox_.getSelectedCategoryId();
+            const offset = this.workspace.toolbox_.getCategoryScrollOffset();
+            this.workspace.updateToolbox(this.props.toolboxXML);
+            this._renderedToolboxXML = this.props.toolboxXML;
+
+            // In order to catch any changes that mutate the toolbox during "normal runtime"
+            // (variable changes/etc), re-enable toolbox refresh.
+            // Using the setter function will rerender the entire toolbox which we just rendered.
+            this.workspace.toolboxRefreshEnabled_ = true;
+
+            const currentCategoryPos = this.workspace.toolbox_.getCategoryPositionById(categoryId);
+            const currentCategoryLen = this.workspace.toolbox_.getCategoryLengthById(categoryId);
+            if (offset < currentCategoryLen) {
+                this.workspace.toolbox_.setFlyoutScrollPos(currentCategoryPos + offset);
+            } else {
+                this.workspace.toolbox_.setFlyoutScrollPos(currentCategoryPos);
+            }
         }
+
 
         const queue = this.toolboxUpdateQueue;
         this.toolboxUpdateQueue = [];
@@ -599,9 +600,9 @@ class Blocks extends React.Component {
     }
     clickDirBtn (dir) {
         const ele = document.getElementsByClassName('blocklyToolboxDiv')[0];
-        if (dir == 'up') {
+        if (dir === 'up') {
             ele.scrollTop -= 100;
-           
+
         } else {
             ele.scrollTop += 100;
         }
@@ -652,7 +653,7 @@ class Blocks extends React.Component {
                     onDrop={this.handleDrop}
                     {...props}
                 />
-                
+
                 {this.state.prompt ? (
                     <Prompt
                         defaultValue={this.state.prompt.defaultValue}

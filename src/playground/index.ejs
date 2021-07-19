@@ -25,59 +25,30 @@
             function loadConsole() {
                 if (loadConsole.yes) return;
                 loadConsole.yes = true;
-                document.write(
-                    '<script src="https://cdn.jsdelivr.net/gh/wusfen/console.js@master/src/console.min.js"><\/script>'
-                );
+
+                var src =
+                    "https://cdn.jsdelivr.net/gh/wusfen/console.js@master/src/console.min.js";
+                if (document.readyState == "complete") {
+                    var script = document.createElement("script");
+                    script.src = src;
+                    document.body.appendChild(script);
+                } else {
+                    document.write("<script src=" + src + "><\/script>");
+                }
             }
 
             if ("ontouchstart" in window) {
-                if (/\/(dev|uat)\/|\/\/1|[?&]f12\b/.test(location)) {
+                if (/\/(dev|uat)\/|[?&#]f12\b/.test(location)) {
                     loadConsole();
+                    console.f12 = 1;
                 }
             }
 
-            document.addEventListener("touchstart", function (e) {
-                if (e.touches && e.touches.length === 3) {
+            addEventListener("touchstart", function (e) {
+                if (e.touches && e.touches.length >= 6) {
                     loadConsole();
-                    console.show = 2;
+                    console.f12 = 2;
                 }
-            });
-        </script>
-
-        <script>
-            function nativeCall(options) {
-                console.log("[nativeCall]", options);
-
-                // ios
-                try {
-                    window["webkit"].messageHandlers.webCall.postMessage(
-                        JSON.stringify(options),
-                        "*"
-                    );
-                } catch (e) {}
-
-                // android
-                try {
-                    native.call(JSON.stringify(options));
-                } catch (e) {}
-
-                // pc(iframe)
-                try {
-                    parent.postMessage(options, "*");
-                } catch (e) {}
-            }
-
-            addEventListener("exit", function () {
-                console.log("[exit]");
-
-                nativeCall({
-                    code: 0,
-                    protocol: 200134,
-                    data: {
-                        operType: 1,
-                        param: 1,
-                    },
-                });
             });
         </script>
 

@@ -89,8 +89,8 @@ export default function (vm) {
         //     ScratchBlocks.ScratchMsgs.translate('SOUND_RECORD', 'record...'),
         //     ScratchBlocks.recordSoundCallback
         // ]);
-        menu.push([
-            '+ 编辑',
+        menu.unshift([
+            '增加/编辑声音',
             function () {
                 document.querySelector('[role="tablist"]').children[2].click();
             }
@@ -366,6 +366,17 @@ export default function (vm) {
         return true;
     };
 
+    const oldStartDrag = ScratchBlocks.BlockDragger.prototype.startBlockDrag;
+    ScratchBlocks.BlockDragger.prototype.startBlockDrag = function () {
+        document.getElementById('toolboxTrashcan').style.display = 'block';
+        return (oldStartDrag.apply(this, arguments));
+    };
+
+    const oldEndBlockDrag = ScratchBlocks.BlockDragger.prototype.endBlockDrag;
+    ScratchBlocks.BlockDragger.prototype.endBlockDrag = function () {
+        document.getElementById('toolboxTrashcan').style.display = 'none';
+        return (oldEndBlockDrag.apply(this, arguments));
+    };
 
     return ScratchBlocks;
 }

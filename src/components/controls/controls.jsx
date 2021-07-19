@@ -9,6 +9,8 @@ import StopAll from '../stop-all/stop-all.jsx';
 import TurboMode from '../turbo-mode/turbo-mode.jsx';
 
 import styles from './controls.css';
+var c = styles;
+Object.assign(c, require('../../css/animate.css'));
 
 const messages = defineMessages({
     goTitle: {
@@ -25,6 +27,7 @@ const messages = defineMessages({
 
 const Controls = function (props) {
     const {
+        guide,
         active,
         className,
         intl,
@@ -33,6 +36,7 @@ const Controls = function (props) {
         turbo,
         ...componentProps
     } = props;
+ 
     return (
         <div
             className={classNames(styles.controlsContainer, className)}
@@ -54,7 +58,11 @@ const Controls = function (props) {
                 onClick={onStopAllClick}
             />
             <button
-                className={!active ? classNames(styles.button) : classNames(styles.stopButton)}
+                className={classNames({
+                    [styles.button]: true,
+                    [styles.stopButton]: active,
+                    [styles.blingBling]: guide, // TODO 按钮动效，切换 true false
+                })}
                 type="button"
                 onClick={active ? onStopAllClick : onGreenFlagClick}
             >
@@ -70,6 +78,7 @@ const Controls = function (props) {
 
 Controls.propTypes = {
     active: PropTypes.bool,
+    guide: PropTypes.bool,
     className: PropTypes.string,
     intl: intlShape.isRequired,
     onGreenFlagClick: PropTypes.func.isRequired,

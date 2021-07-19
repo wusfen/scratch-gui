@@ -107,6 +107,7 @@ const StageSelector = props => {
                         type="button"
                         onClick={function (e) {
                             e.stopPropagation();
+                            window.dispatchEvent(new Event('editStage'));
                             document.querySelector('[role="tablist"]').children[1].click();
                         }}
                     >

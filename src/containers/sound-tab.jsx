@@ -8,7 +8,7 @@ import AssetPanel from '../components/asset-panel/asset-panel.jsx';
 import soundIcon from '../components/asset-panel/icon--sound.svg';
 import soundIconRtl from '../components/asset-panel/icon--sound-rtl.svg';
 import addSoundFromLibraryIcon from '../components/asset-panel/icon--add-sound-lib.svg';
-import addSoundFromRecordingIcon from '../components/asset-panel/icon--add-sound-record.svg';
+import addSoundFromRecordingIcon from '../components/asset-panel/record.png';
 import fileUploadIcon from '../components/action-menu/icon--file-upload.svg';
 import surpriseIcon from '../components/action-menu/icon--surprise.svg';
 import searchIcon from '../components/action-menu/icon--search.svg';
@@ -16,6 +16,8 @@ import searchIcon from '../components/action-menu/icon--search.svg';
 import RecordModal from './record-modal.jsx';
 import SoundEditor from './sound-editor.jsx';
 import SoundLibrary from './sound-library.jsx';
+import SoundCtrl from './sound-ctrl.jsx';
+
 
 import soundLibraryContent from '../lib/libraries/sounds.json';
 import {handleFileUpload, soundUpload} from '../lib/file-uploader.js';
@@ -166,6 +168,9 @@ class SoundTab extends React.Component {
             }).then(this.handleNewSound);
         }
     }
+    handleHideEditingTarget () {
+        document.querySelector('[role="tablist"]').children[0].click();
+    }
 
     setFileInput (input) {
         this.fileInput = input;
@@ -222,7 +227,6 @@ class SoundTab extends React.Component {
         return (
             <AssetPanel
                 buttons={[{
-                    title: intl.formatMessage(messages.addSound),
                     img: addSoundFromLibraryIcon,
                     onClick: onNewSoundFromLibraryClick
                 }, {
@@ -255,10 +259,12 @@ class SoundTab extends React.Component {
                 onDuplicateClick={this.handleDuplicateSound}
                 onExportClick={this.handleExportSound}
                 onItemClick={this.handleSelectSound}
+                onCloseBtn={this.handleHideEditingTarget}
             >
                 {sprite.sounds && sprite.sounds[this.state.selectedSoundIndex] ? (
                     <SoundEditor soundIndex={this.state.selectedSoundIndex} />
                 ) : null}
+
                 {this.props.soundRecorderVisible ? (
                     <RecordModal
                         onNewSound={this.handleNewSound}
@@ -270,6 +276,14 @@ class SoundTab extends React.Component {
                         onNewSound={this.handleNewSound}
                         onRequestClose={this.props.onRequestCloseSoundLibrary}
                     />
+                ) : null}
+                {sprite.sounds && sprite.sounds.length === 0 ? (
+                    <SoundCtrl
+                        onClickUploadClick={this.handleFileUploadClick}
+                        onClickRecord={onNewSoundFromRecordingClick}
+                        onClickRandom={this.handleSurpriseSound}
+                        onClickSearch={onNewSoundFromLibraryClick}
+                    ></SoundCtrl>
                 ) : null}
             </AssetPanel>
         );

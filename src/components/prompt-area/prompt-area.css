@@ -1,0 +1,87 @@
+
+.drawing-item {
+    cursor: move;
+    width: 49rem;
+    height: 30rem;
+    position: fixed;
+    top: 8.25rem;
+    left: 7rem;
+    box-sizing: border-box;
+    z-index: 500;
+    padding: 0.72rem 0.59rem 1.09rem 0.59rem;
+    box-sizing: border-box;
+    background: rgba(172, 154, 254, 0.5);
+    box-shadow: 0rem 0.03rem 0.44rem 0rem #6D57DC;
+    border-radius: 1.25rem 1.25rem 0rem 0rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.title {
+    font-size: 0.88rem;
+    font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+    font-weight: 500;
+    color: #FFFFFF;
+    line-height: 1.31rem;
+    text-align: center;
+    margin-bottom: 0.63rem;
+}
+.show-content {
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    /* overflow: hidden; */
+}
+.video {
+    width: 100%;
+    object-fit: fill;
+}
+.video::-webkit-media-controls-fullscreen-button { /* 去掉全屏按钮 */
+    display: none;
+}
+.scale {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+.close-icon {
+    width: 1.18rem;
+    height: 1.18rem;    
+    position: absolute;
+    top: 0.59rem;
+    right: 0.59rem;
+}
+
+.image-text-content {
+    position: relative;
+    height: 100%;
+    background-color: #FFFFFF;
+    overflow: scroll;
+}
+.image-text-contain {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.image-text {
+    max-height: 100%;
+    max-width: 100%;
+}
+.image-scale {
+    position: absolute;
+    left: 1.16rem;
+    bottom: 1.26rem;
+    display: flex;  
+}
+.big-icon {
+    width: 1.38rem;
+    margin-right: 0.81rem;
+}
+
+.small-icon {
+    width: 1.38rem;
+}

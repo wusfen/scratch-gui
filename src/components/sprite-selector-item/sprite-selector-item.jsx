@@ -54,6 +54,7 @@ const SpriteSelectorItem = props => (
                     type="button"
                     onClick={function (e) {
                         e.stopPropagation();
+                        window.dispatchEvent(new Event('editSprite'));
                         document.querySelector('[role="tablist"]').children[1].click();
                     }}
                 >

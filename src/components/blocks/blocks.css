@@ -231,3 +231,24 @@
     width: 2rem;
     background-size: 100% 100%;
 }
+
+.trashcan-init-style {
+    display: none;
+    width: 4.38rem;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 1.25rem 0rem 0rem 1.25rem;
+    top: 0;
+    left: 0;
+    position: relative;
+    z-index: 800;
+}
+
+.trashcan-img{
+    position: absolute;
+    width: 2.09rem;
+    height: 2.25rem;
+    left: 1.13rem;
+    bottom: 1.63rem;
+    z-index: 810;
+}

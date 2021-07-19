@@ -28,7 +28,8 @@ import SB3Downloader from '../../containers/sb3-downloader.jsx';
 import DeletionRestorer from '../../containers/deletion-restorer.jsx';
 import TurboMode from '../../containers/turbo-mode.jsx';
 import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
-import Confirm from '../dialog/confirm/index.jsx';
+import Dialog from '../dialog/index.jsx';
+import Loading from '../loading/index.jsx';
 
 import {openTipsLibrary} from '../../reducers/modals';
 import {setPlayer} from '../../reducers/mode';
@@ -41,6 +42,7 @@ import {
     remixProject,
     saveProjectAsCopy
 } from '../../reducers/project-state';
+import {setProjectTitle} from '../../reducers/project-title';
 import {
     openAboutMenu,
     closeAboutMenu,
@@ -66,6 +68,11 @@ import collectMetadata from '../../lib/collect-metadata';
 
 import styles from './menu-bar.css';
 const c = styles;
+Object.assign(
+    c,
+    require('../../css/common.css'),
+    require('../../css/animate.css'),
+);
 
 import helpIcon from '../../lib/assets/icon--tutorials.svg';
 import mystuffIcon from './icon--mystuff.png';
@@ -85,6 +92,7 @@ import setupIcon from '../../assets/icons/set up.svg';
 import resetIcon from '../../assets/icons/redo.svg';
 
 import {ajax} from '../../lib/ajax.js';
+import {param} from '../../lib/param.js';
 
 const ariaMessages = defineMessages({
     language: {
@@ -170,6 +178,10 @@ class MenuBar extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
+            'handleInput',
+            'handleSave',
+            'handleSaveAs',
+            'handleExit',
             'handleTeacherPreview',
             'handleSkip',
             'handleSubmit',
@@ -186,19 +198,59 @@ class MenuBar extends React.Component {
             'getSaveToComputerHandler',
             'restoreOptionMessage'
         ]);
-        const searchParams = new URL(location).searchParams;
 
         this.state = {
-            file: searchParams.get('file'),
-            isShowResetFileButton: searchParams.get('file'),
-            isShowSkipButton: !false,
+            id: param('id'),
+            token: param('token'),
+            workName: '',
+            isShowSkipButton: false,
+            file: param('file'),
+            isShowResetFileButton: !!param('file'),
+            mode: param('mode'),
             isShowPublishButton: !false,
-            mode: searchParams.get('mode'),
+            isShowPublishButtonBling: false,
             isTeacherPreview: false, // true: 老师切学生
-            workUserBlockNum: 0
+            isSaveAsChanged: false,
+            workUserBlockNum: 0,
+            _timeout: param('_timeout') || 30, // dev
         };
+        var state = this.state;
 
+        setTimeout(() => {
+            this.setState({
+                isShowSkipButton: true,
+            });
+        }, state._timeout * 1000);
+        addEventListener('运行时判断正确', e => {
+            this.setState({
+                isShowPublishButtonBling: true,
+            });
+            new Audio(require('../../assets/sounds/提交按钮.mp3')).play();
+        });
+        addEventListener('运行时判断不正确', e => {
+            this.setState({
+                isShowPublishButtonBling: false,
+            });
+        });
+        // 30秒自动保存一次
+        // TODO 太耗资源
+        var timer = setInterval(() => {
+            console.log(`每${state._timeout}秒检查是否要自动保存`, this.props.projectChanged);
 
+            if (!(/^(normal|course)$/.test(state.mode) && state.id && state.token)) {
+                console.warn('state.mode:', state.mode);
+                console.warn('state.id:', state.id);
+                console.warn('state.token:', state.token);
+                clearInterval(timer);
+                return;
+            }
+
+            this.autoSave(true);
+        }, state._timeout * 1000);
+
+        window.bridge.on('requireExitEditor', e => {
+            this.handleExit('requireExitEditor');
+        });
     }
     componentDidMount () {
         document.addEventListener('keydown', this.handleKeyPress);
@@ -206,7 +258,7 @@ class MenuBar extends React.Component {
             this.setState({
                 workUserBlockNum: this.getUserBlocks()
             });
-            
+
         });
 
     }
@@ -284,6 +336,7 @@ class MenuBar extends React.Component {
     }
     getSaveToComputerHandler (downloadProjectCallback) {
         return () => {
+            dispatchEvent(new Event('saveToComputer'));
             this.props.onRequestCloseFile();
             downloadProjectCallback();
             if (this.props.onProjectTelemetryEvent) {
@@ -376,6 +429,19 @@ class MenuBar extends React.Component {
             this.props.onRequestCloseAbout();
         };
     }
+    async getProjectCover (silence) {
+        if (silence) return;
+
+        var dataURL = this.props.vm.renderer.canvas.toDataURL();
+        var blob = await (await fetch(dataURL)).blob();
+
+        const formData = new FormData();
+        formData.append('file', blob, `${this.props.projectTitle || 'project'}.png`);
+        const {data} = await ajax.post('/file/upload', formData, {silence});
+
+        // return `${data.domain}${data.path}`;
+        return data.path;
+    }
     async handleClickResetFile () {
         const fileUrl = this.state.file;
 
@@ -387,7 +453,7 @@ class MenuBar extends React.Component {
                 r(buffer);
             });
 
-            await Confirm.confirm({
+            await Dialog.confirm({
                 title: '重做确认',
                 content: '将会清空当前作品记录，重新开始创作哦，是否确定重做？'
             });
@@ -395,8 +461,11 @@ class MenuBar extends React.Component {
             this.props.vm.loadProject(await bufferPromise);
         }
     }
-    clickHideCode () {
+    handleHideCode () {
         dispatchEvent(new Event('menu:hideCode'));
+    }
+    handleSiderBtn () {
+        window.bridge.emit('showCourseSidebar');
     }
     // 获取用户新增代码块
     getUserBlocks () {
@@ -408,59 +477,141 @@ class MenuBar extends React.Component {
                 }
             }
         }
-        
+
         return curBlocksNum;
     }
-
-    async handleSubmit () {
-        dispatchEvent(new Event('submit:提交中'));
-        const timeoutTimer = setTimeout(() => {
-            dispatchEvent(new Event('submit:提交中超时'));
-        }, 1000 * 15);
+    async uploadSb3 (silence) {
+        silence || Loading.show();
 
         const blob = await this.props.vm.saveProjectSb3();
         let formData = new FormData();
-        formData.append('file', blob);
+        formData.append('file', blob, `${this.props.projectTitle || 'project'}.sb3`);
+
         // TODO remove
         if (/mock/.test(location)) {
             formData = null;
         }
 
-        // 上传文件
-        const {data: fileData} = await ajax.post('/file/upload', formData);
+        // {domain, path}
+        const {data} = await ajax.post('/file/upload', formData, {silence});
 
-        // TODO 临时存值
-        const workInfo = window._workInfo;
-    
- 
+        Loading.hide();
+        return data;
+    }
+    handleInput (e) {
+        this.props.setProjectTitle(e.target.value);
+    }
+    async handleSave () {
+        const id = this.state.id;
+
+        const workName = this.props.projectTitle || param('workName') || '';
+
+        const sb3PathInfo = await this.uploadSb3();
+        var {data} = await ajax.put('/hwUserWork/submitIdeaWork', {
+            id: id,
+            workCoverPath: await this.getProjectCover(),
+            workName: workName,
+            workPath: sb3PathInfo.path,
+        });
+        this.state.id = data;
+        param('id', this.state.id);
+
+        this.props.onProjectSaved({
+            title: workName
+        });
+
+        alert('保存成功');
+    }
+    async handleSaveAs () {
+        await Dialog.confirm('是否将作品另存为自由创作？');
+
+        this.state.id = null;
+        await this.handleSave();
+        param('id', this.state.id);
+        this.setState({
+            isSaveAsChanged: true,
+        });
+    }
+    async autoSave (silence) {
+        if (this.props.projectChanged) {
+            if (this.state.mode === 'course') {
+                await this.handleSubmit('noCheckResult', silence);
+            } else {
+                await this.handleSave(silence);
+            }
+        }
+    }
+    async handleExit (e = 'exitEditor') {
+        if (this.props.projectChanged) {
+            await Dialog.confirm({
+                title: '还未保存作品哦，是否保存作品？',
+                onCancel () {
+                    window.bridge.emit(e);
+                }
+            });
+
+            this.autoSave();
+        }
+
+        window.bridge.emit(e);
+    }
+    async handleSubmit (isNoCheckResult, silence) {
+        this.setState({
+            isShowPublishButtonBling: false,
+        });
+
+        const workInfo = window._workInfo || {};
+
+
         var lastUserBlockNum = 0;
         if (window._workInfo.userBlockNum) {
             lastUserBlockNum = window._workInfo.userBlockNum;
         }
+
+
+        if (!workInfo.id) {
+            Dialog.alert({
+                title: '缺少id!'
+            });
+            return;
+        }
         var _userBlockNum = this.getUserBlocks() - this.state.workUserBlockNum + lastUserBlockNum;
 
-        
         if (_userBlockNum < 0) {
             _userBlockNum = 0;
         }
-        
-        
+
+        // 上传文件
+        const fileData = await this.uploadSb3(silence);
+
         // 提交
         const {data: workId} = await ajax.put('/hwUserWork/submitWork', {
             id: workInfo.id,
-            submitType: 2,
+            submitType: silence ? 1 : 2,
+            workCoverPath: await this.getProjectCover(silence),
             workPath: fileData.path,
             userBlockNum: _userBlockNum,
             // analystStatus: undefined,
             workId: workInfo.analystStatus === -1 ? workInfo.workId : ''
+        }, {silence});
+
+        // 标记已保存
+        this.props.onProjectSaved({
+            title: this.props.projectTitle || param('workName') || ''
         });
 
+        if (isNoCheckResult) {
+            return;
+        }
+
+        dispatchEvent(new Event('submit:提交中'));
+
         // 轮询批改结果
+        // TODO hwUserWork/autoAnalyst
         const checkStartTime = new Date();
         // eslint-disable-next-line func-style, require-jsdoc
         async function checkResult () {
             const {data} = await ajax.get(`/hwUserWork/getWorkData/${workId}`);
-            clearTimeout(timeoutTimer);
 
             if (data.analystStatus === 1) {
                 dispatchEvent(new Event('submit:已提交正确'));
@@ -490,6 +641,14 @@ class MenuBar extends React.Component {
         dispatchEvent(new Event('submit:跳过'));
     }
     render () {
+        var state = this.state;
+        var {mode} = state;
+        var workInfo = window._workInfo || {};
+        var isSaveAs = workInfo.id && !/IDEA/i.test(workInfo.workType);
+        if (state.isSaveAsChanged) {
+            isSaveAs = false;
+        }
+
         const saveNowMessage = (
             <FormattedMessage
                 defaultMessage="Save now"
@@ -743,6 +902,7 @@ class MenuBar extends React.Component {
                             >
                                 <ProjectTitleInput
                                     className={classNames(styles.titleFieldGrowable)}
+                                    projectTitle="fuck"
                                 />
                             </MenuBarItemTooltip>
                         </div>
@@ -948,38 +1108,98 @@ class MenuBar extends React.Component {
                 </div>
 
                 {aboutButton}
-
                 <div
-                    className={styles.buttons}
+                    className={classNames(styles.buttons)}
                 >
-                    <button
-                        hidden={this.state.mode != 'teacher'}
-                        className={styles.blueButton}
-                        onClick={this.handleTeacherPreview}
-                    >
-                        { this.state.isTeacherPreview ? '返回老师模式' : '切换学生模式' }
-                    </button>
+                    {
+                        mode === 'normal' ? (
+                            <>
+                                <div className={`${c.withIconRight}`}>
+                                    <input
+                                        type="text"
+                                        className={`${c.input}`}
+                                        placeholder="作品名称"
+                                        maxLength={20}
+                                        value={this.props.projectTitle}
+                                        onInput={this.handleInput}
+                                    />
+                                    <i className={c.iEdit} />
+                                </div>
 
-                    <button
-                        hidden={this.state.mode != 'teacher'}
-                        className={styles.blueButton}
-                        onClick={this.clickHideCode}
-                    >{'隐藏盒子'}</button>
+                                {/* TODO 没有 token 不能保存和提交 */}
 
-                    <button
-                        hidden={!this.state.isShowSkipButton}
-                        className={styles.skipButton}
-                        onClick={this.handleSkip}
-                    >{'跳过'}</button>
+                                <button
+                                    hidden={!(!isSaveAs)}
+                                    className={`${c.button} ${c.yellow}`}
+                                    onClick={this.handleSave}
+                                >
+                                    {'保存'}
+                                </button>
 
-                    <button
-                        hidden={!this.state.isShowPublishButton}
-                        className={styles.publishButton}
-                        onClick={this.handleSubmit}
-                    >{'提交'}</button>
+                                <button
+                                    hidden={!(isSaveAs)}
+                                    className={`${c.button} ${c.yellow}`}
+                                    onClick={this.handleSaveAs}
+                                >
+                                    {'另存为'}
+                                </button>
 
+                                <button
+                                    className={`${c.button} ${c.pink}`}
+                                    onClick={e => this.handleExit()}
+                                >
+                                    {'退出'}
+                                </button>
+                            </>
+                        ) : null
+                    }
+                    {
+                        mode === 'course' ? (
+                            <>
+                                <button
+                                    hidden={!state.isShowSkipButton}
+                                    className={`${c.button} ${c.blue}`}
+                                    onClick={this.handleSkip}
+                                >{'跳过'}</button>
 
+                                <button
+                                    className={classNames(c.button, c.yellow, {
+                                        [c.blingBling]: this.state.isShowPublishButtonBling,
+                                    })}
+                                    onClick={e => this.handleSubmit()}
+                                >
+                                    <i className={`${c.iSend} ${c.iSizeL}`} />
+                                    {'提交'}
+                                </button>
+
+                                <button
+                                    hidden
+                                    className={styles.siderButton}
+                                    onClick={this.handleSiderBtn}
+                                >
+                                </button>
+                            </>
+                        ) : null
+                    }
+                    {
+                        mode === 'teacher' ? (
+                            <>
+                                <button
+                                    className={`${c.button} ${c.pink}`}
+                                    onClick={this.handleTeacherPreview}
+                                >
+                                    {this.state.isTeacherPreview ? '返回老师模式' : '切换学生模式'}
+                                </button>
+
+                                <button
+                                    className={c.button}
+                                    onClick={this.handleHideCode}
+                                >{'隐藏盒子'}</button>
+                            </>
+                        ) : null
+                    }
                 </div>
+
             </Box>
         );
     }
@@ -1055,7 +1275,10 @@ MenuBar.propTypes = {
     showComingSoon: PropTypes.bool,
     userOwnsProject: PropTypes.bool,
     username: PropTypes.string,
-    vm: PropTypes.instanceOf(VM).isRequired
+    vm: PropTypes.instanceOf(VM).isRequired,
+    projectChanged: PropTypes.bool,
+    onProjectSaved: PropTypes.func,
+    setProjectTitle: PropTypes.func,
 };
 
 MenuBar.defaultProps = {
@@ -1105,7 +1328,8 @@ const mapDispatchToProps = dispatch => ({
     onClickRemix: () => dispatch(remixProject()),
     onClickSave: () => dispatch(manualUpdateProject()),
     onClickSaveAsCopy: () => dispatch(saveProjectAsCopy()),
-    onSeeCommunity: () => dispatch(setPlayer(true))
+    onSeeCommunity: () => dispatch(setPlayer(true)),
+    setProjectTitle: title => dispatch(setProjectTitle(title)),
 });
 
 export default compose(
