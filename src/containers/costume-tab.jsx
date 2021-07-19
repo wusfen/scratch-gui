@@ -285,7 +285,7 @@ class CostumeTab extends React.Component {
                         img: addLibraryIcon,
                         onClick: addLibraryFunc
                     },
-                    
+
                     {
                         title: intl.formatMessage(addLibraryMessage),
                         img: searchIcon,
@@ -323,12 +323,12 @@ class CostumeTab extends React.Component {
                 onItemClick={this.handleSelectCostume}
                 onCloseBtn={this.hideEditingTarget}
             >
-                {/* {target.costumes ?
+                {target.costumes ?
                     <PaintEditorWrapper
                         selectedCostumeIndex={this.state.selectedCostumeIndex}
                     /> :
                     null
-                } */}
+                }
             </AssetPanel>
         );
     }
