@@ -41,10 +41,15 @@ class Timer {
             window.addEventListener('hideEditingTarget', this.createCodeTimer); // 关闭画板界面
             window.addEventListener('noVideoGuide', this.createCodeTimer); // 没有视频引导
             window.addEventListener('closeVideoGuide', this.createCodeTimer); // 关闭视频引导
+            window.addEventListener('closeVideoTips', this.createCodeTimer); // 关闭视频提示
+            window.addEventListener('handleStopAllClick', this.createCodeTimer); // 点击停止运行代码
+            
             window.addEventListener('editSprite', this.pauseCodeTimer); // 编辑精灵
             window.addEventListener('editStage', this.pauseCodeTimer); // 编辑舞台
             window.addEventListener('onNewSpriteClick', this.pauseCodeTimer); // 选择精灵
             window.addEventListener('paintSprite', this.pauseCodeTimer); // 绘制
+            window.addEventListener('clickVideoTips', this.pauseCodeTimer); // 点击提示视频
+            window.addEventListener('handleGreenFlagClick', this.pauseCodeTimer); // 点击开始运行代码
             break;
         case timerType.OPERATE:
             this.createOperateTimer = () => { // 监听创建操作计时器事件
@@ -55,10 +60,14 @@ class Timer {
             this.pauseOperateTimer = () => { // 监听终止操作计时器事件
                 if (this.state === '') return;
                 console.log('终止操作计时器');
-                this.auseTimer(); // 终止计时器
+                this.pauseTimer(); // 终止计时器
             };
             window.addEventListener('noVideoGuide', this.createOperateTimer); // 没有视频引导
             window.addEventListener('closeVideoGuide', this.createOperateTimer); // 关闭视频引导
+            window.addEventListener('closeVideoTips', this.createOperateTimer); // 关闭视频提示
+            window.addEventListener('handleStopAllClick', this.createOperateTimer); // 点击停止运行代码
+            window.addEventListener('clickVideoTips', this.pauseOperateTimer); // 点击提示视频
+            window.addEventListener('handleGreenFlagClick', this.pauseOperateTimer); // 点击开始运行代码
             window.addEventListener('pauseOperateTimer', this.pauseOperateTimer);
             break;
         }
@@ -125,15 +134,23 @@ class Timer {
             window.removeEventListener('hideEditingTarget', this.createCodeTimer);
             window.removeEventListener('noVideoGuide', this.createCodeTimer);
             window.removeEventListener('closeVideoGuide', this.createCodeTimer);
+            window.removeEventListener('closeVideoTips', this.createCodeTimer);
+            window.removeEventListener('handleStopAllClick', this.createCodeTimer);
             window.removeEventListener('editSprite', this.pauseCodeTimer);
             window.removeEventListener('editStage', this.pauseCodeTimer);
             window.removeEventListener('onNewSpriteClick', this.pauseCodeTimer);
             window.removeEventListener('paintSprite', this.pauseCodeTimer);
+            window.removeEventListener('clickVideoTips', this.pauseCodeTimer);
+            window.removeEventListener('handleGreenFlagClick', this.pauseCodeTimer);
             break;
         case timerType.OPERATE:
             window.removeEventListener('noVideoGuide', this.createOperateTimer); // 没有视频引导
             window.removeEventListener('closeVideoGuide', this.createOperateTimer); // 关闭视频引导
+            window.removeEventListener('closeVideoTips', this.createOperateTimer);
+            window.removeEventListener('handleStopAllClick', this.createOperateTimer);
+            window.removeEventListener('clickVideoTips', this.pauseOperateTimer);
             window.removeEventListener('pauseOperateTimer', this.pauseOperateTimer);
+            window.removeEventListener('handleGreenFlagClick', this.pauseOperateTimer);
             break;
         default:
             break;

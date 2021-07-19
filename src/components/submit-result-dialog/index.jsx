@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import bindAll from 'lodash.bindall';
-import { OPERATE_TIME_2 ,timerType} from './../timer/data';
+import {OPERATE_TIME_2, timerType} from './../timer/data';
 
 
 import styles from './styles.css';
@@ -91,14 +91,14 @@ class Component extends React.Component{
         };
     }
     handleClose () {
-        if(/错误/.test(this.state.status)) {
+        if (/错误/.test(this.state.status)) {
             window.dispatchEvent(new Event(`noAction:${timerType.OPERATE}:${OPERATE_TIME_2}`));
         }
 
         if (this.state.isShowBackButton) {
             window.bridge.emit('exitEditor');
         }
-
+        dispatchEvent(new Event('handleStopAllClick'));
         this.props.vm.stopAll();
         this.setState(this.getInitState());
         clearInterval(this.timer);

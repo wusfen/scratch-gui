@@ -52,6 +52,10 @@ class PromptArea extends React.Component{
         this.initStyle();
         window.addEventListener('resize', this.initStyle);
         this.videoRef && this.videoRef.addEventListener('ended', this.videoPause);
+        // this.showRef && this.showRef.addEventListener('dragstart', e => {
+        //     // e.preventDefault();
+        //     e.stopPropagation();
+        // });
     }
 
     componentWillUnmount (){
@@ -59,8 +63,19 @@ class PromptArea extends React.Component{
         this.videoRef && this.videoRef.removeEventListener('ended', this.videoPause);
     }
 
+    judgeTouchOrMoveReturnEvent = event => {
+        let touchObj;
+        if (event.touches) {
+            touchObj = event.touches[0];
+        } else {
+            touchObj = event;
+        }
+        return touchObj;
+    }
+
     // 手指按下
     handleTouchStart = (handleName, e) => {
+        const touchObj = this.judgeTouchOrMoveReturnEvent(e);
         if (handleName === 'scale'){
             this.setState({isScale: true});
         }
@@ -69,22 +84,26 @@ class PromptArea extends React.Component{
         e.stopPropagation();
         this.setState({isDown: true});
         // 鼠标坐标
-        const cY = e.targetTouches[0].clientY; // clientX 相对于可视化区域
-        const cX = e.targetTouches[0].clientX;
+        const cY = touchObj.clientY; // clientX 相对于可视化区域
+        const cX = touchObj.clientX;
         this.setState({oriPos: {
             ...style, cX, cY
         }});
     }
     // 手指移动
     handleTouchMove = e => {
+        const touchObj = this.judgeTouchOrMoveReturnEvent(e);
         e.stopPropagation();
         const {isDown, oriPos, editStyle, style, isScale, rate} = this.state;
         let newStyle;
         // 判断鼠标是否按住
         if (isDown) {
             newStyle = {...oriPos};
-            const offsetY = e.targetTouches[0].clientY - oriPos.cY;
-            const offsetX = e.targetTouches[0].clientX - oriPos.cX;
+            if (touchObj.clientY === 0 && touchObj.clientX === 0) { // 兼容drag事件，drag事件在移动最后会获取到clientY为0，丢弃该值
+                return;
+            }
+            const offsetY = touchObj.clientY - oriPos.cY;
+            const offsetX = touchObj.clientX - oriPos.cX;
             if (isScale){ // 是否是缩放操作
                 newStyle.width += offsetX;
                 newStyle.height += offsetX / rate; // 根据width和缩放比例算出height
@@ -154,6 +173,13 @@ class PromptArea extends React.Component{
         });
     }
 
+    handleStopPropagation = e => {
+        if (!event.touches) {
+            e.preventDefault();
+        }
+        e.stopPropagation();
+    }
+
     render () {
         const {
             videoSrc,
@@ -187,15 +213,21 @@ class PromptArea extends React.Component{
                 onTouchStart={this.handleTouchStart.bind(this, '')}
                 onTouchEnd={this.handleTouchEnd}
                 onTouchMove={this.handleTouchMove}
+                draggable={'true'}
+                onDragEnd={this.handleTouchEnd}
+                onDrag={this.handleTouchMove}
+                onDragStart={this.handleTouchStart.bind(this, '')}
             >
                 <div
                     className={c.title}
-                    onTouchStart={e => e.stopPropagation()}
+                    onTouchStart={e => this.handleStopPropagation(e)}
+                    draggable={'true'}
+                    onDragStart={e => this.handleStopPropagation(e)}
                 >{title}</div>
                 <img
                     className={c.closeIcon}
                     src={require('./close.svg')}
-                    alt=""
+                    alt={''}
                     onClick={closePromptArea}
                 />
                 <div
@@ -203,8 +235,11 @@ class PromptArea extends React.Component{
                         this.showRef = r;
                     }}
                     className={c.showContent}
-                    onTouchStart={e => e.stopPropagation()}
-                    onTouchEnd={e => e.stopPropagation()}
+                    onTouchStart={e => this.handleStopPropagation(e)}
+                    onTouchEnd={e => this.handleStopPropagation(e)}
+                    draggable={'true'}
+                    onDragStart={e => this.handleStopPropagation(e)}
+                    onDragEnd={e => this.handleStopPropagation(e)}
                 >
                     {type === '视频' ? (<video
                         ref={r => {
@@ -212,7 +247,7 @@ class PromptArea extends React.Component{
                         }}
                         className={c.video}
                         src={videoSrc}
-                        controls="controls"
+                        controls={'controls'}
                         autoPlay
                     >
                     </video>) : <div
@@ -235,29 +270,37 @@ class PromptArea extends React.Component{
                     type === '图文' &&
                     <div
                         className={c.imageScale}
-                        onTouchStart={e => e.stopPropagation()}
-                        onTouchEnd={e => e.stopPropagation()}
+                        onTouchStart={e => this.handleStopPropagation(e)}
+                        onTouchEnd={e => this.handleStopPropagation(e)}
+                        draggable={'true'}
+                        onDragStart={e => this.handleStopPropagation(e)}
+                        onDragEnd={e => this.handleStopPropagation(e)}
                     >
                         <img
                             className={c.bigIcon}
                             src={require('./big.svg')}
-                            alt=""
+                            alt={''}
                             onClick={this.handleBig}
                         />
                         <img
                             className={c.smallIcon}
                             src={require('./small.svg')}
-                            alt=""
+                            alt={''}
                             onClick={this.handleSmall}
                         />
                     </div>
                 }
-                <img
-                    className={c.scale}
-                    onTouchStart={this.handleTouchStart.bind(this, 'scale')}
-                    src={scaleIcon}
-                    alt=""
-                />
+                <div>
+                    <img
+                        className={c.scale}
+                        onTouchStart={this.handleTouchStart.bind(this, 'scale')}
+                        draggable={'true'}
+                        onDragStart={this.handleTouchStart.bind(this, 'scale')}
+                        src={scaleIcon}
+                        alt={''}
+                    />
+                </div>
+                
             </div>
         );
     }

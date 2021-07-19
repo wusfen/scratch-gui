@@ -94,7 +94,9 @@ class GUI extends React.Component {
     handleVideoSrc = () => {
         let videoSrc = getParam('introVideo');
         if (videoSrc){ // 有初始引导
-            this.setState({promptAreaShow: true});
+            addEventListener('projectLoadSucceed', () => { // 等待工程加载完毕
+                this.setState({promptAreaShow: true});
+            });
         } else {
             videoSrc = '';
             window.dispatchEvent(new Event('noVideoGuide'));

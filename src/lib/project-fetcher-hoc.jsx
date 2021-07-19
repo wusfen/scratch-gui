@@ -105,6 +105,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
                 const buffer = await blob.arrayBuffer();
                 // loadProject
                 this.props.onFetchedProjectData(buffer, loadingState);
+                dispatchEvent(new Event('projectLoadSucceed'));
                 return;
             }
 

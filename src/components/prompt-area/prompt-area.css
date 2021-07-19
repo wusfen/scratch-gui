@@ -1,6 +1,6 @@
 
 .drawing-item {
-    cursor: move;
+    /* cursor: move; */
     width: 49rem;
     height: 30rem;
     position: fixed;

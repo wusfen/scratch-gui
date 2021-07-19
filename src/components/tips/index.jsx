@@ -86,7 +86,7 @@ class Tips extends React.Component{
             count = tipVideo.length;
         }
         if (this.state.type === '视频'){
-            dispatchEvent(new Event('clickVideoTips')); // 点击视频提示终止读题语音
+            dispatchEvent(new Event('clickVideoTips')); // 点击视频提示
         }
         this.setState({
             promptAreaShow: true,
@@ -98,6 +98,9 @@ class Tips extends React.Component{
         this.setState({
             promptAreaShow: false
         });
+        if (this.state.type === '视频'){
+            dispatchEvent(new Event('closeVideoTips')); // 关闭视频提示
+        }
     }
     render () {
         const {
