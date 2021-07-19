@@ -560,16 +560,23 @@ class MenuBar extends React.Component {
             isShowPublishButtonBling: false,
         });
 
-        // TODO 临时存值
         const workInfo = window._workInfo || {};
+
+
+        var lastUserBlockNum = 0;
+        if (window._workInfo.userBlockNum) {
+            lastUserBlockNum = window._workInfo.userBlockNum;
+        }
+
+
         if (!workInfo.id) {
             Dialog.alert({
                 title: '缺少id!'
             });
             return;
         }
+        var _userBlockNum = this.getUserBlocks() - this.state.workUserBlockNum + lastUserBlockNum;
 
-        var _userBlockNum = this.getUserBlocks() - this.state.workUserBlockNum;
         if (_userBlockNum < 0) {
             _userBlockNum = 0;
         }
