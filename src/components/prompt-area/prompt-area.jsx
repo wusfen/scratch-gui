@@ -51,12 +51,12 @@ class PromptArea extends React.Component{
     componentDidMount () {
         this.initStyle();
         window.addEventListener('resize', this.initStyle);
-        this.videoRef && this.videoRef.addEventListener('pause', this.videoPause);
+        this.videoRef && this.videoRef.addEventListener('ended', this.videoPause);
     }
 
     componentWillUnmount (){
         window.removeEventListener('resize', this.initStyle);
-        this.videoRef && this.videoRef.removeEventListener('pause', this.videoPause);
+        this.videoRef && this.videoRef.removeEventListener('ended', this.videoPause);
     }
 
     // 手指按下
@@ -258,8 +258,6 @@ class PromptArea extends React.Component{
                     src={scaleIcon}
                     alt=""
                 />
-                {/* <div className={c.scale} onTouchStart={this.onTouchStart.bind(this,'scale')}>
-                </div> */}
             </div>
         );
     }

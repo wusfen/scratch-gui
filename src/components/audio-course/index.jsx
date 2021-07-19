@@ -49,7 +49,6 @@ class AudioCourse extends React.Component{
         this.audio.addEventListener('ended', this.closeAudio);
     }
     openTitleAudio = () => {
-        console.log(999);
         this.audio.pause();
         if (this.titleAudioSrc){
             this.audio.src = this.titleAudioSrc;
