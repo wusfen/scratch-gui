@@ -431,9 +431,13 @@ class MenuBar extends React.Component {
 
         // TODO 临时存值
         const workInfo = window._workInfo;
-        
     
-        var _userBlockNum = this.getUserBlocks() - this.state.workUserBlockNum;
+ 
+        var lastUserBlockNum = 0;
+        if (window._workInfo.userBlockNum) {
+            lastUserBlockNum = window._workInfo.userBlockNum;
+        }
+        var _userBlockNum = this.getUserBlocks() - this.state.workUserBlockNum + lastUserBlockNum;
 
         
         if (_userBlockNum < 0) {
