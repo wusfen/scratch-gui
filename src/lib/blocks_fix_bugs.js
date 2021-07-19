@@ -187,4 +187,173 @@ export default function (Blockly){
       
         this.recordCategoryScrollPositions_();
     };
+
+    // Blockly.ContextMenu.workspaceCommentOption = function(ws, e) {
+    //     // Helper function to create and position a comment correctly based on the
+    //     // location of the mouse event.
+    //     var addWsComment = function() {
+    //       // Disable events while this comment is getting created
+    //       // so that we can fire a single create event for this comment
+    //       // at the end (instead of CommentCreate followed by CommentMove,
+    //       // which results in unexpected undo behavior).
+    //       var disabled = false;
+    //       if (Blockly.Events.isEnabled()) {
+    //         Blockly.Events.disable();
+    //         disabled = true;
+    //       }
+    //       var comment = new Blockly.WorkspaceCommentSvg(
+    //           ws, '', Blockly.WorkspaceCommentSvg.DEFAULT_SIZE,
+    //           Blockly.WorkspaceCommentSvg.DEFAULT_SIZE, false);
+      
+    //       var injectionDiv = ws.getInjectionDiv();
+    //       // Bounding rect coordinates are in client coordinates, meaning that they
+    //       // are in pixels relative to the upper left corner of the visible browser
+    //       // window.  These coordinates change when you scroll the browser window.
+    //       var boundingRect = injectionDiv.getBoundingClientRect();
+      
+    //       // The client coordinates offset by the injection div's upper left corner.
+    //       var clientOffsetPixels = new goog.math.Coordinate(
+    //           e.clientX - boundingRect.left, e.clientY - boundingRect.top);
+      
+    //       // The offset in pixels between the main workspace's origin and the upper
+    //       // left corner of the injection div.
+    //       var mainOffsetPixels = ws.getOriginOffsetInPixels();
+      
+    //       // The position of the new comment in pixels relative to the origin of the
+    //       // main workspace.
+    //       var finalOffsetPixels = goog.math.Coordinate.difference(clientOffsetPixels,
+    //           mainOffsetPixels);
+      
+    //       // The position of the new comment in main workspace coordinates.
+    //       var finalOffsetMainWs = finalOffsetPixels.scale(1 / ws.scale);
+      
+    //       var commentX = finalOffsetMainWs.x;
+    //       var commentY = finalOffsetMainWs.y;
+    //       comment.moveBy(commentX, commentY);
+    //       if (ws.rendered) {
+    //         comment.initSvg();
+    //         comment.render(false);
+    //         comment.select();
+    //       }
+    //       if (disabled) {
+    //         Blockly.Events.enable();
+    //       }
+    //       Blockly.WorkspaceComment.fireCreateEvent(comment);
+    //     };
+      
+    //     var wsCommentOption = {enabled: true};
+    //     wsCommentOption.text = Blockly.Msg.ADD_COMMENT;
+    //     wsCommentOption.callback = function() {
+    //       addWsComment();
+    //     };
+    //     return wsCommentOption;
+    //   };
+
+
+    Blockly.Workspace.prototype.fireChangeListener = function(event) {
+        if (event.recordUndo && Blockly.mainWorkspace.toolbox_.flyout_.workspace_.id !== event.workspaceId) {
+          this.undoStack_.push(event);
+          this.redoStack_.length = 0;
+          if (this.undoStack_.length > this.MAX_UNDO) {
+            this.undoStack_.shift();
+          }
+          //console.log(this.undoStack_.length, "xxxxx", this.id)
+        }
+       
+        // Copy listeners in case a listener attaches/detaches itself.
+        var currentListeners = this.listeners_.slice();
+        for (var i = 0, func; func = currentListeners[i]; i++) {
+          func(event);
+        }
+    };
+
+    Blockly.Block.prototype.dispose = function(healStack) {
+        if (!this.workspace) {
+          // Already deleted.
+          return;
+        }
+        // Terminate onchange event calls.
+        if (this.onchangeWrapper_) {
+          this.workspace.removeChangeListener(this.onchangeWrapper_);
+        }
+        this.unplug(healStack);
+        if (Blockly.Events.isEnabled() && !this.workspace.isFlyout) {//是flayout就不发送删除事件，因为不需要undo
+          Blockly.Events.fire(new Blockly.Events.BlockDelete(this));
+        }
+        Blockly.Events.disable();
+      
+        try {
+          // This block is now at the top of the workspace.
+          // Remove this block from the workspace's list of top-most blocks.
+          if (this.workspace) {
+            this.workspace.removeTopBlock(this);
+            // Remove from block database.
+            delete this.workspace.blockDB_[this.id];
+            this.workspace = null;
+          }
+      
+          // Just deleting this block from the DOM would result in a memory leak as
+          // well as corruption of the connection database.  Therefore we must
+          // methodically step through the blocks and carefully disassemble them.
+      
+          if (Blockly.selected == this) {
+            Blockly.selected = null;
+          }
+      
+          // First, dispose of all my children.
+          for (var i = this.childBlocks_.length - 1; i >= 0; i--) {
+            this.childBlocks_[i].dispose(false);
+          }
+          // Then dispose of myself.
+          // Dispose of all inputs and their fields.
+          for (var i = 0, input; input = this.inputList[i]; i++) {
+            input.dispose();
+          }
+          this.inputList.length = 0;
+          // Dispose of any remaining connections (next/previous/output).
+          var connections = this.getConnections_(true);
+          for (var i = 0; i < connections.length; i++) {
+            var connection = connections[i];
+            if (connection.isConnected()) {
+              connection.disconnect();
+            }
+            connections[i].dispose();
+          }
+        } finally {
+          Blockly.Events.enable();
+        }
+      };
+
+    //   Blockly.BlockSvg.prototype.moveBy = function(dx, dy) {
+    //     //goog.asserts.assert(!this.parentBlock_, 'Block has parent.');
+    //     var eventsEnabled = Blockly.Events.isEnabled();
+    //     if (eventsEnabled) {
+    //       var event = new Blockly.Events.BlockMove(this);
+    //     }
+    //     var xy = this.getRelativeToSurfaceXY();
+    //     this.translate(xy.x + dx, xy.y + dy);
+    //     this.moveConnections_(dx, dy);
+    //     if (eventsEnabled) {
+    //         event.recordUndo = !this.workspace.isFlyout;//是flayout就不需要undo
+    //         event.recordNew();
+    //         Blockly.Events.fire(event);
+    //     }
+    //     this.workspace.resizeContents();
+    //   };
+
+      Blockly.Field.prototype.setValue = function(newValue) {
+        if (newValue === null) {
+          // No change if null.
+          return;
+        }
+        var oldValue = this.getValue();
+        if (oldValue == newValue) {
+          return;
+        }
+        if (this.sourceBlock_ && Blockly.Events.isEnabled() && !this.sourceBlock_.workspace.isFlyout) {
+          Blockly.Events.fire(new Blockly.Events.BlockChange(
+              this.sourceBlock_, 'field', this.name, oldValue, newValue));
+        }
+        this.setText(newValue);
+      };
 }

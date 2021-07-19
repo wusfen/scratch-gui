@@ -41,7 +41,8 @@ class Controls extends React.Component {
         this.setState({
             guide: false
         });
-        window.addEventListener(`noAction:${timerType.OPERATE}:${CODE_TIME_1}`, () => {
+        window.addEventListener(`noAction:${timerType.CODE}:${CODE_TIME_1}`, () => {
+            console.log("60秒代码区域无变化")
             // 显示引导提示
             if (!this.state.guide) {
                 // 处理

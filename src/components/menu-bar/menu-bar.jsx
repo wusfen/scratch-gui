@@ -216,11 +216,19 @@ class MenuBar extends React.Component {
         };
         var state = this.state;
 
+        // 30秒显示跳过按钮
         setTimeout(() => {
             this.setState({
                 isShowSkipButton: true,
             });
         }, state._timeout * 1000);
+        // TODO 提交保存另存为逻辑单独文件
+        addEventListener('skipSaveExit', async e => {
+            await this.autoSave();
+
+            window.bridge.emit('exitEditor');
+        });
+
         addEventListener('运行时判断正确', e => {
             this.setState({
                 isShowPublishButtonBling: true,
@@ -237,7 +245,7 @@ class MenuBar extends React.Component {
         var timer = setInterval(() => {
             console.log(`每${state._timeout}秒检查是否要自动保存`, this.props.projectChanged);
 
-            if (!(/^(normal|course)$/.test(state.mode) && state.id && state.token)) {
+            if (!(/^(course)$/.test(state.mode) && state.id && state.token)) {
                 console.warn('state.mode:', state.mode);
                 console.warn('state.id:', state.id);
                 console.warn('state.token:', state.token);
@@ -501,18 +509,18 @@ class MenuBar extends React.Component {
     handleInput (e) {
         this.props.setProjectTitle(e.target.value);
     }
-    async handleSave () {
+    async handleSave (silence) {
         const id = this.state.id;
 
         const workName = this.props.projectTitle || param('workName') || '';
 
-        const sb3PathInfo = await this.uploadSb3();
+        const sb3PathInfo = await this.uploadSb3(silence);
         var {data} = await ajax.put('/hwUserWork/submitIdeaWork', {
             id: id,
-            workCoverPath: await this.getProjectCover(),
+            workCoverPath: await this.getProjectCover(silence),
             workName: workName,
             workPath: sb3PathInfo.path,
-        });
+        }, {silence});
         this.state.id = data;
         param('id', this.state.id);
 
@@ -532,6 +540,7 @@ class MenuBar extends React.Component {
             isSaveAsChanged: true,
         });
     }
+    // TODO 保存得区分 提交 保存 另存为
     async autoSave (silence) {
         if (this.props.projectChanged) {
             if (this.state.mode === 'course') {

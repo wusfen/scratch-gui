@@ -1,7 +1,8 @@
+/* eslint-disable import/no-nodejs-modules */
 const fs = require('fs');
 const loaderUtils = require('loader-utils');
 
-module.exports = function(source) {
+module.exports = function (source) {
   this.cacheable && this.cacheable();
 
   const callback = this.async();
@@ -9,6 +10,7 @@ module.exports = function(source) {
 
   if (this.resourcePath.indexOf(options.path) > -1) {
     const newPath = this.resourcePath.replace(options.path, options.replacePath);
+    console.debug(newPath);
 
 
     fs.readFile(newPath, (err, data) => {

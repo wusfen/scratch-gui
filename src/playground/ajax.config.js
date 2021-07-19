@@ -43,11 +43,12 @@ ajax.setSettings({
     },
     onload (res, options) {
 
-        if (options.silence) return;
         if (!/^(0|200)$/.test(res.code)) {
-            Dialog.alert(`${res.code} ${res.detail}`).then(e => {
-                window.bridge.emit('exitEditor');
-            });
+            if (!options.silence) {
+                Dialog.alert(`${res.code} ${res.detail}`).then(e => {
+                    window.bridge.emit('exitEditor');
+                });
+            }
 
             return Promise.reject(res.detail || res.code);
         }

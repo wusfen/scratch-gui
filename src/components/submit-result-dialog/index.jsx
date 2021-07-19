@@ -96,7 +96,8 @@ class Component extends React.Component{
         }
 
         if (this.state.isShowBackButton) {
-            window.bridge.emit('exitEditor');
+            // menu-bar.jsx
+            dispatchEvent(new Event('skipSaveExit'));
         }
         dispatchEvent(new Event('handleStopAllClick'));
         this.props.vm.stopAll();
