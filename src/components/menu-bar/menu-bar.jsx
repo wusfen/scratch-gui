@@ -336,6 +336,7 @@ class MenuBar extends React.Component {
     }
     getSaveToComputerHandler (downloadProjectCallback) {
         return () => {
+            dispatchEvent(new Event('saveToComputer'));
             this.props.onRequestCloseFile();
             downloadProjectCallback();
             if (this.props.onProjectTelemetryEvent) {

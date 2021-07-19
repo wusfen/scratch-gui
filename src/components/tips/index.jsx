@@ -22,10 +22,12 @@ class Tips extends React.Component{
         this.state = {
             promptAreaShow: false,
             videoSrc: '',
+            tipVideo: [],
             imageSrc: '',
             showState: false,
             timeOutEvent: null,
-            type: '图文'
+            type: '图文',
+            clickCount: 0
         };
         this.audio = null;
         bindAll(this, [
@@ -56,17 +58,18 @@ class Tips extends React.Component{
     }
     
     judgeVideoOrImageText = () => {
-        const tipVideo = getParam('tipVideo');
+        let tipVideo = getParam('tipVideo');
         const tipPic = getParam('tipPic');
         let type = '';
         if (tipVideo) {
             type = '视频';
+            tipVideo = tipVideo.split('|');
         } else if (tipPic) {
             type = '图文';
         }
         this.setState({
             type: type,
-            videoSrc: tipVideo,
+            tipVideo: tipVideo || [],
             imageSrc: tipPic || initPng
         });
     }
@@ -77,11 +80,18 @@ class Tips extends React.Component{
         this.audio.src = src ? src : '';
     }
     clickTips = () => {
+        const {clickCount, tipVideo} = this.state;
+        let count = clickCount + 1;
+        if (count > tipVideo.length) { // 最多超过2次后的点击固定都是最后一个视频
+            count = tipVideo.length;
+        }
         if (this.state.type === '视频'){
             dispatchEvent(new Event('clickVideoTips')); // 点击视频提示终止读题语音
         }
         this.setState({
-            promptAreaShow: true
+            promptAreaShow: true,
+            clickCount: count,
+            videoSrc: tipVideo[count - 1]
         });
     }
     closePromptArea = () => {

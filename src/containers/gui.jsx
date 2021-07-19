@@ -92,7 +92,7 @@ class GUI extends React.Component {
     }
     
     handleVideoSrc = () => {
-        let videoSrc = getParam('tipVideo');
+        let videoSrc = getParam('introVideo');
         if (videoSrc){ // 有初始引导
             this.setState({promptAreaShow: true});
         } else {

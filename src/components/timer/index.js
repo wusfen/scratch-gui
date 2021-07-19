@@ -16,14 +16,11 @@ class Timer {
     }
     static isHasUserHandleListener = false // 避免重复初始化用户点击的监听
     initUserHandleListener = () => {
-        if (!Timer.isHasUserHandleListener){
-            Timer.isHasUserHandleListener = true;
-            window.addEventListener('click', this.resetTimer, true);
-            const blocklyWorkspaces = Array.from(document.getElementsByClassName('blocklyWorkspace'));
-            blocklyWorkspaces.forEach(item => {
-                item.addEventListener('touchstart', this.resetTimer, true);
-            });
-        }
+        window.addEventListener('click', this.resetTimer, true);
+        const blocklyWorkspaces = Array.from(document.getElementsByClassName('blocklyWorkspace'));
+        blocklyWorkspaces.forEach(item => {
+            item.addEventListener('touchstart', this.resetTimer, true);
+        });
     }
 
     iniTimertListener = () => {
@@ -102,7 +99,7 @@ class Timer {
         default:
             break;
         }
-        if (this.state === '') return;
+        if (this.state === '') return; // 重置计时器是在计时器已经存在的基础上
         this.createTimer();
     }
     pauseTimer = () => {
@@ -118,7 +115,6 @@ class Timer {
         default:
             break;
         }
-        window.removeEventListener('click', this.resetTimer, true);
     }
 
     removeListener = () => {
