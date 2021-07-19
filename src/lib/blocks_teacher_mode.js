@@ -245,11 +245,15 @@ export default function (Blockly, vm){
             // Fire a VarCreate event for each (if any) new variable created.
             for (var i = 0; i < newVariables.length; i++) {
                 const thisVariable = newVariables[i];
-                Blockly.Events.fire(new Blockly.Events.VarCreate(thisVariable));
+                const event = new Blockly.Events.VarCreate(thisVariable);
+                event.recordUndo = !workspace.isFlyout;//是flayout就不需要undo
+                Blockly.Events.fire(event);
             }
             // Block events come after var events, in case they refer to newly created
             // variables.
-            Blockly.Events.fire(new Blockly.Events.BlockCreate(topBlock));
+            const event = new Blockly.Events.BlockCreate(topBlock);
+            event.recordUndo = !workspace.isFlyout;//是flayout就不需要undo
+            Blockly.Events.fire(event);
         }
         return topBlock;
     };
