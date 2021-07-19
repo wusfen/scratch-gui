@@ -199,25 +199,23 @@ export default function (Blockly, vm){
         Blockly.Events.disable();
         const variablesBeforeCreation = workspace.getAllVariables();
         try {
-            var topBlock = Blockly.Xml.domToBlockHeadless_(xmlBlock, workspace);
+            const hide = needHide(xmlBlock);
+            var topBlock = Blockly.Xml.domToBlockHeadless_(xmlBlock, workspace, hide);
             // Generate list of all blocks.
             const blocks = topBlock.getDescendants(false);
             if (workspace.rendered) {
             // Hide connections to speed up assembly.
                 topBlock.setConnectionsHidden(true);
                 // Render each block.
-                const hide = [];
                 for (var i = blocks.length - 1; i >= 0; i--) {
-                    hide[i] = needHide(xmlBlock);
+                    blocks[i].initSvg(hide);
                 }
-                for (var i = blocks.length - 1; i >= 0; i--) {
-                    blocks[i].initSvg(hide[i]);
-                }
-                for (var i = blocks.length - 1; i >= 0; i--) {
-                    if (!hide[i]){
+                if(!hide){
+                    for (var i = blocks.length - 1; i >= 0; i--) {
                         blocks[i].render(false);
                     }
                 }
+                
                 // Populating the connection database may be deferred until after the
                 // blocks have rendered.
                 if (!workspace.isFlyout) {
@@ -375,7 +373,7 @@ export default function (Blockly, vm){
         }
     };
 
-    Blockly.Xml.domToBlockHeadless_ = function (xmlBlock, workspace) {
+    Blockly.Xml.domToBlockHeadless_ = function (xmlBlock, workspace, hide) {
         let block = null;
         const prototypeName = xmlBlock.getAttribute('type');
         // goog.asserts.assert(
@@ -416,7 +414,7 @@ export default function (Blockly, vm){
                     block.domToMutation(xmlChild);
                     if (block.initSvg) {
                         // Mutation may have added some elements that need initializing.
-                        block.initSvg();
+                        block.initSvg(hide);
                     }
                 }
                 break;

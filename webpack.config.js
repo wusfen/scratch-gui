@@ -49,7 +49,7 @@ const config = {
                     /node_modules[\\/]scratch-l10n[\\/]locales/,
                     /node_modules[\\/]scratch-blocks.msg/,
                     /node_modules[\\/]scratch-paint/,
-                    /node_modules[\\/]scratch-render/
+                    /node_modules[\\/]scratch-render[\\/]src/,
                 ],
                 use: [
                     'cache-loader',
