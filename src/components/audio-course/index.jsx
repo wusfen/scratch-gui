@@ -28,18 +28,20 @@ class AudioCourse extends React.Component{
     componentDidMount () {
         this.titleAudioSrc = getParam('tipAudio');
         this.createAudio();
-        window.addEventListener('submit:提交中', this.closeAudio);// 点击提交终止语音
+        window.addEventListener('clickSubmit', this.closeAudio);// 点击提交终止语音
         window.addEventListener('clickVideoTips', this.closeAudio);// 点击视频提示终止语音
         window.addEventListener('handleGreenFlagClick', this.closeAudio);// 点击开始运行代码终止语音
         window.addEventListener('saveToComputer', this.closeAudio);// 点击保存到电脑终止语音
+        window.addEventListener('projectRunning', this.closeAudio); // 代码运行中
         window.addEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_1}`, this.openTitleAudio); // 连续10秒无任何操作
         // window.addEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_2}`, this.openTipAudio) // 连续30秒无任何操作
     }
     componentWillUnmount () {
-        window.removeEventListener('submit:提交中', this.closeAudio);
+        window.removeEventListener('clickSubmit', this.closeAudio);
         window.removeEventListener('clickVideoTips', this.closeAudio);
         window.removeEventListener('handleGreenFlagClick', this.closeAudio);
         window.removeEventListener('saveToComputer', this.closeAudio);
+        window.removeEventListener('projectRunning', this.closeAudio);
         window.removeEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_1}`, this.openTitleAudio);
         // window.removeEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_2}`, this.openTipAudio);
         this.audio = null;

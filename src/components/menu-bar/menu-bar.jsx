@@ -565,6 +565,7 @@ class MenuBar extends React.Component {
         window.bridge.emit(e);
     }
     async handleSubmit (isNoCheckResult, silence) {
+        dispatchEvent(new Event('clickSubmit'));
         const workInfo = window._workInfo || {};
 
         if (!workInfo.id) {
