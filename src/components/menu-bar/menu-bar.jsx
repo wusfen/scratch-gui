@@ -565,25 +565,27 @@ class MenuBar extends React.Component {
         window.bridge.emit(e);
     }
     async handleSubmit (isNoCheckResult, silence) {
+        const workInfo = window._workInfo || {};
+
+        if (!workInfo.id) {
+            await Dialog.alert({
+                title: 'id参数为空！',
+            });
+            console.f12 = 2;
+            console.log(location);
+            return;
+        }
+
         this.setState({
             isShowPublishButtonBling: false,
         });
 
-        const workInfo = window._workInfo || {};
-
-
         var lastUserBlockNum = 0;
-        if (window._workInfo.userBlockNum) {
-            lastUserBlockNum = window._workInfo.userBlockNum;
+        if (workInfo.userBlockNum) {
+            lastUserBlockNum = workInfo.userBlockNum;
         }
 
 
-        if (!workInfo.id) {
-            Dialog.alert({
-                title: '缺少id!'
-            });
-            return;
-        }
         var _userBlockNum = this.getUserBlocks() - this.state.workUserBlockNum + lastUserBlockNum;
 
         if (_userBlockNum < 0) {

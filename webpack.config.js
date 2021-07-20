@@ -37,6 +37,7 @@ const config = {
             chunkFilename: 'chunks/[name].js____[contenthash:5].js'
         } :
         {},
+    devtool: process.env.devtool,
     module: {
         rules: [
             {
