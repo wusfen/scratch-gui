@@ -60,7 +60,7 @@ class Tips extends React.Component{
     judgeVideoOrImageText = () => {
         let tipVideo = getParam('tipVideo');
         const tipPic = getParam('tipPic');
-        let type = '';
+        let type = '图文';
         if (tipVideo) {
             type = '视频';
             tipVideo = tipVideo.split('|');

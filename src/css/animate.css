@@ -19,6 +19,7 @@
     right: 0;
     border-radius: inherit;
     animation: blingBling 1.3s both infinite;
+    pointer-events: none;
 }
 @keyframes blingBling {
     0% {
