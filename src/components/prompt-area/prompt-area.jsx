@@ -99,6 +99,7 @@ class PromptArea extends React.Component{
         // 判断鼠标是否按住
         if (isDown) {
             newStyle = {...oriPos};
+            console.log(touchObj, touchObj.clientY, touchObj.clientX, typeof touchObj.clientY);
             if (touchObj.clientY === 0 && touchObj.clientX === 0) { // 兼容drag事件，drag事件在移动最后会获取到clientY为0，丢弃该值
                 return;
             }
@@ -220,9 +221,7 @@ class PromptArea extends React.Component{
             >
                 <div
                     className={c.title}
-                    onTouchStart={e => this.handleStopPropagation(e)}
                     draggable={'true'}
-                    onDragStart={e => this.handleStopPropagation(e)}
                 >{title}</div>
                 <img
                     className={c.closeIcon}
