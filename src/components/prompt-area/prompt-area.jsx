@@ -15,18 +15,11 @@ class PromptArea extends React.Component{
 
         this.state = {
             rate: 0, // 缩放比例
-            isScale: false, // 是否缩放操作
             style: {
                 left: 0,
                 top: 0,
                 width: '49rem',
                 height: '30rem'
-            },
-            editStyle: { // 可移动区域
-                left: 0,
-                top: 0,
-                width: document.documentElement.clientWidth,
-                height: document.documentElement.clientHeight
             },
             oriPos: { // 开始状态
                 top: 0, // 元素的坐标
@@ -34,7 +27,6 @@ class PromptArea extends React.Component{
                 cX: 0, // 鼠标的坐标
                 cY: 0
             },
-            isDown: false,
             title: '提示',
             imageTextScale: 1,
             imageTextScaleRate: 0.25,
@@ -52,7 +44,7 @@ class PromptArea extends React.Component{
         this.initStyle();
         window.addEventListener('resize', this.initStyle);
         this.videoRef && this.videoRef.addEventListener('ended', this.videoPause);
-        this.initMove();
+        this.initTouchAndMove(); // 初始化缩放和拖拽事件
     }
 
     componentWillUnmount (){
@@ -70,63 +62,6 @@ class PromptArea extends React.Component{
         return touchObj;
     }
 
-    // 手指按下
-    handleTouchStart = (handleName, e) => {
-        const touchObj = this.judgeTouchOrMoveReturnEvent(e);
-        if (handleName === 'scale'){
-            this.setState({isScale: true});
-        }
-        const {style} = this.state;
-        // 阻止事件冒泡
-        e.stopPropagation();
-        this.setState({isDown: true});
-        // 鼠标坐标
-        const cY = touchObj.clientY; // clientX 相对于可视化区域
-        const cX = touchObj.clientX;
-        this.setState({oriPos: {
-            ...style, cX, cY
-        }});
-    }
-    // 手指移动
-    handleTouchMove = e => {
-        const touchObj = this.judgeTouchOrMoveReturnEvent(e);
-        e.stopPropagation();
-        const {isDown, oriPos, editStyle, style, isScale, rate} = this.state;
-        let newStyle;
-        // 判断鼠标是否按住
-        if (isDown) {
-            newStyle = {...oriPos};
-            if (touchObj.clientY <= 0 && touchObj.clientX <= 0) { // 如果获取到clientY <= 0，丢弃该值
-                return;
-            }
-            const offsetY = touchObj.clientY - oriPos.cY;
-            const offsetX = touchObj.clientX - oriPos.cX;
-            if (isScale){ // 是否是缩放操作
-                newStyle.width += offsetX;
-                newStyle.height += offsetX / rate; // 根据width和缩放比例算出height
-                if (
-                    (newStyle.width < 200 && offsetX <= 0) ||
-                     (newStyle.width > document.documentElement.clientWidth && offsetX >= 0)
-                ) return;
-                // if((newStyle.width/newStyle.height) !== rate) return
-            } else {
-                // 元素当前位置 + 偏移量
-                const top = oriPos.top + offsetY;
-                const left = oriPos.left + offsetX;
-                // 限制必须在这个范围内移动 画板的高度-元素的高度
-                newStyle.top = Math.max(0, Math.min(top, editStyle.height - style.height));
-                newStyle.left = Math.max(0, Math.min(left, editStyle.width - style.width));
-            }
-            this.setState({style: newStyle});
-        }
-    }
-    
-    // 手指抬起
-    handleTouchEnd = e => {
-        this.setState({isDown: false});
-        this.state.isScale && this.setState({isScale: !this.state.isScale});
-    }
-
     initStyle = () => {
         const rate = this.showRef.clientWidth / this.showRef.clientHeight; // 计算展示区的缩放比例
         this.setState({style: { // 将展示区定位到屏幕中心
@@ -136,7 +71,6 @@ class PromptArea extends React.Component{
             height: this.myRef.clientHeight
         },
         rate: rate});
-
     }
 
     videoPause = () => {
@@ -177,9 +111,11 @@ class PromptArea extends React.Component{
         e.stopPropagation();
     }
 
-    initMove = () => {
+
+    initTouchAndMove = () => { // 初始化缩放和拖拽事件
         const dragObj = this.myRef;
-        const shieldList = [this.scaleRef, this.videoRef, this.imageTextRef, this.imageScaleRef]; // 不允许触发move的对象
+        const scaleRef = this.scaleRef;
+        const shieldList = [this.videoRef, this.imageTextRef, this.imageScaleRef]; // 不允许触发move的对象
         dragObj.style.left = '0px';
         dragObj.style.top = '0px';    
         let mouseX;
@@ -189,26 +125,37 @@ class PromptArea extends React.Component{
         let dragging = false;
         let diffX;
         let diffY;
-        
-        dragObj.onmousedown = event => {
-            const e = event || window.event;
+        let isScale = false;
+        const handleStart = event => { // 拖动开始
+            const e = this.judgeTouchOrMoveReturnEvent(event);
             if (shieldList.includes(e.target)) {
                 return;
-            }    
-            dragging = true;
-                        
+            }  
+            dragging = true;      
             mouseX = e.clientX;// 初始位置时鼠标的坐标
             mouseY = e.clientY;
             objX = dragObj.offsetLeft; // 元素的初始位置
-            objY = dragObj.offsetTop;
-                        
+            objY = dragObj.offsetTop;   
             diffX = mouseX - objX;// 相当于鼠标距物体左边的距离
             diffY = mouseY - objY;
         };
-
-        document.onmousemove = event => {
-            const e = event || window.event;
+        const handleMove = event => { // 拖动中
+            const e = this.judgeTouchOrMoveReturnEvent(event);
             if (dragging) {
+                if (isScale) {
+                    const newStyle = {...this.state.oriPos};
+                    const offsetX = e.clientX - this.state.oriPos.mouseX;
+                    newStyle.width += offsetX;
+                    newStyle.height += offsetX / this.state.rate; // 根据width和缩放比例算出height
+                    if (
+                        (newStyle.width < 200 && offsetX <= 0) ||
+                         (newStyle.width > document.documentElement.clientWidth && offsetX >= 0)
+                    ) return;
+                    this.setState({
+                        style: newStyle
+                    });
+                    return;
+                }
                 // 元素左边距等于鼠标移动的宽度加上元素本身的位置
                 dragObj.style.left = `${e.clientX - mouseX + objX}px`;
                 dragObj.style.top = `${e.clientY - mouseY + objY}px`;
@@ -227,9 +174,35 @@ class PromptArea extends React.Component{
                 }
             } 
         };
-        document.onmouseup = () => {
+        const handleEnd = () => { // 拖动结束
             dragging = false;
+            isScale = false;
         };
+        const handleScaleStart = event => { // 缩放开始
+            const e = this.judgeTouchOrMoveReturnEvent(event);
+            dragging = true;   
+            isScale = true;     
+            mouseX = e.clientX;// 初始位置时鼠标的坐标
+            mouseY = e.clientY;
+            this.setState({oriPos: {
+                ...this.state.style, mouseX, mouseY
+            }});
+        };
+        // 注册touch事件（移动端）
+        dragObj.ontouchstart = handleStart;
+        document.ontouchmove = handleMove;
+        document.ontouchend = handleEnd;
+        
+        // 注册move事件（pc端）
+        dragObj.onmousedown = handleStart;
+        document.onmousemove = handleMove;
+        document.onmouseup = handleEnd;
+
+        // 注册缩放事件（移动端）
+        scaleRef.ontouchstart = handleScaleStart;
+
+        // 注册缩放事件（pc端）
+        scaleRef.onmousedown = handleScaleStart;
     }
 
     render () {
@@ -262,12 +235,6 @@ class PromptArea extends React.Component{
                 }}
                 style={style}
                 className={c.drawingItem}
-                onTouchStart={this.handleTouchStart.bind(this, '')}
-                onTouchEnd={this.handleTouchEnd}
-                onTouchMove={this.handleTouchMove}
-                onDragEnd={this.handleTouchEnd}
-                onDrag={this.handleTouchMove}
-
             >
                 <div
                     className={c.title}
@@ -283,8 +250,6 @@ class PromptArea extends React.Component{
                         this.showRef = r;
                     }}
                     className={c.showContent}
-                    onTouchStart={e => this.handleStopPropagation(e)}
-                    onTouchEnd={e => this.handleStopPropagation(e)}
                 >
                     {type === '视频' ? (<video
                         ref={r => {
@@ -318,8 +283,6 @@ class PromptArea extends React.Component{
                     type === '图文' &&
                     <div
                         className={c.imageScale}
-                        onTouchStart={e => this.handleStopPropagation(e)}
-                        onTouchEnd={e => this.handleStopPropagation(e)}
                         ref={r => {
                             this.imageScaleRef = r;
                         }}
@@ -344,8 +307,7 @@ class PromptArea extends React.Component{
                             this.scaleRef = r;
                         }}
                         className={c.scale}
-                        onTouchStart={this.handleTouchStart.bind(this, 'scale')}
-                        onDragStart={this.handleTouchStart.bind(this, 'scale')}
+                        draggable={false}
                         src={scaleIcon}
                         alt={''}
                     />

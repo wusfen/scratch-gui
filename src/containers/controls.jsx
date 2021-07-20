@@ -40,7 +40,7 @@ class Controls extends React.Component {
             guide: false
         });
         window.addEventListener(`noAction:${timerType.CODE}:${CODE_TIME_1}`, () => {
-            console.log("60秒代码区域无变化")
+            console.log('60秒代码区域无变化');
             // 显示引导提示
             if (!this.state.guide) {
                 // 处理
