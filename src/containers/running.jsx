@@ -37,6 +37,8 @@ class Controls extends React.Component {
             turbo,
             ...props
         } = this.props;
+
+        // TODO
         if (projectRunning) {
             dispatchEvent(new Event('projectRunning'));
         } else {
