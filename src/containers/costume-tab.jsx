@@ -35,7 +35,7 @@ import surpriseIcon from '../components/action-menu/icon--surprise.svg';
 import searchIcon from '../components/action-menu/icon--search.svg';
 
 import costumeLibraryContent from '../lib/libraries/costumes.json';
-import backdropLibraryContent from '../lib/libraries/backdrops.json';
+import backdropLibraryContent from '../lib/libraries/backdrops_new.json';
 
 let messages = defineMessages({
     addLibraryBackdropMsg: {
