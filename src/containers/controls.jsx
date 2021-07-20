@@ -22,8 +22,6 @@ class Controls extends React.Component {
         this.initGuide();
 
         window.bridge.on('pause', e => {
-            dispatchEvent(new Event('handleStopAllClick'));
-            console.log(999);
             props.vm.stopAll();
         });
     }
@@ -61,7 +59,6 @@ class Controls extends React.Component {
         });
     }
     handleGreenFlagClick (e) {
-        dispatchEvent(new Event('handleGreenFlagClick'));
         e.preventDefault();
         if (e.shiftKey) {
             this.props.vm.setTurboMode(!this.props.turbo);
@@ -75,7 +72,6 @@ class Controls extends React.Component {
         this.checkWork();
     }
     handleStopAllClick (e) {
-        dispatchEvent(new Event('handleStopAllClick'));
         e.preventDefault();
         this.props.vm.stopAll();
     }
@@ -108,6 +104,11 @@ class Controls extends React.Component {
             turbo,
             ...props
         } = this.props;
+        if (projectRunning) {
+            dispatchEvent(new Event('projectRunning'));
+        } else {
+            dispatchEvent(new Event('projectRunFinish'));
+        }
         return (
             <ControlsComponent
                 {...props}

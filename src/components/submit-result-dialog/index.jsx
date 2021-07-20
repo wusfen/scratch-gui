@@ -99,7 +99,6 @@ class Component extends React.Component{
             // menu-bar.jsx
             dispatchEvent(new Event('skipSaveExit'));
         }
-        dispatchEvent(new Event('handleStopAllClick'));
         this.props.vm.stopAll();
         this.setState(this.getInitState());
         clearInterval(this.timer);

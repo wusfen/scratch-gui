@@ -16,7 +16,6 @@ class GreenFlagOverlay extends React.Component {
     }
 
     handleClick () {
-        dispatchEvent(new Event('handleGreenFlagClick'));
         this.props.vm.start();
         this.props.vm.greenFlag();
     }
