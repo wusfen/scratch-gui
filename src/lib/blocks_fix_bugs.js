@@ -251,7 +251,7 @@ export default function (Blockly){
 
 
     Blockly.Workspace.prototype.fireChangeListener = function(event) {
-        if (event.recordUndo && Blockly.mainWorkspace.toolbox_.flyout_.workspace_.id !== event.workspaceId) {
+        if (event.recordUndo && (!Blockly.mainWorkspace.toolbox_ || Blockly.mainWorkspace.toolbox_.flyout_.workspace_.id !== event.workspaceId)) {
           this.undoStack_.push(event);
           this.redoStack_.length = 0;
           if (this.undoStack_.length > this.MAX_UNDO) {
