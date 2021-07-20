@@ -50,7 +50,6 @@
 .info-message {
     font-weight: normal;
     font-size: .875rem;
-    margin-bottom: 1.5rem;
     text-align: center;
     margin-top: 1.28rem;
     height: 2.7rem;
@@ -59,7 +58,6 @@
 .options-row {
     display: block;
     justify-content: space-between;
-    margin-bottom: 1.5rem;
     margin-top: 1.28rem;
     height: 2.7rem;
     font-size: 0.75rem;
@@ -70,6 +68,7 @@
 .button-row {
     font-weight: bolder;
     text-align: right;
+    margin-top: 1.5rem;
 }
 
 .button-row button {
