@@ -38,9 +38,9 @@ class Controls extends React.Component {
             ...props
         } = this.props;
         if (projectRunning) {
-            dispatchEvent(new Event('handleGreenFlagClick'));
+            dispatchEvent(new Event('projectRunning'));
         } else {
-            dispatchEvent(new Event('handleStopAllClick'));
+            dispatchEvent(new Event('projectRunFinish'));
         }
         return (
             <ControlsComponent
