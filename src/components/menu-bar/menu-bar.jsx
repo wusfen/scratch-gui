@@ -1291,6 +1291,7 @@ MenuBar.propTypes = {
     projectChanged: PropTypes.bool,
     onProjectSaved: PropTypes.func,
     setProjectTitle: PropTypes.func,
+    projectRunning: PropTypes.bool,
 };
 
 MenuBar.defaultProps = {
@@ -1317,7 +1318,8 @@ const mapStateToProps = (state, ownProps) => {
         username: user ? user.username : null,
         userOwnsProject: ownProps.authorUsername && user &&
             (ownProps.authorUsername === user.username),
-        vm: state.scratchGui.vm
+        vm: state.scratchGui.vm,
+        projectRunning: state.scratchGui.vmStatus.running,
     };
 };
 

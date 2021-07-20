@@ -25,6 +25,12 @@ class Controls extends React.Component {
             props.vm.stopAll();
         });
     }
+    componentDidUpdate (preProps) {
+        // 运行停止后查询作业是否正确
+        if (preProps.projectRunning !== this.props.projectRunning && !this.props.projectRunning) {
+            this.checkWork();
+        }
+    }
     playSound () {
         var _audio = new Audio(startBgS);
         _audio.play(); // 播放 mp3这个音频对象
@@ -40,7 +46,7 @@ class Controls extends React.Component {
             guide: false
         });
         window.addEventListener(`noAction:${timerType.CODE}:${CODE_TIME_1}`, () => {
-            console.log("60秒代码区域无变化")
+            console.log('60秒代码区域无变化');
             // 显示引导提示
             if (!this.state.guide) {
                 // 处理
@@ -69,7 +75,6 @@ class Controls extends React.Component {
             this.props.vm.greenFlag();
         }
 
-        this.checkWork();
     }
     handleStopAllClick (e) {
         e.preventDefault();
@@ -86,7 +91,7 @@ class Controls extends React.Component {
             var {data} = await ajax.post('hwUserWork/autoAnalyst', {
                 workCode: window._workInfo.workCode,
                 projectJsonStr: json,
-            });
+            }, {silence: true});
 
             if (data == 1) {
                 dispatchEvent(new Event('运行时判断正确'));
