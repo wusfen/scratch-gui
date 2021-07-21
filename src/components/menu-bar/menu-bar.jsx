@@ -437,18 +437,20 @@ class MenuBar extends React.Component {
             this.props.onRequestCloseAbout();
         };
     }
-    async getProjectCover (silence) {
+    getProjectCover (silence) {
         if (silence) return;
 
-        
-        this.props.vm.renderer.requestSnapshot(async (dataURL)=>{
-            var blob = await (await fetch(dataURL)).blob();
-            const formData = new FormData();
-            formData.append('file', blob, `${this.props.projectTitle || 'project'}.png`);
-            const {data} = await ajax.post('/file/upload', formData, {silence});
+        return new Promise(rs => {
+            this.props.vm.renderer.requestSnapshot(async dataURL => {
+                var blob = await (await fetch(dataURL)).blob();
+                const formData = new FormData();
+                formData.append('file', blob, `${this.props.projectTitle || 'project'}.png`);
+                const {data} = await ajax.post('/file/upload', formData, {silence});
 
-            // return `${data.domain}${data.path}`;
-            return data.path;
+                // return `${data.domain}${data.path}`;
+                // return data.path;
+                rs(data.path);
+            });
         });
     }
     async handleClickResetFile () {
