@@ -58,6 +58,13 @@ class Stage extends React.Component {
             this.canvas = document.createElement('canvas');
             this.renderer = new Renderer(this.canvas);
             this.props.vm.attachRenderer(this.renderer);
+             // 舞台背景色
+            const stageBgColor = '#c3b6ff';
+            this.renderer.setBackgroundColor(
+                parseInt(stageBgColor.slice(1, 3), 16) / 255,
+                parseInt(stageBgColor.slice(3, 5), 16) / 255,
+                parseInt(stageBgColor.slice(5, 7), 16) / 255
+            );
 
             // Only attach a video provider once because it is stateful
             this.props.vm.setVideoProvider(new VideoProvider());
