@@ -9,18 +9,6 @@
         <meta name="google" value="notranslate" />
         <link rel="shortcut icon" href="static/favicon.ico" />
         <title>豌豆编程</title>
-        <base href="<%= htmlWebpackPlugin.options.PUBLIC_PATH %>" />
-        <script>
-            // fix <base> pushState
-            history._pushState = history.pushState;
-            history.pushState = function (state, title, url) {
-                url = /:\/\//.test(url)
-                    ? url
-                    : location.origin + String(url).replace(/^\/?/, "/");
-                return history._pushState.apply(this, arguments);
-            };
-        </script>
-
         <script>
             function loadConsole() {
                 if (loadConsole.yes) return;
