@@ -124,7 +124,7 @@ class LoaderComponent extends React.Component {
         super(props);
         this.state = {
             messageNumber: this.chooseRandomMessage(),
-            isPlayerOnly: false
+            isPlayerOnly: this.props.isPlayerOnly
         };
         console.log('LoaderComponent===>>>');
         console.log(props);

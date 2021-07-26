@@ -193,7 +193,7 @@ const GUIComponent = props => {
                         onShowPrivacyPolicy={onShowPrivacyPolicy}
                     />
                 ) : null}
-                {true ? (
+                {isCreating ? (
                     <Loader
                         messageId="gui.loader.creating"
                         isPlayerOnly={isPlayerOnly}
