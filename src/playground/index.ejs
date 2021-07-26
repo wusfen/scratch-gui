@@ -53,21 +53,6 @@
         </script>
 
         <script>
-            function resize() {
-                document.documentElement.style.setProperty(
-                    "--STAGE_CSS_WIDTH",
-                    Math.min(
-                        375,
-                        266 / (1024 / window.innerWidth),
-                        266 / (768 / window.innerHeight)
-                    )
-                );
-            }
-            resize();
-            addEventListener("resize", resize);
-        </script>
-
-        <script>
             // arrayBuffer polyfill
             (function () {
                 File.prototype.arrayBuffer =

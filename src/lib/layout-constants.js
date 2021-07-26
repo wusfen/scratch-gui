@@ -47,6 +47,10 @@ STAGE_DISPLAY_SCALES[STAGE_DISPLAY_SIZES.small] = 0.5; // small mode, regardless
 
 window.STAGE_WIDTH = 375;
 window.STAGE_HEIGHT = 667;
+window.UI_WIDTH = 1024;
+window.UI_HEIGHT = 768;
+window.STAGE_UI_WIDTH = 266;
+window.STAGE_CSS_WIDTH = window.STAGE_UI_WIDTH;
 
 const searchParams = (new URL(location)).searchParams;
 if (searchParams.get('STAGE_WIDTH')) {
@@ -60,6 +64,24 @@ if (searchParams.get('STAGE_WIDTH')) {
 const htmlEl = document.documentElement;
 htmlEl.style.setProperty('--STAGE_WIDTH', window.STAGE_WIDTH);
 htmlEl.style.setProperty('--STAGE_HEIGHT', window.STAGE_HEIGHT);
+
+
+// eslint-disable-next-line require-jsdoc, func-style
+function resize () {
+    window.STAGE_CSS_WIDTH = Math.min(
+        window.STAGE_WIDTH,
+        window.STAGE_UI_WIDTH / (window.UI_WIDTH / htmlEl.clientWidth),
+        window.STAGE_UI_WIDTH / (window.UI_HEIGHT / htmlEl.clientHeight)
+    );
+
+    document.documentElement.style.setProperty(
+        '--STAGE_CSS_WIDTH',
+        window.STAGE_CSS_WIDTH
+    );
+}
+resize();
+addEventListener('resize', resize);
+
 
 export default {
     standardStageWidth: window.STAGE_WIDTH,
