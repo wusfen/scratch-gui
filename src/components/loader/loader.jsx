@@ -8,7 +8,7 @@ import topBlock from './top-block.svg';
 import middleBlock from './middle-block.svg';
 import bottomBlock from './bottom-block.svg';
 import loadingVideo from './loading.mp4';
-import loadBg from './load_bg.png';
+import loadBg from './loading.gif';
 
 const messages = [
     {
@@ -158,7 +158,7 @@ class LoaderComponent extends React.Component {
                     [styles.fullscreen]: this.props.isFullScreen
                 })}
             >
-                {this.state.isPlayerOnly ? <video
+                {this.state.isPlayerOnly === false ? <video
                     className={styles.loadingVideo}
                     src={loadingVideo}
                     autoPlay="autoplay"
@@ -170,8 +170,8 @@ class LoaderComponent extends React.Component {
                         src={loadBg}
                         className={styles.loadBgImg}
                     />
-                    <div className={classNames(styles.loadingTxt)}>
-                        Hello World<span className={styles.shadowDot}></span></div>
+                    {/* <div className={classNames(styles.loadingTxt)}>
+                        Hello World<span className={styles.shadowDot}></span></div> */}
                 </div>}
 
                 {/* <div className={styles.container}>
