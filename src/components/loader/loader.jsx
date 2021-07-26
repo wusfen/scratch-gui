@@ -167,8 +167,9 @@ class LoaderComponent extends React.Component {
                 >
                 </video> : <div>
                     <img src={loadBg} />
-                    <div className={styles.loadingTxt}>
-                        Hello World......</div>
+                    classNames(styles.menuBarMenu)
+                    <div className={classNames(styles.loadingTxt)}>
+                        Hello World<span className={styles.shadowDot}></span></div>
                 </div>}
 
                 {/* <div className={styles.container}>
