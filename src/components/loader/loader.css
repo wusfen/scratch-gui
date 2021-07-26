@@ -18,31 +18,80 @@
     /* backdrop-filter: blur(5px); */
 }
 
-  /* box-shadow+animate方法  */
-  .shadow-dot {
-    display: inline-block; min-width: 2px; min-height: 2px;
-    box-shadow: 2px 0 currentColor, 6px 0 currentColor, 10px 0 currentColor;
-    -webkit-animation: shadow-dot 4s infinite step-start both;
-    animation: shadow-dot 4s infinite step-start both;
-    *zoom: expression(this.innerHTML = '...'); /* IE7 */
+/* box-shadow+animate方法  */
+.shadow-dot {
+    display          : inline-block;
+    min-width        : 4px;
+    min-height       : 4px;
+    box-shadow       : 4px 0 currentColor, 12px 0 currentColor, 20px 0 currentColor, 28px 0 currentColor, 36px 0 currentColor, 44px 0 currentColor;
+    -webkit-animation: shadow-dot 6s infinite step-start both;
+    animation        : shadow-dot 6s infinite step-start both;
+    *zoom            : expression(this.innerHTML='......');
+    /* IE7 */
 }
-.shadow-dot:before { content: '...'; } /* IE8 */
-.shadow-dot::before { content: ''; }
-:root .shadow-dot { margin-right: 8px; } /* IE9+,FF,CH,OP,SF */
 
-@-webkit-keyframes shadow-dot {
-    25% { box-shadow: none; }
-    50% { box-shadow: 2px 0 currentColor; }
-    75% { box-shadow: 2px 0 currentColor, 6px 0 currentColor; }
+.shadow-dot:before {
+    content: '......';
 }
+
+/* IE8 */
+.shadow-dot::before {
+    content: '';
+}
+
+:root .shadow-dot {
+    margin-right: 8px;
+}
+
+/* IE9+,FF,CH,OP,SF */
+/* 
+@-webkit-keyframes shadow-dot {
+    25% {
+        box-shadow: none;
+    }
+
+    50% {
+        box-shadow: 2px 0 currentColor;
+    }
+
+    75% {
+        box-shadow: 2px 0 currentColor, 6px 0 currentColor;
+    }
+} */
+
 @keyframes shadow-dot {
-    25% { box-shadow: none; }
-    50% { box-shadow: 2px 0 currentColor; }
-    75% { box-shadow: 2px 0 currentColor, 6px 0 currentColor; }
+    12.5% {
+        box-shadow: none;
+    }
+
+    25% {
+        box-shadow: 4px 0 currentColor;
+    }
+
+    37.5% {
+        box-shadow:  4px 0 currentColor,12px 0 currentColor;
+    }
+
+
+    50% {
+        box-shadow:  4px 0 currentColor,12px 0 currentColor,20px 0 currentColor;
+    }
+
+    62.5% {
+        box-shadow:   4px 0 currentColor,12px 0 currentColor,20px 0 currentColor,28px 0 currentColor;
+    }
+
+    75% {
+        box-shadow:  4px 0 currentColor,12px 0 currentColor,20px 0 currentColor,28px 0 currentColor,36px 0 currentColor;
+    }
+}
+
+.load-bg-img {
+    width: 14rem;
 }
 
 .loading-txt {
-    color    :purple;
+    color    : purple;
     font-size: 30px;
 
 }

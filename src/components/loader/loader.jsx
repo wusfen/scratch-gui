@@ -166,8 +166,10 @@ class LoaderComponent extends React.Component {
                     muted
                 >
                 </video> : <div>
-                    <img src={loadBg} />
-                    classNames(styles.menuBarMenu)
+                    <img
+                        src={loadBg}
+                        className={styles.loadBgImg}
+                    />
                     <div className={classNames(styles.loadingTxt)}>
                         Hello World<span className={styles.shadowDot}></span></div>
                 </div>}
