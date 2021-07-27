@@ -48,6 +48,7 @@ const vmManagerHOC = function (WrappedComponent) {
             }
             // Start the VM if entering editor mode with an unstarted vm
             if (!this.props.isPlayerOnly && !this.props.isStarted) {
+                console.log("vm.start")
                 this.props.vm.start();
             }
         }
