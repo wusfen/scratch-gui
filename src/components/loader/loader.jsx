@@ -8,6 +8,7 @@ import topBlock from './top-block.svg';
 import middleBlock from './middle-block.svg';
 import bottomBlock from './bottom-block.svg';
 import loadingVideo from './loading.mp4';
+import loadBg from './loading.gif';
 
 const messages = [
     {
@@ -122,8 +123,11 @@ class LoaderComponent extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
-            messageNumber: this.chooseRandomMessage()
+            messageNumber: this.chooseRandomMessage(),
+            isPlayerOnly: this.props.isPlayerOnly
         };
+        console.log('LoaderComponent===>>>');
+        console.log(props);
     }
     componentDidMount () {
         // Start an interval to choose a new message every 5 seconds
@@ -154,14 +158,22 @@ class LoaderComponent extends React.Component {
                     [styles.fullscreen]: this.props.isFullScreen
                 })}
             >
-                <video
+                {this.state.isPlayerOnly === false ? <video
                     className={styles.loadingVideo}
                     src={loadingVideo}
                     autoPlay="autoplay"
                     loop="loop"
                     muted
                 >
-                </video>
+                </video> : <div>
+                    <img
+                        src={loadBg}
+                        className={styles.loadBgImg}
+                    />
+                    {/* <div className={classNames(styles.loadingTxt)}>
+                        Hello World<span className={styles.shadowDot}></span></div> */}
+                </div>}
+
                 {/* <div className={styles.container}>
                     <div className={styles.blockAnimation}>
                         <img
@@ -204,11 +216,13 @@ class LoaderComponent extends React.Component {
 LoaderComponent.propTypes = {
     isFullScreen: PropTypes.bool,
     // eslint-disable-next-line react/no-unused-prop-types
-    messageId: PropTypes.string
+    messageId: PropTypes.string,
+    isPlayerOnly: PropTypes.bool
 };
 LoaderComponent.defaultProps = {
     isFullScreen: false,
-    messageId: 'gui.loader.headline'
+    messageId: 'gui.loader.headline',
+    isPlayerOnly: false
 };
 
 export default LoaderComponent;

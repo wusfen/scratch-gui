@@ -2,39 +2,117 @@
 @import "../../css/z-index.css";
 
 .background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: $z-index-loader;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #FFFAEA;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    text-align: center;
-    color: white;
+    position          : absolute;
+    top               : 0;
+    left              : 0;
+    width             : 100%;
+    height            : 100%;
+    z-index           : $z-index-loader;
+    display           : flex;
+    justify-content   : center;
+    align-items       : center;
+    background-color  : #FFFAEA;
+    font-family       : "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-align        : center;
+    color             : white;
     /* backdrop-filter: blur(5px); */
+}
+
+/* box-shadow+animate方法  */
+.shadow-dot {
+    display          : inline-block;
+    min-width        : 4px;
+    min-height       : 4px;
+    box-shadow       : 4px 0 currentColor, 12px 0 currentColor, 20px 0 currentColor, 28px 0 currentColor, 36px 0 currentColor, 44px 0 currentColor;
+    -webkit-animation: shadow-dot 6s infinite step-start both;
+    animation        : shadow-dot 6s infinite step-start both;
+    *zoom            : expression(this.innerHTML='......');
+    /* IE7 */
+}
+
+.shadow-dot:before {
+    content: '......';
+}
+
+/* IE8 */
+.shadow-dot::before {
+    content: '';
+}
+
+:root .shadow-dot {
+    margin-right: 8px;
+}
+
+/* IE9+,FF,CH,OP,SF */
+/* 
+@-webkit-keyframes shadow-dot {
+    25% {
+        box-shadow: none;
+    }
+
+    50% {
+        box-shadow: 2px 0 currentColor;
+    }
+
+    75% {
+        box-shadow: 2px 0 currentColor, 6px 0 currentColor;
+    }
+} */
+
+@keyframes shadow-dot {
+    12.5% {
+        box-shadow: none;
+    }
+
+    25% {
+        box-shadow: 4px 0 currentColor;
+    }
+
+    37.5% {
+        box-shadow:  4px 0 currentColor,12px 0 currentColor;
+    }
+
+
+    50% {
+        box-shadow:  4px 0 currentColor,12px 0 currentColor,20px 0 currentColor;
+    }
+
+    62.5% {
+        box-shadow:   4px 0 currentColor,12px 0 currentColor,20px 0 currentColor,28px 0 currentColor;
+    }
+
+    75% {
+        box-shadow:  4px 0 currentColor,12px 0 currentColor,20px 0 currentColor,28px 0 currentColor,36px 0 currentColor;
+    }
+}
+
+.load-bg-img {
+    width: 14rem;
+}
+
+.loading-txt {
+    color    : purple;
+    font-size: 30px;
+
 }
 
 .fullscreen {
     /* Break out of the layout using position: fixed to cover the whole screen */
     position: fixed;
     /* Use the fullscreen stage z-index to allow covering full-screen mode */
-    z-index: $z-index-stage-wrapper-overlay;
+    z-index : $z-index-stage-wrapper-overlay;
 }
 
 .block-animation {
-    width: 7.8125rem;
+    width : 7.8125rem;
     height: 9.375rem;
     margin: 3.125rem auto 0rem;
 }
 
 .block-animation img {
-    display: block;
-    position: relative;
-    height: 30%;
+    display   : block;
+    position  : relative;
+    height    : 30%;
     margin-top: -4px;
 }
 
@@ -65,111 +143,113 @@
 @keyframes top-slide-in {
     0% {
         transform: translateY(50px);
-        opacity: 0;
+        opacity  : 0;
     }
 
     33% {
         transform: translateY(0px);
-        opacity: 1;
+        opacity  : 1;
     }
 }
 
 @keyframes middle-slide-in {
     0% {
         transform: translateY(50px);
-        opacity: 0;
+        opacity  : 0;
     }
 
     33% {
         transform: translateY(50px);
-        opacity: 0;
+        opacity  : 0;
     }
 
     66% {
         transform: translateY(0px);
-        opacity: 1;
+        opacity  : 1;
     }
 }
 
 @keyframes bottom-slide-in {
     0% {
         transform: translateY(50px);
-        opacity: 0;
+        opacity  : 0;
     }
 
     66% {
         transform: translateY(50px);
-        opacity: 0;
+        opacity  : 0;
     }
 
     100% {
         transform: translateY(0px);
-        opacity: 1;
+        opacity  : 1;
     }
 }
 
 @keyframes top-slide-in-rtl {
     0% {
         transform: translateY(50px) scaleX(-1);
-        opacity: 0;
+        opacity  : 0;
     }
 
     33% {
         transform: translateY(0px) scaleX(-1);
-        opacity: 1;
+        opacity  : 1;
     }
+
     100% {
         transform: translateY(0px) scaleX(-1);
-        opacity: 1;
+        opacity  : 1;
     }
 }
 
 @keyframes middle-slide-in-rtl {
     0% {
         transform: translateY(50px) scaleX(-1);
-        opacity: 0;
+        opacity  : 0;
     }
 
     33% {
         transform: translateY(50px) scaleX(-1);
-        opacity: 0;
+        opacity  : 0;
     }
 
     66% {
         transform: translateY(0px) scaleX(-1);
-        opacity: 1;
+        opacity  : 1;
     }
+
     100% {
         transform: translateY(0px) scaleX(-1);
-        opacity: 1;
+        opacity  : 1;
     }
 }
 
 @keyframes bottom-slide-in-rtl {
     0% {
         transform: translateY(50px) scaleX(-1);
-        opacity: 0;
+        opacity  : 0;
     }
 
     66% {
         transform: translateY(50px) scaleX(-1);
-        opacity: 0;
+        opacity  : 0;
     }
 
     100% {
         transform: translateY(0px) scaleX(-1);
-        opacity: 1;
+        opacity  : 1;
     }
 }
 
 .title {
-    font-size: 2rem;
+    font-size  : 2rem;
     font-weight: bold;
-    margin: 0.75rem 0;
+    margin     : 0.75rem 0;
 }
 
 .message-container-outer {
-    height: 30px;
+    height  : 30px;
     overflow: hidden;
 }
 

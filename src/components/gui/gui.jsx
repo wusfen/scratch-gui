@@ -151,7 +151,7 @@ const GUIComponent = props => {
     if (isRendererSupported === null) {
         isRendererSupported = Renderer.isSupported();
     }
-    
+
     return (<MediaQuery minWidth={layout.fullSizeMinWidth}>{isFullSize => {
         const stageSize = resolveStageSize(stageSizeMode, isFullSize);
 
@@ -159,6 +159,7 @@ const GUIComponent = props => {
             <div >
                 <StageWrapper
                     isFullScreen={isFullScreen}
+                    isPlayerOnly={isPlayerOnly}
                     isRendererSupported={isRendererSupported}
                     isRtl={isRtl}
                     loading={loading}
@@ -194,7 +195,10 @@ const GUIComponent = props => {
                     />
                 ) : null}
                 {isCreating ? (
-                    <Loader messageId="gui.loader.creating" />
+                    <Loader
+                        messageId="gui.loader.creating"
+                        isPlayerOnly={isPlayerOnly}
+                    />
                 ) : (
                     loading ? (
                         <Loader />
