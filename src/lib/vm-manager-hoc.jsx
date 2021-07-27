@@ -57,7 +57,7 @@ const vmManagerHOC = function (WrappedComponent) {
                     this.props.onLoadedProject(this.props.loadingState, this.props.canSave);
                     // Wrap in a setTimeout because skin loading in
                     // the renderer can be async.
-                    setTimeout(() => this.props.onSetProjectUnchanged());
+                    setTimeout(() => this.props.onSetProjectUnchanged(), 32);
 
                     // If the vm is not running, call draw on the renderer manually
                     // This draws the state of the loaded project with no blocks running
@@ -67,7 +67,7 @@ const vmManagerHOC = function (WrappedComponent) {
                     if (!this.props.isStarted) {
                         // Wrap in a setTimeout because skin loading in
                         // the renderer can be async.
-                        setTimeout(() => this.props.vm.renderer.draw());
+                        setTimeout(() => this.props.vm.renderer.draw(), 32);
                     }
                 })
                 .catch(e => {
