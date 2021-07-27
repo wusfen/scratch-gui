@@ -201,7 +201,7 @@ const GUIComponent = props => {
                     />
                 ) : (
                     loading ? (
-                        <Loader />
+                        <Loader isPlayerOnly={isPlayerOnly} />
                     ) : null
                 )}
                 {isRendererSupported ? null : (
