@@ -1,3 +1,5 @@
+import * as bridge from '../../playground/bridge.js';
+
 /**
  * audio = new TipAudio
  * audio.src = 'src'
@@ -12,6 +14,19 @@ class TipAudio {
         return this.audio;
     }
 }
+
+bridge.on('pause', e => {
+    TipAudio.audio.muted = true;
+});
+bridge.on('resume', e => {
+    TipAudio.audio.muted = false;
+});
+addEventListener('pagehide', e => {
+    TipAudio.audio.muted = true;
+});
+addEventListener('pageshow', e => {
+    TipAudio.audio.muted = false;
+});
 
 /**
  * playTipAudio(src)
