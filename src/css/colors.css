@@ -57,7 +57,7 @@ $motion-light-transparent: hsla(
 $red-primary: hsla(20, 100%, 55%, 1); /* #FF661A */
 $red-tertiary: hsla(20, 100%, 45%, 1); /* #E64D00 */
 
-$sound-primary: hsla(300, 53%, 60%, 1); /* #CF63CF */
+$sound-primary: hsla(197,100%,60%, 1); /* #32C5FF */
 $sound-tertiary: hsla(300, 48%, 50%, 1); /* #BD42BD */
 
 $control-primary: hsla(38, 100%, 55%, 1); /* #FFAB19 */
@@ -97,7 +97,7 @@ $motion-transparent: #fff8;
 
 $ui-primary: #76CBFF;
 $ui-secondary: #76CBFF88;
-$motion-primary: #886dff;
+$motion-primary: #0091FF;
 $motion-primary: #00B6FF;
 $motion-tertiary: #00B6FF;
 $motion-transparent: #d1c4ff21;
