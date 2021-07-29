@@ -1,16 +1,21 @@
 /* eslint-disable no-invalid-this */
-import {OPERATE_TIME_1, OPERATE_TIME_2, CODE_TIME_1, timerType} from './data';
+import {OPERATE_TIME_1, OPERATE_TIME_2, CODE_TIME_1, timerType, RIGHT_ANSWER_1, RIGHT_ANSWER_2} from './data';
 class Timer {
     constructor (type) {
         this.state = '';
         this.codeTimer = null; // 代码计时器
         this.operateTimer1 = null; // 操作计时器1
         this.operateTimer2 = null; // 操作计时器2
+        this.rightAnswerTimer1 = null; // 正确答案计时器1
+        this.rightAnswerTimer2 = null; // 正确答案计时器2
         this.type = type; // 计时器类型
         this.createOperateTimer = null;
         this.createCodeTimer = null;
+        this.createRightAnswerTimer = null;
         this.pauseOperateTimer = null;
         this.pauseCodeTimer = null;
+        this.pauseRightAnswerTimer = null;
+        this.rightAnswerTimerIsReset = false;
         this.iniTimertListener(); // 初始化计时器监听器
         this.initUserHandleListener(); // 初始化用户点击事件的监听
     }
@@ -70,6 +75,37 @@ class Timer {
             window.addEventListener('projectRunning', this.pauseOperateTimer); // 代码运行中
             window.addEventListener('pauseOperateTimer', this.pauseOperateTimer);
             break;
+        case timerType.RIGHT_ANSWER:
+            this.createRightAnswerTimer = () => { // 监听创建正确答案计时器事件
+                if (this.state === 'exist') return;
+                console.log('创建正确答案计时器');
+                this.createTimer(); // 开始计时
+            };
+            this.pauseRightAnswerTimer = () => { // 监听终止正确答案计时器事件
+                if (this.state === '') return;
+                console.log('终止正确答案计时器');
+                this.pauseTimer(); // 终止计时器
+            };
+            window.addEventListener('noVideoGuide', this.createRightAnswerTimer); // 没有视频引导
+            window.addEventListener('closeVideoTips', this.createRightAnswerTimer); // 关闭视频引导
+            window.addEventListener('hideEditingTarget', this.createRightAnswerTimer); // 关闭画板界面
+            window.addEventListener('libraryBack', this.createRightAnswerTimer); // 关闭资源库
+            window.addEventListener('selectSprite', this.createRightAnswerTimer); // 选择精灵
+            window.addEventListener('closeVideoTips', this.createRightAnswerTimer); // 关闭视频提示
+            window.addEventListener('projectRunFinish', this.createRightAnswerTimer); // 代码运行结束
+
+            window.addEventListener('editSprite', this.pauseRightAnswerTimer); // 编辑精灵
+            window.addEventListener('editStage', this.pauseRightAnswerTimer); // 编辑舞台
+            window.addEventListener('onNewSpriteClick', this.pauseRightAnswerTimer); // 选择精灵
+            window.addEventListener('paintSprite', this.pauseRightAnswerTimer); // 绘制
+            window.addEventListener('projectRunning', this.pauseRightAnswerTimer); // 代码运行中
+            window.addEventListener('clickVideoTips', this.pauseRightAnswerTimer); // 点击提示视频
+            window.addEventListener('submit:已提交正确', this.pauseRightAnswerTimer); // 提交正确
+            window.addEventListener('运行时判断正确', this.pauseRightAnswerTimer); // 点击开始运行正确
+
+            window.addEventListener('submitErrorCounter1', this.resetTimer); // 第一次提交错误，触发了引导学生点击提示，需要重置计时器
+            // json自动批改错误，容错小范围内，触发了引导学生点击提示，需要重置计时器
+            window.addEventListener('jsonErrorCounterInRange', this.resetTimer); 
         }
     }
    
@@ -92,8 +128,26 @@ class Timer {
                 }, OPERATE_TIME_2);
             }, OPERATE_TIME_1);
             break;
+        case timerType.RIGHT_ANSWER:
+            this.toCreateRightAnswerTimer();
+            break;
         default:
             break;
+        }
+    }
+    toCreateRightAnswerTimer = () => { // 首次是RIGHT_ANSWER_1秒（重置一次之后是每隔RIGHT_ANSWER_1秒）
+        const helpFunc = () => {
+            this.rightAnswerTimer2 = setInterval(() => {
+                window.dispatchEvent(new Event(`noAction:${this.type}:${RIGHT_ANSWER_2}`));
+            }, RIGHT_ANSWER_2);
+        };
+        if (this.rightAnswerTimerIsReset) { // 判断是否被重置过
+            helpFunc();
+        } else {
+            this.rightAnswerTimer1 = setTimeout(() => {
+                window.dispatchEvent(new Event(`noAction:${this.type}:${RIGHT_ANSWER_1}`));
+                helpFunc();
+            }, RIGHT_ANSWER_1);
         }
     }
     resetTimer = () => {
@@ -104,6 +158,11 @@ class Timer {
         case timerType.OPERATE:
             this.operateTimer1 && clearTimeout(this.operateTimer1);
             this.operateTimer2 && clearTimeout(this.operateTimer2);
+            break;
+        case timerType.RIGHT_ANSWER:
+            this.rightAnswerTimerIsReset = true;
+            this.rightAnswerTimer1 && clearTimeout(this.rightAnswerTimer1);
+            this.rightAnswerTimer2 && clearInterval(this.rightAnswerTimer2);
             break;
         default:
             break;
@@ -120,6 +179,10 @@ class Timer {
         case timerType.OPERATE:
             this.operateTimer1 && clearTimeout(this.operateTimer1);
             this.operateTimer2 && clearTimeout(this.operateTimer2);
+            break;
+        case timerType.RIGHT_ANSWER:
+            this.rightAnswerTimer1 && clearTimeout(this.rightAnswerTimer1);
+            this.rightAnswerTimer2 && clearInterval(this.rightAnswerTimer2);
             break;
         default:
             break;
@@ -151,6 +214,25 @@ class Timer {
             window.removeEventListener('clickVideoTips', this.pauseOperateTimer);
             window.removeEventListener('pauseOperateTimer', this.pauseOperateTimer);
             window.removeEventListener('projectRunning', this.pauseOperateTimer);
+            break;
+        case timerType.RIGHT_ANSWER:
+            window.removeEventListener('libraryBack', this.createRightAnswerTimer);
+            window.removeEventListener('selectSprite', this.createRightAnswerTimer);
+            window.removeEventListener('hideEditingTarget', this.createRightAnswerTimer);
+            window.removeEventListener('noVideoGuide', this.createRightAnswerTimer);
+            window.removeEventListener('closeVideoGuide', this.createRightAnswerTimer);
+            window.removeEventListener('closeVideoTips', this.createRightAnswerTimer);
+            window.removeEventListener('projectRunFinish', this.createRightAnswerTimer);
+            window.removeEventListener('editSprite', this.pauseRightAnswerTimer);
+            window.removeEventListener('editStage', this.pauseRightAnswerTimer);
+            window.removeEventListener('onNewSpriteClick', this.pauseRightAnswerTimer);
+            window.removeEventListener('paintSprite', this.pauseRightAnswerTimer);
+            window.removeEventListener('clickVideoTips', this.pauseRightAnswerTimer);
+            window.removeEventListener('projectRunning', this.pauseRightAnswerTimer);
+            window.removeEventListener('submit:已提交正确', this.pauseRightAnswerTimer);
+            window.removeEventListener('运行时判断正确', this.pauseRightAnswerTimer);
+            window.removeEventListener('submitErrorCounter1', this.resetTimer);
+            window.removeEventListener('jsonErrorCounterInRange', this.resetTimer);
             break;
         default:
             break;

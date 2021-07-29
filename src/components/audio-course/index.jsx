@@ -33,8 +33,7 @@ class AudioCourse extends React.Component{
         window.addEventListener('handleGreenFlagClick', this.closeAudio);// 点击开始运行代码终止语音
         window.addEventListener('saveToComputer', this.closeAudio);// 点击保存到电脑终止语音
         window.addEventListener('projectRunning', this.closeAudio); // 代码运行中
-        window.addEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_1}`, this.openTitleAudio); // 连续10秒无任何操作
-        // window.addEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_2}`, this.openTipAudio) // 连续30秒无任何操作
+        window.addEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_1}`, this.openTitleAudio);
     }
     componentWillUnmount () {
         window.removeEventListener('clickSubmit', this.closeAudio);
@@ -43,7 +42,6 @@ class AudioCourse extends React.Component{
         window.removeEventListener('saveToComputer', this.closeAudio);
         window.removeEventListener('projectRunning', this.closeAudio);
         window.removeEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_1}`, this.openTitleAudio);
-        // window.removeEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_2}`, this.openTipAudio);
         this.audio = null;
     }
     createAudio = () => {

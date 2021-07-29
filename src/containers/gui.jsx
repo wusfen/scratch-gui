@@ -43,6 +43,8 @@ import {setIsScratchDesktop} from '../lib/isScratchDesktop.js';
 import {getParam} from '../lib/param';
 import Timer from '../components/timer/index';
 import {timerType} from '../components/timer/data';
+import Counter from '../components/counter/index';
+import {counterType} from '../components/counter/data';
 class GUI extends React.Component {
     constructor (props) {
         super(props);
@@ -60,6 +62,7 @@ class GUI extends React.Component {
 
        
         this.initTimer(); // 初始化计时器
+        this.initCounter(); // 初始化计数器
         this.handleVideoSrc(); // 获取引导video
     }
 
@@ -77,12 +80,21 @@ class GUI extends React.Component {
     componentWillUnmount () {
         window.operateTimer.removeListener();
         window.codeTimer.removeListener();
+        window.rightAnswerTimer.removeListener();
+        window.jsonErrorCounter.removeListener();
+        window.submitErrorCounter.removeListener();
     }
     
 
     initTimer = () => {
         window.operateTimer = new Timer(timerType.OPERATE); // 操作计时器
         window.codeTimer = new Timer(timerType.CODE); // 代码计时器
+        window.rightAnswerTimer = new Timer(timerType.RIGHT_ANSWER); // 代码计时器
+    }
+
+    initCounter = () => {
+        window.jsonErrorCounter = new Counter(counterType.JSON_ERROR);
+        window.submitErrorCounter = new Counter(counterType.SUBMIT_ERROR);
     }
     
     handleVideoSrc = () => {

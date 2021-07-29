@@ -92,7 +92,7 @@ class Component extends React.Component{
     }
     handleClose () {
         if (/错误/.test(this.state.status)) {
-            window.dispatchEvent(new Event(`noAction:${timerType.OPERATE}:${OPERATE_TIME_2}`));
+            window.dispatchEvent(new Event('提交错误:关闭弹窗'));
         }
 
         if (this.state.isShowBackButton) {

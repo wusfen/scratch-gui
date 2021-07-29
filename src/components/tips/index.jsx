@@ -36,27 +36,45 @@ class Tips extends React.Component{
     componentDidMount () {
         this.createAudio(tipAudio);
         this.judgeVideoOrImageText();
-        const s = this;
-        window.addEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_2}`, () => {
-            s.setState({
-                showState: true
-            });
-            s.audio.play();
-            s.timeOutEvent = setTimeout(() => {
-                s.setState({
-                    showState: false
-                });
-                s.audio.pause();
-            }, 12000);
-        });
+        this.initListener();
     }
 
     componentWillUnmount () {
         clearTimeout(this.timeOutEvent);
+        this.removeListener();
         this.audio.pause();
         this.audio = null;
     }
-    
+
+    initListener = () => {
+        window.addEventListener('submitErrorCounter1', this.touchTip); // 第一次提交错误
+        window.addEventListener('submitErrorCounter2', this.clickTips); // 第二次提交错误，自动播放视频
+        window.addEventListener('jsonErrorCounterInRange', this.touchTip); // json自动批改错误，容错小范围内
+        window.addEventListener('jsonErrorCounterOutRange', this.clickTips); // json自动批改错误，超过容错小范围
+    }
+
+    removeListener = () => {
+        window.removeEventListener('submitErrorCounter1', this.touchTip);
+        window.removeEventListener('submitErrorCounter2', this.clickTips);
+        window.removeEventListener('jsonErrorCounterInRange', this.touchTip);
+        window.removeEventListener('jsonErrorCounterOutRange', this.clickTips);
+    }
+
+    touchTip = () => {
+        this.setState({
+            showState: true
+        });
+        this.audio.pause();
+        this.audio.currentTime = 0;
+        this.audio.play();
+        this.timeOutEvent = setTimeout(() => {
+            this.setState({
+                showState: false
+            });
+            this.audio.pause();
+        }, 12000);
+    }
+
     judgeVideoOrImageText = () => {
         let tipVideo = getParam('tipVideo');
         const tipPic = getParam('tipPic');
@@ -76,8 +94,7 @@ class Tips extends React.Component{
     
     createAudio = tipSrc => {
         this.audio = document.createElement('audio');
-        const src = tipSrc ? tipSrc : getParam('tipAudio');
-        this.audio.src = src ? src : '';
+        this.audio.src = tipSrc ? tipSrc : '';
     }
     clickTips = () => {
         const {clickCount, tipVideo} = this.state;
