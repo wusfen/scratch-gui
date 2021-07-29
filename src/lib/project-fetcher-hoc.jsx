@@ -5,7 +5,6 @@ import bindAll from 'lodash.bindall';
 import {connect} from 'react-redux';
 
 import {setProjectUnchanged} from '../reducers/project-changed';
-import {setProjectTitle} from '../reducers/project-title';
 
 import {
     LoadingState,
