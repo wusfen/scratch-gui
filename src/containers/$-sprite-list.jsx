@@ -97,6 +97,7 @@ class TargetPane$ extends React.Component {
             }
 
         }
+        
         if (curTarget && curTarget.hidden) {
             Dialog.alert({
                 title: '求求你，别删我',
