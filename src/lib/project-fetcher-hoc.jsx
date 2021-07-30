@@ -100,7 +100,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
 
             // fetch
             if (/^http|.sb3$/.test(fileUrl)) {
-                const blob = await ajax.get(fileUrl, {}, {responseType: 'blob'});
+                const blob = await ajax.get(fileUrl, {}, {responseType: 'blob', base: ''});
                 const buffer = await blob.arrayBuffer();
                 // loadProject
                 this.props.onFetchedProjectData(buffer, loadingState);
