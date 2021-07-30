@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 60.1 (88133) - https://sketch.com -->
-    <title>X</title>
+    <title>Slice</title>
     <desc>Created with Sketch.</desc>
-    <g id="X" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <polygon id="x" fill="#E0B8FF" fill-rule="nonzero" points="9.42578125 24.7421875 13.6835938 18.3164062 17.9023438 24.7421875 24.640625 24.7421875 16.9648438 13.8242188 23.9960938 4 17.5507812 4 13.6835938 9.703125 10.0117188 4 3.3125 4 10.4804688 14.0585938 3 24.7421875"></polygon>
+    <g id="改蓝色" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="01-blue-landscape" transform="translate(-72.000000, -1352.000000)" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="X" transform="translate(72.000000, 1352.000000)">
+                <polygon id="x" points="9.42578125 24.7421875 13.6835938 18.3164062 17.9023438 24.7421875 24.640625 24.7421875 16.9648438 13.8242188 23.9960938 4 17.5507812 4 13.6835938 9.703125 10.0117188 4 3.3125 4 10.4804688 14.0585938 3 24.7421875"></polygon>
+            </g>
+        </g>
     </g>
 </svg>

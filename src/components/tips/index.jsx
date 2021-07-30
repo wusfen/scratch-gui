@@ -36,24 +36,40 @@ class Tips extends React.Component{
     }
     componentDidMount () {
         this.judgeVideoOrImageText();
-        const s = this;
-        window.addEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_2}`, () => {
-            s.setState({
-                showState: true
-            });
-            playTipAudio(tipAudio);
-            s.timeOutEvent = setTimeout(() => {
-                s.setState({
-                    showState: false
-                });
-
-            }, 12000);
-        });
+        this.initListener();
     }
 
     componentWillUnmount () {
         clearTimeout(this.timeOutEvent);
+        this.removeListener();
+    }
 
+    initListener = () => {
+        window.addEventListener('submitErrorCounter1', this.touchTip); // 第一次提交错误
+        window.addEventListener('submitErrorCounter2', this.clickTips); // 第二次提交错误，自动播放视频
+        window.addEventListener('jsonErrorCounterInRange', this.touchTip); // json自动批改错误，容错小范围内
+        window.addEventListener('jsonErrorCounterOutRange', this.clickTips); // json自动批改错误，超过容错小范围
+    }
+
+    removeListener = () => {
+        window.removeEventListener('submitErrorCounter1', this.touchTip);
+        window.removeEventListener('submitErrorCounter2', this.clickTips);
+        window.removeEventListener('jsonErrorCounterInRange', this.touchTip);
+        window.removeEventListener('jsonErrorCounterOutRange', this.clickTips);
+    }
+
+    touchTip = () => {
+        this.setState({
+            showState: true
+        });
+
+        playTipAudio(tipAudio);
+        this.timeOutEvent = setTimeout(() => {
+            this.setState({
+                showState: false
+            });
+
+        }, 12000);
     }
 
     judgeVideoOrImageText = () => {
@@ -120,7 +136,8 @@ class Tips extends React.Component{
             <div
                 className={classNames({
                     [styles.container]: true,
-                    [styles.blingBling]: showState})}
+                    [styles.blingBling]: showState,
+                    [styles.blingBlingRight]: showState})}
             >
                 <img
                     className={styles.tipIcon}

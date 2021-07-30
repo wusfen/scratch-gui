@@ -223,10 +223,10 @@ class MenuBar extends React.Component {
             });
         }, state._timeout * 1000);
         // TODO 提交保存另存为逻辑单独文件
-        addEventListener('skipSaveExit', async e => {
+        addEventListener('submit-result-dialog:跳过退出', async e => {
             await this.autoSave();
 
-            window.bridge.emit('exitEditor');
+            window.bridge.emit('exitEditor', {type: 'skip'});
         });
 
         addEventListener('运行时判断正确', e => {
@@ -543,29 +543,45 @@ class MenuBar extends React.Component {
             isSaveAsChanged: true,
         });
     }
-    // TODO 保存得区分 提交 保存 另存为
     async autoSave (silence) {
-        if (this.props.projectChanged) {
-            if (this.state.mode === 'course') {
-                await this.handleSubmit('noCheckResult', silence);
-            } else {
-                await this.handleSave(silence);
-            }
+        if (!this.props.projectChanged) return;
+
+        var mode = this.state.mode;
+        var workInfo = window._workInfo || {};
+
+        if (mode === 'course') {
+            await this.handleSubmit('noCheckResult', silence);
+            return;
         }
+
+        if (mode === 'normal' && workInfo.id && !/IDEA/i.test(workInfo.workType)) {
+            await this.handleSaveAs();
+            return;
+        }
+
+        // id || !id&&
+        if (mode === 'normal') {
+            await this.handleSave(silence);
+            return;
+        }
+
     }
     async handleExit (e = 'exitEditor') {
+        var exitType = 'exit';
+        if (e === 'requireExitEditor') exitType = 'sidebar';
+
         if (this.props.projectChanged) {
             await Dialog.confirm({
                 title: '还未保存作品哦，是否保存作品？',
                 onCancel () {
-                    window.bridge.emit(e);
+                    window.bridge.emit(e, {type: exitType});
                 }
             });
 
-            this.autoSave();
+            await this.autoSave();
         }
 
-        window.bridge.emit(e);
+        window.bridge.emit(e, {type: exitType});
     }
     async handleSubmit (isNoCheckResult, silence) {
         dispatchEvent(new Event('clickSubmit'));

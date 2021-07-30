@@ -16,7 +16,7 @@
     position     : relative;
     width        : 43.75rem;
     height       : 37.5rem;
-    background   : #F1E0FF;
+    background   : #EAF7FF;
     border-radius: 1.25rem;
 }
 
@@ -29,7 +29,7 @@
     font-size  : 0.75rem;
     font-family: SourceHanSansCN-Normal, SourceHanSansCN;
     font-weight: 400;
-    color      : #6D57DC;
+    color      : #0091FF;
     line-height: 1.13rem;
 }
 
@@ -40,12 +40,12 @@
     display      : inline-block;
     width        : 8.13rem;
     height       : 2.5rem;
-    background   : #E0C6FF;
+    background   : #77D9FF;
     border-radius: 0.63rem;
     font-size    : 1rem;
     font-family  : SourceHanSansCN-Normal, SourceHanSansCN;
     font-weight  : 400;
-    color        : #6D57DC;
+    color        : #007EFF;
     line-height  : 2.5rem;
     text-align   : center;
     margin-bottom: 0.75rem;
@@ -58,7 +58,7 @@
     display      : inline-block;
     width        : 8.13rem;
     height       : 2.5rem;
-    background   : #9678FF;
+    background   : #0091FF;
     border-radius: 0.63rem;
     font-size    : 1rem;
     font-family  : SourceHanSansCN-Normal, SourceHanSansCN;
@@ -75,7 +75,7 @@
     font-size  : 1rem;
     font-family: SourceHanSansCN-Normal, SourceHanSansCN;
     font-weight: 400;
-    color      : #7650ff;
+    color      : #0091FF;
     margin     : 0.6rem 1.2rem;
 }
 
@@ -93,6 +93,9 @@
     height        : 1.38rem;
     margin-right  : 0.44rem;
     vertical-align: middle;
+    display: inline-block;
+    text-align: center;
+    position:relative;
 }
 
 .code-list-container {
@@ -111,13 +114,16 @@
     height        : 1.38rem;
     margin-right  : 1.38rem;
     vertical-align: middle;
+    display: inline-block;
+    text-align: center;
+    position:relative;
 }
 
 .title {
     font-size  : 1.44rem;
     font-family: SourceHanSansCN-Bold, SourceHanSansCN;
     font-weight: bold;
-    color      : #6D57DC;
+    color      : #0091FF;
     line-height: 2.16rem;
     text-align : center;
     margin-top : 1.75rem;
@@ -148,4 +154,28 @@
     font-weight  : 500;
     color        : #FFFFFF;
     line-height  : 1.5rem;
+}
+
+input[type="checkbox"]::before {
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    background:#FFFFFF;
+    width:100%;
+    height:100%;
+    border: 0.06rem solid #0091FF;
+}
+
+input[type="checkbox"]:checked::before {
+    content:"\2713";
+    background-color:#32C5FF;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    border:1px solid #32C5FF;
+    color:#FFFFFF;
+    font-size:1rem;
+    font-weight:bolder;
 }

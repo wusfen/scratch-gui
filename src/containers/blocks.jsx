@@ -97,7 +97,7 @@ class Blocks extends React.Component {
             grid: {
                 length: 48,
                 spacing: 48,
-                colour: '#E0BAFF',
+                colour: '#32C5FF',
                 snap: true
             },
             zoom: {
