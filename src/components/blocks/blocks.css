@@ -201,6 +201,10 @@
     /* line-height: 1.17rem; */
 }
 
+.blocks :global(.blocklyText) {
+    font-size: 13.5pt;
+}
+
 .blocks :global(.blocklyMainWorkspaceScrollbar) {
 }
 
