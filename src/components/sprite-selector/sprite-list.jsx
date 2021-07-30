@@ -34,7 +34,10 @@ const SpriteList = function (props) {
     } = props;
 
     const isSpriteDrag = draggingType === DragConstants.SPRITE;
-
+    React.useEffect(() => {
+        dispatchEvent(new Event('addSprite'));
+    }, [items]);
+    
     return (
         <Box
             id="spriteList"

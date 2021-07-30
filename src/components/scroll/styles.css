@@ -1,0 +1,55 @@
+.scroll {
+    position: relative;
+    height: 35rem;
+    padding-top: 2rem;
+    padding-bottom: 2.2rem;
+}
+
+.content {
+    height: 100%;
+    overflow-y: scroll;
+    margin-left: -1rem;
+    padding-left: 1rem;
+}
+
+.line {
+    width: 4rem;
+    border-top: 0.06rem dotted #79BCFF;
+    margin: 0 auto;
+}
+
+.slide-up {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 4.06rem;
+    height: 0.81rem;
+    background: #9EE4FF;
+    border-radius: 0.63rem 0.63rem 0rem 0rem;
+    margin: 0.84rem auto;
+    margin-bottom: 0.6rem;
+    line-height: 0.81rem;
+}
+.slide-up-img {
+    width: 0.94rem;
+    height: 0.5rem;
+}
+
+.slide-down {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 4.06rem;
+    height: 0.81rem;
+    background: #9EE4FF;
+    border-radius: 0rem 0rem 0.63rem 0.63rem;
+    margin: 0.84rem auto;
+    line-height: 0.81rem;
+}
+
+.slide-down-img {
+    width: 0.94rem;
+    height: 0.5rem;
+}
