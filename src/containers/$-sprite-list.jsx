@@ -31,7 +31,7 @@ import SpriteList from '../components/sprite-selector/sprite-list.jsx';
 import styles from './$-sprite-list.css';
 
 import StageSelector from '../containers/stage-selector.jsx';
-
+import Scroll from '../components/scroll/index.jsx';
 
 class TargetPane$ extends React.Component {
     constructor (props) {
@@ -304,7 +304,6 @@ class TargetPane$ extends React.Component {
                     classNames(styles.list)
                 }
             >
-
                 <StageSelector
                     asset={
                         stage.costume &&
@@ -315,30 +314,20 @@ class TargetPane$ extends React.Component {
                     selected={stage.id === editingTarget}
                     onSelect={this.handleSelectSprite}
                 />
-                <div className={styles.slideUp}>
-                    <img 
-                        className={styles.slideUpImg}
-                        src={require('../assets/icons/slide-up.svg')}
-                    />
-                </div>
-                <SpriteList
-                    editingTarget={editingTarget}
-                    hoveredTarget={hoveredTarget}
-                    items={Object.keys(sprites).map(id => sprites[id])}
-                    raised={raiseSprites}
-                    selectedId={editingTarget}
-                    onDeleteSprite={this.handleDeleteSprite}
-                    onDrop={this.handleDrop}
-                    onDuplicateSprite={this.handleDuplicateSprite}
-                    onExportSprite={this.handleExportSprite}
-                    onSelectSprite={this.handleSelectSprite}
-                />
-                <div className={styles.slideDown}>
-                    <img 
-                        className={styles.slideDownImg}
-                        src={require('../assets/icons/slide-down.svg')}
-                    />
-                </div>
+                <Scroll>
+                    <SpriteList
+                        editingTarget={editingTarget}
+                        hoveredTarget={hoveredTarget}
+                        items={Object.keys(sprites).map(id => sprites[id])}
+                        raised={raiseSprites}
+                        selectedId={editingTarget}
+                        onDeleteSprite={this.handleDeleteSprite}
+                        onDrop={this.handleDrop}
+                        onDuplicateSprite={this.handleDuplicateSprite}
+                        onExportSprite={this.handleExportSprite}
+                        onSelectSprite={this.handleSelectSprite}
+                    />  
+                </Scroll>
             </div>
 
         );

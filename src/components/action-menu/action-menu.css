@@ -86,6 +86,7 @@ button::-moz-focus-inner {
     bottom: calc($more-button-size + 1.8rem);
     margin-bottom: calc($main-button-size / -2);
     z-index: 9;
+    border-top-left-radius: 0.63rem;
     /* padding-bottom: calc($main-button-size / 2); */
 }
 
@@ -97,7 +98,7 @@ button::-moz-focus-inner {
     flex-direction: column;
     justify-content: flex-end;
     z-index: 10; /* @todo justify */
-    height: 39.6rem;
+    height: 40.4rem;
 }
 
 .file-input {
