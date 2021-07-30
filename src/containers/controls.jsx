@@ -9,6 +9,7 @@ import startBgS from '../assets/sounds/begin.mp3';
 import {CODE_TIME_1, timerType} from '../components/timer/data';
 
 import {ajax} from '../lib/ajax.js';
+import {playTipAudio} from '../lib/courseTip/TipAudio.js';
 
 class Controls extends React.Component {
     constructor (props) {
@@ -32,8 +33,7 @@ class Controls extends React.Component {
         }
     }
     playSound () {
-        var _audio = new Audio(startBgS);
-        _audio.play(); // 播放 mp3这个音频对象
+        playTipAudio(startBgS);
     }
 
     getInitState () {

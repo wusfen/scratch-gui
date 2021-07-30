@@ -14,6 +14,7 @@ import initPng from './test.png';
 const c = styles;
 Object.assign(c, require('../../css/animate.css'));
 import {OPERATE_TIME_2, timerType} from '../timer/data';
+import {playTipAudio} from '../../lib/courseTip/TipAudio.js';
 
 class Tips extends React.Component{
     constructor (props) {
@@ -53,10 +54,10 @@ class Tips extends React.Component{
 
     componentWillUnmount () {
         clearTimeout(this.timeOutEvent);
-        this.audio.pause();
-        this.audio = null;
+        // this.audio.pause();
+        // this.audio = null;
     }
-    
+
     judgeVideoOrImageText = () => {
         let tipVideo = getParam('tipVideo');
         const tipPic = getParam('tipPic');
@@ -73,11 +74,12 @@ class Tips extends React.Component{
             imageSrc: tipPic || initPng
         });
     }
-    
+
     createAudio = tipSrc => {
-        this.audio = document.createElement('audio');
-        const src = tipSrc ? tipSrc : getParam('tipAudio');
-        this.audio.src = src ? src : '';
+        playTipAudio(tipSrc);
+        // this.audio = document.createElement('audio');
+        // const src = tipSrc ? tipSrc : getParam('tipAudio');
+        // this.audio.src = src ? src : '';
     }
     clickTips = () => {
         const {clickCount, tipVideo} = this.state;
@@ -106,7 +108,7 @@ class Tips extends React.Component{
         const {
             ...props
         } = this.props;
-        
+
         const {
             promptAreaShow,
             videoSrc,
@@ -115,7 +117,7 @@ class Tips extends React.Component{
             type,
             ...state
         } = this.state;
-        
+
         return (
             <div
                 className={classNames({
