@@ -120,7 +120,8 @@ class Tips extends React.Component{
             <div
                 className={classNames({
                     [styles.container]: true,
-                    [styles.blingBling]: showState})}
+                    [styles.blingBling]: showState,
+                    [styles.blingBlingRight]: showState})}
             >
                 <img
                     className={styles.tipIcon}
