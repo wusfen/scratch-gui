@@ -94,7 +94,7 @@ class Component extends React.Component{
     handleClose () {
         // TODO 这里已有 `submit:已提交错误` 事件
         if (/错误/.test(this.state.status)) {
-            window.dispatchEvent(new Event(`noAction:${timerType.OPERATE}:${OPERATE_TIME_2}`));
+            window.dispatchEvent(new Event('提交错误:关闭弹窗'));
         }
 
         this.props.vm.stopAll();
