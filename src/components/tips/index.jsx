@@ -35,27 +35,25 @@ class Tips extends React.Component{
         ]);
     }
     componentDidMount () {
-        this.createAudio(tipAudio);
         this.judgeVideoOrImageText();
         const s = this;
         window.addEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_2}`, () => {
             s.setState({
                 showState: true
             });
-            s.audio.play();
+            playTipAudio(tipAudio);
             s.timeOutEvent = setTimeout(() => {
                 s.setState({
                     showState: false
                 });
-                s.audio.pause();
+
             }, 12000);
         });
     }
 
     componentWillUnmount () {
         clearTimeout(this.timeOutEvent);
-        // this.audio.pause();
-        // this.audio = null;
+
     }
 
     judgeVideoOrImageText = () => {
