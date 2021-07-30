@@ -42,6 +42,9 @@ ajax.setSettings({
         }
     },
     onload (res, options) {
+        if (options.responseType === 'blob') {
+            return res;
+        }
 
         if (!/^(0|200)$/.test(res.code)) {
             if (!options.silence) {
@@ -55,6 +58,7 @@ ajax.setSettings({
     },
     async onerror (e, options) {
         if (options.silence) return;
+        console.f12 = 2;
         await alert('接口异常');
         window.bridge.emit('exitEditor');
     },
