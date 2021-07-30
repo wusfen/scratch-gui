@@ -31,7 +31,7 @@ class Counter {
 
     judgeCount = () => {
         if (this.type === counterType.JSON_ERROR) {
-            if (JSON_COUNT_RANGE_START <= this.count < JSON_COUNT_RANGE_END) {
+            if (JSON_COUNT_RANGE_START <= this.count && this.count < JSON_COUNT_RANGE_END) {
                 dispatchEvent(new Event('jsonErrorCounterInRange'));
             } else if (this.count > JSON_COUNT_RANGE_END) {
                 dispatchEvent(new Event('jsonErrorCounterOutRange'));

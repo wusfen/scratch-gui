@@ -40,7 +40,7 @@ import cloudManagerHOC from '../lib/cloud-manager-hoc.jsx';
 
 import GUIComponent from '../components/gui/gui.jsx';
 import {setIsScratchDesktop} from '../lib/isScratchDesktop.js';
-import {getParam} from '../lib/param';
+import getTipParam from '../lib/courseTip/getTipParam';
 import Timer from '../components/timer/index';
 import {timerType} from '../components/timer/data';
 import Counter from '../components/counter/index';
@@ -98,7 +98,7 @@ class GUI extends React.Component {
     }
     
     handleVideoSrc = () => {
-        let videoSrc = getParam('introVideo');
+        let videoSrc = getTipParam('introVideo');
         if (videoSrc){ // 有初始引导
             addEventListener('projectLoadSucceed', () => { // 等待工程加载完毕
                 this.setState({promptAreaShow: true});

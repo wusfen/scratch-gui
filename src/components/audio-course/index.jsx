@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 
 import styles from './styles.css';
 import audioIcon from './audio.svg';
-import {getParam} from '../../lib/param';
+import getTipParam from '../../lib/courseTip/getTipParam';
 import {OPERATE_TIME_1, OPERATE_TIME_2, CODE_TIME_1, timerType} from '../timer/data';
 import {setTipAudioSrc} from '../../reducers/tipAudio';
 import tipAudioSource from '../../assets/sounds/tipAudio.mp3';
@@ -26,7 +26,7 @@ class AudioCourse extends React.Component{
         ]);
     }
     componentDidMount () {
-        this.titleAudioSrc = getParam('tipAudio');
+        this.titleAudioSrc = getTipParam('tipAudio');
         this.createAudio();
         window.addEventListener('clickSubmit', this.closeAudio);// 点击提交终止语音
         window.addEventListener('clickVideoTips', this.closeAudio);// 点击视频提示终止语音

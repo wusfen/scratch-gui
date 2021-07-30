@@ -105,7 +105,7 @@ class Timer {
 
             window.addEventListener('submitErrorCounter1', this.resetTimer); // 第一次提交错误，触发了引导学生点击提示，需要重置计时器
             // json自动批改错误，容错小范围内，触发了引导学生点击提示，需要重置计时器
-            window.addEventListener('jsonErrorCounterInRange', this.resetTimer); 
+            window.addEventListener('jsonErrorCounterInRange', this.resetTimer);
         }
     }
    
