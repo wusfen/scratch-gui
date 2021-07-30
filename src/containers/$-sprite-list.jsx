@@ -304,14 +304,6 @@ class TargetPane$ extends React.Component {
                     classNames(styles.list)
                 }
             >
-                {/* <img
-                    className={
-                        classNames(styles.dirBtn, styles.upBtn)
-                    }
-                    onClick={this.clickDirBtn.bind(this, 'up')}
-                    src={require('../assets/icons/slist_up_btn.png')}
-                    alt=""
-                /> */}
 
                 <StageSelector
                     asset={
@@ -347,15 +339,6 @@ class TargetPane$ extends React.Component {
                         src={require('../assets/icons/slide-down.svg')}
                     />
                 </div>
-
-                {/* <img
-                    onClick={this.clickDirBtn.bind(this, 'down')}
-                    className={
-                        classNames(styles.dirBtn, styles.downBtn)
-                    }
-                    src={require('../assets/icons/slist_down_btn.png')}
-                    alt=""
-                /> */}
             </div>
 
         );

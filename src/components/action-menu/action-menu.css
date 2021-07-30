@@ -95,6 +95,7 @@ button::-moz-focus-inner {
     overflow-x: visible;
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
     z-index: 10; /* @todo justify */
     height: 39.6rem;
 }

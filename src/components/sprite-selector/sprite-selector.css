@@ -52,6 +52,8 @@
               then back up, introduces white space in the outside the page container.
     */
     height: calc(100% - $sprite-info-height);
+    margin-left: -1rem;
+    padding-left: 1rem;
     overflow-y: auto;
 }
 
@@ -69,7 +71,7 @@
     padding-right: calc($space / 2);
     padding-bottom: $space;
 
-    overflow-x: hidden;
+    overflow-x: visible;
 
     justify-content: center;
     padding-bottom: 4.375rem;
