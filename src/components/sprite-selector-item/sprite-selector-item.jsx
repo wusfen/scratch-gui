@@ -48,30 +48,6 @@ const SpriteSelectorItem = props => (
         </div>
 
         {(props.selected && props.onDeleteButtonClick) ? (
-            // <div className={styles.actionWrap}>
-            //     <button
-            //         hidden={!!props.number}
-            //         type="button"
-            //         onClick={function (e) {
-            //             e.stopPropagation();
-            //             window.dispatchEvent(new Event('editSprite'));
-            //             document.querySelector('[role="tablist"]').children[1].click();
-            //         }}
-            //     >
-            //         <img
-            //             src={require('../../assets/icons/edit.svg')}
-            //             alt="*"
-            //         />
-            //     </button>
-            //     <button
-            //         type="button"
-            //         onClick={props.onDeleteButtonClick}
-            //     >
-            //         <img
-            //             src={require('../../assets/icons/delete.svg')}
-            //             alt="-"
-            //         /></button>
-            // </div>
             <section>
                 <div className={styles.deleteSprite}>
                     <img
