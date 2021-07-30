@@ -27,7 +27,7 @@ export default function (Blockly, vm){
                 const name = field.getAttribute('name');
                 if (name === 'VARIABLE'|| name === 'BROADCAST_OPTION' || name === 'LIST'){
                     const name = field.innerHTML;
-                    if (name.indexOf('#') == 0 && name.length - 1 == name.indexOf('*')){
+                    if (name.indexOf('#') === 0 && name.length - 1 === name.indexOf('*')){
                         return true;
                     }
                 }
@@ -58,7 +58,7 @@ export default function (Blockly, vm){
             start += 10;
             const end = html.indexOf("\"", start);
             const name = html.substring(start, end);
-            if (name.indexOf('#') == 0 && -1 !== name.indexOf('*')){
+            if (name.indexOf('#') === 0 && -1 !== name.indexOf('*')){
                 return true;
             }
         }
