@@ -11,6 +11,7 @@ import {getParam} from '../../lib/param';
 import {OPERATE_TIME_1, OPERATE_TIME_2, CODE_TIME_1, timerType} from '../timer/data';
 import {setTipAudioSrc} from '../../reducers/tipAudio';
 import tipAudioSource from '../../assets/sounds/tipAudio.mp3';
+import {playTipAudio} from '../../lib/courseTip/TipAudio.js';
 const c = styles;
 Object.assign(c, require('../../css/animate.css'));
 class AudioCourse extends React.Component{
@@ -53,22 +54,21 @@ class AudioCourse extends React.Component{
     openTitleAudio = () => {
         this.audio.pause();
         if (this.titleAudioSrc){
-            this.audio.src = this.titleAudioSrc;
             this.setState({
                 isPlay: true
             });
-            this.audio.currentTime = 0;
-            this.audio.play();
+        
+            console.log('openTitleAudio');
+            playTipAudio(this.titleAudioSrc);
         }
     }
     openTipAudio = () => {
-        this.audio.pause();
-        this.audio.src = tipAudioSource;
+        console.log('openTipAudio');
+        playTipAudio(tipAudioSource);
         this.setState({
             isPlay: true
         });
-        this.audio.currentTime = 0;
-        this.audio.play();
+    
     }
     closeAudio = () => {
         this.setState({
@@ -81,7 +81,7 @@ class AudioCourse extends React.Component{
             children,
             ...props
         } = this.props;
-        
+
         const {
             isPlay,
             ...state
