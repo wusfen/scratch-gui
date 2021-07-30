@@ -69,9 +69,9 @@ function request (options) {
     xhr.onload = function (e) {
         // success
         if (/^(2..|304)$/.test(xhr.status)) {
-            let result = xhr.responseText;
+            let result = null;
             try {
-                result = xhr.response || result;
+                result = xhr.response || xhr.responseText;
                 result = JSON.parse(result);
             // eslint-disable-next-line no-catch-shadow, no-empty, no-shadow
             } catch (e) {}

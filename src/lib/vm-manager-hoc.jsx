@@ -36,6 +36,7 @@ const vmManagerHOC = function (WrappedComponent) {
                 this.props.vm.setLocale(this.props.locale, this.props.messages);
             }
             if (!this.props.isPlayerOnly && !this.props.isStarted) {
+                console.log("vm.start-Mount");
                 this.props.vm.start();
             }
         }
@@ -48,6 +49,7 @@ const vmManagerHOC = function (WrappedComponent) {
             }
             // Start the VM if entering editor mode with an unstarted vm
             if (!this.props.isPlayerOnly && !this.props.isStarted) {
+                console.log("vm.start-Update");
                 this.props.vm.start();
             }
         }
@@ -57,7 +59,7 @@ const vmManagerHOC = function (WrappedComponent) {
                     this.props.onLoadedProject(this.props.loadingState, this.props.canSave);
                     // Wrap in a setTimeout because skin loading in
                     // the renderer can be async.
-                    setTimeout(() => this.props.onSetProjectUnchanged());
+                    setTimeout(() => this.props.onSetProjectUnchanged(), 32);
 
                     // If the vm is not running, call draw on the renderer manually
                     // This draws the state of the loaded project with no blocks running

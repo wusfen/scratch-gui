@@ -5,7 +5,6 @@ import bindAll from 'lodash.bindall';
 import {connect} from 'react-redux';
 
 import {setProjectUnchanged} from '../reducers/project-changed';
-import {setProjectTitle} from '../reducers/project-title';
 
 import {
     LoadingState,
@@ -97,11 +96,10 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             fileUrl = sb3Map[fileUrl] || fileUrl || sb3Map.default;
 
             console.info('[load sb3]', fileUrl);
-            
+
             // fetch
             if (/^http|.sb3$/.test(fileUrl)) {
-                const res = await fetch(fileUrl);
-                const blob = await res.blob();
+                const blob = await ajax.get(fileUrl, {}, {responseType: 'blob', base: ''});
                 const buffer = await blob.arrayBuffer();
                 // loadProject
                 this.props.onFetchedProjectData(buffer, loadingState);
