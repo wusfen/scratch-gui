@@ -49,6 +49,7 @@ class Component extends React.Component{
 
         bindAll(this, [
             'handleClose',
+            'handleExit',
             'startBackTimer'
         ]);
 
@@ -91,17 +92,30 @@ class Component extends React.Component{
         };
     }
     handleClose () {
+        // TODO 这里已有 `submit:已提交错误` 事件
         if (/错误/.test(this.state.status)) {
             window.dispatchEvent(new Event(`noAction:${timerType.OPERATE}:${OPERATE_TIME_2}`));
         }
 
-        if (this.state.isShowBackButton) {
-            // menu-bar.jsx
-            dispatchEvent(new Event('skipSaveExit'));
-        }
         this.props.vm.stopAll();
         this.setState(this.getInitState());
         clearInterval(this.timer);
+    }
+    handleExit () {
+        this.props.vm.stopAll();
+        this.setState(this.getInitState());
+        clearInterval(this.timer);
+
+        // to: menu-bar.jsx autoSave
+        if (/跳过/.test(this.state.status)) {
+            dispatchEvent(new Event('submit-result-dialog:跳过退出'));
+            return;
+        }
+        if (/正确/.test(this.state.status)) {
+            // dispatchEvent(new Event('submit-result-dialog:正确退出'));
+            window.bridge.emit('exitEditor', {type: 'submit'});
+            return;
+        }
     }
     startBackTimer () {
         this.setState({
@@ -153,7 +167,7 @@ class Component extends React.Component{
                         hidden={!(isShowBackButton)}
                         type="button"
                         className={classNames(styles.button)}
-                        onClick={this.handleClose}
+                        onClick={this.handleExit}
                     >
                         {`返回课程 (${backTimeRemain}s)`}
                     </button>
