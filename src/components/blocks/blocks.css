@@ -252,3 +252,7 @@
     bottom: 1.63rem;
     z-index: 810;
 }
+
+.blocks :global(.blocklyText) {
+    font-size: 13.5pt;
+}
