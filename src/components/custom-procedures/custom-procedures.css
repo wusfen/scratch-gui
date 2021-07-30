@@ -4,8 +4,8 @@
 .modal-content {
     width: 33.25rem;
     height: 25.3rem;
-    background: #f1e0ff;
-    box-shadow: 0rem 0.03rem 0.44rem 0rem #d096ff;
+    background: #EAF7FF;
+    box-shadow: 0rem 0.03rem 0.44rem 0rem #32C5FF;
     border-radius: 1.25rem;
     border: none;
     overflow: visible;
@@ -111,8 +111,8 @@
     width: 6.56rem;
     height: 2.5rem;
     line-height: 2.5rem;
-    background: #9678ff;
-    box-shadow: 0rem 0.03rem 0.66rem 0rem #886dff;
+    background: #0091FF;
+    box-shadow: 0rem 0.03rem 0.66rem 0rem #0582e0;
     border-radius: 0.63rem;
 }
 
@@ -138,8 +138,8 @@
 }
 
 .modal-content [class*="blocklyMainBackground"] {
-    stroke: #f1e0ff !important;
-    fill: #f1e0ff !important;
+    stroke: #EAF7FF !important;
+    fill: #EAF7FF !important;
 }
 
 .input-box {

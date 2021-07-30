@@ -57,7 +57,7 @@ $motion-light-transparent: hsla(
 $red-primary: hsla(20, 100%, 55%, 1); /* #FF661A */
 $red-tertiary: hsla(20, 100%, 45%, 1); /* #E64D00 */
 
-$sound-primary: hsla(300, 53%, 60%, 1); /* #CF63CF */
+$sound-primary: hsla(197,100%,60%, 1); /* #32C5FF */
 $sound-tertiary: hsla(300, 48%, 50%, 1); /* #BD42BD */
 
 $control-primary: hsla(38, 100%, 55%, 1); /* #FFAB19 */
@@ -95,14 +95,14 @@ $motion-primary: #ccc;
 $motion-tertiary: #555;
 $motion-transparent: #fff8;
 
-$ui-primary: #ac9afe;
-$ui-secondary: #ac9afe88;
-$motion-primary: #886dff;
-$motion-primary: #9678ff;
-$motion-tertiary: #9678ff;
+$ui-primary: #76CBFF;
+$ui-secondary: #76CBFF88;
+$motion-primary: #0091FF;
+$motion-primary: #00B6FF;
+$motion-tertiary: #00B6FF;
 $motion-transparent: #d1c4ff21;
 $text-primary: hsla(254, 100%, 15%, 0.68);
 
-$extensions-primary: #ac9afe88;
+$extensions-primary: #76CBFF88;
 
 $ui-modal-overlay: rgba(0, 0, 0, 0.75);

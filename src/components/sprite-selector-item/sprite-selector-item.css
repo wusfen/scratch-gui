@@ -35,14 +35,14 @@
     /* border: .125rem solid $motion-primary; */
     /* background: $ui-white; */
 
-    background: #8362f9;
+    background: #006BD8;
 }
 
 .sprite-selector-item:hover {
     /* border: .125rem solid $motion-primary; */
     /* background: $ui-white; */
 
-    background: #8362f9;
+    background: #006BD8;
 }
 
 .sprite-selector-item:hover .sprite-image,
@@ -92,7 +92,7 @@
     padding: 1px 0 0.25rem;
     font-family: SourceHanSansCN-Normal;
     font-size: 0.75rem;
-    color: #f1e0ff;
+    color: #EAF7FF;
     text-align: center;
 }
 
@@ -154,7 +154,7 @@
     left: 0;
     right: 0;
     display: flex;
-    background: #724bfa;
+    background: #008FFD;
     border-radius: 0.625rem;
 }
 @media screen and (pointer: fine) {
