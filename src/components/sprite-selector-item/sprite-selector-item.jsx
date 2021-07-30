@@ -48,30 +48,55 @@ const SpriteSelectorItem = props => (
         </div>
 
         {(props.selected && props.onDeleteButtonClick) ? (
-            <div className={styles.actionWrap}>
-                <button
-                    hidden={!!props.number}
-                    type="button"
-                    onClick={function (e) {
-                        e.stopPropagation();
-                        window.dispatchEvent(new Event('editSprite'));
-                        document.querySelector('[role="tablist"]').children[1].click();
-                    }}
-                >
+            // <div className={styles.actionWrap}>
+            //     <button
+            //         hidden={!!props.number}
+            //         type="button"
+            //         onClick={function (e) {
+            //             e.stopPropagation();
+            //             window.dispatchEvent(new Event('editSprite'));
+            //             document.querySelector('[role="tablist"]').children[1].click();
+            //         }}
+            //     >
+            //         <img
+            //             src={require('../../assets/icons/edit.svg')}
+            //             alt="*"
+            //         />
+            //     </button>
+            //     <button
+            //         type="button"
+            //         onClick={props.onDeleteButtonClick}
+            //     >
+            //         <img
+            //             src={require('../../assets/icons/delete.svg')}
+            //             alt="-"
+            //         /></button>
+            // </div>
+            <section>
+                <div className={styles.deleteSprite}>
                     <img
-                        src={require('../../assets/icons/edit.svg')}
-                        alt="*"
-                    />
-                </button>
-                <button
-                    type="button"
-                    onClick={props.onDeleteButtonClick}
-                >
-                    <img
+                        className={styles.deleteImg}
                         src={require('../../assets/icons/delete.svg')}
-                        alt="-"
-                    /></button>
-            </div>
+                        alt="*"
+                        onClick={props.onDeleteButtonClick}
+                    />
+                </div>
+
+                <div className={styles.editSprite}>
+                    <img
+                        className={styles.editImg}
+                        src={require('../../assets/icons/triangle.svg')}
+                        alt="*"
+                        onClick={function (e) {
+                            e.stopPropagation();
+                            window.dispatchEvent(new Event('editSprite'));
+                            document.querySelector('[role="tablist"]').children[1].click();
+                        }}
+                    />
+                </div>
+            </section>
+            
+            
         ) : null }
 
         {props.onDuplicateButtonClick || props.onDeleteButtonClick || props.onExportButtonClick ? (

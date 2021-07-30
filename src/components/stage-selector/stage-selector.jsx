@@ -102,7 +102,7 @@ const StageSelector = props => {
 
             {selected ?
                 <div className={styles.actionWrap}>
-                    <button
+                    {/* <button
                         hidden={!!props.number}
                         type="button"
                         onClick={function (e) {
@@ -115,7 +115,7 @@ const StageSelector = props => {
                             src={require('../../assets/icons/edit.svg')}
                             alt="*"
                         />
-                    </button>
+                    </button> */}
                 </div> :
                 null}
             

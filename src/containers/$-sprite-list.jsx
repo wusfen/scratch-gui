@@ -304,14 +304,14 @@ class TargetPane$ extends React.Component {
                     classNames(styles.list)
                 }
             >
-                <img
+                {/* <img
                     className={
                         classNames(styles.dirBtn, styles.upBtn)
                     }
                     onClick={this.clickDirBtn.bind(this, 'up')}
                     src={require('../assets/icons/slist_up_btn.png')}
                     alt=""
-                />
+                /> */}
 
                 <StageSelector
                     asset={
@@ -323,6 +323,12 @@ class TargetPane$ extends React.Component {
                     selected={stage.id === editingTarget}
                     onSelect={this.handleSelectSprite}
                 />
+                <div className={styles.slideUp}>
+                    <img 
+                        className={styles.slideUpImg}
+                        src={require('../assets/icons/slide-up.svg')}
+                    />
+                </div>
                 <SpriteList
                     editingTarget={editingTarget}
                     hoveredTarget={hoveredTarget}
@@ -335,15 +341,21 @@ class TargetPane$ extends React.Component {
                     onExportSprite={this.handleExportSprite}
                     onSelectSprite={this.handleSelectSprite}
                 />
+                <div className={styles.slideDown}>
+                    <img 
+                        className={styles.slideDownImg}
+                        src={require('../assets/icons/slide-down.svg')}
+                    />
+                </div>
 
-                <img
+                {/* <img
                     onClick={this.clickDirBtn.bind(this, 'down')}
                     className={
                         classNames(styles.dirBtn, styles.downBtn)
                     }
                     src={require('../assets/icons/slist_down_btn.png')}
                     alt=""
-                />
+                /> */}
             </div>
 
         );
