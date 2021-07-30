@@ -5,6 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {intlShape, injectIntl} from 'react-intl';
+import Dialog from '../components/dialog/index.jsx';
 
 import {
     openSpriteLibrary,
@@ -87,6 +88,24 @@ class TargetPane$ extends React.Component {
         this.props.vm.postSpriteInfo({y});
     }
     handleDeleteSprite (id) {
+
+
+        var curTarget;
+        for (var i = 0; i < this.props.vm.runtime.targets.length; i++) {
+            if (this.props.vm.runtime.targets[i].id === id) {
+                curTarget = this.props.vm.runtime.targets[i];
+            }
+
+        }
+        if (curTarget && curTarget.hidden) {
+            Dialog.alert({
+                title: '求求你，别删我',
+                content: '我对本次练习非常重要，求求你不要删除我哦',
+                isConfirm: true
+            });
+            return;
+        }
+
         const restoreSprite = this.props.vm.deleteSprite(id);
         const restoreFun = () => restoreSprite().then(this.handleActivateBlocksTab);
 
@@ -250,7 +269,7 @@ class TargetPane$ extends React.Component {
         const ele = document.getElementById('spriteList');
         if (dir == 'up') {
             ele.scrollTop -= 100;
-           
+
         } else {
             ele.scrollTop += 100;
         }
