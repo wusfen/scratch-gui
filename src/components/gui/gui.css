@@ -233,34 +233,16 @@ html {
 }
 
 .extension-button-container {
-    width: 3.75rem;
-    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
-    /* bottom: 0; */
-    padding-top: 0.6rem;
-    padding-left: 0.3rem;
-    background: #EAF7FF;
-    border-radius: 1.25rem 0 0 0;
-    left: 0;
-    right: 0;
+    bottom: 0;
+    left: 0.249rem;
+    width: 3.56rem;
+    height: 3.56rem;
     z-index: $z-index-extension-button;
-    border-right: solid 0.05rem #A4DCF2;
-    /* background: $motion-primary;
-
-    border: 1px solid $motion-primary; */
-    box-sizing: content-box; /* To match scratch-block vertical toolbox borders */
-
-    width: calc(4.375rem - 1px);
-    box-sizing: border-box;
-}
-
-.extension-button-container span {
-    display: block;
-    font-size: 1.2rem;
-    font-family: SourceHanSansCN-Medium, SourceHanSansCN;
-    font-weight: bold;
-    color: #ffffff;
-    line-height: 1.125rem;
+    border-top: dotted 0.05rem #79bcff;
 }
 
 $fade-out-distance: 0.9375rem;
@@ -277,18 +259,16 @@ $fade-out-distance: 0.9375rem;
 }
 
 .extension-button {
-    min-width: 3.75rem;
-    height: 1.75rem;
-    background: #ff457f;
-    box-shadow: 0rem 1px 0.25rem 0rem rgb(0 0 0 / 33%),
-        inset 0rem 1px 0.75rem 0rem rgb(255 176 200);
-    border-radius: 0.625rem;
+    width: 1.78rem;
+    height: 1.78rem;
+    background: #32c5ff;
+    border-radius: 99px;
     font-size: 1.2rem;
     font-family: SourceHanSansCN-Medium, SourceHanSansCN;
     font-weight: bold;
     color: #ffffff;
     line-height: 1.125rem;
-    cursor: pointer;
+    box-shadow: 0 0 0.9375rem 0.625rem #fff;
 }
 
 .extension-button:hover span {

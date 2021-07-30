@@ -31,8 +31,9 @@ html {
 /* ================ */
 html {
     font-size: 16px;
+    transition: none;
 }
-// ja max 375: 375/266 * 1024
+// js max 375: 375/266 * 1024
 @media all and (max-width: 1443px) {
     html {
         font-size: calc(100vw / (1024 / 16));

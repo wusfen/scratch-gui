@@ -1,5 +1,5 @@
-
 .sprite-image {
+    display: none;
     margin: auto;
     user-select: none;
     max-width: 48px;
