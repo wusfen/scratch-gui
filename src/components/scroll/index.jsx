@@ -17,7 +17,6 @@ class Scroll extends React.Component{
             slideUpImgShow: false,
             slideDownImgShow: false,
         };
-        // this.switch = false
         bindAll(this, [
         ]);
     }
@@ -45,7 +44,7 @@ class Scroll extends React.Component{
 
     computeHasScroll = () => {
         if(!this.switch){
-            this.switch = true
+            this.switch = true;
             let timer = setTimeout(() => {
                 if(this.scrollContentRef.scrollHeight > this.scrollContentRef.clientHeight){ // 计算出现滚动条
                     this.setState({

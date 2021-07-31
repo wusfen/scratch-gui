@@ -76,13 +76,13 @@ button::-moz-focus-inner {
 
     /* border-top-left-radius: $more-button-size;
     border-top-right-radius: $more-button-size; */
-    width: calc($more-button-size + 2.75rem);
+    width: calc($more-button-size + 3rem);
     margin-left: calc(($main-button-size - $more-button-size) / 2);
     margin-right: calc(($main-button-size - $more-button-size) / 2);
     background: $motion-tertiary;
     position: absolute;
     /* top: -$main-button-size; */
-    left: -0.85rem;
+    left: -0.95rem;
     bottom: calc($more-button-size + 1.8rem);
     margin-bottom: calc($main-button-size / -2);
     z-index: 9;

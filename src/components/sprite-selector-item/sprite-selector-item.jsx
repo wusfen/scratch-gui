@@ -14,7 +14,8 @@ const SpriteSelectorItem = props => (
     <ContextMenuTrigger
         attributes={{
             className: classNames(props.className, styles.spriteSelectorItem, {
-                [styles.isSelected]: props.selected
+                [styles.isSelected]: props.selected,
+                [styles.isEditSpace]: props.isEditSpace || false
             }),
             onClick: props.onClick,
             onMouseEnter: props.onMouseEnter,
@@ -124,7 +125,8 @@ SpriteSelectorItem.propTypes = {
     onMouseEnter: PropTypes.func,
     onMouseLeave: PropTypes.func,
     preventContextMenu: PropTypes.bool,
-    selected: PropTypes.bool.isRequired
+    selected: PropTypes.bool.isRequired,
+    isEditSpace: PropTypes.bool
 };
 
 export default SpriteSelectorItem;

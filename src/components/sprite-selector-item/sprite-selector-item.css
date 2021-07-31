@@ -29,6 +29,7 @@
     color: $ui-white;
 }
 
+
 .sprite-selector-item.is-selected {
     /* box-shadow: 0rem 0rem 0rem .25rem $motion-transparent; */
     /* border: .125rem solid $motion-primary; */
@@ -39,6 +40,10 @@
     border-radius: 0.63rem 0rem 0rem 0.63rem;
     padding: 0;
     margin-left: -0.63rem;
+}
+
+.is-edit-space.sprite-selector-item.is-selected {
+    margin-left: 0;
 }
 
 .sprite-selector-item:hover {
@@ -64,6 +69,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.is-edit-space .delete-sprite {
+    top: -0.8rem;
+    left: 3.4rem;
 }
 
 .delete-img {
@@ -111,7 +121,7 @@
     width: 2.75rem;
     height: 2.75rem;
     object-fit: contain;
-    margin-top: 1rem;
+    margin-top: 0.58rem;
 }
 
 .sprite-info {
