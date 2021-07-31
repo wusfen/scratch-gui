@@ -56,6 +56,8 @@ $fade-out-distance: 6.25rem;
     flex-direction: column;
 }
 
+
+
 .list-area:after {
     /* Make sure there is room to scroll beyond the last tile */
     content: "";
@@ -73,6 +75,7 @@ $fade-out-distance: 6.25rem;
 
     height: 5.5625rem;
 }
+
 
 @media only screen and (max-width: $full-size-paint) {
     .wrapper {

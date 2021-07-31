@@ -71,6 +71,7 @@ const Selector = props => {
                             costumeURL={item.url}
                             details={item.details}
                             dragPayload={item.dragPayload}
+                            isEditSpace
                             dragType={dragType}
                             id={index}
                             index={index}

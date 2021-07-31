@@ -4,6 +4,7 @@
 $header-height: calc($stage-menu-height - 0.125rem);
 
 .stage-selector {
+    box-sizing: border-box;
     background-clip: padding-box;
     display: flex;
     flex-direction: column;
@@ -18,8 +19,6 @@ $header-height: calc($stage-menu-height - 0.125rem);
     border-style: solid;
     border-bottom: 0;
     cursor: pointer;
-    transition: all 0.25s ease;
-
     height: 5.5625rem;
     background: none;
     background-color: #9EE4FF;
@@ -29,12 +28,12 @@ $header-height: calc($stage-menu-height - 0.125rem);
 }
 
 .stage-selector.is-selected {
+    margin-left: 0rem;
     width: 5.25rem;
     height: 5.56rem;
     background: #E8F8FF;
     border-radius: 0.63rem 0rem 0rem 0.63rem;
-    padding: 0;
-    margin-left: 0rem;
+    
 }
 
 .stage-selector:hover {
