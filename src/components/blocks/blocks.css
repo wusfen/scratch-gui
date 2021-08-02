@@ -117,7 +117,7 @@
     bottom: 0;
     left: 0;
     /* width: 4.375rem; */
-    width: 4.06rem;
+    width: 4.59rem;
     height: auto;
     /* padding-top: 2.25rem; */
     padding-bottom: 4.375rem;
@@ -131,13 +131,13 @@
 .blocks :global(.scratchCategoryMenu) {
     width: 100%;
     background: none;
-    margin-top: calc(1.45rem - 0.69rem);
+    margin-top: calc((4.59rem - 3.69rem) / 2);
 }
 
 .blocks :global(.scratchCategoryMenuRow) {
-    width: 3.28rem;
-    height: 3.89rem;
-    margin: 0.45rem auto;
+    width: 3.69rem;
+    height: 4.35rem;
+    margin: 0 auto;
 }
 .blocks :global(.scratchCategoryMenuItem) {
     display: flex;
@@ -160,11 +160,10 @@
     /* min-width: 150px; */
     z-index: 41;
     /* transform: translate(calc(4.375rem - 1px), 0rem) !important; */
-    transform: translate(calc(4.06rem - 1px), 0rem) !important;
+    transform: translate(calc(4.59rem - 1px), 0rem) !important;
     border: 0;
     background: rgba(255, 255, 255, 0.8);
-    box-shadow: inset 0 0 0.3125rem 0rem rgba(0, 0, 0, 0.06),
-        0.11rem 0rem 0.31rem 0rem rgba(0, 0, 0, 0.13);
+    box-shadow: 0.11rem 0rem 0.31rem 0rem rgba(0, 0, 0, 0.13);
     border-radius: 0rem 0.56rem 0.56rem 0rem;
     backdrop-filter: blur(5px);
     animation: flyout 0.5s;

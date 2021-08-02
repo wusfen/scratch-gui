@@ -239,8 +239,8 @@ html {
     position: absolute;
     bottom: 0;
     left: 0.249rem;
-    width: 3.56rem;
-    height: 3.56rem;
+    width: 3.69rem;
+    height: 3.69rem;
     z-index: $z-index-extension-button;
     border-top: dotted 0.05rem #79bcff;
 }
