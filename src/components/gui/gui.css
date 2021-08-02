@@ -240,9 +240,10 @@ html {
     bottom: 0;
     left: 0.4rem;
     width: 3.69rem;
-    height: 3.69rem;
+    height: 4.1rem;
     z-index: $z-index-extension-button;
     border-top: dotted 0.05rem #79bcff;
+    padding-top: 1rem;
 }
 
 $fade-out-distance: 0.9375rem;
@@ -259,8 +260,8 @@ $fade-out-distance: 0.9375rem;
 }
 
 .extension-button {
-    width: 1.78rem;
-    height: 1.78rem;
+    width: 2rem;
+    height: 2rem;
     background: #32c5ff;
     border-radius: 99px;
     font-size: 1.2rem;
