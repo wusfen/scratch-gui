@@ -126,17 +126,19 @@
     border-bottom-left-radius: inherit;
     /* box-shadow: 1px 0 0.4375rem #e6c8ff; */
     border-right: solid 0.1rem #ddf4fb;
+    padding: 0 0.38rem;
 }
 
 .blocks :global(.scratchCategoryMenu) {
     width: 100%;
     background: none;
     margin-top: 0.625rem;
+    border-bottom: dotted 0.05rem #79bcff;
 }
 
 .blocks :global(.scratchCategoryMenuRow) {
     width: 3.69rem;
-    height: 4.35rem;
+    height: 4.325rem;
     margin: 0 auto;
 }
 .blocks :global(.scratchCategoryMenuItem) {
