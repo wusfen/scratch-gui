@@ -102,20 +102,25 @@ class Component extends React.Component{
         clearInterval(this.timer);
     }
     handleExit () {
+        const status = this.state.status;
+
+        // reset
         this.props.vm.stopAll();
         this.setState(this.getInitState());
         clearInterval(this.timer);
 
+        // exitEditor
         // to: menu-bar.jsx autoSave
-        if (/跳过/.test(this.state.status)) {
+        if (/跳过/.test(status)) {
             dispatchEvent(new Event('submit-result-dialog:跳过退出'));
             return;
         }
-        if (/正确/.test(this.state.status)) {
+        if (/正确/.test(status)) {
             // dispatchEvent(new Event('submit-result-dialog:正确退出'));
             window.bridge.emit('exitEditor', {type: 'submit'});
             return;
         }
+
     }
     startBackTimer () {
         this.setState({
