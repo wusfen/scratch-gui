@@ -125,7 +125,7 @@ class Component extends React.Component{
         let backTimeRemain = this.state.backTimeRemain;
         this.timer = setInterval(() => {
             if (backTimeRemain <= 0) {
-                this.handleClose();
+                this.handleExit();
                 return;
             }
 
