@@ -47,7 +47,10 @@ const StageWrapperComponent = function (props) {
                 />
             </Box>
             {loading ? (
-                <Loader isFullScreen={isFullScreen} isPlayerOnly={isPlayerOnly}/>
+                <Loader
+                    isFullScreen={isFullScreen}
+                    isPlayerOnly={isPlayerOnly}
+                />
             ) : null}
         </Box>
     );
