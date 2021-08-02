@@ -117,6 +117,11 @@ const config = {
             }
         ]
     },
+    resolve: {
+        alias: {
+            '@': path.resolve('./src/')
+        }
+    },
     resolveLoader: {
         alias: {
             'path-replace-loader': path.join(__dirname, './path-replace-loader-files/path-replace-loader.js')
