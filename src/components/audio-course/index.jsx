@@ -46,7 +46,12 @@ class AudioCourse extends React.Component{
     }
     createAudio = () => {
         this.audio = document.createElement('audio');
-        this.audio.addEventListener('ended', this.closeAudio);
+        this.audio.addEventListener('ended', () => {
+            console.log('读题语音结束，停止动效');
+            this.setState({
+                isPlay: false
+            });
+        });
     }
     openTitleAudio = () => {
         this.audio.pause();

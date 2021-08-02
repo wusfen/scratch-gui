@@ -13,7 +13,7 @@ import PromptArea from '../prompt-area/prompt-area.jsx';
 import initPng from './test.png';
 const c = styles;
 Object.assign(c, require('../../css/animate.css'));
-import {OPERATE_TIME_2, timerType} from '../timer/data';
+import {OPERATE_TIME_2, timerType, RIGHT_ANSWER_1, RIGHT_ANSWER_2} from '../timer/data';
 
 class Tips extends React.Component{
     constructor (props) {
@@ -47,6 +47,11 @@ class Tips extends React.Component{
     }
 
     initListener = () => {
+        // 正确答案计时器, 首次是97秒（重置一次之后是每隔61秒），就引导学生点击提示
+        window.addEventListener(`noAction:${timerType.RIGHT_ANSWER}:${RIGHT_ANSWER_1}`, this.touchTip);
+        // 正确答案计时器, 重置一次之后是每隔61秒，就引导学生点击提示
+        window.addEventListener(`noAction:${timerType.RIGHT_ANSWER}:${RIGHT_ANSWER_2}`, this.touchTip);
+        window.addEventListener('submitErrorCounter1', this.touchTip);
         window.addEventListener('submitErrorCounter1', this.touchTip); // 第一次提交错误
         window.addEventListener('submitErrorCounter2', this.clickTips); // 第二次提交错误，自动播放视频
         window.addEventListener('jsonErrorCounterInRange', this.touchTip); // json自动批改错误，容错小范围内
@@ -58,6 +63,8 @@ class Tips extends React.Component{
         window.removeEventListener('submitErrorCounter2', this.clickTips);
         window.removeEventListener('jsonErrorCounterInRange', this.touchTip);
         window.removeEventListener('jsonErrorCounterOutRange', this.clickTips);
+        window.removeEventListener(`noAction:${timerType.RIGHT_ANSWER}:${RIGHT_ANSWER_1}`, this.touchTip);
+        window.removeEventListener(`noAction:${timerType.RIGHT_ANSWER}:${RIGHT_ANSWER_2}`, this.touchTip);
     }
 
     touchTip = () => {
