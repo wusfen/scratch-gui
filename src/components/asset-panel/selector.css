@@ -2,7 +2,7 @@
 @import "../../css/units.css";
 
 .wrapper {
-    width: 5rem;
+    width: 5.25rem;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -15,14 +15,14 @@
 
 .new-buttons {
     position: absolute;
-    top: 0;
+    bottom: 0.15rem;
     width: 100%;
 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    padding: 0.5rem 0;
+    padding: 0.5rem 0 0.5rem 0.15rem;
     color: $motion-primary;
     text-align: center;
     background: none;
@@ -79,7 +79,7 @@ $fade-out-distance: 6.25rem;
 
 @media only screen and (max-width: $full-size-paint) {
     .wrapper {
-        width: 5rem;
+        width: 5.25rem;
     }
 
     .list-item {
