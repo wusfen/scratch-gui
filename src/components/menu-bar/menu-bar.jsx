@@ -1163,7 +1163,7 @@ class MenuBar extends React.Component {
                                 <button
                                     hidden={!(!isSaveAs)}
                                     className={`${c.button} ${c.yellow}`}
-                                    onClick={this.handleSave}
+                                    onClick={e => this.handleSave()}
                                 >
                                     {'保存'}
                                 </button>
@@ -1171,7 +1171,7 @@ class MenuBar extends React.Component {
                                 <button
                                     hidden={!(isSaveAs)}
                                     className={`${c.button} ${c.yellow}`}
-                                    onClick={this.handleSaveAs}
+                                    onClick={e => this.handleSaveAs()}
                                 >
                                     {'另存为'}
                                 </button>
