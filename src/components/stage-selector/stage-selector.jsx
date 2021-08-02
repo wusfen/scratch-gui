@@ -101,21 +101,17 @@ const StageSelector = props => {
 
 
             {selected ?
-                <div className={styles.actionWrap}>
-                    <button
-                        hidden={!!props.number}
-                        type="button"
+                <div className={styles.editSprite}>
+                    <img
+                        className={styles.editImg}
+                        src={require('../../assets/icons/triangle.svg')}
+                        alt="*"
                         onClick={function (e) {
                             e.stopPropagation();
                             window.dispatchEvent(new Event('editStage'));
                             document.querySelector('[role="tablist"]').children[1].click();
                         }}
-                    >
-                        <img
-                            src={require('../../assets/icons/edit.svg')}
-                            alt="*"
-                        />
-                    </button>
+                    />
                 </div> :
                 null}
             

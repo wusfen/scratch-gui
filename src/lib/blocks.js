@@ -2,7 +2,10 @@ import ScratchBlocks from 'scratch-blocks';
 import fixBugs from './blocks_fix_bugs';
 import teacherMode from './blocks_teacher_mode';
 import optimize from './blocks_optimize';
+import appear_modify from './blocks_appearance_modify';
 
+
+appear_modify(ScratchBlocks);
 fixBugs(ScratchBlocks);
 optimize(ScratchBlocks);
 

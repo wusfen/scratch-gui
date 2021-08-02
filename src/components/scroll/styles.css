@@ -1,28 +1,28 @@
-.list {
-    flex: none;
-    order: 1;
-    width: 5.25rem;
-    margin-left: 0.1875rem;
-    background: #B9EBFF;
-    box-shadow: 0rem 0.03rem 0.66rem 0rem rgba(0, 145, 255, 0.29);
-    border-radius: 0.63rem 0rem 0rem 0.63rem;
-    text-align: center;
-}
-.dir-btn {
-    text-align: center;
-    cursor: pointer;
-    width: 0.75rem;
-    height: 0.59rem;
-}
-.up-btn {
-    margin-top: 5px;
-}
-.down-btn {
+.scroll {
     position: relative;
-    top: -40px;
+    height: 35rem;
+    padding-top: 2rem;
+    padding-bottom: 2.2rem;
+}
+
+.content {
+    height: 100%;
+    overflow-y: scroll;
+    margin-left: -1rem;
+    padding-left: 1rem;
+}
+
+.line {
+    width: 4rem;
+    border-top: 0.06rem dotted #79BCFF;
+    margin: 0 auto;
 }
 
 .slide-up {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
     width: 4.06rem;
     height: 0.81rem;
     background: #9EE4FF;
@@ -37,6 +37,10 @@
 }
 
 .slide-down {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
     width: 4.06rem;
     height: 0.81rem;
     background: #9EE4FF;

@@ -51,8 +51,9 @@
               also introduces a new bug in Chrome when vertically resizing window down,
               then back up, introduces white space in the outside the page container.
     */
-    height: calc(100% - $sprite-info-height);
-    overflow-y: auto;
+    /* height: calc(100% - $sprite-info-height); */
+    
+    /* overflow-y: auto; */
 }
 
 .scroll-wrapper-dragging {
@@ -69,7 +70,7 @@
     padding-right: calc($space / 2);
     padding-bottom: $space;
 
-    overflow-x: hidden;
+    overflow-x: visible;
 
     justify-content: center;
     padding-bottom: 4.375rem;
@@ -77,7 +78,7 @@
 
 .add-button {
     position: fixed;
-    top: 4rem;
+    bottom: 1.5rem;
     left: 20.4rem;
     z-index: 99;
 }

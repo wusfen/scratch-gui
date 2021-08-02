@@ -44,10 +44,8 @@ button::-moz-focus-inner {
 .main-button {
     min-width: 3.75rem;
     height: 1.75rem;
-    background: #ff457f;
-    box-shadow: 0rem 1px 0.25rem 0rem rgba(0, 0, 0, 0.33),
-        inset 0rem 1px 0.75rem 0rem rgba(255, 176, 200, 1);
-    border-radius: 0.625rem;
+    background: #32C5FF;
+    border-radius: 0.63rem;
     font-size: 1.2rem;
     font-family: SourceHanSansCN-Medium, SourceHanSansCN;
     font-weight: bold;
@@ -78,16 +76,17 @@ button::-moz-focus-inner {
 
     /* border-top-left-radius: $more-button-size;
     border-top-right-radius: $more-button-size; */
-    width: calc($more-button-size + 2.75rem);
+    width: calc($more-button-size + 3rem);
     margin-left: calc(($main-button-size - $more-button-size) / 2);
     margin-right: calc(($main-button-size - $more-button-size) / 2);
     background: $motion-tertiary;
     position: absolute;
-    top: calc($main-button-size);
-    left: -0.85rem;
-
+    /* top: -$main-button-size; */
+    left: -0.95rem;
+    bottom: calc($more-button-size + 1.8rem);
     margin-bottom: calc($main-button-size / -2);
     z-index: 9;
+    border-top-left-radius: 0.63rem;
     /* padding-bottom: calc($main-button-size / 2); */
 }
 
@@ -97,7 +96,9 @@ button::-moz-focus-inner {
     overflow-x: visible;
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
     z-index: 10; /* @todo justify */
+    height: 40.4rem;
 }
 
 .file-input {

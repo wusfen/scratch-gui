@@ -97,7 +97,7 @@ class Blocks extends React.Component {
             grid: {
                 length: 48,
                 spacing: 48,
-                colour: '#32C5FF',
+                colour: '#ddf4fb',
                 snap: true
             },
             zoom: {
@@ -635,6 +635,7 @@ class Blocks extends React.Component {
         return (
             <React.Fragment>
                 <img
+                    hidden
                     className={
                         classNames(styles.dirBtn, styles.upBtn)
                     }
@@ -642,6 +643,7 @@ class Blocks extends React.Component {
                     src={require('../assets/icons/clist_up.png')}
                 ></img>
                 <img
+                    hidden
                     className={
                         classNames(styles.dirBtn, styles.downBtn)
                     }

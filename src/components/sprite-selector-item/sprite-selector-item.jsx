@@ -14,7 +14,8 @@ const SpriteSelectorItem = props => (
     <ContextMenuTrigger
         attributes={{
             className: classNames(props.className, styles.spriteSelectorItem, {
-                [styles.isSelected]: props.selected
+                [styles.isSelected]: props.selected,
+                [styles.isEditSpace]: props.isEditSpace || false
             }),
             onClick: props.onClick,
             onMouseEnter: props.onMouseEnter,
@@ -48,30 +49,31 @@ const SpriteSelectorItem = props => (
         </div>
 
         {(props.selected && props.onDeleteButtonClick) ? (
-            <div className={styles.actionWrap}>
-                <button
-                    hidden={!!props.number}
-                    type="button"
-                    onClick={function (e) {
-                        e.stopPropagation();
-                        window.dispatchEvent(new Event('editSprite'));
-                        document.querySelector('[role="tablist"]').children[1].click();
-                    }}
-                >
+            <section>
+                <div className={styles.deleteSprite}>
                     <img
-                        src={require('../../assets/icons/edit.svg')}
-                        alt="*"
-                    />
-                </button>
-                <button
-                    type="button"
-                    onClick={props.onDeleteButtonClick}
-                >
-                    <img
+                        className={styles.deleteImg}
                         src={require('../../assets/icons/delete.svg')}
-                        alt="-"
-                    /></button>
-            </div>
+                        alt="*"
+                        onClick={props.onDeleteButtonClick}
+                    />
+                </div>
+
+                <div className={styles.editSprite}>
+                    <img
+                        className={styles.editImg}
+                        src={require('../../assets/icons/triangle.svg')}
+                        alt="*"
+                        onClick={function (e) {
+                            e.stopPropagation();
+                            window.dispatchEvent(new Event('editSprite'));
+                            document.querySelector('[role="tablist"]').children[1].click();
+                        }}
+                    />
+                </div>
+            </section>
+            
+            
         ) : null }
 
         {props.onDuplicateButtonClick || props.onDeleteButtonClick || props.onExportButtonClick ? (
@@ -123,7 +125,8 @@ SpriteSelectorItem.propTypes = {
     onMouseEnter: PropTypes.func,
     onMouseLeave: PropTypes.func,
     preventContextMenu: PropTypes.bool,
-    selected: PropTypes.bool.isRequired
+    selected: PropTypes.bool.isRequired,
+    isEditSpace: PropTypes.bool
 };
 
 export default SpriteSelectorItem;

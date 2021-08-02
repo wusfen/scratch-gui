@@ -54,7 +54,7 @@
     */
     -ms-overflow-style: none;
 
-    background: #EAF7FF;
+    background: #fffefa;
 }
 
 [dir="rtl"] .blocks :global(.blocklyToolboxDiv) {
@@ -93,7 +93,7 @@
 .blocks :global(.scratchCategoryMenuItemLabel) {
     font-size: 0.75rem;
     line-height: 1.13rem;
-    color: #0091FF;
+    color: #0091ff;
 }
 
 .blocks :global(.blocklyMinimalBody) {
@@ -104,9 +104,9 @@
 /* ======================================== */
 
 .blocks :global(.injectionDiv) {
-    background: #FFFFFF;
-    box-shadow: inset 0 1px 0.4375rem 0 #32C5FF;
-    border-radius: 1.25rem;
+    background: #ffffff;
+    box-shadow: inset 0 1px 0.4375rem 0 #32c5ff;
+    border-radius: 0 0.56rem 0.56rem 0;
     border: 0;
 }
 
@@ -116,39 +116,56 @@
     top: 0;
     bottom: 0;
     left: 0;
-    width: 4.375rem;
+    /* width: 4.375rem; */
+    width: 4.06rem;
     height: auto;
-    padding-top: 2.25rem;
+    /* padding-top: 2.25rem; */
     padding-bottom: 4.375rem;
     border: 0;
     border-top-left-radius: inherit;
     border-bottom-left-radius: inherit;
     /* box-shadow: 1px 0 0.4375rem #e6c8ff; */
-    border-right: solid 0.1rem #A4DCF2;
+    border-right: solid 0.1rem #ddf4fb;
 }
 
 .blocks :global(.scratchCategoryMenu) {
     width: 100%;
     background: none;
-    margin-top: 2.19rem;
+    margin-top: calc(1.45rem - 0.69rem);
 }
 
 .blocks :global(.scratchCategoryMenuRow) {
-    height: 3.75rem;
-    margin: 0.5rem 0;
+    width: 3.28rem;
+    height: 3.89rem;
+    margin: 0.45rem auto;
+}
+.blocks :global(.scratchCategoryMenuItem) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    /* background: #e8f8ff; */
+    border-radius: 0.44rem;
+}
+.blocks :global(.categorySelected) {
+    background: #e8f8ff;
 }
 
 .blocks :global(.blocklyFlyout) {
     /* overflow: visible; */
-    /* width: 15.625rem; */
+    max-width: 15.11rem;
     /* max-width: 320px; */
     /* min-width: 150px; */
     z-index: 41;
-    transform: translate(calc(4.375rem - 1px), 0rem) !important;
+    /* transform: translate(calc(4.375rem - 1px), 0rem) !important; */
+    transform: translate(calc(4.06rem - 1px), 0rem) !important;
     border: 0;
     background: rgba(255, 255, 255, 0.8);
-    box-shadow: 0.625rem 1px 0.625rem -0.625rem rgba(0, 0, 0, 0.18);
-    border-radius: 0 1.25rem 1.25rem 0;
+    box-shadow: inset 0 0 0.3125rem 0rem rgba(0, 0, 0, 0.06),
+        0.11rem 0rem 0.31rem 0rem rgba(0, 0, 0, 0.13);
+    border-radius: 0rem 0.56rem 0.56rem 0rem;
     backdrop-filter: blur(5px);
     animation: flyout 0.5s;
 }
@@ -173,7 +190,19 @@
 }
 
 .blocks :global(.blocklyFlyoutLabel) {
-    display: none;
+}
+
+.blocks :global(.blocklyFlyoutLabelText) {
+    /* font-size: 0.78rem; */
+    font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+    font-weight: 500;
+    color: #aaacae;
+    fill: currentColor;
+    /* line-height: 1.17rem; */
+}
+
+.blocks :global(.blocklyText) {
+    font-size: 13.5pt;
 }
 
 .blocks :global(.blocklyMainWorkspaceScrollbar) {
@@ -205,13 +234,8 @@
     transform: translate(19.28125rem, 0.15625rem) !important;
 }
 
-.blocks :global(.categorySelected) {
-    background: rgba(255, 255, 255, 0.8);
-}
-
 .blocks :global(.blocklySvg) {
     background: none;
-    
 }
 
 .blocks :global(.blocklySvg) g * {
@@ -239,14 +263,14 @@
     width: 4.38rem;
     height: 100%;
     background: rgba(0, 0, 0, 0.6);
-    border-radius: 1.25rem 0rem 0rem 1.25rem;
+    /* border-radius: 1.25rem 0rem 0rem 1.25rem; */
     top: 0;
     left: 0;
     position: relative;
     z-index: 800;
 }
 
-.trashcan-img{
+.trashcan-img {
     position: absolute;
     width: 2.09rem;
     height: 2.25rem;

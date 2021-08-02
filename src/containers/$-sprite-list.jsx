@@ -32,7 +32,7 @@ import SpriteList from '../components/sprite-selector/sprite-list.jsx';
 import styles from './$-sprite-list.css';
 
 import StageSelector from '../containers/stage-selector.jsx';
-
+import Scroll from '../components/scroll/index.jsx';
 
 class TargetPane$ extends React.Component {
     constructor (props) {
@@ -324,15 +324,6 @@ class TargetPane$ extends React.Component {
                     classNames(styles.list)
                 }
             >
-                <img
-                    className={
-                        classNames(styles.dirBtn, styles.upBtn)
-                    }
-                    onClick={this.clickDirBtn.bind(this, 'up')}
-                    src={require('../assets/icons/slist_up_btn.png')}
-                    alt=""
-                />
-
                 <StageSelector
                     asset={
                         stage.costume &&
@@ -343,27 +334,20 @@ class TargetPane$ extends React.Component {
                     selected={stage.id === editingTarget}
                     onSelect={this.handleSelectSprite}
                 />
-                <SpriteList
-                    editingTarget={editingTarget}
-                    hoveredTarget={hoveredTarget}
-                    items={Object.keys(sprites).map(id => sprites[id])}
-                    raised={raiseSprites}
-                    selectedId={editingTarget}
-                    onDeleteSprite={this.handleDeleteSprite}
-                    onDrop={this.handleDrop}
-                    onDuplicateSprite={this.handleDuplicateSprite}
-                    onExportSprite={this.handleExportSprite}
-                    onSelectSprite={this.handleSelectSprite}
-                />
-
-                <img
-                    onClick={this.clickDirBtn.bind(this, 'down')}
-                    className={
-                        classNames(styles.dirBtn, styles.downBtn)
-                    }
-                    src={require('../assets/icons/slist_down_btn.png')}
-                    alt=""
-                />
+                <Scroll>
+                    <SpriteList
+                        editingTarget={editingTarget}
+                        hoveredTarget={hoveredTarget}
+                        items={Object.keys(sprites).map(id => sprites[id])}
+                        raised={raiseSprites}
+                        selectedId={editingTarget}
+                        onDeleteSprite={this.handleDeleteSprite}
+                        onDrop={this.handleDrop}
+                        onDuplicateSprite={this.handleDuplicateSprite}
+                        onExportSprite={this.handleExportSprite}
+                        onSelectSprite={this.handleSelectSprite}
+                    />  
+                </Scroll>
             </div>
 
         );
