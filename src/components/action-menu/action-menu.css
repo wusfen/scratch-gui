@@ -85,7 +85,7 @@ button::-moz-focus-inner {
     background: $motion-tertiary;
     position: absolute;
     /* top: -$main-button-size; */
-    left: -0.75rem;
+    left: -0.74rem;
     bottom: calc($more-button-size + 1.8rem);
     margin-bottom: calc($main-button-size / -2);
     z-index: 9;
@@ -101,7 +101,7 @@ button::-moz-focus-inner {
     flex-direction: column;
     justify-content: flex-end;
     z-index: 10; /* @todo justify */
-    height: 40.4rem;
+    height: 40.5rem;
     
 }
 

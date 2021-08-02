@@ -131,7 +131,7 @@
 .blocks :global(.scratchCategoryMenu) {
     width: 100%;
     background: none;
-    margin-top: calc((4.59rem - 3.69rem) / 2);
+    margin-top: 0.625rem;
 }
 
 .blocks :global(.scratchCategoryMenuRow) {

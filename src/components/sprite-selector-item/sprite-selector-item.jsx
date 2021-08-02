@@ -10,8 +10,9 @@ import {FormattedMessage} from 'react-intl';
 // react-contextmenu requires unique id to match trigger and context menu
 let contextMenuId = 0;
 
-const SpriteSelectorItem = props => (
-    <ContextMenuTrigger
+const SpriteSelectorItem = props => {
+    let isClickEdit = false;
+    return (<ContextMenuTrigger
         attributes={{
             className: classNames(props.className, styles.spriteSelectorItem, {
                 [styles.isSelected]: props.selected,
@@ -61,10 +62,13 @@ const SpriteSelectorItem = props => (
 
                 <div className={styles.editSprite}>
                     <img
-                        className={styles.editImg}
+                        className={classNames(styles.editImg, {
+                            [styles.isSelect]: isClickEdit
+                        })}
                         src={require('../../assets/icons/triangle.svg')}
                         alt="*"
                         onClick={function (e) {
+                            isClickEdit = true;
                             e.stopPropagation();
                             window.dispatchEvent(new Event('editSprite'));
                             document.querySelector('[role="tablist"]').children[1].click();
@@ -107,8 +111,8 @@ const SpriteSelectorItem = props => (
                 ) : null }
             </ContextMenu>
         ) : null}
-    </ContextMenuTrigger>
-);
+    </ContextMenuTrigger>);
+};
 
 SpriteSelectorItem.propTypes = {
     className: PropTypes.string,
