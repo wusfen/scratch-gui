@@ -41,6 +41,7 @@ module.exports = {
         'prefer-rest-params': 0,
         'require-jsdoc': 0,
         'func-style': 0,
+        'camelcase': 1,
     },
     settings: {
         react: {
