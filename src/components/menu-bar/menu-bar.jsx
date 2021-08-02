@@ -242,19 +242,21 @@ class MenuBar extends React.Component {
         });
         // 30秒自动保存一次
         // TODO 太耗资源
-        var timer = setInterval(() => {
-            console.log(`每${state._timeout}秒检查是否要自动保存`, this.props.projectChanged);
+        addEventListener('projectLoadSucceed', e => {
+            var timer = setInterval(() => {
+                console.log(`每${state._timeout}秒检查是否要自动保存`, this.props.projectChanged);
 
-            if (!(/^(course)$/.test(state.mode) && state.id && state.token)) {
-                console.warn('state.mode:', state.mode);
-                console.warn('state.id:', state.id);
-                console.warn('state.token:', state.token);
-                clearInterval(timer);
-                return;
-            }
+                if (!(/^(course)$/.test(state.mode) && state.id && state.token)) {
+                    console.warn('state.mode:', state.mode);
+                    console.warn('state.id:', state.id);
+                    console.warn('state.token:', state.token);
+                    clearInterval(timer);
+                    return;
+                }
 
-            this.autoSave(true);
-        }, state._timeout * 1000);
+                this.autoSave(true);
+            }, state._timeout * 1000);
+        });
 
         window.bridge.on('requireExitEditor', e => {
             this.handleExit('requireExitEditor');

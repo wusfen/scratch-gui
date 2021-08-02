@@ -53,7 +53,6 @@ const config = {
                     /node_modules[\\/]scratch-render[\\/]src/,
                 ],
                 use: [
-                    'cache-loader',
                     {
 
                         loader: 'babel-loader',
@@ -77,7 +76,6 @@ const config = {
             {
                 test: /\.css$/,
                 use: [
-                    'cache-loader',
                     {loader: 'style-loader'},
                     {
                         loader: 'css-loader',
@@ -189,8 +187,7 @@ const config = {
 
 
 try {
-    const local = require('./webpack.config.local.js');
-    Object.assign(config, local);
+    require('./webpack.config.local.js')(config);
 } catch (_) {
     //
 }
