@@ -59,7 +59,7 @@ ajax.setSettings({
     async onerror (e, options) {
         if (options.silence) return;
         console.f12 = 2;
-        await alert('接口异常');
+        await alert('哎呀，网络出点问题哦，请稍候重试');
         window.bridge.emit('exitEditor');
     },
     onloadend () {
