@@ -9,8 +9,13 @@ import * as bridge from '../../playground/bridge.js';
 class TipAudio {
     static audio = new Audio()
     constructor (src) {
-        this.audio = TipAudio.audio;
+        console.info('TipAudio:', (src));
+        TipAudio.audio.pause();
+
+        this.audio = new Audio(src);
         this.audio.src = src;
+        TipAudio.audio = this.audio;
+
         return this.audio;
     }
 }
@@ -35,8 +40,7 @@ addEventListener('pageshow', e => {
  * @returns {Audio} audio
  */
 function playTipAudio (src) {
-    var audio = new TipAudio();
-    audio.src = src;
+    var audio = new TipAudio(src);
     audio.play();
     return audio;
 }
@@ -45,3 +49,5 @@ export {
     TipAudio as default,
     playTipAudio,
 };
+
+window.playTipAudio = playTipAudio;
