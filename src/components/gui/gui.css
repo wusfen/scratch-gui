@@ -259,15 +259,18 @@ $fade-out-distance: 0.9375rem;
 }
 
 .extension-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 2rem;
     height: 2rem;
+    padding: 0;
     background: #32c5ff;
     border-radius: 99px;
     font-size: 1.2rem;
     font-family: SourceHanSansCN-Medium, SourceHanSansCN;
     font-weight: bold;
     color: #ffffff;
-    line-height: 1.125rem;
     box-shadow: 0 0 0.9375rem 0.625rem #fff;
 }
 
