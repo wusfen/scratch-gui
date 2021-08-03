@@ -1,3 +1,4 @@
+/* eslint-disable prefer-spread */
 import * as bridge from '../../playground/bridge.js';
 
 /**
@@ -12,9 +13,27 @@ class TipAudio {
         console.info('TipAudio:', (src));
         TipAudio.audio.pause();
 
-        this.audio = new Audio(src);
-        this.audio.src = src;
+        var audio = new Audio(src);
+
+        this.audio = audio;
         TipAudio.audio = this.audio;
+
+        // fix: pause error
+        audio._play = audio.play;
+        audio.play = function () {
+            var promise = audio._play();
+
+            audio._pause = audio.pause;
+            audio.pause = function () {
+                if (promise && promise.finally) {
+                    promise.finally(e => {
+                        audio._pause();
+                    });
+                }
+            };
+
+            return promise;
+        };
 
         return this.audio;
     }
