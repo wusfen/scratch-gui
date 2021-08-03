@@ -33,14 +33,14 @@ class Counter {
         if (this.type === counterType.JSON_ERROR) {
             if (JSON_COUNT_RANGE_START <= this.count && this.count < JSON_COUNT_RANGE_END) {
                 dispatchEvent(new Event('jsonErrorCounterInRange'));
-            } else if (this.count >= JSON_COUNT_RANGE_END) {
+            } else if (this.count === JSON_COUNT_RANGE_END) {
                 dispatchEvent(new Event('jsonErrorCounterOutRange'));
                 this.resetCounter(); // 自动播放提示视频，则重置错误计数器为0
             }
         } else if (this.type === counterType.SUBMIT_ERROR) {
             if (this.count === SUBMIT_COUNT_RANGE_1) {
                 dispatchEvent(new Event('submitErrorCounter1'));
-            } else if (this.count >= SUBMIT_COUNT_RANGE_2) {
+            } else if (this.count === SUBMIT_COUNT_RANGE_2) {
                 dispatchEvent(new Event('submitErrorCounter2'));
             }
         }

@@ -87,6 +87,7 @@ class Timer {
                 this.pauseTimer(); // 终止计时器
             };
             window.addEventListener('noVideoGuide', this.createRightAnswerTimer); // 没有视频引导
+            window.addEventListener('closeVideoGuide', this.createRightAnswerTimer); // 关闭视频引导
             window.addEventListener('closeVideoTips', this.createRightAnswerTimer); // 关闭视频引导
             window.addEventListener('hideEditingTarget', this.createRightAnswerTimer); // 关闭画板界面
             window.addEventListener('libraryBack', this.createRightAnswerTimer); // 关闭资源库
@@ -103,9 +104,9 @@ class Timer {
             window.addEventListener('submit:已提交正确', this.pauseRightAnswerTimer); // 提交正确
             window.addEventListener('运行时判断正确', this.pauseRightAnswerTimer); // 点击开始运行正确
 
-            window.addEventListener('submitErrorCounter1', this.resetTimer); // 第一次提交错误，触发了引导学生点击提示，需要重置计时器
+            window.addEventListener('submitErrorCounter1', this.resetRightAnswerTimer); // 第一次提交错误，触发了引导学生点击提示，需要重置计时器
             // json自动批改错误，容错小范围内，触发了引导学生点击提示，需要重置计时器
-            window.addEventListener('jsonErrorCounterInRange', this.resetTimer);
+            window.addEventListener('jsonErrorCounterInRange', this.resetRightAnswerTimer);
         }
     }
    
@@ -159,17 +160,22 @@ class Timer {
             this.operateTimer1 && clearTimeout(this.operateTimer1);
             this.operateTimer2 && clearTimeout(this.operateTimer2);
             break;
-        case timerType.RIGHT_ANSWER:
-            this.rightAnswerTimerIsReset = true;
-            this.rightAnswerTimer1 && clearTimeout(this.rightAnswerTimer1);
-            this.rightAnswerTimer2 && clearInterval(this.rightAnswerTimer2);
-            break;
         default:
             break;
         }
         if (this.state === '') return; // 重置计时器是在计时器已经存在的基础上
         this.createTimer();
     }
+
+    resetRightAnswerTimer = () => {
+        this.rightAnswerTimerIsReset = true;
+        this.rightAnswerTimer1 && clearTimeout(this.rightAnswerTimer1);
+        this.rightAnswerTimer2 && clearInterval(this.rightAnswerTimer2);
+        if (this.state === '') return;
+        this.createTimer();
+    }
+
+
     pauseTimer = () => {
         this.state = '';
         switch (this.type) {
@@ -231,8 +237,8 @@ class Timer {
             window.removeEventListener('projectRunning', this.pauseRightAnswerTimer);
             window.removeEventListener('submit:已提交正确', this.pauseRightAnswerTimer);
             window.removeEventListener('运行时判断正确', this.pauseRightAnswerTimer);
-            window.removeEventListener('submitErrorCounter1', this.resetTimer);
-            window.removeEventListener('jsonErrorCounterInRange', this.resetTimer);
+            window.removeEventListener('submitErrorCounter1', this.resetRightAnswerTimer);
+            window.removeEventListener('jsonErrorCounterInRange', this.resetRightAnswerTimer);
             break;
         default:
             break;

@@ -65,14 +65,6 @@ class AudioCourse extends React.Component{
             playTipAudio(this.titleAudioSrc);
         }
     }
-    openTipAudio = () => {
-        console.log('openTipAudio');
-        playTipAudio(tipAudioSource);
-        this.setState({
-            isPlay: true
-        });
-    
-    }
     closeAudio = () => {
         this.setState({
             isPlay: false
