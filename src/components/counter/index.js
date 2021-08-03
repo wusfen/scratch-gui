@@ -40,7 +40,7 @@ class Counter {
         } else if (this.type === counterType.SUBMIT_ERROR) {
             if (this.count === SUBMIT_COUNT_RANGE_1) {
                 dispatchEvent(new Event('submitErrorCounter1'));
-            } else if (this.count === SUBMIT_COUNT_RANGE_2) {
+            } else if (this.count >= SUBMIT_COUNT_RANGE_2) {
                 dispatchEvent(new Event('submitErrorCounter2'));
             }
         }
