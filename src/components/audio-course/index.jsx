@@ -64,15 +64,6 @@ class AudioCourse extends React.Component{
             this.audio.play();
         }
     }
-    openTipAudio = () => {
-        this.audio.pause();
-        this.audio.src = tipAudioSource;
-        this.setState({
-            isPlay: true
-        });
-        this.audio.currentTime = 0;
-        this.audio.play();
-    }
     closeAudio = () => {
         this.setState({
             isPlay: false
