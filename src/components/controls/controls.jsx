@@ -36,7 +36,7 @@ const Controls = function (props) {
         turbo,
         ...componentProps
     } = props;
- 
+
     return (
         <div
             className={classNames(styles.controlsContainer, className)}
@@ -59,7 +59,7 @@ const Controls = function (props) {
             />
             <button
                 className={classNames({
-                    [styles.button]: true,
+                    [styles.button]: !active,
                     [styles.stopButton]: active,
                     [styles.blingBling]: guide, // TODO 按钮动效，切换 true false
                 })}
