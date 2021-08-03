@@ -12,3 +12,8 @@
 [src*="static/assets/tip.svg"] {
     opacity: 0;
 }
+
+[class*="asidebtn-menu_undo"],
+[class*="asidebtn-menu_redo"] {
+    opacity: 0;
+}
