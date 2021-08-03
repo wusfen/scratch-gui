@@ -1,0 +1,14 @@
+[class*="delete-sprite"] {
+    opacity: 0;
+}
+[class*="blingBling"]:before,
+[class*="blingBling"]:after {
+    visibility: hidden;
+}
+
+[src*="static/assets/audio.svg"] {
+    opacity: 0;
+}
+[src*="static/assets/tip.svg"] {
+    opacity: 0;
+}

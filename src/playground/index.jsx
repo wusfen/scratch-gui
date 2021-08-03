@@ -16,6 +16,11 @@ import './index.js';
 
 import styles from './index.css';
 
+// 录屏模式
+if (/mode=record/.test(location)) {
+    require('./recordMode.css');
+}
+
 // Register "base" page view
 analytics.pageview('/');
 
