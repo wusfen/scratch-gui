@@ -356,4 +356,99 @@ export default function (Blockly){
         }
         this.setText(newValue);
       };
+
+      Blockly.WorkspaceSvg.prototype.setScale = function(newScale) {
+        if(this.options.zoomOptions){
+            if (this.options.zoomOptions.maxScale &&
+              newScale > this.options.zoomOptions.maxScale) {
+            newScale = this.options.zoomOptions.maxScale;
+          } else if (this.options.zoomOptions.minScale &&
+              newScale < this.options.zoomOptions.minScale) {
+            newScale = this.options.zoomOptions.minScale;
+          }
+        }
+        
+        this.scale = newScale;
+        if (this.grid_) {
+          this.grid_.update(this.scale);
+        }
+        if (this.scrollbar) {
+          this.scrollbar.resize();
+        } else {
+          this.translate(this.scrollX, this.scrollY);
+        }
+        Blockly.hideChaff(true);//不关闭工具栏
+        if (this.flyout_) {
+          // No toolbox, resize flyout.
+          this.flyout_.reflow();
+        }
+      };
+
+      Blockly.init_ = function(mainWorkspace) {
+        var options = mainWorkspace.options;
+        var svg = mainWorkspace.getParentSvg();
+      
+        // Suppress the browser's context menu.
+        Blockly.bindEventWithChecks_(svg.parentNode, 'contextmenu', null,
+            function(e) {
+              if (!Blockly.utils.isTargetInput(e)) {
+                e.preventDefault();
+              }
+            });
+      
+        var workspaceResizeHandler = Blockly.bindEventWithChecks_(window, 'resize',
+            null,
+            function() {
+              Blockly.hideChaffOnResize(true);
+              Blockly.svgResize(mainWorkspace);
+              const scale = Blockly.getFitScale();
+              mainWorkspace.setScale(scale);
+              mainWorkspace.getFlyout().getWorkspace().setScale(scale);
+              
+            });
+        mainWorkspace.setResizeHandlerWrapper(workspaceResizeHandler);
+      
+        Blockly.inject.bindDocumentEvents_();
+      
+        if (options.languageTree) {
+          if (mainWorkspace.toolbox_) {
+            mainWorkspace.toolbox_.init(mainWorkspace);
+          } else if (mainWorkspace.flyout_) {
+            // Build a fixed flyout with the root blocks.
+            mainWorkspace.flyout_.init(mainWorkspace);
+            mainWorkspace.flyout_.show(options.languageTree.childNodes);
+            mainWorkspace.flyout_.scrollToStart();
+            // Translate the workspace to avoid the fixed flyout.
+            if (options.horizontalLayout) {
+              mainWorkspace.scrollY = mainWorkspace.flyout_.height_;
+              if (options.toolboxPosition == Blockly.TOOLBOX_AT_BOTTOM) {
+                mainWorkspace.scrollY *= -1;
+              }
+            } else {
+              mainWorkspace.scrollX = mainWorkspace.flyout_.width_;
+              if (options.toolboxPosition == Blockly.TOOLBOX_AT_RIGHT) {
+                mainWorkspace.scrollX *= -1;
+              }
+            }
+            mainWorkspace.translate(mainWorkspace.scrollX, mainWorkspace.scrollY);
+          }
+        }
+      
+        if (options.hasScrollbars) {
+          mainWorkspace.scrollbar = new Blockly.ScrollbarPair(mainWorkspace);
+          mainWorkspace.scrollbar.resize();
+        }
+      
+        // Load the sounds.
+        if (options.hasSounds) {
+          Blockly.inject.loadSounds_(options.pathToMedia, mainWorkspace);
+        }
+      };
+
+      Blockly.getFitScale = function(){
+        return Math.max(0.5, Math.min(.75 * (window.innerHeight / 768), 1)); // todo add
+      }
+      
+      
+      
 }
