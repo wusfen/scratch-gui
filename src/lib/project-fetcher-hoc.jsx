@@ -79,7 +79,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             if (id) {
                 const {data} = await ajax.get(`/hwUserWork/getWorkInfo/${id}`);
                 fileUrl = data.workPath;
-                this.props.setProjectTitle(data.workName);
+                this.props.setProjectTitle?.(data.workName);
 
                 // TODO 临时存值
                 window._workInfo = data;

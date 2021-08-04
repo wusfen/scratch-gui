@@ -1,3 +1,4 @@
+/* eslint-disable prefer-spread */
 import * as bridge from '../../playground/bridge.js';
 
 /**
@@ -9,8 +10,31 @@ import * as bridge from '../../playground/bridge.js';
 class TipAudio {
     static audio = new Audio()
     constructor (src) {
-        this.audio = TipAudio.audio;
-        this.audio.src = src;
+        console.info('TipAudio:', (src));
+        TipAudio.audio.pause();
+
+        var audio = new Audio(src);
+
+        this.audio = audio;
+        TipAudio.audio = this.audio;
+
+        // fix: pause error
+        audio._play = audio.play;
+        audio.play = function () {
+            var promise = audio._play();
+
+            audio._pause = audio.pause;
+            audio.pause = function () {
+                if (promise && promise.finally) {
+                    promise.finally(e => {
+                        audio._pause();
+                    });
+                }
+            };
+
+            return promise;
+        };
+
         return this.audio;
     }
 }
@@ -35,8 +59,7 @@ addEventListener('pageshow', e => {
  * @returns {Audio} audio
  */
 function playTipAudio (src) {
-    var audio = new TipAudio();
-    audio.src = src;
+    var audio = new TipAudio(src);
     audio.play();
     return audio;
 }
@@ -45,3 +68,5 @@ export {
     TipAudio as default,
     playTipAudio,
 };
+
+window.playTipAudio = playTipAudio;

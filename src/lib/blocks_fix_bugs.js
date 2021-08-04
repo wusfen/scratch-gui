@@ -1,5 +1,6 @@
 /* eslint-disable */
 // fix bugs
+
 export default function (Blockly){
 
 
@@ -356,4 +357,293 @@ export default function (Blockly){
         }
         this.setText(newValue);
       };
+
+      // Blockly.WorkspaceSvg.prototype.setScale = function(newScale) {
+      //   if(this.options.zoomOptions){
+      //       if (this.options.zoomOptions.maxScale &&
+      //         newScale > this.options.zoomOptions.maxScale) {
+      //       newScale = this.options.zoomOptions.maxScale;
+      //     } else if (this.options.zoomOptions.minScale &&
+      //         newScale < this.options.zoomOptions.minScale) {
+      //       newScale = this.options.zoomOptions.minScale;
+      //     }
+      //   }
+        
+      //   this.scale = newScale;
+      //   if (this.grid_) {
+      //     this.grid_.update(this.scale);
+      //   }
+      //   if (this.scrollbar) {
+      //     this.scrollbar.resize();
+      //   } else {
+      //     this.translate(this.scrollX, this.scrollY);
+      //   }
+      //   Blockly.hideChaff(false);
+      //   if (this.flyout_) {
+      //     // No toolbox, resize flyout.
+      //     this.flyout_.reflow();
+      //   }
+      //   if(this.toolbox_ && this.toolbox_.flyout_){
+      //     this.toolbox_.flyout_.reflow();
+      //   }
+      // };
+
+      Blockly.init_ = function(mainWorkspace) {
+        var options = mainWorkspace.options;
+        var svg = mainWorkspace.getParentSvg();
+      
+        // Suppress the browser's context menu.
+        Blockly.bindEventWithChecks_(svg.parentNode, 'contextmenu', null,
+            function(e) {
+              if (!Blockly.utils.isTargetInput(e)) {
+                e.preventDefault();
+              }
+            });
+      
+        var workspaceResizeHandler = Blockly.bindEventWithChecks_(window, 'resize',
+            null,
+            function() {
+              Blockly.hideChaffOnResize(true);
+              Blockly.svgResize(mainWorkspace);
+              const scale = Blockly.getFitScale();
+              mainWorkspace.setScale(scale);
+             //const toolbox = mainWorkspace.toolbox_;
+             if(mainWorkspace.toolbox_ && mainWorkspace.toolbox_.flyout_){
+                const flyout = mainWorkspace.toolbox_.flyout_;
+                flyout.workspace_.scale = scale;
+                flyout.reflow();
+             }
+             
+              //const flyoutWS = mainWorkspace.getFlyout().getWorkspace();
+              //toolbox.flyout_.DEFAULT_WIDTH = (250+70) * scale;
+              // toolbox.width = toolbox_.flyout_.DEFAULT_WIDTH + (50 * scale);
+              //flyoutWS.setScale(scale);
+            });
+        mainWorkspace.setResizeHandlerWrapper(workspaceResizeHandler);
+      
+        Blockly.inject.bindDocumentEvents_();
+      
+        if (options.languageTree) {
+          if (mainWorkspace.toolbox_) {
+            mainWorkspace.toolbox_.init(mainWorkspace);
+          } else if (mainWorkspace.flyout_) {
+            // Build a fixed flyout with the root blocks.
+            mainWorkspace.flyout_.init(mainWorkspace);
+            mainWorkspace.flyout_.show(options.languageTree.childNodes);
+            mainWorkspace.flyout_.scrollToStart();
+            // Translate the workspace to avoid the fixed flyout.
+            if (options.horizontalLayout) {
+              mainWorkspace.scrollY = mainWorkspace.flyout_.height_;
+              if (options.toolboxPosition == Blockly.TOOLBOX_AT_BOTTOM) {
+                mainWorkspace.scrollY *= -1;
+              }
+            } else {
+              mainWorkspace.scrollX = mainWorkspace.flyout_.width_;
+              if (options.toolboxPosition == Blockly.TOOLBOX_AT_RIGHT) {
+                mainWorkspace.scrollX *= -1;
+              }
+            }
+            mainWorkspace.translate(mainWorkspace.scrollX, mainWorkspace.scrollY);
+          }
+        }
+      
+        if (options.hasScrollbars) {
+          mainWorkspace.scrollbar = new Blockly.ScrollbarPair(mainWorkspace);
+          mainWorkspace.scrollbar.resize();
+        }
+      
+        // Load the sounds.
+        if (options.hasSounds) {
+          Blockly.inject.loadSounds_(options.pathToMedia, mainWorkspace);
+        }
+      };
+
+      Blockly.getFitScale = function(){
+        // return Math.max(0.5, Math.min(.75 * (window.innerHeight / 768), 1)); // todo add
+        return .75 * (window.innerHeight / 768)
+      }
+      
+      Blockly.Flyout.prototype.setVisible = function(visible) {
+        var visibilityChanged = (visible != this.isVisible());
+      
+        this.isVisible_ = visible;
+        if (visibilityChanged) {
+          if(this._changeSize && this.isVisible_){
+            this.position();//重新计算大小
+            this._changeSize = false;
+          }
+          this.updateDisplay_();
+        }
+      };
+
+      //实现reflowInternal_方法
+      Blockly.VerticalFlyout.prototype.reflowInternal_ = function(blocks) {
+        //this.workspace_.scale = this.targetWorkspace_.scale;
+        var flyoutWidth = 0;
+        for (var i = 0, block; block = blocks[i]; i++) {
+          flyoutWidth = Math.max(flyoutWidth, block.getHeightWidth().width);
+        }
+        flyoutWidth += this.MARGIN * 1.5;
+        flyoutWidth *= this.workspace_.scale;
+        flyoutWidth += Blockly.Scrollbar.scrollbarThickness;
+        if (this.getWidth() !== flyoutWidth) {
+          this.width_ = flyoutWidth;
+          this._changeSize = true;
+        }
+       
+      }
+
+      Blockly.VerticalFlyout.prototype.getWidth = function() {
+        return this.width_  || this.DEFAULT_WIDTH;
+      };
+
+      //======================
+      
+      // Blockly.BlockSvg.prototype.moveToDragSurface_ = function() {
+      //   if (!this.useDragSurface_) {
+      //     return;
+      //   }
+        
+      //   // The translation for drag surface blocks,
+      //   // is equal to the current relative-to-surface position,
+      //   // to keep the position in sync as it move on/off the surface.
+      //   // This is in workspace coordinates.
+      //   var xy = this.getRelativeToSurfaceXY();
+      //   this.clearTransformAttributes_();
+      //   this.workspace.blockDragSurface_.translateSurface(xy.x, xy.y);
+      //   //console.log("xxx-moveToDragSurface_", xy.x, xy.y)
+      //   // Execute the move on the top-level SVG component
+      //   this.workspace.blockDragSurface_.setBlocksAndShow(this.getSvgRoot());
+      // };
+      
+
+      // Blockly.BlockDragSurfaceSvg.prototype.translateAndScaleGroup = function(x, y, scale) {
+      //   this.scale_ = scale;
+      //   // This is a work-around to prevent a the blocks from rendering
+      //   // fuzzy while they are being dragged on the drag surface.
+      //   var fixedX = x.toFixed(0);
+      //   var fixedY = y.toFixed(0);
+      //   this.dragGroup_.setAttribute('transform',
+      //       'translate(' + fixedX + ',' + fixedY + ') scale(' + scale + ')');
+      //       console.log("xxx-translateAndScaleGroup", fixedX, fixedY, scale);
+      // };
+
+      // const org = Blockly.BlockDragSurfaceSvg.prototype.translateSurface;
+      
+      // Blockly.BlockDragSurfaceSvg.prototype.translateSurface = function(x, y) {
+      //   org.bind(this)(x, y);
+      //   console.log("xxx-translateSurface", x, y, this.scale_);
+      // };
+
+      // // Blockly.BlockDragger.prototype.startBlockDrag = function(currentDragDeltaXY) {
+      // //   if (!Blockly.Events.getGroup()) {
+      // //     Blockly.Events.setGroup(true);
+      // //   }
+      
+      // //   this.workspace_.setResizesEnabled(false);
+      // //   Blockly.BlockAnimations.disconnectUiStop();
+      
+      // //   if (this.draggingBlock_.getParent()) {
+      // //     this.draggingBlock_.unplug();
+      // //     var delta = this.pixelsToWorkspaceUnits_(currentDragDeltaXY);
+      // //     var newLoc = goog.math.Coordinate.sum(this.startXY_, delta);
+      
+      // //     this.draggingBlock_.translate(newLoc.x, newLoc.y);
+      // //     Blockly.BlockAnimations.disconnectUiEffect(this.draggingBlock_);
+      // //   }
+      // //   this.draggingBlock_.setDragging(true);
+      // //   // For future consideration: we may be able to put moveToDragSurface inside
+      // //   // the block dragger, which would also let the block not track the block drag
+      // //   // surface.
+      // //   this.draggingBlock_.moveToDragSurface_();
+      
+      // //   var toolbox = this.workspace_.getToolbox();
+      // //   if (toolbox) {
+      // //     var style = this.draggingBlock_.isDeletable() ? 'blocklyToolboxDelete' :
+      // //         'blocklyToolboxGrab';
+      // //     toolbox.addStyle(style);
+      // //   }
+      // // };
+
+      // const orggg = Blockly.Flyout.prototype.placeNewBlock_;
+      // Blockly.Flyout.prototype.placeNewBlock_ = function(oldBlock) {
+      //   console.log("xxxxx", this.targetWorkspace_.getOriginOffsetInPixels(), this.workspace_.getOriginOffsetInPixels());
+      //   return orggg.bind(this)(oldBlock);
+      //   var targetWorkspace = this.targetWorkspace_;
+      //   var svgRootOld = oldBlock.getSvgRoot();
+      //   if (!svgRootOld) {
+      //     throw 'oldBlock is not rendered.';
+      //   }
+      
+      //   // Create the new block by cloning the block in the flyout (via XML).
+      //   var xml = Blockly.Xml.blockToDom(oldBlock);
+      //   // The target workspace would normally resize during domToBlock, which will
+      //   // lead to weird jumps.  Save it for terminateDrag.
+      //   targetWorkspace.setResizesEnabled(false);
+      
+      //   // Using domToBlock instead of domToWorkspace means that the new block will be
+      //   // placed at position (0, 0) in main workspace units.
+      //   var block = Blockly.Xml.domToBlock(xml, targetWorkspace);
+      //   var svgRootNew = block.getSvgRoot();
+      //   if (!svgRootNew) {
+      //     throw 'block is not rendered.';
+      //   }
+      
+      //   // The offset in pixels between the main workspace's origin and the upper left
+      //   // corner of the injection div.
+      //   var mainOffsetPixels = targetWorkspace.getOriginOffsetInPixels();
+      
+      //   // The offset in pixels between the flyout workspace's origin and the upper
+      //   // left corner of the injection div.
+      //   var flyoutOffsetPixels = this.workspace_.getOriginOffsetInPixels();
+      
+      //   // The position of the old block in flyout workspace coordinates.
+      //   var oldBlockPosWs = oldBlock.getRelativeToSurfaceXY();
+      
+      //   // The position of the old block in pixels relative to the flyout
+      //   // workspace's origin.
+      //   var oldBlockPosPixels = oldBlockPosWs.scale(this.workspace_.scale);
+      
+      //   // The position of the old block in pixels relative to the upper left corner
+      //   // of the injection div.
+      //   var oldBlockOffsetPixels = goog.math.Coordinate.sum(flyoutOffsetPixels,
+      //       oldBlockPosPixels);
+      
+      //   // The position of the old block in pixels relative to the origin of the
+      //   // main workspace.
+      //   var finalOffsetPixels = goog.math.Coordinate.difference(oldBlockOffsetPixels,
+      //       mainOffsetPixels);
+      
+      //   // The position of the old block in main workspace coordinates.
+      //   var finalOffsetMainWs = finalOffsetPixels.scale(1 / targetWorkspace.scale);
+      
+      //   block.moveBy(finalOffsetMainWs.x, finalOffsetMainWs.y);
+      //   return block;
+      // };
+
+
+      // Blockly.svgResize = function(workspace) {
+      //   var mainWorkspace = workspace;
+      //   while (mainWorkspace.options.parentWorkspace) {
+      //     mainWorkspace = mainWorkspace.options.parentWorkspace;
+      //   }
+      //   var svg = mainWorkspace.getParentSvg();
+      //   var div = svg.parentNode;
+      //   if (!div) {
+      //     // Workspace deleted, or something.
+      //     return;
+      //   }
+      //   var width = div.offsetWidth;
+      //   var height = div.offsetHeight;
+      //   if (svg.cachedWidth_ != width) {
+      //     svg.setAttribute('width', width + 'px');
+      //     svg.cachedWidth_ = width;
+      //   }
+      //   if (svg.cachedHeight_ != height) {
+      //     svg.setAttribute('height', height + 'px');
+      //     svg.cachedHeight_ = height;
+      //   }
+      //   mainWorkspace.resize();
+      // };
+      
 }

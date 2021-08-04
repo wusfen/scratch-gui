@@ -23,6 +23,7 @@
     animation: blingBlingHand 1s both infinite;
     background: center no-repeat url("@/assets/icons/hand.svg");
     background-size: 100%;
+    pointer-events: none;
 }
 
 .blingBlingRight::before {
@@ -30,6 +31,7 @@
     background-size: 100%;
     bottom: -3rem;
     left: -4rem;
+    pointer-events: none;
 }
 
 .blingBling::after {

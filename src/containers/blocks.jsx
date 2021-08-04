@@ -104,7 +104,7 @@ class Blocks extends React.Component {
                 controls: true,
                 wheel: true,
                 // startScale: .75,
-                startScale: Math.max(0.5, Math.min(.75 * (window.innerHeight / 768), 1)), // todo add
+                startScale: this.ScratchBlocks.getFitScale(),
                 maxScale: 3,
                 minScale: 0.3,
                 scaleSpeed: 1.2
@@ -162,7 +162,6 @@ class Blocks extends React.Component {
         // lists, and procedures from extensions.
 
         const toolboxWorkspace = this.workspace.getFlyout().getWorkspace();
-
         const varListButtonCallback = type =>
             (() => this.ScratchBlocks.Variables.createVariable(this.workspace, null, type));
         const procButtonCallback = () => {

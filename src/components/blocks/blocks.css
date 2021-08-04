@@ -134,6 +134,8 @@
     background: none;
     margin-top: 0.625rem;
     border-bottom: dotted 0.05rem #79bcff;
+    height: 39rem;
+    overflow: scroll;
 }
 
 .blocks :global(.scratchCategoryMenuRow) {
