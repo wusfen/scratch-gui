@@ -136,6 +136,7 @@ class LoaderComponent extends React.Component {
         }, 5000);
     }
     componentWillUnmount () {
+        dispatchEvent(new Event('projectLoadSucceedLoaderUnmount'));
         clearInterval(this.intervalId);
     }
     chooseRandomMessage () {

@@ -100,7 +100,7 @@ class GUI extends React.Component {
     handleVideoSrc = () => {
         let videoSrc = getTipParam('introVideo');
         if (videoSrc){ // 有初始引导
-            addEventListener('projectLoadSucceed', () => { // 等待工程加载完毕
+            addEventListener('projectLoadSucceedLoaderUnmount', () => { // 等待工程加载完毕
                 this.setState({promptAreaShow: true});
             });
         } else {
