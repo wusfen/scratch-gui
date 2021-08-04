@@ -114,11 +114,14 @@ class Timer {
         this.state = 'exist';
         switch (this.type) {
         case timerType.CODE:
+            clearInterval(this.codeTimer);
             this.codeTimer = setInterval(() => {
                 window.dispatchEvent(new Event(`noAction:${this.type}:${CODE_TIME_1}`));
             }, CODE_TIME_1);
             break;
         case timerType.OPERATE:
+            clearTimeout(this.operateTimer1);
+            clearTimeout(this.operateTimer2);
             this.operateTimer1 = setTimeout(() => {
                 window.dispatchEvent(new Event(`noAction:${this.type}:${OPERATE_TIME_1}`));
                 clearTimeout(this.operateTimer1);
@@ -136,7 +139,9 @@ class Timer {
             break;
         }
     }
-    toCreateRightAnswerTimer = () => { // 首次是RIGHT_ANSWER_1秒（重置一次之后是每隔RIGHT_ANSWER_1秒）
+    toCreateRightAnswerTimer = () => { // 首次是RIGHT_ANSWER_1秒（重置一次之后是每隔RIGHT_ANSWER_2秒）
+        clearTimeout(this.rightAnswerTimer1);
+        clearInterval(this.rightAnswerTimer2);
         const helpFunc = () => {
             this.rightAnswerTimer2 = setInterval(() => {
                 window.dispatchEvent(new Event(`noAction:${this.type}:${RIGHT_ANSWER_2}`));
@@ -148,30 +153,18 @@ class Timer {
             this.rightAnswerTimer1 = setTimeout(() => {
                 window.dispatchEvent(new Event(`noAction:${this.type}:${RIGHT_ANSWER_1}`));
                 clearTimeout(this.rightAnswerTimer1);
+                this.rightAnswerTimer1 = null;
                 helpFunc();
             }, RIGHT_ANSWER_1);
         }
     }
     resetTimer = () => {
-        switch (this.type) {
-        case timerType.CODE:
-            this.codeTimer && clearInterval(this.codeTimer);
-            break;
-        case timerType.OPERATE:
-            this.operateTimer1 && clearTimeout(this.operateTimer1);
-            this.operateTimer2 && clearTimeout(this.operateTimer2);
-            break;
-        default:
-            break;
-        }
         if (this.state === '') return; // 重置计时器是在计时器已经存在的基础上
         this.createTimer();
     }
 
     resetRightAnswerTimer = () => {
         this.rightAnswerTimerIsReset = true;
-        this.rightAnswerTimer1 && clearTimeout(this.rightAnswerTimer1);
-        this.rightAnswerTimer2 && clearInterval(this.rightAnswerTimer2);
         if (this.state === '') return;
         this.createTimer();
     }
