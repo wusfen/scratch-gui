@@ -174,15 +174,15 @@ class Timer {
         this.state = '';
         switch (this.type) {
         case timerType.CODE:
-            this.codeTimer && clearInterval(this.codeTimer);
+            clearInterval(this.codeTimer);
             break;
         case timerType.OPERATE:
-            this.operateTimer1 && clearTimeout(this.operateTimer1);
-            this.operateTimer2 && clearTimeout(this.operateTimer2);
+            clearTimeout(this.operateTimer1);
+            clearTimeout(this.operateTimer2);
             break;
         case timerType.RIGHT_ANSWER:
-            this.rightAnswerTimer1 && clearTimeout(this.rightAnswerTimer1);
-            this.rightAnswerTimer2 && clearInterval(this.rightAnswerTimer2);
+            clearTimeout(this.rightAnswerTimer1);
+            clearInterval(this.rightAnswerTimer2);
             break;
         default:
             break;
