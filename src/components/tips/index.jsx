@@ -70,7 +70,7 @@ class Tips extends React.Component{
             showState: true
         });
 
-        playTipAudio(tipAudio);
+        this.audio = playTipAudio(tipAudio);
         this.timeOutEvent = setTimeout(() => {
             this.setState({
                 showState: false
@@ -97,12 +97,16 @@ class Tips extends React.Component{
     }
 
     createAudio = tipSrc => {
-        playTipAudio(tipSrc);
+        this.audio = playTipAudio(tipSrc);
         // this.audio = document.createElement('audio');
         // const src = tipSrc ? tipSrc : getParam('tipAudio');
         // this.audio.src = src ? src : '';
     }
     clickTips = () => {
+
+        if (this.audio) {
+            this.audio.pause();
+        }
         const {clickCount, tipVideo} = this.state;
         let count = clickCount + 1;
         if (count > tipVideo.length) { // 最多超过2次后的点击固定都是最后一个视频
