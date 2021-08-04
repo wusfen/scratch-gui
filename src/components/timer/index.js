@@ -147,6 +147,7 @@ class Timer {
         } else {
             this.rightAnswerTimer1 = setTimeout(() => {
                 window.dispatchEvent(new Event(`noAction:${this.type}:${RIGHT_ANSWER_1}`));
+                clearTimeout(this.rightAnswerTimer1);
                 helpFunc();
             }, RIGHT_ANSWER_1);
         }
