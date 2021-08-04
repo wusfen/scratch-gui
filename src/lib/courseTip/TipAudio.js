@@ -14,6 +14,7 @@ class TipAudio {
         TipAudio.audio.pause();
 
         var audio = new Audio(src);
+        audio.muted = TipAudio.audio.muted;
 
         this.audio = audio;
         TipAudio.audio = this.audio;
