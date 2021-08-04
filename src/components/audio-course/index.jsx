@@ -68,7 +68,10 @@ class AudioCourse extends React.Component{
         this.setState({
             isPlay: false
         });
-        this.audio.pause();
+        if (this.audio) {
+            this.audio.pause();
+        }
+
     }
     render () {
         const {

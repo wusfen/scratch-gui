@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import bindAll from 'lodash.bindall';
 import {OPERATE_TIME_2, timerType} from './../timer/data';
-
+import Audio from '../../lib/courseTip/TipAudio.js';
 
 import styles from './styles.css';
 
@@ -65,7 +65,7 @@ class Component extends React.Component{
                 }
 
                 if (/已提交/.test(status)) {
-                    if (/正确/.test(status)) {
+                    if (/正确/.test(status)) { 
                         new Audio(require('./audio/批改正确.mp3')).play();
                     } else if (/错误/.test(status)) {
                         new Audio(require('./audio/批改错误.mp3')).play();

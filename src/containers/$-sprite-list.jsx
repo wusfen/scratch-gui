@@ -101,7 +101,7 @@ class TargetPane$ extends React.Component {
         if (curTarget && curTarget.hidden) {
             Dialog.alert({
                 title: '求求你，别删我',
-                content: '我对本次练习非常重要，求求你不要删除我哦',
+                content: '小朋友，想要完成这次任务，可不能丢下我哦！',
                 isConfirm: true
             });
             return;

@@ -33,6 +33,7 @@ import Loading from '../loading/index.jsx';
 
 import {openTipsLibrary} from '../../reducers/modals';
 import {setPlayer} from '../../reducers/mode';
+import Audio from '../../lib/courseTip/TipAudio.js';
 import {
     autoUpdateProject,
     getIsUpdating,
