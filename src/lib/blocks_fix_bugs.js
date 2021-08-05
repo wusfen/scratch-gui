@@ -488,6 +488,9 @@ export default function (Blockly){
         flyoutWidth += this.MARGIN * 1.5;
         flyoutWidth *= this.workspace_.scale;
         flyoutWidth += Blockly.Scrollbar.scrollbarThickness;
+        if(flyoutWidth < 150){
+          flyoutWidth = 150;
+        }
         if (this.getWidth() !== flyoutWidth) {
           this.width_ = flyoutWidth;
           if (this.parentToolbox_) {
