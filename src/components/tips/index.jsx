@@ -111,6 +111,7 @@ class Tips extends React.Component{
         if (count > tipVideo.length) { // 最多超过2次后的点击固定都是最后一个视频
             count = tipVideo.length;
         }
+        dispatchEvent(new Event('clickTips')); 
         if (this.state.type === '视频'){
             dispatchEvent(new Event('clickVideoTips')); // 点击视频提示
         }
