@@ -164,7 +164,7 @@
     /* min-width: 150px; */
     z-index: 41;
     /* transform: translate(calc(4.375rem - 1px), 0rem) !important; */
-    transform: translate(calc(4.59rem - 1px), 0rem) !important;
+    /*transform: translate(calc(4.59rem - 1px), 0rem) !important;*/
     border: 0;
     background: rgba(255, 255, 255, 0.8);
     box-shadow: 0.11rem 0rem 0.31rem 0rem rgba(0, 0, 0, 0.13);
