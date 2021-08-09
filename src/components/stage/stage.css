@@ -13,6 +13,7 @@ $stage-height: calc($stage-css-height * 1px);
 
 .stage-wrapper {
     position: relative;
+
     width: $stage-width;
     height: $stage-height;
 }
@@ -41,16 +42,16 @@ $stage-height: calc($stage-css-height * 1px);
     /* enforce overflow + reset position of absolutely-positioned children */
     position: relative;
 
-    transform: scale(calc($stage-css-width / $stage-js-width));
-    transform-origin: left top;
+    /* transform: scale(calc($stage-css-width / $stage-js-width)); */
+    /* transform-origin: left top; */
 }
 
-.stage canvas {
+/* .stage canvas {
     width: $stage-width !important;
     height: $stage-height !important;
     transform: scale(calc($stage-js-width / $stage-css-width));
     transform-origin: left top;
-}
+}  */
 
 .stage.full-screen {
     border: $stage-full-screen-border-width solid rgb(126, 133, 151);

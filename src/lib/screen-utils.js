@@ -36,6 +36,7 @@ const resolveStageSize = (stageSizeMode, isFullSize) => {
 };
 
 /**
+ * 动态改变需要调整这里
  * Retrieve info used to determine the actual stage size based on the current GUI and browser state.
  * @param {STAGE_DISPLAY_SIZES} stageSize - the current fully-resolved stage size.
  * @param {boolean} isFullScreen - true if full-screen mode is enabled.
@@ -64,7 +65,7 @@ const getStageDimensions = (stageSize, isFullScreen) => {
 
         stageDimensions.scale = stageDimensions.width / stageDimensions.widthDefault;
     } else {
-        stageDimensions.scale = STAGE_DISPLAY_SCALES[stageSize];
+        stageDimensions.scale = window.STAGE_CSS_WIDTH / window.STAGE_WIDTH;
         stageDimensions.height = stageDimensions.scale * stageDimensions.heightDefault;
         stageDimensions.width = stageDimensions.scale * stageDimensions.widthDefault;
     }
