@@ -45,6 +45,9 @@ import Timer from '../components/timer/index';
 import {timerType} from '../components/timer/data';
 import Counter from '../components/counter/index';
 import {counterType} from '../components/counter/data';
+
+import {param} from '../lib/param.js';
+
 class GUI extends React.Component {
     constructor (props) {
         super(props);
@@ -60,10 +63,14 @@ class GUI extends React.Component {
         this.props.onStorageInit(storage);
         this.props.onVmInit(this.props.vm);
 
-       
+        var mode = param('mode');
+
         this.initTimer(); // 初始化计时器
         this.initCounter(); // 初始化计数器
-        this.handleVideoSrc(); // 获取引导video
+
+        if (/^(course|normal)$/.test(mode)) {
+            this.handleVideoSrc(); // 获取引导video
+        }
     }
 
     componentDidUpdate (prevProps) {
@@ -78,25 +85,30 @@ class GUI extends React.Component {
     }
 
     componentWillUnmount () {
-        window.operateTimer.removeListener();
-        window.codeTimer.removeListener();
-        window.rightAnswerTimer.removeListener();
-        window.jsonErrorCounter.removeListener();
-        window.submitErrorCounter.removeListener();
+        window.operateTimer?.removeListener();
+        window.codeTimer?.removeListener();
+        window.rightAnswerTimer?.removeListener();
+        window.jsonErrorCounter?.removeListener();
+        window.submitErrorCounter?.removeListener();
     }
-    
+
 
     initTimer = () => {
-        window.operateTimer = new Timer(timerType.OPERATE); // 操作计时器
-        window.codeTimer = new Timer(timerType.CODE); // 代码计时器
-        window.rightAnswerTimer = new Timer(timerType.RIGHT_ANSWER); // 正确答案计时器
+        if (param('mode') === 'course') {
+            window.operateTimer = new Timer(timerType.OPERATE); // 操作计时器
+            window.codeTimer = new Timer(timerType.CODE); // 代码计时器
+            window.rightAnswerTimer = new Timer(timerType.RIGHT_ANSWER); // 正确答案计时器
+        }
+        if (param('mode') === 'normal') {
+            window.codeTimer = new Timer(timerType.CODE); // 代码计时器
+        }
     }
 
     initCounter = () => {
         window.jsonErrorCounter = new Counter(counterType.JSON_ERROR);
         window.submitErrorCounter = new Counter(counterType.SUBMIT_ERROR);
     }
-    
+
     handleVideoSrc = () => {
         let videoSrc = getTipParam('introVideo');
         if (videoSrc){ // 有初始引导
@@ -114,7 +126,7 @@ class GUI extends React.Component {
         this.setState({promptAreaShow: false});
         window.dispatchEvent(new Event('closeVideoGuide'));
     }
-    
+
     render () {
         if (this.props.isError) {
             throw new Error(

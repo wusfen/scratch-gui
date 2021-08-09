@@ -9,18 +9,23 @@ import startBgS from '../assets/sounds/begin.mp3';
 import {CODE_TIME_1, timerType} from '../components/timer/data';
 
 import {ajax} from '../lib/ajax.js';
+import {param} from '../lib/param.js';
 import {playTipAudio} from '../lib/courseTip/TipAudio.js';
 
 class Controls extends React.Component {
     constructor (props) {
         super(props);
-        this.state = this.getInitState();
+        this.state = {
+            guide: false,
+        };
         bindAll(this, [
             'handleGreenFlagClick',
             'handleStopAllClick'
         ]);
 
-        this.initGuide();
+        if (param('mode') === 'course'){
+            this.initGuide();
+        }
 
         window.bridge.on('pause', e => {
             props.vm.stopAll();
@@ -36,11 +41,6 @@ class Controls extends React.Component {
         playTipAudio(startBgS);
     }
 
-    getInitState () {
-        return {
-            guide: false,
-        };
-    }
     initGuide () {
         this.setState({
             guide: false

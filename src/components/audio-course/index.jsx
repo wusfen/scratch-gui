@@ -12,6 +12,7 @@ import {OPERATE_TIME_1, OPERATE_TIME_2, CODE_TIME_1, timerType} from '../timer/d
 import {setTipAudioSrc} from '../../reducers/tipAudio';
 import tipAudioSource from '../../assets/sounds/tipAudio.mp3';
 import {playTipAudio} from '../../lib/courseTip/TipAudio.js';
+import {param} from '../../lib/param.js';
 const c = styles;
 Object.assign(c, require('../../css/animate.css'));
 class AudioCourse extends React.Component{
@@ -34,7 +35,10 @@ class AudioCourse extends React.Component{
         window.addEventListener('handleGreenFlagClick', this.closeAudio);// 点击开始运行代码终止语音
         window.addEventListener('saveToComputer', this.closeAudio);// 点击保存到电脑终止语音
         window.addEventListener('projectRunning', this.closeAudio); // 代码运行中
-        window.addEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_1}`, this.openTitleAudio);
+
+        if (param('mode') === 'course') {
+            window.addEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_1}`, this.openTitleAudio);
+        }
     }
     componentWillUnmount () {
         window.removeEventListener('clickSubmit', this.closeAudio);
@@ -85,6 +89,7 @@ class AudioCourse extends React.Component{
         } = this.state;
         return (
             <div
+                hidden={!(param('mode') === 'course')}
                 className={classNames({
                     [styles.container]: true,
                     [styles.blingBling]: isPlay
