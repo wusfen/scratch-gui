@@ -7,7 +7,7 @@
     flex-direction: column;
     justify-content: flex-start;
     position: relative;
-    background-color: #9EE4FF;
+    background-color: #9ee4ff;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 0.8rem;
     color: $text-primary;
@@ -29,14 +29,10 @@
     color: $ui-white;
 }
 
-
 .sprite-selector-item.is-selected {
-    /* box-shadow: 0rem 0rem 0rem .25rem $motion-transparent; */
-    /* border: .125rem solid $motion-primary; */
-    /* background: $ui-white; */
     width: 5.25rem;
     height: 5.56rem;
-    background: #E8F8FF;
+    background: #e8f8ff;
     border-radius: 0.63rem 0rem 0rem 0.63rem;
     padding: 0;
     margin-left: -0.63rem;
@@ -44,13 +40,6 @@
 
 .is-edit-space.sprite-selector-item.is-selected {
     margin-left: 0;
-}
-
-.sprite-selector-item:hover {
-    /* border: .125rem solid $motion-primary; */
-    /* background: $ui-white; */
-
-    background: #E8F8FF;
 }
 
 .sprite-selector-item:hover .sprite-image,
@@ -62,18 +51,13 @@
     position: absolute;
     width: 1.53rem;
     height: 1.53rem;
-    background: #FF8BAF;
+    background: #ff8baf;
     border-radius: 50%;
     top: -0.5rem;
     left: -0.9rem;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.is-edit-space .delete-sprite {
-    top: -0.8rem;
-    left: 3.4rem;
 }
 
 .delete-img {
@@ -85,7 +69,6 @@
     position: absolute;
     top: calc(50% - 0.44rem);
     right: 0.28rem;
-
 }
 
 .edit-img {
@@ -136,7 +119,7 @@
     padding: 1px 0 0.25rem;
     font-family: SourceHanSansCN-Normal;
     font-size: 0.75rem;
-    color: #EAF7FF;
+    color: #eaf7ff;
     text-align: center;
 }
 
@@ -150,11 +133,10 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     min-width: 0;
-    color: #2F9CEF;
+    color: #2f9cef;
 }
 
 .sprite-details {
-    margin-top: 0.125rem;
     font-size: 0.5rem;
 }
 
@@ -199,7 +181,7 @@
     left: 0;
     right: 0;
     display: flex;
-    background: #008FFD;
+    background: #008ffd;
     border-radius: 0.625rem;
 }
 @media screen and (pointer: fine) {
@@ -223,4 +205,34 @@
     width: 1em;
     height: 1em;
     margin: auto;
+}
+
+/* 区分角色是造型栏 */
+.is-edit-space.sprite-selector-item {
+    background: #d7f4ff;
+}
+.is-edit-space.sprite-selector-item.is-selected {
+    margin: 0.5rem auto;
+    width: 4.06rem;
+    height: 5.56rem;
+    background: #9ee4ff;
+    border-radius: 0.63rem;
+    border: 0.03rem solid #ffffff;
+}
+.is-edit-space .delete-sprite {
+    bottom: 100%;
+    left: 100%;
+    top: auto;
+    margin-bottom: -0.75rem;
+    margin-left: -0.75rem;
+}
+.is-edit-space .number {
+    font-size: 0.75rem;
+    font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+    font-weight: 500;
+    color: #32c5ff;
+    line-height: 1.13rem;
+}
+.is-edit-space .edit-img {
+    display: none;
 }

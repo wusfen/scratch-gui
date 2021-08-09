@@ -47,7 +47,7 @@ button::-moz-focus-inner {
 .main-button {
     min-width: 3.75rem;
     height: 1.75rem;
-    background: #32C5FF;
+    background: #32c5ff;
     border-radius: 0.63rem;
     font-size: 1.2rem;
     font-family: SourceHanSansCN-Medium, SourceHanSansCN;
@@ -56,8 +56,8 @@ button::-moz-focus-inner {
     line-height: 1.125rem;
 }
 
-.main-button:hover{
-    background: #ff457f;
+.main-button:hover {
+    /* background: #ff457f; */
 }
 
 .main-icon {
@@ -70,6 +70,11 @@ button::-moz-focus-inner {
 }
 
 .more-buttons-outer {
+    display: flex;
+    height: 40rem;
+    max-height: 0;
+    transition: max-height 0.5s;
+    pointer-events: none;
     /*
         Need to use two divs to set different overflow x/y
         which is needed to get animation to look right while
@@ -82,7 +87,7 @@ button::-moz-focus-inner {
     width: calc($more-button-size + 3rem);
     /* margin-left: calc(($main-button-size - $more-button-size) / 2); */
     /* margin-right: calc(($main-button-size - $more-button-size) / 2); */
-    background: $motion-tertiary;
+    background: linear-gradient(180deg, rgba(0, 167, 255, 0) 0%, #00a7ff 100%);
     position: absolute;
     /* top: -$main-button-size; */
     left: -0.74rem;
@@ -94,22 +99,22 @@ button::-moz-focus-inner {
 }
 
 .more-buttons {
+    width: 100%;
     max-height: 0;
-    transition: max-height 1s;
     overflow-x: visible;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     z-index: 10; /* @todo justify */
-    height: 40.5rem;
-    
+    margin-top: auto;
+    pointer-events: all;
 }
 
 .file-input {
     display: none;
 }
 
-.expanded .more-buttons {
+.expanded .more-buttons-outer {
     max-height: 1000px; /* Arbitrary, needs to be a value in order for animation to run */
 }
 
@@ -117,7 +122,8 @@ button::-moz-focus-inner {
     display: none; /* This property does not animate */
 }
 
-.more-buttons:first-child { /* Round off top button */
+.more-buttons:first-child {
+    /* Round off top button */
     /* border-top-right-radius: $more-button-size;
     border-top-left-radius: $more-button-size; */
 }
@@ -125,7 +131,9 @@ button::-moz-focus-inner {
 .more-button {
     width: calc($more-button-size + 2.75rem);
     height: calc($more-button-size + 1.5rem);
-    background: $motion-tertiary;
+
+    width: 100%;
+    background: transparent;
 }
 
 .tip-text {
@@ -152,8 +160,8 @@ button::-moz-focus-inner {
 .tooltip {
     background-color: $extensions-primary !important;
     opacity: 1 !important;
-    border: 1px solid hsla(0, 0%, 0%, .1) !important;
-    box-shadow: 0 0 .5rem hsla(0, 0%, 0%, .25) !important;
+    border: 1px solid hsla(0, 0%, 0%, 0.1) !important;
+    box-shadow: 0 0 0.5rem hsla(0, 0%, 0%, 0.25) !important;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
@@ -170,9 +178,9 @@ button::-moz-focus-inner {
 }
 
 .tooltip {
-    border: 1px solid hsla(0, 0%, 0%, .1) !important;
+    border: 1px solid hsla(0, 0%, 0%, 0.1) !important;
     border-radius: $form-radius !important;
-    box-shadow: 0 0 .5rem hsla(0, 0%, 0%, .25) !important;
+    box-shadow: 0 0 0.5rem hsla(0, 0%, 0%, 0.25) !important;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
     z-index: $z-index-tooltip !important;
 }
@@ -183,10 +191,10 @@ $arrow-rounding: 0.125rem;
 
 .tooltip:after {
     content: "";
-    border-top: 1px solid hsla(0, 0%, 0%, .1) !important;
+    border-top: 1px solid hsla(0, 0%, 0%, 0.1) !important;
     border-left: 0 !important;
     border-bottom: 0 !important;
-    border-right: 1px solid hsla(0, 0%, 0%, .1) !important;
+    border-right: 1px solid hsla(0, 0%, 0%, 0.1) !important;
     border-radius: $arrow-rounding;
     height: $arrow-size !important;
     width: $arrow-size !important;
@@ -215,4 +223,3 @@ $arrow-rounding: 0.125rem;
     top: $arrow-inset !important;
     transform: rotate(-45deg) !important;
 }
-
