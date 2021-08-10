@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 import styles from './styles.css';
 import tipIcon from './tip.svg';
 import tipAudio from './tips.mp3';
-import {getParam} from '../../lib/param';
+import {getParam, param} from '../../lib/param';
 import PromptArea from '../prompt-area/prompt-area.jsx';
 import initPng from './test.png';
 const c = styles;
@@ -111,7 +111,7 @@ class Tips extends React.Component{
         if (count > tipVideo.length) { // 最多超过2次后的点击固定都是最后一个视频
             count = tipVideo.length;
         }
-        dispatchEvent(new Event('clickTips')); 
+        dispatchEvent(new Event('clickTips'));
         if (this.state.type === '视频'){
             dispatchEvent(new Event('clickVideoTips')); // 点击视频提示
         }
@@ -145,6 +145,7 @@ class Tips extends React.Component{
 
         return (
             <div
+                hidden={!(param('mode') === 'course')}
                 className={classNames({
                     [styles.container]: true,
                     [styles.blingBling]: showState,
