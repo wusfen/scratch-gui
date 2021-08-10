@@ -393,7 +393,11 @@ const events = function (isInitialSetup, isStage) {
               <shadow type="event_broadcast_menu"></shadow>
             </value>
         </block>
+        ${window.MODE === 'teacher' ? `
+            <block type="event_next_lesson"/>
+        ` : ''}
         ${categorySeparator}
+        
     </category>
     `;
 };
