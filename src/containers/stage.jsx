@@ -76,7 +76,8 @@ class Stage extends React.Component {
             const w = layout.standardStageWidth / 2;
             const h = layout.standardStageHeight / 2;
             this.props.vm.renderer.setStageSize(-w, w, -h, h);
-            this.props.vm.renderer.draw();
+            //this.props.vm.renderer.draw();
+            this.renderer.resize(layout.standardStageWidth, layout.standardStageHeight);
         }
         this.props.vm.attachV2BitmapAdapter(new V2BitmapAdapter());
     }
@@ -84,6 +85,7 @@ class Stage extends React.Component {
         this.attachRectEvents();
         this.attachMouseEvents(this.canvas);
         this.updateRect();
+        this.renderer.resize(this.rect.width, this.rect.height);
         this.props.vm.runtime.addListener('QUESTION', this.questionListener);
     }
     shouldComponentUpdate (nextProps, nextState) {
@@ -147,16 +149,23 @@ class Stage extends React.Component {
         canvas.removeEventListener('wheel', this.onWheel);
     }
     attachRectEvents () {
-        window.addEventListener('resize', this.updateRect);
+        window.addEventListener('resize', this.stageReSize);
         window.addEventListener('scroll', this.updateRect);
     }
     detachRectEvents () {
-        window.removeEventListener('resize', this.updateRect);
+        window.removeEventListener('resize', this.stageReSize);
         window.removeEventListener('scroll', this.updateRect);
     }
+
     updateRect () {
         this.rect = this.canvas.getBoundingClientRect();
     }
+
+    stageReSize = () => {
+        this.updateRect();
+        this.forceUpdate();
+    }
+
     getScratchCoords (x, y) {
         const nativeSize = this.renderer.getNativeSize();
         return [

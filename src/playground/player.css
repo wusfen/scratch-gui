@@ -5,7 +5,12 @@ body {
 }
 
 .stage-only {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
+    height: 100vh;
+    background-color: #000;
 }
 
 .editor {
@@ -24,20 +29,20 @@ body {
     display: none;
 }
 
-.stage-only [class*="stage-wrapper"] {
+/*.stage-only [class*="stage-wrapper"] {
     overflow: hidden !important;
     width: 100vw !important;
     height: 100vh !important;
-}
+}*/
 
 .stage-only [class*="stage"] {
     overflow: initial;
 }
 
-.stage-only [class*="stage"] canvas {
+/*.stage-only [class*="stage"] canvas {
     width: 100vw !important;
     height: 100vh !important;
-}
+}*/
 
 .stage-only [class*="green-flag-overlay"] img {
     content: url("./start.svg");

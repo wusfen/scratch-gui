@@ -4,9 +4,11 @@ import bindAll from 'lodash.bindall';
 
 import Box from '../box/box.jsx';
 import styles from './loupe.css';
+import {getStageDimensions} from '../../lib/screen-utils.js';
 
 const zoomScale = 3;
 
+//取色鱼眼
 class LoupeComponent extends React.Component {
     constructor (props) {
         super(props);
@@ -23,9 +25,11 @@ class LoupeComponent extends React.Component {
         const colorRingWidth = 15 / zoomScale;
 
         const ctx = this.canvas.getContext('2d');
+        const stageDimensions = getStageDimensions('large', false);
         const {color, data, width, height} = this.props.colorInfo;
-        this.canvas.width = zoomScale * width;
-        this.canvas.height = zoomScale * height;
+        const zoomScale_ = zoomScale * stageDimensions.scale;
+        this.canvas.width = zoomScale_ * width;
+        this.canvas.height = zoomScale_ * height;
 
         // In order to scale the image data, must draw to a tmp canvas first
         const tmpCanvas = document.createElement('canvas');
@@ -38,7 +42,7 @@ class LoupeComponent extends React.Component {
 
         // Scale the loupe canvas and draw the zoomed image
         ctx.save();
-        ctx.scale(zoomScale, zoomScale);
+        ctx.scale(zoomScale_, zoomScale_);
         ctx.drawImage(tmpCanvas, 0, 0, width, height);
 
         // Draw an outlined square at the cursor position (cursor is hidden)
@@ -67,6 +71,8 @@ class LoupeComponent extends React.Component {
             colorInfo,
             ...boxProps
         } = this.props;
+        const stageDimensions = getStageDimensions('large', false);
+        const zoomScale_ = zoomScale * stageDimensions.scale;
         return (
             <Box
                 {...boxProps}
@@ -75,10 +81,10 @@ class LoupeComponent extends React.Component {
                 element="canvas"
                 height={colorInfo.height}
                 style={{
-                    top: colorInfo.y - ((zoomScale * colorInfo.height) / 2),
-                    left: colorInfo.x - ((zoomScale * colorInfo.width) / 2),
-                    width: colorInfo.width * zoomScale,
-                    height: colorInfo.height * zoomScale
+                    top: colorInfo.y - ((zoomScale_ * colorInfo.height) / 2),
+                    left: colorInfo.x - ((zoomScale_ * colorInfo.width) / 2),
+                    width: colorInfo.width * zoomScale_,
+                    height: colorInfo.height * zoomScale_
                 }}
                 width={colorInfo.width}
             />
