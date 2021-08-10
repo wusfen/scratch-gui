@@ -1,18 +1,24 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-
+import {compose} from 'redux';
+import {connect} from 'react-redux';
 import Box from '../box/box.jsx';
 import Label from '../forms/label.jsx';
 import Input from '../forms/input.jsx';
 import BufferedInputHOC from '../forms/buffered-input-hoc.jsx';
 import DirectionPicker from '../../containers/direction-picker.jsx';
-
+import SB3Downloader from '../../containers/sb3-downloader.jsx';
 import {injectIntl, intlShape, defineMessages, FormattedMessage} from 'react-intl';
 
 import {STAGE_DISPLAY_SIZES} from '../../lib/layout-constants.js';
 import {isWideLocale} from '../../lib/locale-utils.js';
-
+import {
+    manualUpdateProject
+} from '../../reducers/project-state';
+import {
+    closeFileMenu
+} from '../../reducers/menus';
 import styles from './sprite-info.css';
 import Icon from '../../assets/icons/icon.jsx';
 
@@ -24,9 +30,19 @@ import hideIcon from './icon--hide.svg';
 import rotateIcon from './rotate.svg';
 
 import isometricIcon from './isometric.svg';
-
-
+import omit from './omit.svg';
+import bindAll from 'lodash.bindall';
+import Dialog from '../dialog/index.jsx';
+import VM from 'scratch-vm';
+import resetIcon from '../../assets/icons/redo.svg';
+import {param} from '../../lib/param.js';
+import folderIcon from '../../assets/icons/folder.svg';
+import fileUp from '../../assets/icons/fileUp.svg';
+import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
+import collectMetadata from '../../lib/collect-metadata';
+import getParam from '../../lib/param';
 const BufferedInput = BufferedInputHOC(Input);
+
 
 const messages = defineMessages({
     spritePlaceholder: {
@@ -37,7 +53,34 @@ const messages = defineMessages({
 });
 
 class SpriteInfo extends React.Component {
-    shouldComponentUpdate (nextProps) {
+    constructor (props) {
+        super(props);
+        bindAll(this, [
+            'handleClickResetFile',
+            'handleClickSave',
+            'getSaveToComputerHandler',
+            'showMoreFunc',
+            'hideMoreFunc',
+            'handleTouchStart',
+            'handleTouchOutside'
+        ]);
+        this.state = {
+            file: param('file'),
+            moreFuncShow: false,
+            mode: getParam('mode') || ''
+        };
+    }
+
+    componentDidMount () {
+        this.moreFuncBtnRef.addEventListener('touchstart', this.handleTouchStart);
+        document.addEventListener('touchstart', this.handleTouchOutside);
+        const blocklyWorkspaces = Array.from(document.getElementsByClassName('blocklyWorkspace'));
+        blocklyWorkspaces.forEach(item => {
+            item.addEventListener('touchstart', this.handleTouchOutside, true);
+        });
+    }
+
+    shouldComponentUpdate (nextProps, nextState) {
         return (
             this.props.rotationStyle !== nextProps.rotationStyle ||
             this.props.disabled !== nextProps.disabled ||
@@ -48,13 +91,99 @@ class SpriteInfo extends React.Component {
             Math.round(this.props.direction) !== Math.round(nextProps.direction) ||
             Math.round(this.props.size) !== Math.round(nextProps.size) ||
             Math.round(this.props.x) !== Math.round(nextProps.x) ||
-            Math.round(this.props.y) !== Math.round(nextProps.y)
+            Math.round(this.props.y) !== Math.round(nextProps.y) || 
+            this.state.moreFuncShow !== nextState.moreFuncShow
         );
     }
+
+    componentWillUnmount () {
+        this.moreFuncBtnRef.removeEventListener('touchstart', this.handleTouchStart);
+        document.removeEventListener('touchstart', this.handleTouchOutside);
+        const blocklyWorkspaces = Array.from(document.getElementsByClassName('blocklyWorkspace'));
+        blocklyWorkspaces.forEach(item => {
+            item.removeEventListener('touchstart', this.handleTouchOutside, true);
+        });
+    }
+
+    handleTouchStart (e) {
+        if (!this.state.moreFuncShow) {
+            e.preventDefault();
+            this.showMoreFunc();
+        }
+    }
+
+    handleTouchOutside (e) {
+        if (this.state.moreFuncShow && !this.containerRef.contains(e.target)) {
+            this.setState({
+                moreFuncShow: false
+            });
+        }
+    }
+
+    async handleClickResetFile () {
+        const fileUrl = this.state.file;
+
+        if (fileUrl) {
+            const bufferPromise = new Promise(async r => {
+                const res = await fetch(fileUrl);
+                const blob = await res.blob();
+                const buffer = await blob.arrayBuffer();
+                r(buffer);
+            });
+
+            await Dialog.confirm({
+                title: '重做确认',
+                content: '将会清空当前作品记录，重新开始创作哦，是否确定重做？'
+            });
+
+            this.props.vm.loadProject(await bufferPromise);
+        }
+    }
+
+    handleClickSave () {
+        this.props.onClickSave();
+        this.props.onRequestCloseFile();
+    }
+
+    getSaveToComputerHandler (downloadProjectCallback) {
+        return () => {
+            dispatchEvent(new Event('saveToComputer'));
+            this.props.onRequestCloseFile();
+            downloadProjectCallback();
+            if (this.props.onProjectTelemetryEvent) {
+                const metadata = collectMetadata(this.props.vm, this.props.projectTitle, this.props.locale);
+                this.props.onProjectTelemetryEvent('projectDidSave', metadata);
+            }
+        };
+    }
+
+    showMoreFunc () {
+        if (this.closeTimeoutId) {
+            clearTimeout(this.closeTimeoutId);
+        } else {
+            this.setState({
+                moreFuncShow: true
+            });
+        }
+    }
+
+    hideMoreFunc () {
+        this.closeTimeoutId = setTimeout(() => {
+            this.setState({
+                moreFuncShow: false
+            });
+            this.closeTimeoutId = null;
+            clearTimeout(this.closeTimeoutId);
+        }, 200);
+    }
+
     render () {
         const {
-            stageSize
+            stageSize,
+            onStartSelectingFileUpload
         } = this.props;
+
+        const {moreFuncShow, mode} = this.state; 
 
         const sprite = (
             <FormattedMessage
@@ -82,33 +211,41 @@ class SpriteInfo extends React.Component {
 
         return (
             <Box className={styles.spriteInfo}>
-                <div className={classNames(styles.row)}>
+                <div 
+                    className={classNames(
+                        styles.row
+                    )}
+                >
                     {/* 角色名 */}
                     <div className={styles.group}>
+                        <div className={styles.title}>角色</div>
                         <Label
                             above={labelAbove}
                             // text={sprite}
-                            text={this.props.name || ''}
+                            text={''}
                         >
                             <BufferedInput
-                                hidden
+                                
                                 className={classNames(
                                     styles.spriteInput,
                                     {
                                         [styles.columnInput]: labelAbove
-                                    }
+                                    },
+                                    styles.newInput
                                 )}
-                                disabled={this.props.disabled}
-                                placeholder={this.props.intl.formatMessage(messages.spritePlaceholder)}
+                                small
+                                disabled
+                                // placeholder={this.props.intl.formatMessage(messages.spritePlaceholder)}
                                 tabIndex="0"
                                 type="text"
                                 value={this.props.disabled ? '' : this.props.name}
-                                onSubmit={this.props.onChangeName}
+                                
                             />
                         </Label>
                     </div>
                     {/* 显示 */}
-                    {
+                    {/* 控制隐藏和显示（先注释） */}
+                    {/* {
                         this.props.visible ?
                             <b
                                 className={classNames(styles.iconWrap)}
@@ -124,7 +261,7 @@ class SpriteInfo extends React.Component {
                             >
                                 <Icon name="hide" />
                             </b>
-                    }
+                    } */}
 
                     <div
                         hidden
@@ -171,19 +308,21 @@ class SpriteInfo extends React.Component {
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div className={classNames(styles.row)}>
                     <div className={styles.group}>
+                        <div className={styles.title}>X</div>
                         <Label
                             above={labelAbove}
                             text=""
                         >
-                            <img
+                            {/* <img
                                 className={styles.iconWrapperAbs}
                                 src={xIcon}
-                            />
+                            /> */}
                             <BufferedInput
+                                className={classNames(
+                                    styles.smallInput,
+                                    styles.newInput
+                                )}
                                 disabled={this.props.disabled}
                                 tabIndex="0"
                                 type="text"
@@ -192,38 +331,21 @@ class SpriteInfo extends React.Component {
                             />
                         </Label>
                     </div>
-                    <div className={classNames(styles.group)}>
-                        <Label
-                            secondary
-                            above={labelAbove}
-                            text=""
-                        >
-                            <img
-                                className={styles.iconWrapperAbs}
-                                src={isometricIcon}
-                            />
-                            <BufferedInput
-                                disabled={this.props.disabled}
-                                label={sizeLabel}
-                                tabIndex="0"
-                                type="text"
-                                value={this.props.disabled ? '' : Math.round(this.props.size)}
-                                onSubmit={this.props.onChangeSize}
-                            />
-                        </Label>
-                    </div>
-                </div>
-                <div className={classNames(styles.row)}>
                     <div className={styles.group}>
+                        <div className={styles.title}>Y</div>
                         <Label
                             above={labelAbove}
                             text=""
                         >
-                            <img
+                            {/* <img
                                 className={styles.iconWrapperAbs}
                                 src={yIcon}
-                            />
+                            /> */}
                             <BufferedInput
+                                className={classNames(
+                                    styles.smallInput,
+                                    styles.newInput
+                                )}
                                 disabled={this.props.disabled}
                                 tabIndex="0"
                                 type="text"
@@ -233,6 +355,33 @@ class SpriteInfo extends React.Component {
                         </Label>
                     </div>
                     <div className={classNames(styles.group)}>
+                        <div className={styles.title}>方向</div>
+                        <Label
+                            secondary
+                            above={labelAbove}
+                            text=""
+                        >
+                            {/* <img
+                                className={styles.iconWrapperAbs}
+                                src={isometricIcon}
+                            /> */}
+                            <BufferedInput
+                                className={classNames(
+                                    styles.smallInput,
+                                    styles.newInput
+                                )}
+                                disabled={this.props.disabled}
+                                label={sizeLabel}
+                                tabIndex="0"
+                                type="text"
+                                value={this.props.disabled ? '' : Math.round(this.props.size)}
+                                onSubmit={this.props.onChangeSize}
+                            />
+                        </Label>
+                    </div>
+                    
+                    <div className={classNames(styles.group)}>
+                        <div className={styles.title}>角度</div>
                         <DirectionPicker
                             direction={Math.round(this.props.direction)}
                             disabled={this.props.disabled}
@@ -241,6 +390,82 @@ class SpriteInfo extends React.Component {
                             onChangeDirection={this.props.onChangeDirection}
                             onChangeRotationStyle={this.props.onChangeRotationStyle}
                         />
+                    </div>
+
+                    <div 
+                        className={classNames(
+                            styles.group,
+                            styles.moreFunc)}
+                        onMouseLeave={this.hideMoreFunc}
+                        onMouseEnter={this.showMoreFunc}
+                        ref={r => {
+                            this.containerRef = r;
+                        }}
+                    >   
+                        {moreFuncShow && <div
+                            className={classNames(styles.moreContent)}
+                        >
+                            {mode === 'normal' && <div className={classNames(styles.item)}>
+                                <button
+                                    hidden={false}
+                                    type="button"
+                                    className={`${styles.funcItem}`}
+                                >
+                                    <img
+                                        className={styles.funcIcon}
+                                        src={folderIcon}
+                                        alt="folder"
+                                    />
+                                    <SB3Downloader>{(className, downloadProjectCallback) => (
+                                        <div
+                                            className={className}
+                                            onClick={this.getSaveToComputerHandler(downloadProjectCallback)}
+                                        >
+                                            保存到本地
+                                        </div>
+                                    )}</SB3Downloader>
+                                </button>
+                            </div>}
+                            {mode === 'normal' && <div className={classNames(styles.item)}>
+                                <button
+                                    hidden={false}
+                                    type="button"
+                                    className={`${styles.funcItem}`}
+                                    onClick={onStartSelectingFileUpload}
+                                >
+                                    <img
+                                        className={styles.funcIcon}
+                                        src={fileUp}
+                                        alt="fileUp"
+                                    />
+                                    加载本地文件
+                                </button>
+                            </div>}
+                            <div className={classNames(styles.item)}>
+                                <button
+                                    hidden={false}
+                                    type="button"
+                                    className={`${styles.funcItem}`}
+                                    onClick={this.handleClickResetFile}
+                                >
+                                    <img
+                                        className={styles.funcIcon}
+                                        src={resetIcon}
+                                        alt="reset"
+                                    />
+                                    重做
+                                </button>
+                            </div>
+                        </div>}
+                        <div
+                            className={classNames(styles.more)}
+                            ref={r => {
+                                this.moreFuncBtnRef = r;
+                            }}
+                        >
+                            <img src={omit} />
+                        </div>
+                        
                     </div>
                 </div>
             </Box>
@@ -280,7 +505,34 @@ SpriteInfo.propTypes = {
     y: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number
-    ])
+    ]),
+    vm: PropTypes.instanceOf(VM).isRequired,
+    onClickSave: PropTypes.func,
+    onRequestCloseFile: PropTypes.func,
+    projectTitle: PropTypes.string,
+    locale: PropTypes.string.isRequired,
+    onProjectTelemetryEvent: PropTypes.func,
+    onStartSelectingFileUpload: PropTypes.func,
 };
 
-export default injectIntl(SpriteInfo);
+
+const mapStateToProps = state => {
+    const test = null;
+    return {
+        locale: state.locales.locale,
+        projectTitle: state.scratchGui.projectTitle
+    };
+};
+
+const mapDispatchToProps = dispatch => ({
+    onClickSave: () => dispatch(manualUpdateProject()),
+    onRequestCloseFile: () => dispatch(closeFileMenu()),
+});
+
+export default compose(
+    injectIntl,
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    )
+)(SpriteInfo);

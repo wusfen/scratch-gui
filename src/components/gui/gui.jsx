@@ -49,6 +49,7 @@ import CopyCodeHideModal from '../copy-code-hide/index.jsx';
 import PromptArea from '../prompt-area/prompt-area.jsx';
 import AudioCourse from '../audio-course/index.jsx';
 import Tips from '../tips/index.jsx';
+import TaskBar from '../taskBar/index.jsx';
 
 const messages = defineMessages({
     addExtension: {
@@ -233,7 +234,8 @@ const GUIComponent = props => {
                         onRequestClose={onRequestCloseBackdropLibrary}
                     />
                 ) : null}
-                <MenuBar
+                {/* 隐藏顶部菜单栏 */}
+                {/* <MenuBar
                     accountNavOpen={accountNavOpen}
                     authorId={authorId}
                     authorThumbnailUrl={authorThumbnailUrl}
@@ -263,7 +265,7 @@ const GUIComponent = props => {
                     onShare={onShare}
                     onStartSelectingFileUpload={onStartSelectingFileUpload}
                     onToggleLoginOpen={onToggleLoginOpen}
-                />
+                /> */}
                 <Box className={styles.bodyWrapper}>
                     <Box className={styles.flexWrapper}>
                         <Box className={styles.editorWrapper}>
@@ -368,6 +370,14 @@ const GUIComponent = props => {
                                     {soundsTabVisible ? <SoundTab vm={vm} /> : null}
                                 </TabPanel>
                             </Tabs>
+                            <Box className={styles.targetWrapper}>
+                                <TargetPane
+                                    stageSize={stageSize}
+                                    vm={vm}
+                                    onProjectTelemetryEvent={onProjectTelemetryEvent}
+                                    onStartSelectingFileUpload={onStartSelectingFileUpload}
+                                />
+                            </Box>
                             {backpackVisible ? (
                                 <Backpack host={backpackHost} />
                             ) : null}
@@ -377,8 +387,13 @@ const GUIComponent = props => {
                             vm={vm}
                             stageSize={stageSize}
                         />
-
+                        
                         <Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}>
+                            {/* 任务栏 */}
+                            <TaskBar
+                                onProjectTelemetryEvent={onProjectTelemetryEvent}
+                                onStartSelectingFileUpload={onStartSelectingFileUpload}
+                            ></TaskBar>
                             <StageWrapper
                                 isFullScreen={isFullScreen}
                                 isRendererSupported={isRendererSupported}
@@ -386,12 +401,13 @@ const GUIComponent = props => {
                                 stageSize={stageSize}
                                 vm={vm}
                             />
-                            <Box className={styles.targetWrapper}>
+                            {/* 移到右边 */}
+                            {/* <Box className={styles.targetWrapper}>
                                 <TargetPane
                                     stageSize={stageSize}
                                     vm={vm}
                                 />
-                            </Box>
+                            </Box> */}
                         </Box>
                     </Box>
                 </Box>

@@ -1,0 +1,129 @@
+@import "../../css/units.css";
+@import "../../css/colors.css";
+.container {
+    color: #ffffff;
+}
+
+.production-name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.88rem;
+    color: #ffffff;
+    margin-bottom: 0.31rem;
+    font-weight: 500;
+}
+
+.input {
+    width: 18.38rem;
+    height: 1.75rem;
+    background: #FFFEFA;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    border: 0;
+    font-size: 0.75rem;
+    font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+    font-weight: 500;
+    color: #0091FF;
+    line-height: 1.75rem;
+    outline: none;
+    
+}
+
+.input::placeholder {
+    color: #ffffff;
+    opacity: 0.8;
+}
+
+.teacher-mode {
+    width: 22.38rem;
+    height: 1.75rem;
+    background: #0091FF;
+    border-radius: 0.5rem;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 0.31rem;
+}
+
+.teacher-mode-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.75rem;
+}
+.teacher-mode-item img {
+    width: 1.06rem;
+    height: 1.06rem;
+    margin-right: 0.38rem;
+}
+
+.line {
+    height: 1.3rem;
+    border-left: 0.03rem solid #53c7f5;
+}
+
+.more-func-container {
+    position: relative;
+}
+
+.more-content {
+    box-sizing: border-box;
+    position: absolute;
+    top: 2rem;
+    left: -0.5rem;
+    min-width: 7.63rem;
+    background: rgba(50, 197, 255, 0.9);
+    border-radius: 0.63rem;
+    color: #FFFFFF;
+    z-index: 9999;
+    transition: all 2s;
+}
+
+.more-content .item {
+    border-radius: 0.63rem;
+    padding: 0.16rem 0.4rem;
+}
+/* .more-content .item:hover {
+    background-color: #21B5EB;
+} */
+
+.more-content::before {
+    content: '';
+    width: 0;
+    height: 0;
+    top: -0.4rem;
+    border-left: 0.4rem solid transparent;
+    border-right: 0.4rem solid transparent;
+    border-bottom: 0.4rem solid rgba(50, 197, 255, 0.9);
+    position: absolute;
+    left: 1rem;
+}
+
+
+.func-item {
+    display: flex;
+    justify-content: center;
+    padding: 0 0.25rem;
+    text-decoration: none;
+    background: none;
+    color: $ui-white;
+    user-select: none;
+    align-self: center;
+    position: relative;
+    align-items: center;
+    white-space: nowrap;
+    height: $menu-bar-height;
+    font-size: 0.75rem;
+}
+
+.func-icon {
+    width: 1.38rem;
+    height: 1.38rem;
+    margin-right: 0.38rem;
+}
+
+
+
+

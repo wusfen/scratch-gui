@@ -13,7 +13,7 @@ html {
 }
 
 .body-wrapper {
-    height: calc(100% - $menu-bar-height - 0.5rem);
+    height: calc(100% - 0.5rem);
 }
 
 .body-wrapper * {
@@ -203,11 +203,11 @@ html {
 }
 
 .stage-and-target-wrapper {
-    width: 18.75rem;
-    padding: 1.875rem 1.0625rem 0.875rem;
+    width: 23.75rem;
+    padding: 0.41rem 0.72rem;
     background: rgba(159, 138, 255, 0);
     box-shadow: inset 0 1px 0.625rem 0 $motion-primary;
-    border-radius: 1.25rem;
+    border-radius: 0.63rem;
 
     display: flex;
     flex-direction: column;

@@ -305,14 +305,17 @@ class MenuBar extends React.Component {
         dispatchEvent(new Event('updateWorkspace_'));
     }
     handleClickRemix () {
+        debugger
         this.props.onClickRemix();
         this.props.onRequestCloseFile();
     }
     handleClickSave () {
+        debugger
         this.props.onClickSave();
         this.props.onRequestCloseFile();
     }
     handleClickSaveAsCopy () {
+        debugger
         this.props.onClickSaveAsCopy();
         this.props.onRequestCloseFile();
     }
