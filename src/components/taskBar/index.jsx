@@ -34,12 +34,12 @@ class TaskBar extends React.Component{
     }
 
     componentDidMount () {
-        this.moreFuncBtnRef.addEventListener('touchstart', this.handleTouchStart);
+        this.moreFuncBtnRef?.addEventListener('touchstart', this.handleTouchStart);
         document.addEventListener('touchstart', this.handleTouchOutside);
     }
 
     componentWillUnmount () {
-        this.moreFuncBtnRef.removeEventListener('touchstart', this.handleTouchStart);
+        this.moreFuncBtnRef?.removeEventListener('touchstart', this.handleTouchStart);
         document.removeEventListener('touchstart', this.handleTouchOutside);
     }
 
@@ -104,7 +104,7 @@ class TaskBar extends React.Component{
             clearTimeout(this.closeTimeoutId);
         }, 200);
     }
-    
+
 
     render () {
         const {
@@ -136,7 +136,7 @@ class TaskBar extends React.Component{
                     />
                 </div>}
                 {mode === 'teacher' && <div className={c.teacherMode}>
-                    <div 
+                    <div
                         className={c.moreFuncContainer}
                         ref={r => {
                             this.containerRef = r;
@@ -159,7 +159,7 @@ class TaskBar extends React.Component{
                             <span>保存与加载</span>
                         </div>
                         {moreFuncShow && <div
-                            className={classNames(c.moreContent)} 
+                            className={classNames(c.moreContent)}
                         >
                             <div className={classNames(c.item)}>
                                 <button
@@ -199,7 +199,7 @@ class TaskBar extends React.Component{
                             </div>
                         </div>}
                     </div>
-                    
+
                     <div className={c.line}></div>
                     <div
                         className={classNames({
