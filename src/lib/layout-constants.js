@@ -46,10 +46,10 @@ STAGE_DISPLAY_SCALES[STAGE_DISPLAY_SIZES.largeConstrained] = 1; // large mode bu
 STAGE_DISPLAY_SCALES[STAGE_DISPLAY_SIZES.small] = 0.5; // small mode, regardless of browser size
 
 window.STAGE_WIDTH = 375;
-window.STAGE_HEIGHT = 667;//舞台真实大小
+window.STAGE_HEIGHT = 667;// 舞台真实大小
 window.UI_WIDTH = 1024;
 window.UI_HEIGHT = 768;
-window.STAGE_UI_WIDTH = 266;//舞台显示大小
+window.STAGE_UI_WIDTH = 266;// 舞台显示大小
 window.STAGE_CSS_WIDTH = window.STAGE_UI_WIDTH;
 
 const searchParams = (new URL(location)).searchParams;
@@ -68,20 +68,20 @@ htmlEl.style.setProperty('--STAGE_HEIGHT', window.STAGE_HEIGHT);
 
 // eslint-disable-next-line require-jsdoc, func-style
 function resize () {
-    if(location.pathname.length === location.pathname.lastIndexOf("player.html") + 11 || searchParams.get("mode") === 'player'){
+    if (/\b(player\.html|mode=player)\b/.test(location)){
         window.STAGE_CSS_WIDTH = window.innerWidth;
-        if(window.STAGE_CSS_WIDTH * (16 / 9) > window.innerHeight){
+        if (window.STAGE_CSS_WIDTH * (16 / 9) > window.innerHeight){
             window.STAGE_CSS_WIDTH = window.innerHeight * 9 / 16;
         }
-    }else{
+    } else {
         window.STAGE_CSS_WIDTH = Math.min(
             window.STAGE_WIDTH,
             window.STAGE_UI_WIDTH / (window.UI_WIDTH / htmlEl.clientWidth),
             window.STAGE_UI_WIDTH / (window.UI_HEIGHT / htmlEl.clientHeight)
         );
-    
+
     }
-    
+
     document.documentElement.style.setProperty(
         '--STAGE_CSS_WIDTH',
         window.STAGE_CSS_WIDTH

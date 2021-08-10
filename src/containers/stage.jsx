@@ -76,7 +76,7 @@ class Stage extends React.Component {
             const w = layout.standardStageWidth / 2;
             const h = layout.standardStageHeight / 2;
             this.props.vm.renderer.setStageSize(-w, w, -h, h);
-            //this.props.vm.renderer.draw();
+            // this.props.vm.renderer.draw();
             this.renderer.resize(layout.standardStageWidth, layout.standardStageHeight);
         }
         this.props.vm.attachV2BitmapAdapter(new V2BitmapAdapter());
@@ -162,6 +162,7 @@ class Stage extends React.Component {
     }
 
     stageReSize = () => {
+        /* eslint-disable no-invalid-this */
         this.updateRect();
         this.forceUpdate();
     }

@@ -8,7 +8,7 @@ import {getStageDimensions} from '../../lib/screen-utils.js';
 
 const zoomScale = 3;
 
-//取色鱼眼
+// 取色鱼眼
 class LoupeComponent extends React.Component {
     constructor (props) {
         super(props);

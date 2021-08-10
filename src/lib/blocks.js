@@ -5,10 +5,10 @@ import optimize from './blocks_optimize';
 import appear_modify from './blocks_appearance_modify';
 import addNew from './blocks_add_new';
 
-addNew(ScratchBlocks);//增加积木块
-appear_modify(ScratchBlocks);//UI样式修改
-fixBugs(ScratchBlocks);//修正bug
-optimize(ScratchBlocks);//优化
+addNew(ScratchBlocks);// 增加积木块
+appear_modify(ScratchBlocks);// UI样式修改
+fixBugs(ScratchBlocks);// 修正bug
+optimize(ScratchBlocks);// 优化
 
 /**
  * Connect scratch blocks with the vm

@@ -276,7 +276,7 @@ class TargetPane$ extends React.Component {
         }
     }
 
-    _filterSprite(sprite){
+    _filterSprite (sprite){
         const name = sprite.name;
         return !(name.indexOf('#') === 0 && name.length - 1 === name.indexOf('*'));
     }
@@ -322,7 +322,7 @@ class TargetPane$ extends React.Component {
             ...componentProps
         } = this.props;
         /* eslint-enable no-unused-vars */
-        const items = window.MODE?Object.values(sprites):Object.values(sprites).filter(this._filterSprite);
+        const items = window.MODE ? Object.values(sprites) : Object.values(sprites).filter(this._filterSprite);
         return (
             <div
                 className={

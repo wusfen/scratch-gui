@@ -36,7 +36,7 @@ const vmManagerHOC = function (WrappedComponent) {
                 this.props.vm.setLocale(this.props.locale, this.props.messages);
             }
             if (!this.props.isPlayerOnly && !this.props.isStarted) {
-                console.log("vm.start-Mount");
+                console.log('vm.start-Mount');
                 this.props.vm.start();
             }
         }
@@ -49,7 +49,7 @@ const vmManagerHOC = function (WrappedComponent) {
             }
             // Start the VM if entering editor mode with an unstarted vm
             if (!this.props.isPlayerOnly && !this.props.isStarted) {
-                console.log("vm.start-Update");
+                console.log('vm.start-Update');
                 this.props.vm.start();
             }
         }

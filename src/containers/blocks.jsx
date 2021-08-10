@@ -124,7 +124,7 @@ class Blocks extends React.Component {
 
         const startScale = workspaceConfig.zoom.startScale * (1 / .75);
         toolbox_.flyout_.DEFAULT_WIDTH = 250 * startScale;
-        toolbox_.width = toolbox_.flyout_.DEFAULT_WIDTH + 73 * startScale;
+        toolbox_.width = toolbox_.flyout_.DEFAULT_WIDTH + (73 * startScale);
         toolbox_.flyout_.autoClose = true;
         // // autoClose 时会执行它
         toolbox_.clearSelection = function () {
