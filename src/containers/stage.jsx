@@ -59,7 +59,7 @@ class Stage extends React.Component {
             this.renderer = new Renderer(this.canvas);
             this.props.vm.attachRenderer(this.renderer);
             // 舞台背景色
-            const stageBgColor = '#c3b6ff';
+            const stageBgColor = '#76CBFF';
             this.renderer.setBackgroundColor(
                 parseInt(stageBgColor.slice(1, 3), 16) / 255,
                 parseInt(stageBgColor.slice(3, 5), 16) / 255,
