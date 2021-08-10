@@ -21,7 +21,15 @@ body {
 }
 
 .stage-only [class*="stage-header-wrapper"] {
-    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+}
+.stage-only [class*="stage-header_stage-menu-wrapper"] {
+    margin: 0.5rem;
+}
+.stage-only [class*="stage-header_stage-menu-wrapper"] button {
+    border-radius: 99px;
 }
 
 .stage-only [class*="stage-wrapper"] {
