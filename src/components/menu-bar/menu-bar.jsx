@@ -740,7 +740,8 @@ class MenuBar extends React.Component {
             >
                 <div
                     hidden
-                    className={styles.mainMenu}>
+                    className={styles.mainMenu}
+                >
                     <div className={styles.fileGroup}>
                         {/* logo */}
                         <div className={classNames(styles.menuBarItem)}>
@@ -1208,12 +1209,12 @@ class MenuBar extends React.Component {
                                 >{'跳过'}</button>
 
                                 <button
-                                    className={classNames(c.button, c.yellow, {
+                                    className={classNames(c.button, c.pink, {
                                         [c.blingBling]: this.state.isShowPublishButtonBling,
                                     })}
                                     onClick={e => this.handleSubmit()}
                                 >
-                                    <i className={`${c.iSend} ${c.iSizeL}`} />
+                                    <i className={`${c.iCheck} ${c.iSizeL}`} />
                                     {'提交'}
                                 </button>
 
