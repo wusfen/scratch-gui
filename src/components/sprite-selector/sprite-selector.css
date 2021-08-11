@@ -6,6 +6,9 @@
     flex-grow: 1;
     position: relative;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: #fffefa;
+    border-bottom-right-radius: 0.63rem;
+    border-top: 0.06rem solid #bfecfc;
     /* margin-right: calc($space / 2); */
     /* background-color: $ui-secondary; */
     /* border-top-right-radius: $space; */
@@ -52,7 +55,7 @@
               then back up, introduces white space in the outside the page container.
     */
     /* height: calc(100% - $sprite-info-height); */
-    
+
     /* overflow-y: auto; */
 }
 
@@ -73,13 +76,13 @@
     overflow-x: visible;
 
     justify-content: center;
-    padding-bottom: 4.375rem;
+    /* padding-bottom: 4.375rem; */
 }
 
 .add-button {
-    position: fixed;
-    bottom: 1.5rem;
-    left: 20.4rem;
+    position: absolute;
+    bottom: 0.4rem;
+    left: -5.2rem;
     z-index: 99;
 }
 

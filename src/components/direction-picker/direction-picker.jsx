@@ -56,10 +56,10 @@ const DirectionPicker = props => (
         above={props.labelAbove}
         text=""
     >
-        <img
+        {/* <img
             className={styles.iconWrapperAbs}
             src={rotateIcon}
-        />
+        /> */}
         <Popover
             body={
                 <div>
@@ -113,6 +113,10 @@ const DirectionPicker = props => (
         >
           
             <BufferedInput
+                className={classNames(
+                    styles.smallInput,
+                    styles.newInput
+                )}
                 small
                 disabled={props.disabled}
                 label={directionLabel}

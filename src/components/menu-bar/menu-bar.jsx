@@ -738,7 +738,10 @@ class MenuBar extends React.Component {
                     styles.menuBar
                 )}
             >
-                <div className={styles.mainMenu}>
+                <div
+                    hidden
+                    className={styles.mainMenu}
+                >
                     <div className={styles.fileGroup}>
                         {/* logo */}
                         <div className={classNames(styles.menuBarItem)}>
@@ -1154,7 +1157,10 @@ class MenuBar extends React.Component {
                     {
                         mode === 'normal' ? (
                             <>
-                                <div className={`${c.withIconRight}`}>
+                                <div
+                                    hidden
+                                    className={`${c.withIconRight}`}
+                                >
                                     <input
                                         type="text"
                                         className={`${c.input}`}
@@ -1203,12 +1209,12 @@ class MenuBar extends React.Component {
                                 >{'跳过'}</button>
 
                                 <button
-                                    className={classNames(c.button, c.yellow, {
+                                    className={classNames(c.button, c.pink, {
                                         [c.blingBling]: this.state.isShowPublishButtonBling,
                                     })}
                                     onClick={e => this.handleSubmit()}
                                 >
-                                    <i className={`${c.iSend} ${c.iSizeL}`} />
+                                    <i className={`${c.iCheck} ${c.iSizeL}`} />
                                     {'提交'}
                                 </button>
 
@@ -1225,6 +1231,7 @@ class MenuBar extends React.Component {
                         mode === 'teacher' ? (
                             <>
                                 <button
+                                    hidden
                                     className={`${c.button} ${c.pink}`}
                                     onClick={this.handleTeacherPreview}
                                 >
@@ -1232,6 +1239,7 @@ class MenuBar extends React.Component {
                                 </button>
 
                                 <button
+                                    hidden
                                     className={c.button}
                                     onClick={this.handleHideCode}
                                 >{'隐藏盒子'}</button>

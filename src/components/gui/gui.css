@@ -9,11 +9,11 @@ html {
 .page-wrapper {
     height: 100%;
     padding: 1rem 0.75rem;
-    padding: calc(16 * 1px) 0.75rem;
+    padding: 0.75rem 0.6rem;
 }
 
 .body-wrapper {
-    height: calc(100% - $menu-bar-height - 0.5rem);
+    height: 100%;
 }
 
 .body-wrapper * {
@@ -49,9 +49,10 @@ html {
         much better ways to solve that (e.g. undo #2124, remove this flex-basis entirely). However, they run their own
         risks of breaking things, so let's just leave this as-is for the time being.
     */
-    flex-basis: calc(
+    /* flex-basis: calc(
         64rem - 25.5rem - (($space + $stage-standard-border-width) * 2)
     );
+    flex-basis: 100px; */
     flex-grow: 1;
     flex-shrink: 0;
     position: relative;
@@ -203,12 +204,12 @@ html {
 }
 
 .stage-and-target-wrapper {
-    width: 18.75rem;
-    padding: 1.875rem 1.0625rem 0.875rem;
+    position: relative;
+    width: 23.75rem;
+    padding: 0.41rem 0.72rem;
     background: rgba(159, 138, 255, 0);
     box-shadow: inset 0 1px 0.625rem 0 $motion-primary;
-    border-radius: 1.25rem;
-
+    border-radius: 0.63rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -335,3 +336,43 @@ $fade-out-distance: 0.9375rem;
 .watermark {
     /* display: none; */
 }
+
+.stage-and-target-wrapper .error-tips {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999999;
+}
+
+.stage-and-target-wrapper .warning-border {
+    position: absolute;
+    width: 22.31rem;
+    height: 39.69rem;
+    top: 2.47rem;
+    border-radius: 0.31rem;
+    border: 0.44rem solid rgba(255, 56, 123, 0.5);
+    z-index: 100;
+    animation: breath 1.6s both infinite;
+}
+
+@keyframes breath {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.menu-bar-container {
+    position: absolute;
+    z-index: 200;
+    top: 1.4rem;
+    right: 1.4rem;
+}
+
+

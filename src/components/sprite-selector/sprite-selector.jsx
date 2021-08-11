@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
-
+import VM from 'scratch-vm';
 import Box from '../box/box.jsx';
 import SpriteInfo from '../../containers/sprite-info.jsx';
 import SpriteList from './sprite-list.jsx';
@@ -67,6 +67,9 @@ const SpriteSelectorComponent = function (props) {
         spriteFileInput,
         sprites,
         stageSize,
+        vm,
+        onProjectTelemetryEvent,
+        onStartSelectingFileUpload,
         ...componentProps
     } = props;
     let selectedSprite = sprites[selectedId];
@@ -98,6 +101,9 @@ const SpriteSelectorComponent = function (props) {
                 onChangeVisibility={onChangeSpriteVisibility}
                 onChangeX={onChangeSpriteX}
                 onChangeY={onChangeSpriteY}
+                vm={vm}
+                onProjectTelemetryEvent={onProjectTelemetryEvent}
+                onStartSelectingFileUpload={onStartSelectingFileUpload}
             />
 
             {/* <SpriteList
@@ -189,7 +195,10 @@ SpriteSelectorComponent.propTypes = {
             order: PropTypes.number.isRequired
         })
     }),
-    stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired
+    stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired,
+    vm: PropTypes.instanceOf(VM).isRequired,
+    onProjectTelemetryEvent: PropTypes.func,
+    onStartSelectingFileUpload: PropTypes.func
 };
 
 export default injectIntl(SpriteSelectorComponent);

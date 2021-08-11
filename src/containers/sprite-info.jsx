@@ -56,7 +56,8 @@ SpriteInfo.propTypes = {
     onChangeX: PropTypes.func,
     onChangeY: PropTypes.func,
     x: PropTypes.number,
-    y: PropTypes.number
+    y: PropTypes.number,
+    onProjectTelemetryEvent: PropTypes.func
 };
 
 export default SpriteInfo;

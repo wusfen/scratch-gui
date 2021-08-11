@@ -20,7 +20,7 @@ class Controls extends React.Component {
         };
         bindAll(this, [
             'handleGreenFlagClick',
-            'handleStopAllClick'
+            'handleStopAllClick',
         ]);
 
         if (param('mode') === 'course'){
@@ -99,6 +99,10 @@ class Controls extends React.Component {
                 dispatchEvent(new Event('运行时判断不正确'));
             }
         }
+
+    }
+
+    onClickNotVisible () {
 
     }
     render () {

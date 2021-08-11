@@ -53,7 +53,9 @@ class GUI extends React.Component {
         super(props);
         this.state = {
             videoSrc: '',
-            promptAreaShow: false
+            promptAreaShow: false,
+            errorText: '',
+            showErrorTips: false
         };
     }
 
@@ -71,6 +73,8 @@ class GUI extends React.Component {
         if (/^(course|normal)$/.test(mode)) {
             this.handleVideoSrc(); // 获取引导video
         }
+        window.addEventListener('openErrorTips', this.initErrorTipsListner); // 初始化错误提示的监听
+        window.addEventListener('运行时判断不正确', this.tipsStartError); // 当学生点击开始的时候，会提交json进行判断（已有功能），如果收到的结果是错误的，则出现错误提示效果
     }
 
     componentDidUpdate (prevProps) {
@@ -85,13 +89,33 @@ class GUI extends React.Component {
     }
 
     componentWillUnmount () {
-        window.operateTimer?.removeListener();
-        window.codeTimer?.removeListener();
-        window.rightAnswerTimer?.removeListener();
-        window.jsonErrorCounter?.removeListener();
-        window.submitErrorCounter?.removeListener();
+        window.operateTimer.removeListener();
+        window.codeTimer.removeListener();
+        window.rightAnswerTimer.removeListener();
+        window.jsonErrorCounter.removeListener();
+        window.submitErrorCounter.removeListener();
+        window.removeEventListener('openErrorTips', this.initErrorTipsListner);
+        window.removeEventListener('运行时判断不正确', this.tipsStartError);
+
     }
 
+    tipsStartError = () => {
+        window.editorErrorTipText = '代码还有些问题哦，再修改一下吧';
+        this.initErrorTipsListner();
+    }
+
+    initErrorTipsListner = () => {
+        this.setState({
+            errorText: window.editorErrorTipText || '',
+            showErrorTips: true
+        });
+        this.timer = setTimeout(() => {
+            this.setState({
+                showErrorTips: false
+            });
+            clearTimeout(this.timer);
+        }, 3000);
+    }
 
     initTimer = () => {
         if (param('mode') === 'course') {
@@ -153,7 +177,7 @@ class GUI extends React.Component {
             loadingStateVisible,
             ...componentProps
         } = this.props;
-        const {videoSrc, promptAreaShow} = this.state;
+        const {videoSrc, promptAreaShow, errorText, showErrorTips} = this.state;
         return (
             <GUIComponent
                 loading={fetchingProject || isLoading || loadingStateVisible}
@@ -161,6 +185,8 @@ class GUI extends React.Component {
                 videoSrc={videoSrc}
                 promptAreaShow={promptAreaShow}
                 closePromptArea={this.closePromptArea}
+                errorText={errorText}
+                showErrorTips={showErrorTips}
             >
                 {children}
             </GUIComponent>

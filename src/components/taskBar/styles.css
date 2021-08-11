@@ -1,0 +1,235 @@
+@import "../../css/units.css";
+@import "../../css/colors.css";
+.container {
+    color: #ffffff;
+    margin-bottom: 0.31rem;
+    z-index: 200;
+}
+
+.production-name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.88rem;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.input {
+    width: 18.38rem;
+    height: 1.75rem;
+    background: #FFFEFA;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    border: 0;
+    font-size: 0.75rem;
+    font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+    font-weight: 500;
+    color: #0091FF;
+    line-height: 1.75rem;
+    outline: none;
+    
+}
+
+.input::placeholder {
+    color: #ffffff;
+    opacity: 0.8;
+}
+
+.teacher-mode {
+    width: 22.38rem;
+    height: 1.75rem;
+    background: #0091FF;
+    border-radius: 0.5rem;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.teacher-mode-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.75rem;
+}
+.teacher-mode-item img {
+    width: 1.06rem;
+    height: 1.06rem;
+    margin-right: 0.38rem;
+}
+
+.line {
+    height: 1.3rem;
+    border-left: 0.03rem solid #53c7f5;
+}
+
+.more-func-container {
+    position: relative;
+}
+
+.more-content {
+    box-sizing: border-box;
+    position: absolute;
+    top: 2rem;
+    left: -0.5rem;
+    min-width: 7.63rem;
+    background: rgba(50, 197, 255, 0.9);
+    border-radius: 0.63rem;
+    color: #FFFFFF;
+    z-index: 200;
+    transition: all 2s;
+}
+
+.more-content .item {
+    border-radius: 0.63rem;
+    padding: 0.16rem 0.4rem;
+}
+/* .more-content .item:hover {
+    background-color: #21B5EB;
+} */
+
+.more-content::before {
+    content: '';
+    width: 0;
+    height: 0;
+    top: -0.4rem;
+    border-left: 0.4rem solid transparent;
+    border-right: 0.4rem solid transparent;
+    border-bottom: 0.4rem solid rgba(50, 197, 255, 0.9);
+    position: absolute;
+    left: 1rem;
+}
+
+
+.func-item {
+    display: flex;
+    justify-content: center;
+    padding: 0 0.25rem;
+    text-decoration: none;
+    background: none;
+    color: $ui-white;
+    user-select: none;
+    align-self: center;
+    position: relative;
+    align-items: center;
+    white-space: nowrap;
+    height: $menu-bar-height;
+    font-size: 0.75rem;
+}
+
+.func-icon {
+    width: 1.38rem;
+    height: 1.38rem;
+    margin-right: 0.38rem;
+}
+
+.course-mode {
+    position: relative;
+    width: 22.38rem;
+    height: 1.75rem;
+    background: #FF457F;
+    border-radius: 0.5rem;
+    margin: 0 auto;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    padding: 0 0.5rem;
+    z-index: 200;
+}
+.course-mode.video-content-is-open {
+    background-color: #32C5FF;
+}
+
+.course-mode .iconList {
+    flex: 1;
+    position: absolute;
+    right: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.course-mode .video-icon {
+    width: 1.41rem;
+    height: 1.19rem;
+    
+}
+.course-mode .close-icon {
+    width: 1rem;
+    height: 1rem;
+}
+
+
+.course-mode .audio-icon {
+    width: 1.25rem;
+    height: 1.13rem;
+    margin-right: 0.47rem;
+    
+}
+
+.course-mode .audio-content {
+    display: flex;
+    align-items: center;
+}
+
+.video-content {
+    position: absolute;
+    top: 0.3rem;
+    width: 22.4rem;
+    min-height: 18.81rem;
+    background: rgba(255, 254, 250, 0.8);
+    border-radius: 0.5rem;
+    z-index: 199;
+    padding: 3.13rem 0 0.75rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.video {
+    width: 22.13rem;
+    height: 12.44rem;
+    object-fit: fill;
+}
+.video::-webkit-media-controls-fullscreen-button { /* 去掉全屏按钮 */
+    display: none;
+}
+
+.video-options {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-top: 0.75rem;
+    padding: 0 0.5rem;
+}
+
+.video-options .option {
+    font-size: 0.75rem;
+    min-width: 3.3rem;
+    height: 1.75rem;
+    background: #32C5FF;
+    border-radius: 0.63rem;
+    padding: 0.06rem;
+    line-height: 1.75rem;
+    text-align: center;
+    margin-right: 0.25rem;
+}
+
+
+.video-options .option.active {
+    background-color: #FF457F;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -33,13 +33,10 @@ html {
     font-size: 16px;
     transition: none;
 }
-// js max 375: 375/266 * 1024
-@media all and (max-width: 1443px) {
+@media all {
     html {
         font-size: calc(100vw / (1024 / 16));
     }
-}
-@media all and (max-height: 1080px) {
     html {
         font-size: calc(100vh / (768 / 16));
     }

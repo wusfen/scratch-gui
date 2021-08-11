@@ -49,6 +49,8 @@ import CopyCodeHideModal from '../copy-code-hide/index.jsx';
 import PromptArea from '../prompt-area/prompt-area.jsx';
 import AudioCourse from '../audio-course/index.jsx';
 import Tips from '../tips/index.jsx';
+import TaskBar from '../taskBar/index.jsx';
+import ErrorTips from '../errorTips/index.jsx';
 
 const messages = defineMessages({
     addExtension: {
@@ -132,9 +134,10 @@ const GUIComponent = props => {
         videoSrc,
         promptAreaShow,
         closePromptArea,
+        errorText,
+        showErrorTips,
         ...componentProps
     } = omit(props, 'dispatch');
-    const PromptAreaShow = false;
     if (children) {
         return <Box {...componentProps}>{children}</Box>;
     }
@@ -233,37 +236,41 @@ const GUIComponent = props => {
                         onRequestClose={onRequestCloseBackdropLibrary}
                     />
                 ) : null}
-                <MenuBar
-                    accountNavOpen={accountNavOpen}
-                    authorId={authorId}
-                    authorThumbnailUrl={authorThumbnailUrl}
-                    authorUsername={authorUsername}
-                    canChangeLanguage={canChangeLanguage}
-                    canCreateCopy={canCreateCopy}
-                    canCreateNew={canCreateNew}
-                    canEditTitle={canEditTitle}
-                    canManageFiles={canManageFiles}
-                    canRemix={canRemix}
-                    canSave={canSave}
-                    canShare={canShare}
-                    className={styles.menuBarPosition}
-                    enableCommunity={enableCommunity}
-                    isShared={isShared}
-                    logo={logo}
-                    renderLogin={renderLogin}
-                    showComingSoon={showComingSoon}
-                    onClickAbout={onClickAbout}
-                    onClickAccountNav={onClickAccountNav}
-                    onClickLogo={onClickLogo}
-                    onCloseAccountNav={onCloseAccountNav}
-                    onLogOut={onLogOut}
-                    onOpenRegistration={onOpenRegistration}
-                    onProjectTelemetryEvent={onProjectTelemetryEvent}
-                    onSeeCommunity={onSeeCommunity}
-                    onShare={onShare}
-                    onStartSelectingFileUpload={onStartSelectingFileUpload}
-                    onToggleLoginOpen={onToggleLoginOpen}
-                />
+                {/* 隐藏顶部菜单栏 */}
+                <div className={styles.menuBarContainer}>
+                    <MenuBar
+                        accountNavOpen={accountNavOpen}
+                        authorId={authorId}
+                        authorThumbnailUrl={authorThumbnailUrl}
+                        authorUsername={authorUsername}
+                        canChangeLanguage={canChangeLanguage}
+                        canCreateCopy={canCreateCopy}
+                        canCreateNew={canCreateNew}
+                        canEditTitle={canEditTitle}
+                        canManageFiles={canManageFiles}
+                        canRemix={canRemix}
+                        canSave={canSave}
+                        canShare={canShare}
+                        className={styles.menuBarPosition}
+                        enableCommunity={enableCommunity}
+                        isShared={isShared}
+                        logo={logo}
+                        renderLogin={renderLogin}
+                        showComingSoon={showComingSoon}
+                        onClickAbout={onClickAbout}
+                        onClickAccountNav={onClickAccountNav}
+                        onClickLogo={onClickLogo}
+                        onCloseAccountNav={onCloseAccountNav}
+                        onLogOut={onLogOut}
+                        onOpenRegistration={onOpenRegistration}
+                        onProjectTelemetryEvent={onProjectTelemetryEvent}
+                        onSeeCommunity={onSeeCommunity}
+                        onShare={onShare}
+                        onStartSelectingFileUpload={onStartSelectingFileUpload}
+                        onToggleLoginOpen={onToggleLoginOpen}
+                    />
+                </div>
+                
                 <Box className={styles.bodyWrapper}>
                     <Box className={styles.flexWrapper}>
                         <Box className={styles.editorWrapper}>
@@ -340,8 +347,8 @@ const GUIComponent = props => {
                                             vm={vm}
                                         />
                                         <Running vm={vm} />
-                                        <AudioCourse />
-                                        <Tips />
+                                        {/* <AudioCourse />
+                                        <Tips /> */}
                                     </Box>
                                     <Box className={styles.extensionButtonContainer}>
                                         <button
@@ -368,6 +375,14 @@ const GUIComponent = props => {
                                     {soundsTabVisible ? <SoundTab vm={vm} /> : null}
                                 </TabPanel>
                             </Tabs>
+                            <Box className={styles.targetWrapper}>
+                                <TargetPane
+                                    stageSize={stageSize}
+                                    vm={vm}
+                                    onProjectTelemetryEvent={onProjectTelemetryEvent}
+                                    onStartSelectingFileUpload={onStartSelectingFileUpload}
+                                />
+                            </Box>
                             {backpackVisible ? (
                                 <Backpack host={backpackHost} />
                             ) : null}
@@ -377,8 +392,28 @@ const GUIComponent = props => {
                             vm={vm}
                             stageSize={stageSize}
                         />
-
-                        <Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}>
+                        
+                        <Box
+                            className={
+                                classNames(
+                                    styles.stageAndTargetWrapper,
+                                    styles[stageSize]
+                                )     
+                            }
+                        >
+                            {/* 任务栏 */}
+                            <TaskBar
+                                onProjectTelemetryEvent={onProjectTelemetryEvent}
+                                onStartSelectingFileUpload={onStartSelectingFileUpload}
+                            ></TaskBar>
+                            {showErrorTips && <div
+                                className={styles.errorTips}
+                            >
+                                <ErrorTips
+                                    text={errorText}
+                                ></ErrorTips>
+                            </div>}
+                            
                             <StageWrapper
                                 isFullScreen={isFullScreen}
                                 isRendererSupported={isRendererSupported}
@@ -386,13 +421,17 @@ const GUIComponent = props => {
                                 stageSize={stageSize}
                                 vm={vm}
                             />
-                            <Box className={styles.targetWrapper}>
+                            {showErrorTips && <div className={styles.warningBorder}></div>}
+                            {/* 移到右边 */}
+                            {/* <Box className={styles.targetWrapper}>
                                 <TargetPane
                                     stageSize={stageSize}
                                     vm={vm}
                                 />
-                            </Box>
+                            </Box> */}
+                            
                         </Box>
+                        
                     </Box>
                 </Box>
                 <DragLayer />
@@ -470,6 +509,8 @@ GUIComponent.propTypes = {
     videoSrc: PropTypes.string,
     promptAreaShow: PropTypes.bool,
     closePromptArea: PropTypes.func,
+    errorText: PropTypes.string,
+    showErrorTips: PropTypes.bool
 };
 GUIComponent.defaultProps = {
     backpackHost: null,

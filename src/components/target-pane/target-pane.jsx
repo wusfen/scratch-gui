@@ -46,6 +46,8 @@ const TargetPane = ({
     stageSize,
     sprites,
     vm,
+    onProjectTelemetryEvent,
+    onStartSelectingFileUpload,
     ...componentProps
 }) => (
     <div
@@ -79,6 +81,9 @@ const TargetPane = ({
             onSelectSprite={onSelectSprite}
             onSpriteUpload={onSpriteUpload}
             onSurpriseSpriteClick={onSurpriseSpriteClick}
+            vm={vm}
+            onProjectTelemetryEvent={onProjectTelemetryEvent}
+            onStartSelectingFileUpload={onStartSelectingFileUpload}
         />
 
         <div
@@ -165,7 +170,9 @@ TargetPane.propTypes = {
     sprites: PropTypes.objectOf(spriteShape),
     stage: spriteShape,
     stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired,
-    vm: PropTypes.instanceOf(VM)
+    vm: PropTypes.instanceOf(VM),
+    onProjectTelemetryEvent: PropTypes.func,
+    onStartSelectingFileUpload: PropTypes.func
 };
 
 export default TargetPane;

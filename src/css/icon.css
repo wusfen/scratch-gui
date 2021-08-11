@@ -39,3 +39,11 @@
 .i-send:before {
     background-image: url("../assets/icons/publish.png");
 }
+
+.i-check:before {
+    background-image: url("../assets/icons/check.svg");
+}
+
+button i[class*="i-"]:first-child {
+    margin-right: 0.25rem;
+}

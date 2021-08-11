@@ -244,6 +244,8 @@ class TargetPane extends React.Component {
             onReceivedBlocks,
             onShowImporting,
             workspaceMetrics,
+            onProjectTelemetryEvent,
+            onStartSelectingFileUpload,
             ...componentProps
         } = this.props;
         /* eslint-enable no-unused-vars */
@@ -268,6 +270,8 @@ class TargetPane extends React.Component {
                 onSelectSprite={this.handleSelectSprite}
                 onSpriteUpload={this.handleSpriteUpload}
                 onSurpriseSpriteClick={this.handleSurpriseSpriteClick}
+                onProjectTelemetryEvent={onProjectTelemetryEvent}
+                onStartSelectingFileUpload={onStartSelectingFileUpload}
             />
         );
     }

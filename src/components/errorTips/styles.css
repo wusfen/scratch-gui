@@ -1,0 +1,23 @@
+.error-tips-container {
+    width: 13.5rem;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 0.63rem;
+    padding: 0.7rem 1rem;
+    font-size: 0.88rem;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    z-index: 999999999;
+    line-height: 1.25rem;
+}
+
+
+.error-tips-container img {
+    width: 1.75rem;
+    height: 1.75rem;
+    margin-right: 0.88rem;
+}
+
+.error-tips-container .text {
+
+}

@@ -108,6 +108,7 @@ button::-moz-focus-inner {
     z-index: 10; /* @todo justify */
     margin-top: auto;
     pointer-events: all;
+    height: 43.5rem;
 }
 
 .file-input {

@@ -42,6 +42,13 @@
     margin-left: 0;
 }
 
+.sprite-selector-item:hover {
+    /* border: .125rem solid $motion-primary; */
+    /* background: $ui-white; */
+
+    background: #e8f8ff;
+}
+
 .sprite-selector-item:hover .sprite-image,
 .is-selected .sprite-image {
     filter: drop-shadow(0rem 0rem 0.125rem $ui-black-transparent);
@@ -54,7 +61,7 @@
     background: #ff8baf;
     border-radius: 50%;
     top: -0.5rem;
-    left: -0.9rem;
+    left: -0.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
