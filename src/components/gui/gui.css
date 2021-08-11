@@ -369,10 +369,10 @@ $fade-out-distance: 0.9375rem;
 }
 
 .menu-bar-container {
-    width: 97%;
     position: absolute;
     z-index: 200;
     top: 1.4rem;
+    right: 1.4rem;
 }
 
 

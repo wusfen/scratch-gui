@@ -233,13 +233,12 @@ class SpriteInfo extends React.Component {
                                     },
                                     styles.newInput
                                 )}
-                                small
-                                disabled
+                                disabled={this.props.disabled || !(/^(normal|teacher)$/.test(mode))}
                                 // placeholder={this.props.intl.formatMessage(messages.spritePlaceholder)}
                                 tabIndex="0"
                                 type="text"
                                 value={this.props.disabled ? '' : this.props.name}
-                                
+                                onSubmit={this.props.onChangeName}
                             />
                         </Label>
                     </div>
