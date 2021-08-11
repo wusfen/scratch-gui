@@ -1,16 +1,12 @@
 .aside-btn-wrapper {
     position: absolute;
     z-index: 9;
-    right: 4rem;
-    bottom: 1.7rem;
+    right: 1rem;
+    bottom: 1rem;
 }
 
-.aside-btn-wrapper span {
-    cursor: pointer;
+button {
     margin: 0 0.5rem;
-}
-
-.undo {
     display: inline-block;
     width: 1.5rem;
     height: 1.38rem;
@@ -18,14 +14,31 @@
     background-size: 100% 100%;
 }
 
-.redo {
-    display: inline-block;
-    width: 1.5rem;
-    height: 1.38rem;
-    background: url("./reform.svg") no-repeat center;
-    background-size: 100% 100%;
+:global(.blocklyZoom) {
+    transform: translate(0, 0);
+    opacity: 0 !important;
 }
 
-/* .disable {  
-    cursor: no-drop !important;
-} */
+.undo {
+    background-image: url("./revoke.svg");
+}
+
+.redo {
+    background-image: url("./reform.svg");
+}
+
+.zoomIn {
+    background-image: url("./zoom\ in.svg");
+}
+
+.zoomOut {
+    background-image: url("./zoom\ out.svg");
+}
+
+.align {
+    background-image: url("./aline.svg");
+}
+
+.disable {
+    opacity: 0.5;
+}
