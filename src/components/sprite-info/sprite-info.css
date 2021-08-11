@@ -286,6 +286,7 @@
     position: absolute;
     left: -16rem;
     top: -1rem;
+    z-index: 200;
 }
 
 
