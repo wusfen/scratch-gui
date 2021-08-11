@@ -97,9 +97,8 @@ class TaskBar extends React.Component{
         case 'course':
             this.introVideoSrc = getTipParam('introVideo ');
             this.titleAudioSrc = getTipParam('tipAudio');
-            this.tipVideos = getTipParam('tipVideo');
-
-            if (this.tipVideos) {
+            this.tipVideos = getTipParam('tipVideo') || [];
+            if (typeof this.tipVideos === 'string') {
                 this.tipVideos = this.tipVideos.split('|');
             }
             // 读题语音相关的监听
@@ -301,6 +300,9 @@ class TaskBar extends React.Component{
             // 提示没有介绍视频
             window.editorErrorTipText = '对不起，还没有介绍视频哦';
             dispatchEvent(new Event('openErrorTips'));
+            this.setState({
+                currentFuncIndex: funcIndex
+            });
             return;
         }
         this.setState({

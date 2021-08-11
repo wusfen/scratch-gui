@@ -100,11 +100,11 @@ class GUI extends React.Component {
             errorText: window.editorErrorTipText || '',
             showErrorTips: true
         });
-        const timer = setTimeout(() => {
+        this.timer = setTimeout(() => {
             this.setState({
                 showErrorTips: false
             });
-            clearTimeout(timer);
+            clearTimeout(this.timer);
         }, 3000);
     }
 
