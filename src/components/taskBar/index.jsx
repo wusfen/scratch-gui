@@ -258,7 +258,22 @@ class TaskBar extends React.Component{
         }, 200);
     }
 
+    clickCourseMode = () => {
+        if (this.state.videoContentShow) {
+            this.setState({
+                videoContentShow: false
+            });
+            return;
+        }
+    }
+
     openTitleAudio = () => {
+        if (this.state.videoContentShow) {
+            this.setState({
+                videoContentShow: false
+            });
+            return;
+        }
         if (this.titleAudioSrc){
             this.setState({
                 audioPlaying: true
@@ -484,6 +499,7 @@ class TaskBar extends React.Component{
                                     [c.videoContentIsOpen]: videoContentShow
                                 })
                             }
+                            onClick={this.clickCourseMode}
                         >
                             <div
                                 className={classNames(
