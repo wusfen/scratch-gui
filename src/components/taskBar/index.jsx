@@ -260,7 +260,7 @@ class TaskBar extends React.Component{
                     />
                 </div>}
                 {mode === 'teacher' && <div className={c.teacherMode}>
-                    <div 
+                    <div
                         className={c.moreFuncContainer}
                         ref={r => {
                             this.containerRef = r;
@@ -283,7 +283,7 @@ class TaskBar extends React.Component{
                             <span>保存与加载</span>
                         </div>
                         {moreFuncShow && <div
-                            className={classNames(c.moreContent)} 
+                            className={classNames(c.moreContent)}
                         >
                             <div className={classNames(c.item)}>
                                 <button
@@ -323,7 +323,7 @@ class TaskBar extends React.Component{
                             </div>
                         </div>}
                     </div>
-                    
+
                     <div className={c.line}></div>
                     <div
                         className={classNames({

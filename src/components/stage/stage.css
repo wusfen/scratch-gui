@@ -4,7 +4,7 @@
 
 $stage-js-width: var(--STAGE_WIDTH, 375);
 $stage-js-height: var(--STAGE_HEIGHT, 667);
-$stage-css-width: var(--STAGE_CSS_WIDTH, 266);
+$stage-css-width: var(--STAGE_CSS_WIDTH, 357);
 $stage-css-height: calc(
     $stage-css-width / ($stage-js-width / $stage-js-height)
 );
