@@ -19,7 +19,8 @@ import collectMetadata from '../../lib/collect-metadata';
 import VM from 'scratch-vm';
 import {playTipAudio} from '../../lib/courseTip/TipAudio.js';
 import getTipParam from '../../lib/courseTip/getTipParam';
-import {OPERATE_TIME_1, OPERATE_TIME_2, CODE_TIME_1, timerType} from '../timer/data';
+import tipAudio from './tips.mp3';
+import {OPERATE_TIME_1, RIGHT_ANSWER_1, RIGHT_ANSWER_2, timerType} from '../timer/data';
 import {
     closeFileMenu
 } from '../../reducers/menus';
@@ -35,13 +36,42 @@ class TaskBar extends React.Component{
             isTeacherPreview: false, // true: 老师切学生
             moreFuncShow: false,
             audioPlaying: false,
-            videoContentShow: true,
+            videoContentShow: false,
             currentTipVideoIndex: 0,
-            currentVideoSrc: ''
+            currentVideoSrc: '',
+            currentFuncIndex: -1,
+            alreadyClickVideo: [],
+            tipsShow: false
         };
         this.introVideoSrc = '';
         this.titleAudioSrc = '';
         this.tipVideos = [];
+        this.videoFuncList = [
+            {
+                funcName: '任务',
+                func: index => this.openIntroVideo(index)
+            },
+            {
+                funcName: '提示1',
+                func: index => this.openTipVideo(index, 1)
+            },
+            {
+                funcName: '提示2',
+                func: index => this.openTipVideo(index, 2)
+            },
+            {
+                funcName: '提示3',
+                func: index => this.openTipVideo(index, 3)
+            },
+            {
+                funcName: '新手指引',
+                func: index => this.openBeginnerGuideVideo(index)
+            },
+            {
+                funcName: '找老师',
+                func: index => this.findTeacher(index)
+            }
+        ];
         bindAll(this, [
         ]);
     }
@@ -66,12 +96,23 @@ class TaskBar extends React.Component{
             if (this.tipVideos) {
                 this.tipVideos = this.tipVideos.split('|');
             }
+            // 读题语音相关的监听
             window.addEventListener('clickSubmit', this.closeAudio);// 点击提交终止语音
             window.addEventListener('clickVideoTips', this.closeAudio);// 点击视频提示终止语音
             window.addEventListener('handleGreenFlagClick', this.closeAudio);// 点击开始运行代码终止语音
             window.addEventListener('saveToComputer', this.closeAudio);// 点击保存到电脑终止语音
             window.addEventListener('projectRunning', this.closeAudio); // 代码运行中
             window.addEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_1}`, this.openTitleAudio);
+
+            // 提示按钮相关的监听
+            // 正确答案计时器, 首次是97秒（重置一次之后是每隔61秒），就引导学生点击提示
+            window.addEventListener(`noAction:${timerType.RIGHT_ANSWER}:${RIGHT_ANSWER_1}`, this.touchTip);
+            // 正确答案计时器, 重置一次之后是每隔61秒，就引导学生点击提示
+            window.addEventListener(`noAction:${timerType.RIGHT_ANSWER}:${RIGHT_ANSWER_2}`, this.touchTip);
+            window.addEventListener('submitErrorCounter1', this.touchTip); // 第一次提交错误
+            window.addEventListener('submitErrorCounter2', this.autoPlayTipVideo); // 第二次提交错误，自动播放视频
+            window.addEventListener('jsonErrorCounterInRange', this.touchTip); // json自动批改错误，容错小范围内
+            window.addEventListener('jsonErrorCounterOutRange', this.autoPlayTipVideo); // json自动批改错误，超过容错小范围
             break;
         case 'teacher':
             this.moreFuncBtnRef && this.moreFuncBtnRef.addEventListener('touchstart', this.handleTouchStart);
@@ -89,6 +130,7 @@ class TaskBar extends React.Component{
         const {mode} = this.state;
         switch (mode) {
         case 'course':
+            // 读题语音相关的监听
             window.removeEventListener('clickSubmit', this.closeAudio);
             window.removeEventListener('clickVideoTips', this.closeAudio);
             window.removeEventListener('handleGreenFlagClick', this.closeAudio);
@@ -96,6 +138,14 @@ class TaskBar extends React.Component{
             window.removeEventListener('projectRunning', this.closeAudio);
             window.removeEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_1}`, this.openTitleAudio);
             this.audio = null;
+
+            // 提示按钮相关的监听
+            window.removeEventListener('submitErrorCounter1', this.touchTip);
+            window.removeEventListener('submitErrorCounter2', this.clickTips);
+            window.removeEventListener('jsonErrorCounterInRange', this.touchTip);
+            window.removeEventListener('jsonErrorCounterOutRange', this.clickTips);
+            window.removeEventListener(`noAction:${timerType.RIGHT_ANSWER}:${RIGHT_ANSWER_1}`, this.touchTip);
+            window.removeEventListener(`noAction:${timerType.RIGHT_ANSWER}:${RIGHT_ANSWER_2}`, this.touchTip);
             break;
         case 'teacher':
             this.moreFuncBtnRef && this.moreFuncBtnRef.removeEventListener('touchstart', this.handleTouchStart);
@@ -107,6 +157,34 @@ class TaskBar extends React.Component{
         default:
             break;
         }
+    }
+
+    touchTip = () => {
+        if (!this.state.videoContentShow) {
+            this.setState({
+                tipsShow: true
+            });
+        }
+        this.audio = playTipAudio(tipAudio);
+        this.timeOutEvent = setTimeout(() => {
+            this.setState({
+                tipsShow: false
+            });
+        }, 12000);
+    }
+
+    autoPlayTipVideo = () => {
+        if (this.audio) {
+            this.audio.pause();
+        }
+        const {currentTipVideoIndex} = this.state;
+        let count = currentTipVideoIndex + 1;
+        if (count > this.tipVideos.length) { // 最多超过2次后的点击固定都是最后一个视频
+            count = this.tipVideos.length;
+        }
+        this.openTipVideo(count, count);
+        dispatchEvent(new Event('clickTips')); // 更新声音停止不了的问题 author：hwh
+        dispatchEvent(new Event('clickVideoTips')); // 点击视频提示
     }
 
     handleTouchStart = e => {
@@ -189,26 +267,61 @@ class TaskBar extends React.Component{
         });
     }
 
-    openIntroVideo = () => {
+    videoPlayFunc = () => {
+        this.videoRef.currentTime = 0;
+        this.videoRef.play();
+    }
+
+    openIntroVideo = funcIndex => {
         if (!this.introVideoSrc) {
             // 提示没有介绍视频
+            window.editorErrorTipText = '对不起，还没有介绍视频哦';
+            dispatchEvent(new Event('openErrorTips'));
             return;
         }
         this.setState({
+            currentFuncIndex: funcIndex,
             currentVideoSrc: this.introVideoSrc
         });
     }
 
-    openTipVideo = index => {
-        if (!this.tipVideos[index]) {
+    openBeginnerGuideVideo = funcIndex => {
+        window.editorErrorTipText = '对不起，还没有新手指引视频哦';
+        dispatchEvent(new Event('openErrorTips'));
+        this.setState({
+            currentFuncIndex: funcIndex,
+        });
+    }
+
+    findTeacher = funcIndex => {
+        window.editorErrorTipText = '对不起，该功能还未开放哦';
+        dispatchEvent(new Event('openErrorTips'));
+        this.setState({
+            currentFuncIndex: funcIndex,
+        });
+    }
+
+    openTipVideo = (funcIndex, index) => {
+        if (!this.tipVideos[index - 1]) {
             // 提示没有该提示视频
+            window.editorErrorTipText = '对不起，没有该提示视频哦';
+            dispatchEvent(new Event('openErrorTips'));
             return;
         }
         const deviation = index - this.state.currentTipVideoIndex;
-        if (deviation > 1) {
+        if (!this.state.alreadyClickVideo.includes(index) && deviation > 1) {
             // 提示别着急哦，先自己试试吧
+            window.editorErrorTipText = '别着急哦，先自己试试吧';
+            dispatchEvent(new Event('openErrorTips'));
             return;
         }
+        this.setState({
+            currentVideoSrc: this.tipVideos[index - 1],
+            currentTipVideoIndex: index,
+            currentFuncIndex: funcIndex,
+            alreadyClickVideo: this.state.alreadyClickVideo.concat([index]) // 收集已经点击过的视频，已经点过的就可以跳级点击视频
+        });
+        dispatchEvent(new Event('clickVideoTips')); // 点击视频提示
     }
 
     closeAudio = () => {
@@ -240,6 +353,8 @@ class TaskBar extends React.Component{
             audioPlaying,
             videoContentShow,
             currentVideoSrc,
+            currentFuncIndex,
+            tipsShow,
             ...state
         } = this.state;
 
@@ -381,18 +496,26 @@ class TaskBar extends React.Component{
                                 />
                                 <span>任务内容描述，点击语音读题</span>
                             </div>
-                            
-                            <img
+                            <div 
                                 className={
                                     classNames({
-                                        [c.videoIcon]: !videoContentShow,
-                                        [c.closeIcon]: videoContentShow
+                                        [c.iconList]: true,
+                                        [c.blingBling]: tipsShow
                                     })
                                 }
-                                src={videoContentShow ? close : video}
-                                alt="video"
-                                onClick={this.handleVideoContent}
-                            />
+                            >
+                                <img
+                                    className={
+                                        classNames({
+                                            [c.videoIcon]: !videoContentShow,
+                                            [c.closeIcon]: videoContentShow,
+                                        })
+                                    }
+                                    src={videoContentShow ? close : video}
+                                    alt="video"
+                                    onClick={this.handleVideoContent}
+                                />
+                            </div>
                         </div>
                         {videoContentShow && <div
                             className={
@@ -405,26 +528,28 @@ class TaskBar extends React.Component{
                                 className={c.video}
                                 src={currentVideoSrc}
                                 controls={'controls'}
+                                autoPlay
+                                ref={r => {
+                                    this.videoRef = r;
+                                }}
                             ></video>
                             <div className={c.videoOptions}>
-                                <div
-                                    className={c.option}
-                                    onClick={this.openIntroVideo}
-                                >任务</div>
-                                <div
-                                    className={c.option}
-                                    onClick={this.openTipVideo(1)}
-                                >提示1</div>
-                                <div
-                                    className={c.option}
-                                    onClick={this.openTipVideo(2)}
-                                >提示2</div>
-                                <div
-                                    className={c.option}
-                                    onClick={this.openTipVideo(3)}
-                                >提示3</div>
-                                <div className={c.option}>新手指引</div>
-                                <div className={c.option}>找老师</div>
+                                {this.videoFuncList.map((item, index) => 
+                                    (
+                                        <div
+                                            key={index}
+                                            className={
+                                                classNames(
+                                                    {
+                                                        [c.option]: true,
+                                                        [c.active]: currentFuncIndex === index
+                                                    }
+                                                )
+                                            }
+                                            onClick={() => item.func(index)}
+                                        >{item.funcName}</div>
+                                    )
+                                )}
                             </div>
                         </div>}
                     </section>

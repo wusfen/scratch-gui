@@ -17,7 +17,7 @@ class Controls extends React.Component {
         this.state = this.getInitState();
         bindAll(this, [
             'handleGreenFlagClick',
-            'handleStopAllClick'
+            'handleStopAllClick',
         ]);
 
         this.initGuide();
@@ -99,6 +99,10 @@ class Controls extends React.Component {
                 dispatchEvent(new Event('运行时判断不正确'));
             }
         }
+
+    }
+
+    onClickNotVisible () {
 
     }
     render () {

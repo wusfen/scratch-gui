@@ -305,17 +305,14 @@ class MenuBar extends React.Component {
         dispatchEvent(new Event('updateWorkspace_'));
     }
     handleClickRemix () {
-        debugger
         this.props.onClickRemix();
         this.props.onRequestCloseFile();
     }
     handleClickSave () {
-        debugger
         this.props.onClickSave();
         this.props.onRequestCloseFile();
     }
     handleClickSaveAsCopy () {
-        debugger
         this.props.onClickSaveAsCopy();
         this.props.onRequestCloseFile();
     }
@@ -741,7 +738,9 @@ class MenuBar extends React.Component {
                     styles.menuBar
                 )}
             >
-                <div className={styles.mainMenu}>
+                <div
+                    hidden
+                    className={styles.mainMenu}>
                     <div className={styles.fileGroup}>
                         {/* logo */}
                         <div className={classNames(styles.menuBarItem)}>
@@ -1157,7 +1156,10 @@ class MenuBar extends React.Component {
                     {
                         mode === 'normal' ? (
                             <>
-                                <div className={`${c.withIconRight}`}>
+                                <div
+                                    hidden
+                                    className={`${c.withIconRight}`}
+                                >
                                     <input
                                         type="text"
                                         className={`${c.input}`}
@@ -1228,6 +1230,7 @@ class MenuBar extends React.Component {
                         mode === 'teacher' ? (
                             <>
                                 <button
+                                    hidden
                                     className={`${c.button} ${c.pink}`}
                                     onClick={this.handleTeacherPreview}
                                 >
@@ -1235,6 +1238,7 @@ class MenuBar extends React.Component {
                                 </button>
 
                                 <button
+                                    hidden
                                     className={c.button}
                                     onClick={this.handleHideCode}
                                 >{'隐藏盒子'}</button>

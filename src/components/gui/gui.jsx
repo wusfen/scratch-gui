@@ -134,11 +134,10 @@ const GUIComponent = props => {
         videoSrc,
         promptAreaShow,
         closePromptArea,
+        errorText,
+        showErrorTips,
         ...componentProps
     } = omit(props, 'dispatch');
-    const PromptAreaShow = false;
-    const errorText = 'cuowu';
-    const showErrorTips = false;
     if (children) {
         return <Box {...componentProps}>{children}</Box>;
     }
@@ -238,37 +237,40 @@ const GUIComponent = props => {
                     />
                 ) : null}
                 {/* 隐藏顶部菜单栏 */}
-                {/* <MenuBar
-                    accountNavOpen={accountNavOpen}
-                    authorId={authorId}
-                    authorThumbnailUrl={authorThumbnailUrl}
-                    authorUsername={authorUsername}
-                    canChangeLanguage={canChangeLanguage}
-                    canCreateCopy={canCreateCopy}
-                    canCreateNew={canCreateNew}
-                    canEditTitle={canEditTitle}
-                    canManageFiles={canManageFiles}
-                    canRemix={canRemix}
-                    canSave={canSave}
-                    canShare={canShare}
-                    className={styles.menuBarPosition}
-                    enableCommunity={enableCommunity}
-                    isShared={isShared}
-                    logo={logo}
-                    renderLogin={renderLogin}
-                    showComingSoon={showComingSoon}
-                    onClickAbout={onClickAbout}
-                    onClickAccountNav={onClickAccountNav}
-                    onClickLogo={onClickLogo}
-                    onCloseAccountNav={onCloseAccountNav}
-                    onLogOut={onLogOut}
-                    onOpenRegistration={onOpenRegistration}
-                    onProjectTelemetryEvent={onProjectTelemetryEvent}
-                    onSeeCommunity={onSeeCommunity}
-                    onShare={onShare}
-                    onStartSelectingFileUpload={onStartSelectingFileUpload}
-                    onToggleLoginOpen={onToggleLoginOpen}
-                /> */}
+                <div className={styles.menuBarContainer}>
+                    <MenuBar
+                        accountNavOpen={accountNavOpen}
+                        authorId={authorId}
+                        authorThumbnailUrl={authorThumbnailUrl}
+                        authorUsername={authorUsername}
+                        canChangeLanguage={canChangeLanguage}
+                        canCreateCopy={canCreateCopy}
+                        canCreateNew={canCreateNew}
+                        canEditTitle={canEditTitle}
+                        canManageFiles={canManageFiles}
+                        canRemix={canRemix}
+                        canSave={canSave}
+                        canShare={canShare}
+                        className={styles.menuBarPosition}
+                        enableCommunity={enableCommunity}
+                        isShared={isShared}
+                        logo={logo}
+                        renderLogin={renderLogin}
+                        showComingSoon={showComingSoon}
+                        onClickAbout={onClickAbout}
+                        onClickAccountNav={onClickAccountNav}
+                        onClickLogo={onClickLogo}
+                        onCloseAccountNav={onCloseAccountNav}
+                        onLogOut={onLogOut}
+                        onOpenRegistration={onOpenRegistration}
+                        onProjectTelemetryEvent={onProjectTelemetryEvent}
+                        onSeeCommunity={onSeeCommunity}
+                        onShare={onShare}
+                        onStartSelectingFileUpload={onStartSelectingFileUpload}
+                        onToggleLoginOpen={onToggleLoginOpen}
+                    />
+                </div>
+                
                 <Box className={styles.bodyWrapper}>
                     <Box className={styles.flexWrapper}>
                         <Box className={styles.editorWrapper}>
@@ -345,8 +347,8 @@ const GUIComponent = props => {
                                             vm={vm}
                                         />
                                         <Running vm={vm} />
-                                        <AudioCourse />
-                                        <Tips />
+                                        {/* <AudioCourse />
+                                        <Tips /> */}
                                     </Box>
                                     <Box className={styles.extensionButtonContainer}>
                                         <button
@@ -391,7 +393,14 @@ const GUIComponent = props => {
                             stageSize={stageSize}
                         />
                         
-                        <Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}>
+                        <Box
+                            className={
+                                classNames(
+                                    styles.stageAndTargetWrapper,
+                                    styles[stageSize]
+                                )     
+                            }
+                        >
                             {/* 任务栏 */}
                             <TaskBar
                                 onProjectTelemetryEvent={onProjectTelemetryEvent}
@@ -412,6 +421,7 @@ const GUIComponent = props => {
                                 stageSize={stageSize}
                                 vm={vm}
                             />
+                            {showErrorTips && <div className={styles.warningBorder}></div>}
                             {/* 移到右边 */}
                             {/* <Box className={styles.targetWrapper}>
                                 <TargetPane
@@ -499,6 +509,8 @@ GUIComponent.propTypes = {
     videoSrc: PropTypes.string,
     promptAreaShow: PropTypes.bool,
     closePromptArea: PropTypes.func,
+    errorText: PropTypes.string,
+    showErrorTips: PropTypes.bool
 };
 GUIComponent.defaultProps = {
     backpackHost: null,
