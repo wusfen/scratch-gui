@@ -523,6 +523,9 @@ class TaskBar extends React.Component{
                                     [c.videoContent]: true
                                 })
                             }
+                            ref={r => {
+                                this.videoContentRef = r
+                            }}
                         >
                             <video
                                 className={c.video}

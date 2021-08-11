@@ -357,7 +357,7 @@ class SpriteInfo extends React.Component {
                         </Label>
                     </div>
                     <div className={classNames(styles.group)}>
-                        <div className={styles.title}>方向</div>
+                        <div className={styles.title}>大小</div>
                         <Label
                             secondary
                             above={labelAbove}
@@ -383,7 +383,7 @@ class SpriteInfo extends React.Component {
                     </div>
                     
                     <div className={classNames(styles.group)}>
-                        <div className={styles.title}>角度</div>
+                        <div className={styles.title}>方向</div>
                         <DirectionPicker
                             direction={Math.round(this.props.direction)}
                             disabled={this.props.disabled}
