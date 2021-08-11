@@ -98,9 +98,22 @@ button:not(:active) {
 }
 
 /* paint-editor */
-
-[class*="tool-select-base_is-selected"] {
-    background-color: #32c5ff !important;
+div[class*="paint-editor_editor-container-top"] {
+    margin-top: 2rem;
+    margin-right: -10rem;
+    transform: scale(0.85);
+    transform-origin: top left;
+}
+div[class*="paint-editor_top-align-row"] {
+    min-width: 20rem;
+}
+div[class*="paint-editor_canvas-container"] {
+    min-width: 20rem;
+}
+div [class*="paint-editor_canvas-control"] {
+}
+div[role="button"][class*="tool-select-base_is-selected"] {
+    background-color: #32c5ff;
 }
 
 span[class*="paint-editor_bitmap-button"] {
@@ -118,8 +131,4 @@ span[class*="paint-editor_bitmap-button"] {
 }
 span[class*="paint-editor_bitmap-button"] img {
     display: none;
-}
-
-[class*="paint-editor_top-align-row"] {
-    min-width: 500px !important;
 }
