@@ -5,7 +5,7 @@
     bottom: 1rem;
 }
 
-button {
+.aside-btn-wrapper button {
     margin: 0 0.5rem;
     display: inline-block;
     width: 1.5rem;
@@ -19,26 +19,26 @@ button {
     opacity: 0 !important;
 }
 
-.undo {
+button.undo {
     background-image: url("./revoke.svg");
 }
 
-.redo {
+button.redo {
     background-image: url("./reform.svg");
 }
 
-.zoomIn {
+button.zoomIn {
     background-image: url("./zoom\ in.svg");
 }
 
-.zoomOut {
+button.zoomOut {
     background-image: url("./zoom\ out.svg");
 }
 
-.align {
+button.align {
     background-image: url("./aline.svg");
 }
 
-.disable {
+button.disable {
     opacity: 0.5;
 }
