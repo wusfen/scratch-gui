@@ -199,9 +199,9 @@
 .video-options {
     width: 100%;
     display: flex;
-    justify-content: space-around;
     align-items: center;
     margin-top: 0.75rem;
+    padding: 0 0.5rem;
 }
 
 .video-options .option {
@@ -213,7 +213,9 @@
     padding: 0.06rem;
     line-height: 1.75rem;
     text-align: center;
+    margin-right: 0.25rem;
 }
+
 
 .video-options .option.active {
     background-color: #FF457F;

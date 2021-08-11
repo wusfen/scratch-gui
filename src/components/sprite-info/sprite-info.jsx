@@ -72,7 +72,7 @@ class SpriteInfo extends React.Component {
     }
 
     componentDidMount () {
-        this.moreFuncBtnRef.addEventListener('touchstart', this.handleTouchStart);
+        this.moreFuncBtnRef?.addEventListener('touchstart', this.handleTouchStart);
         document.addEventListener('touchstart', this.handleTouchOutside);
         const blocklyWorkspaces = Array.from(document.getElementsByClassName('blocklyWorkspace'));
         blocklyWorkspaces.forEach(item => {
@@ -394,7 +394,7 @@ class SpriteInfo extends React.Component {
                         />
                     </div>
 
-                    <div 
+                    {(mode === 'normal' || this.state.file !== undefined) && <div
                         className={classNames(
                             styles.group,
                             styles.moreFunc)}
@@ -409,7 +409,6 @@ class SpriteInfo extends React.Component {
                         >
                             {mode === 'normal' && <div className={classNames(styles.item)}>
                                 <button
-                                    hidden={false}
                                     type="button"
                                     className={`${styles.funcItem}`}
                                 >
@@ -430,7 +429,6 @@ class SpriteInfo extends React.Component {
                             </div>}
                             {mode === 'normal' && <div className={classNames(styles.item)}>
                                 <button
-                                    hidden={false}
                                     type="button"
                                     className={`${styles.funcItem}`}
                                     onClick={onStartSelectingFileUpload}
@@ -445,7 +443,7 @@ class SpriteInfo extends React.Component {
                             </div>}
                             <div className={classNames(styles.item)}>
                                 <button
-                                    hidden={false}
+                                    hidden={!(this.state.file)}
                                     type="button"
                                     className={`${styles.funcItem}`}
                                     onClick={this.handleClickResetFile}
@@ -458,6 +456,7 @@ class SpriteInfo extends React.Component {
                                     重做
                                 </button>
                             </div>
+                            {/* {(mode !== 'normal' && this.state.file === undefined) && <div>1123</div>} */}
                         </div>}
                         <div
                             className={classNames(styles.more)}
@@ -468,7 +467,7 @@ class SpriteInfo extends React.Component {
                             <img src={omit} />
                         </div>
                         
-                    </div>
+                    </div>}
                 </div>
             </Box>
         );

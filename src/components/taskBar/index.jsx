@@ -49,27 +49,33 @@ class TaskBar extends React.Component{
         this.videoFuncList = [
             {
                 funcName: '任务',
-                func: index => this.openIntroVideo(index)
+                func: index => this.openIntroVideo(index),
+                show: () => true
             },
             {
                 funcName: '提示1',
-                func: index => this.openTipVideo(index, 1)
+                func: index => this.openTipVideo(index, 1),
+                show: () => this.tipVideos.length >= 1
             },
             {
                 funcName: '提示2',
-                func: index => this.openTipVideo(index, 2)
+                func: index => this.openTipVideo(index, 2),
+                show: () => this.tipVideos.length >= 2
             },
             {
                 funcName: '提示3',
-                func: index => this.openTipVideo(index, 3)
+                func: index => this.openTipVideo(index, 3),
+                show: () => this.tipVideos.length >= 3
             },
             {
                 funcName: '新手指引',
-                func: index => this.openBeginnerGuideVideo(index)
+                func: index => this.openBeginnerGuideVideo(index),
+                show: () => true
             },
             {
                 funcName: '找老师',
-                func: index => this.findTeacher(index)
+                func: index => this.findTeacher(index),
+                show: () => true
             }
         ];
         bindAll(this, [
@@ -174,6 +180,9 @@ class TaskBar extends React.Component{
     }
 
     autoPlayTipVideo = () => {
+        this.setState({
+            videoContentShow: true
+        });
         if (this.audio) {
             this.audio.pause();
         }
@@ -524,7 +533,7 @@ class TaskBar extends React.Component{
                                 })
                             }
                             ref={r => {
-                                this.videoContentRef = r
+                                this.videoContentRef = r;
                             }}
                         >
                             <video
@@ -541,6 +550,7 @@ class TaskBar extends React.Component{
                                     (
                                         <div
                                             key={index}
+                                            hidden={!item.show()}
                                             className={
                                                 classNames(
                                                     {
