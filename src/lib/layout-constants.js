@@ -49,7 +49,7 @@ window.STAGE_WIDTH = 375;
 window.STAGE_HEIGHT = 667;
 window.UI_WIDTH = 1024;
 window.UI_HEIGHT = 768;
-window.STAGE_UI_WIDTH = 266;
+window.STAGE_UI_WIDTH = 357;
 window.STAGE_CSS_WIDTH = window.STAGE_UI_WIDTH;
 
 const searchParams = (new URL(location)).searchParams;
