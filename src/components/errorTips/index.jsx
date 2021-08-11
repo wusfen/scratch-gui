@@ -36,7 +36,7 @@ class ErrorTips extends React.Component{
             ...state
         } = this.state;
         return (
-            <div className={c.container}>
+            <div className={c.errorTipsContainer}>
                 <img
                     src={warn}
                     alt="warn"

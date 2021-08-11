@@ -203,6 +203,7 @@ html {
 }
 
 .stage-and-target-wrapper {
+    position: relative;
     width: 23.75rem;
     padding: 0.41rem 0.72rem;
     background: rgba(159, 138, 255, 0);
@@ -336,11 +337,12 @@ $fade-out-distance: 0.9375rem;
     /* display: none; */
 }
 
-.error-tips {
+.stage-and-target-wrapper .error-tips {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     margin: 0 auto;
+    z-index: 999999;
 }

@@ -1,4 +1,4 @@
-.container {
+.error-tips-container {
     width: 12.5rem;
     background: rgba(0, 0, 0, 0.5);
     border-radius: 0.63rem;
@@ -11,12 +11,12 @@
 }
 
 
-img {
+.error-tips-container img {
     width: 1.75rem;
     height: 1.75rem;
     margin-right: 0.88rem;
 }
 
-.text {
+.error-tips-container .text {
 
 }

@@ -138,6 +138,7 @@ const GUIComponent = props => {
     } = omit(props, 'dispatch');
     const PromptAreaShow = false;
     const errorText = 'cuowu';
+    const showErrorTips = false;
     if (children) {
         return <Box {...componentProps}>{children}</Box>;
     }
@@ -396,10 +397,14 @@ const GUIComponent = props => {
                                 onProjectTelemetryEvent={onProjectTelemetryEvent}
                                 onStartSelectingFileUpload={onStartSelectingFileUpload}
                             ></TaskBar>
-                            <ErrorTips
+                            {showErrorTips && <div
                                 className={styles.errorTips}
-                                text={errorText}
-                            ></ErrorTips>
+                            >
+                                <ErrorTips
+                                    text={errorText}
+                                ></ErrorTips>
+                            </div>}
+                            
                             <StageWrapper
                                 isFullScreen={isFullScreen}
                                 isRendererSupported={isRendererSupported}
@@ -414,7 +419,9 @@ const GUIComponent = props => {
                                     vm={vm}
                                 />
                             </Box> */}
+                            
                         </Box>
+                        
                     </Box>
                 </Box>
                 <DragLayer />
