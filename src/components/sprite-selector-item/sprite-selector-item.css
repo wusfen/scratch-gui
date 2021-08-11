@@ -230,8 +230,8 @@
     bottom: 100%;
     left: 100%;
     top: auto;
-    margin-bottom: -0.75rem;
-    margin-left: -0.75rem;
+    margin-bottom: -1rem;
+    margin-left: -1rem;
 }
 .is-edit-space .number {
     font-size: 0.75rem;
