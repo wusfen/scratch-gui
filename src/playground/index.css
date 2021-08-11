@@ -33,13 +33,10 @@ html {
     font-size: 16px;
     transition: none;
 }
-// js max 375: 375/266 * 1024
-@media all and (max-width: 1443px) {
+@media all {
     html {
         font-size: calc(100vw / (1024 / 16));
     }
-}
-@media all and (max-height: 1080px) {
     html {
         font-size: calc(100vh / (768 / 16));
     }
@@ -93,4 +90,31 @@ button:not(:active) {
     > g
     > image[width="24px"][height="24px"]:first-child:last-child {
     opacity: 0;
+}
+
+/* paint-editor */
+
+[class*="tool-select-base_is-selected"] {
+    background-color: #32c5ff !important;
+}
+
+span[class*="paint-editor_bitmap-button"] {
+    align-items: center;
+    justify-content: center;
+    height: 1.75rem;
+    padding-top: 0;
+    padding-bottom: 0;
+    background: #32c5ff;
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    font-family: SourceHanSansCN-Normal, SourceHanSansCN;
+    font-weight: 400;
+    color: #ffffff;
+}
+span[class*="paint-editor_bitmap-button"] img {
+    display: none;
+}
+
+[class*="paint-editor_top-align-row"] {
+    min-width: 500px !important;
 }
