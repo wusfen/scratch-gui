@@ -11,9 +11,15 @@ import folder from '../../assets/icons/folder.svg';
 import hide from '../../assets/icons/hide.svg';
 import blowUp from '../../assets/icons/blow-up.svg';
 import fileUp from '../../assets/icons/fileUp.svg';
+import video from '../../assets/icons/video.svg';
+import audio from '../../assets/icons/audio.svg';
+import close from '../../assets/icons/close.svg';
 import SB3Downloader from '../../containers/sb3-downloader.jsx';
 import collectMetadata from '../../lib/collect-metadata';
 import VM from 'scratch-vm';
+import {playTipAudio} from '../../lib/courseTip/TipAudio.js';
+import getTipParam from '../../lib/courseTip/getTipParam';
+import {OPERATE_TIME_1, OPERATE_TIME_2, CODE_TIME_1, timerType} from '../timer/data';
 import {
     closeFileMenu
 } from '../../reducers/menus';
@@ -27,20 +33,80 @@ class TaskBar extends React.Component{
         this.state = {
             mode: getParam('mode') || '',
             isTeacherPreview: false, // true: 老师切学生
-            moreFuncShow: false
+            moreFuncShow: false,
+            audioPlaying: false,
+            videoContentShow: true,
+            currentTipVideoIndex: 0,
+            currentVideoSrc: ''
         };
+        this.introVideoSrc = '';
+        this.titleAudioSrc = '';
+        this.tipVideos = [];
         bindAll(this, [
         ]);
     }
 
     componentDidMount () {
-        this.moreFuncBtnRef.addEventListener('touchstart', this.handleTouchStart);
-        document.addEventListener('touchstart', this.handleTouchOutside);
+        this.handleMode();
+        
     }
 
     componentWillUnmount () {
-        this.moreFuncBtnRef.removeEventListener('touchstart', this.handleTouchStart);
-        document.removeEventListener('touchstart', this.handleTouchOutside);
+        this.handleGb();
+    }
+
+    handleMode = () => {
+        const {mode} = this.state;
+        switch (mode) {
+        case 'course':
+            this.introVideoSrc = getTipParam('introVideo ');
+            this.titleAudioSrc = getTipParam('tipAudio');
+            this.tipVideos = getTipParam('tipVideo');
+
+            if (this.tipVideos) {
+                this.tipVideos = this.tipVideos.split('|');
+            }
+            window.addEventListener('clickSubmit', this.closeAudio);// 点击提交终止语音
+            window.addEventListener('clickVideoTips', this.closeAudio);// 点击视频提示终止语音
+            window.addEventListener('handleGreenFlagClick', this.closeAudio);// 点击开始运行代码终止语音
+            window.addEventListener('saveToComputer', this.closeAudio);// 点击保存到电脑终止语音
+            window.addEventListener('projectRunning', this.closeAudio); // 代码运行中
+            window.addEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_1}`, this.openTitleAudio);
+            break;
+        case 'teacher':
+            this.moreFuncBtnRef && this.moreFuncBtnRef.addEventListener('touchstart', this.handleTouchStart);
+            document.addEventListener('touchstart', this.handleTouchOutside);
+            break;
+        case 'normal':
+            
+            break;
+        default:
+            break;
+        }
+    }
+
+    handleGb = () => {
+        const {mode} = this.state;
+        switch (mode) {
+        case 'course':
+            window.removeEventListener('clickSubmit', this.closeAudio);
+            window.removeEventListener('clickVideoTips', this.closeAudio);
+            window.removeEventListener('handleGreenFlagClick', this.closeAudio);
+            window.removeEventListener('saveToComputer', this.closeAudio);
+            window.removeEventListener('projectRunning', this.closeAudio);
+            window.removeEventListener(`noAction:${timerType.OPERATE}:${OPERATE_TIME_1}`, this.openTitleAudio);
+            this.audio = null;
+            break;
+        case 'teacher':
+            this.moreFuncBtnRef && this.moreFuncBtnRef.removeEventListener('touchstart', this.handleTouchStart);
+            document.removeEventListener('touchstart', this.handleTouchOutside);
+            break;
+        case 'normal':
+            
+            break;
+        default:
+            break;
+        }
     }
 
     handleTouchStart = e => {
@@ -104,7 +170,62 @@ class TaskBar extends React.Component{
             clearTimeout(this.closeTimeoutId);
         }, 200);
     }
+
+    openTitleAudio = () => {
+        if (this.titleAudioSrc){
+            this.setState({
+                audioPlaying: true
+            });
+            console.log('openTitleAudio');
+            this.audio = playTipAudio(this.titleAudioSrc);
+            this.audio.removeEventListener('ended', this.stopAudioPlay);
+            this.audio.addEventListener('ended', this.stopAudioPlay);
+        }
+    }
+
+    handleVideoContent = () => {
+        this.setState({
+            videoContentShow: !this.state.videoContentShow
+        });
+    }
+
+    openIntroVideo = () => {
+        if (!this.introVideoSrc) {
+            // 提示没有介绍视频
+            return;
+        }
+        this.setState({
+            currentVideoSrc: this.introVideoSrc
+        });
+    }
+
+    openTipVideo = index => {
+        if (!this.tipVideos[index]) {
+            // 提示没有该提示视频
+            return;
+        }
+        const deviation = index - this.state.currentTipVideoIndex;
+        if (deviation > 1) {
+            // 提示别着急哦，先自己试试吧
+            return;
+        }
+    }
+
+    closeAudio = () => {
+        this.setState({
+            audioPlaying: false
+        });
+        if (this.audio) {
+            this.audio.pause();
+        }
+    }
     
+    stopAudioPlay = () => {
+        console.log('读题语音结束，停止动效');
+        this.setState({
+            audioPlaying: false
+        });
+    }
 
     render () {
         const {
@@ -116,6 +237,9 @@ class TaskBar extends React.Component{
             mode,
             isTeacherPreview,
             moreFuncShow,
+            audioPlaying,
+            videoContentShow,
+            currentVideoSrc,
             ...state
         } = this.state;
 
@@ -227,6 +351,84 @@ class TaskBar extends React.Component{
                         <span>{isTeacherPreview ? '返回老师模式' : '预览学生模式'}</span>
                     </div>
                 </div>}
+                {mode === 'course' && (
+                    <section>
+                        <div
+                            className={
+                                classNames({
+                                    [c.courseMode]: true,
+                                    [c.videoContentIsOpen]: videoContentShow
+                                })
+                            }
+                        >
+                            <div
+                                className={classNames(
+                                    {
+                                        [c.audioContent]: true,
+                                        [c.blingBling]: audioPlaying
+                                    }
+                                )}
+                                onClick={this.openTitleAudio}
+                            >
+                                <img
+                                    className={classNames(
+                                        {
+                                            [c.audioIcon]: true
+                                        }
+                                    )}
+                                    src={audio}
+                                    alt="audio"
+                                />
+                                <span>任务内容描述，点击语音读题</span>
+                            </div>
+                            
+                            <img
+                                className={
+                                    classNames({
+                                        [c.videoIcon]: !videoContentShow,
+                                        [c.closeIcon]: videoContentShow
+                                    })
+                                }
+                                src={videoContentShow ? close : video}
+                                alt="video"
+                                onClick={this.handleVideoContent}
+                            />
+                        </div>
+                        {videoContentShow && <div
+                            className={
+                                classNames({
+                                    [c.videoContent]: true
+                                })
+                            }
+                        >
+                            <video
+                                className={c.video}
+                                src={currentVideoSrc}
+                                controls={'controls'}
+                            ></video>
+                            <div className={c.videoOptions}>
+                                <div
+                                    className={c.option}
+                                    onClick={this.openIntroVideo}
+                                >任务</div>
+                                <div
+                                    className={c.option}
+                                    onClick={this.openTipVideo(1)}
+                                >提示1</div>
+                                <div
+                                    className={c.option}
+                                    onClick={this.openTipVideo(2)}
+                                >提示2</div>
+                                <div
+                                    className={c.option}
+                                    onClick={this.openTipVideo(3)}
+                                >提示3</div>
+                                <div className={c.option}>新手指引</div>
+                                <div className={c.option}>找老师</div>
+                            </div>
+                        </div>}
+                    </section>
+                )}
             </div>
         );
     }

@@ -50,6 +50,7 @@ import PromptArea from '../prompt-area/prompt-area.jsx';
 import AudioCourse from '../audio-course/index.jsx';
 import Tips from '../tips/index.jsx';
 import TaskBar from '../taskBar/index.jsx';
+import ErrorTips from '../errorTips/index.jsx';
 
 const messages = defineMessages({
     addExtension: {
@@ -136,6 +137,7 @@ const GUIComponent = props => {
         ...componentProps
     } = omit(props, 'dispatch');
     const PromptAreaShow = false;
+    const errorText = 'cuowu';
     if (children) {
         return <Box {...componentProps}>{children}</Box>;
     }
@@ -394,6 +396,10 @@ const GUIComponent = props => {
                                 onProjectTelemetryEvent={onProjectTelemetryEvent}
                                 onStartSelectingFileUpload={onStartSelectingFileUpload}
                             ></TaskBar>
+                            <ErrorTips
+                                className={styles.errorTips}
+                                text={errorText}
+                            ></ErrorTips>
                             <StageWrapper
                                 isFullScreen={isFullScreen}
                                 isRendererSupported={isRendererSupported}
