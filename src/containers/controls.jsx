@@ -23,7 +23,7 @@ class Controls extends React.Component {
             'handleStopAllClick',
         ]);
 
-        if (param('mode') === 'course'){
+        if (param('mode') === 'course' || param('mode') === 'normal'){
             this.initGuide();
         }
 
