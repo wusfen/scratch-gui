@@ -167,7 +167,7 @@ class SpriteInfo extends React.Component {
         }
     }
 
-    hideMoreFunc () {
+    hideMoreFunc (e) {
         this.closeTimeoutId = setTimeout(() => {
             this.setState({
                 moreFuncShow: false
@@ -398,14 +398,16 @@ class SpriteInfo extends React.Component {
                         className={classNames(
                             styles.group,
                             styles.moreFunc)}
-                        onMouseLeave={this.hideMoreFunc}
-                        onMouseEnter={this.showMoreFunc}
                         ref={r => {
                             this.containerRef = r;
                         }}
+                        
+                        
                     >   
                         {moreFuncShow && <div
                             className={classNames(styles.moreContent)}
+                            onMouseLeave={this.hideMoreFunc}
+                            onMouseEnter={this.showMoreFunc}
                         >
                             {mode === 'normal' && <div className={classNames(styles.item)}>
                                 <button
@@ -456,13 +458,14 @@ class SpriteInfo extends React.Component {
                                     重做
                                 </button>
                             </div>
-                            {/* {(mode !== 'normal' && this.state.file === undefined) && <div>1123</div>} */}
                         </div>}
                         <div
                             className={classNames(styles.more)}
                             ref={r => {
                                 this.moreFuncBtnRef = r;
                             }}
+                            onMouseLeave={this.hideMoreFunc}
+                            onMouseEnter={this.showMoreFunc}
                         >
                             <img src={omit} />
                         </div>

@@ -84,7 +84,6 @@ class TaskBar extends React.Component{
 
     componentDidMount () {
         this.handleMode();
-        
     }
 
     componentWillUnmount () {
@@ -95,7 +94,7 @@ class TaskBar extends React.Component{
         const {mode} = this.state;
         switch (mode) {
         case 'course':
-            this.introVideoSrc = getTipParam('introVideo ');
+            this.introVideoSrc = getTipParam('introVideo');
             this.titleAudioSrc = getTipParam('tipAudio');
             this.tipVideos = getTipParam('tipVideo') || [];
             if (typeof this.tipVideos === 'string') {
@@ -179,6 +178,9 @@ class TaskBar extends React.Component{
     }
 
     autoPlayTipVideo = () => {
+        if (!this.tipVideos.length) { // 没有提示视频，无法自动播放
+            return;
+        }
         this.setState({
             videoContentShow: true
         });
@@ -562,6 +564,8 @@ class TaskBar extends React.Component{
                                 ref={r => {
                                     this.videoRef = r;
                                 }}
+                                controlsList="nodownload"
+                                disablePictureInPicture
                             ></video>
                             <div className={c.videoOptions}>
                                 {this.videoFuncList.map((item, index) => 

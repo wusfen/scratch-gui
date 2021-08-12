@@ -259,6 +259,8 @@ class PromptArea extends React.Component{
                         src={videoSrc}
                         controls={'controls'}
                         autoPlay
+                        controlsList="nodownload"
+                        disablePictureInPicture
                     >
                     </video>) : <div
                         className={c.imageTextContent}

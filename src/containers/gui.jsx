@@ -73,7 +73,7 @@ class GUI extends React.Component {
         if (/^(course|normal)$/.test(mode)) {
             this.handleVideoSrc(); // 获取引导video
         }
-        window.addEventListener('openErrorTips', this.initErrorTipsListner); // 初始化错误提示的监听
+        window.addEventListener('openErrorTips', this.initErrorTipsListener); // 初始化错误提示的监听
         window.addEventListener('运行时判断不正确', this.tipsStartError); // 当学生点击开始的时候，会提交json进行判断（已有功能），如果收到的结果是错误的，则出现错误提示效果
     }
 
@@ -94,17 +94,17 @@ class GUI extends React.Component {
         window.rightAnswerTimer.removeListener();
         window.jsonErrorCounter.removeListener();
         window.submitErrorCounter.removeListener();
-        window.removeEventListener('openErrorTips', this.initErrorTipsListner);
+        window.removeEventListener('openErrorTips', this.initErrorTipsListener);
         window.removeEventListener('运行时判断不正确', this.tipsStartError);
 
     }
 
     tipsStartError = () => {
         window.editorErrorTipText = '代码还有些问题哦，再修改一下吧';
-        this.initErrorTipsListner();
+        this.initErrorTipsListener();
     }
 
-    initErrorTipsListner = () => {
+    initErrorTipsListener = () => {
         this.setState({
             errorText: window.editorErrorTipText || '',
             showErrorTips: true
