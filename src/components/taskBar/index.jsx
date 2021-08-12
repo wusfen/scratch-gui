@@ -170,11 +170,6 @@ class TaskBar extends React.Component{
             });
         }
         this.audio = playTipAudio(tipAudio);
-        this.timeOutEvent = setTimeout(() => {
-            this.setState({
-                tipsShow: false
-            });
-        }, 12000);
     }
 
     autoPlayTipVideo = () => {
@@ -287,6 +282,14 @@ class TaskBar extends React.Component{
     }
 
     handleVideoContent = () => {
+        if (!this.state.videoContentShow && this.state.tipsShow) {
+            this.setState({
+                tipsShow: false
+            });
+        }
+        if (!this.state.videoContentShow) {
+            this.autoPlayTipVideo(); // 每次点击都播放提示视频，而且视频索引是当前的下一个
+        }
         this.setState({
             videoContentShow: !this.state.videoContentShow
         });
