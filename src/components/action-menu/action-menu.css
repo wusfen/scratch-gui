@@ -87,7 +87,7 @@ button::-moz-focus-inner {
     width: calc($more-button-size + 3rem);
     /* margin-left: calc(($main-button-size - $more-button-size) / 2); */
     /* margin-right: calc(($main-button-size - $more-button-size) / 2); */
-    background: linear-gradient(180deg, rgba(0, 167, 255, 0) 0%, #00a7ff 100%);
+    background: linear-gradient(180deg, rgb(0 167 255 / 0%) 5%, #00a7ff 60%);
     position: absolute;
     /* top: -$main-button-size; */
     left: -0.74rem;

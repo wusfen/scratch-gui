@@ -78,7 +78,7 @@ button:not(:active) {
 
 /* Popover */
 :global(.Popover-above) {
-    z-index: 9;
+    z-index: 20;
 }
 :global(.Popover-body) {
     background: #fff;
