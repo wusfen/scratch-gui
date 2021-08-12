@@ -281,6 +281,18 @@ export default function (Blockly, vm){
         }
     };
 
+    Blockly.BlockSvg.prototype.bringToFront = function() {
+        var block = this;
+        do {
+          var root = block.getSvgRoot();
+          if(!root.parentNode){
+             return;
+          }
+          root.parentNode.appendChild(root);
+          block = block.getParent();
+        } while (block);
+    };
+
     const orgToJSON = vm.toJSON.bind(vm);
     // 保存toolbox配置
     vm.toJSON = function (){
