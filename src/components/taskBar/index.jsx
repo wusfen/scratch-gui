@@ -67,16 +67,16 @@ class TaskBar extends React.Component{
                 func: index => this.openTipVideo(index, 3),
                 show: () => this.tipVideos.length >= 3
             },
-            {
-                funcName: '新手指引',
-                func: index => this.openBeginnerGuideVideo(index),
-                show: () => true
-            },
-            {
-                funcName: '找老师',
-                func: index => this.findTeacher(index),
-                show: () => true
-            }
+            // {
+            //     funcName: '新手指引',
+            //     func: index => this.openBeginnerGuideVideo(index),
+            //     show: () => true
+            // },
+            // {
+            //     funcName: '找老师',
+            //     func: index => this.findTeacher(index),
+            //     show: () => true
+            // }
         ];
         bindAll(this, [
         ]);
