@@ -321,7 +321,7 @@ class TargetPane$ extends React.Component {
             workspaceMetrics,
             ...componentProps
         } = this.props;
-        /* eslint-enable no-unused-vars */
+        /* eslint-disable no-unused-vars, max-len */
         const items = window.MODE === 'teacher' ? Object.values(sprites) : Object.values(sprites).filter(this._filterSprite);
         return (
             <div
@@ -351,7 +351,7 @@ class TargetPane$ extends React.Component {
                         onDuplicateSprite={this.handleDuplicateSprite}
                         onExportSprite={this.handleExportSprite}
                         onSelectSprite={this.handleSelectSprite}
-                    />  
+                    />
                 </Scroll>
             </div>
 
