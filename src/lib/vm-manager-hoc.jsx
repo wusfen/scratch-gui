@@ -14,6 +14,8 @@ import {
     projectError
 } from '../reducers/project-state';
 
+import {ajax} from '../lib/ajax.js';
+
 /*
  * Higher Order Component to manage events emitted by the VM
  * @param {React.Component} WrappedComponent component to manage VM events for
@@ -55,6 +57,42 @@ const vmManagerHOC = function (WrappedComponent) {
         }
         loadProject () {
             return this.props.vm.loadProject(this.props.projectData)
+                .then(() => {
+                    this.props.onLoadedProject(this.props.loadingState, this.props.canSave);
+                    // Wrap in a setTimeout because skin loading in
+                    // the renderer can be async.
+                    setTimeout(() => this.props.onSetProjectUnchanged(), 32);
+
+                    // If the vm is not running, call draw on the renderer manually
+                    // This draws the state of the loaded project with no blocks running
+                    // which closely matches the 2.0 behavior, except for monitors–
+                    // 2.0 runs monitors and shows updates (e.g. timer monitor)
+                    // before the VM starts running other hat blocks.
+                    if (!this.props.isStarted) {
+                        // Wrap in a setTimeout because skin loading in
+                        // the renderer can be async.
+                        setTimeout(() => this.props.vm.renderer.draw(), 64);
+                    }
+                })
+                .catch(e =>
+                    // this.props.onError(e);
+                    this.loadProject2()
+                );
+        }
+        // TODO 通过 id 加载这个文件报错
+        // https://dev-icode-oss-1.oss-cn-shenzhen.aliyuncs.com/homework/20210813/181518_4bKi_%E5%8A%A8%E7%89%A9%E8%81%94%E6%AC%A2%E4%BC%9A.sb3
+        // 临时兜底方案：如果通过 id 加载报错，则加载 file
+        async loadProject2 () {
+            const searchParams = new URL(location).searchParams;
+
+            // ?file
+            var fileUrl = searchParams.get('file') || require('!file-loader!../lib/default-project/sb3/default.sb3');
+            console.warn('[loadProject2 load sb3]', fileUrl);
+
+            const blob = await ajax.get(fileUrl, {}, {responseType: 'blob', base: ''});
+            const buffer = await blob.arrayBuffer();
+
+            return this.props.vm.loadProject(buffer)
                 .then(() => {
                     this.props.onLoadedProject(this.props.loadingState, this.props.canSave);
                     // Wrap in a setTimeout because skin loading in
