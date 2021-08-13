@@ -505,22 +505,6 @@ export default function (Blockly){
         return this.width_  || this.DEFAULT_WIDTH;
       };
 
-
-      Blockly.WorkspaceSvg.prototype.translate = function(x, y) {
-        if (this.useWorkspaceDragSurface_ && this.isDragSurfaceActive_) {
-          this.workspaceDragSurface_.translateSurface(x,y);
-        } else {
-          var translation = 'translate(' + x + ',' + y + ') ' +
-              'scale(' + this.scale + ')';
-          this.svgBlockCanvas_.setAttribute('transform', translation);
-          this.svgBubbleCanvas_.setAttribute('transform', translation);
-        }
-        // Now update the block drag surface if we're using one.
-        if (this.blockDragSurface_) {
-          this.blockDragSurface_.translateAndScaleGroup(x, y, this.scale);
-        }
-      };
-
       Blockly.WorkspaceSvg.getTopLevelWorkspaceMetrics_ = function() {
         var toolboxDimensions;
         if(this.toolbox_){
