@@ -56,7 +56,7 @@ addEventListener('message', e => {
     if (/^\{/.test(options)) {
         options = JSON.parse(options);
     }
-  
+
     var action = options.action;
     if (action) {
         trigger(action, options.data);
