@@ -504,6 +504,87 @@ export default function (Blockly){
       Blockly.VerticalFlyout.prototype.getWidth = function() {
         return this.width_  || this.DEFAULT_WIDTH;
       };
+
+
+      Blockly.WorkspaceSvg.prototype.translate = function(x, y) {
+        if (this.useWorkspaceDragSurface_ && this.isDragSurfaceActive_) {
+          this.workspaceDragSurface_.translateSurface(x,y);
+        } else {
+          var translation = 'translate(' + x + ',' + y + ') ' +
+              'scale(' + this.scale + ')';
+          this.svgBlockCanvas_.setAttribute('transform', translation);
+          this.svgBubbleCanvas_.setAttribute('transform', translation);
+        }
+        // Now update the block drag surface if we're using one.
+        if (this.blockDragSurface_) {
+          this.blockDragSurface_.translateAndScaleGroup(x, y, this.scale);
+        }
+      };
+
+      Blockly.WorkspaceSvg.getTopLevelWorkspaceMetrics_ = function() {
+        var toolboxDimensions;
+        if(this.toolbox_){
+          toolboxDimensions = this.toolbox_.getClientRect();
+        }
+        if(!toolboxDimensions){
+          toolboxDimensions = Blockly.WorkspaceSvg.getDimensionsPx_(this.toolbox_);
+        }
+            
+        var flyoutDimensions =
+            Blockly.WorkspaceSvg.getDimensionsPx_(this.flyout_);
+      
+        // Contains height and width in CSS pixels.
+        // svgSize is equivalent to the size of the injectionDiv at this point.
+        var svgSize = Blockly.svgSize(this.getParentSvg());
+        if (this.toolbox_) {
+          if (this.toolboxPosition == Blockly.TOOLBOX_AT_TOP ||
+              this.toolboxPosition == Blockly.TOOLBOX_AT_BOTTOM) {
+            svgSize.height -= toolboxDimensions.height;
+          } else if (this.toolboxPosition == Blockly.TOOLBOX_AT_LEFT ||
+              this.toolboxPosition == Blockly.TOOLBOX_AT_RIGHT) {
+            svgSize.width -= toolboxDimensions.width;
+          }
+        }
+      
+        // svgSize is now the space taken up by the Blockly workspace, not including
+        // the toolbox.
+        var contentDimensions =
+            Blockly.WorkspaceSvg.getContentDimensions_(this, svgSize);
+      
+        var absoluteLeft = 0;
+        if (this.toolbox_ && this.toolboxPosition == Blockly.TOOLBOX_AT_LEFT) {
+          absoluteLeft = toolboxDimensions.width;
+        }
+        var absoluteTop = 0;
+        if (this.toolbox_ && this.toolboxPosition == Blockly.TOOLBOX_AT_TOP) {
+          absoluteTop = toolboxDimensions.height;
+        }
+      
+        var metrics = {
+          contentHeight: contentDimensions.height,
+          contentWidth: contentDimensions.width,
+          contentTop: contentDimensions.top,
+          contentLeft: contentDimensions.left,
+      
+          viewHeight: svgSize.height,
+          viewWidth: svgSize.width,
+          viewTop: -this.scrollY,   // Must be in pixels, somehow.
+          viewLeft: -this.scrollX,  // Must be in pixels, somehow.
+      
+          absoluteTop: absoluteTop,
+          absoluteLeft: absoluteLeft,
+      
+          toolboxWidth: toolboxDimensions.width,
+          toolboxHeight: toolboxDimensions.height,
+      
+          flyoutWidth: flyoutDimensions.width,
+          flyoutHeight: flyoutDimensions.height,
+      
+          toolboxPosition: this.toolboxPosition
+        };
+        return metrics;
+      };
+      
     
 
 
