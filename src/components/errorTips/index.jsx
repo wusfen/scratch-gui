@@ -37,10 +37,13 @@ class ErrorTips extends React.Component{
         } = this.state;
         return (
             <div className={c.errorTipsContainer}>
-                <img
-                    src={warn}
-                    alt="warn"
-                />
+                <div className={c.imgContent}>
+                    <img
+                        src={warn}
+                        alt="warn"
+                    />
+                </div>
+                
                 <div className={c.text}>
                     {text}
                 </div>

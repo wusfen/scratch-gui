@@ -526,7 +526,7 @@ class TaskBar extends React.Component{
                                     src={audio}
                                     alt="audio"
                                 />
-                                <span>任务内容描述，点击语音读题</span>
+                                <span>点击这里，会告诉你本次的任务哦</span>
                             </div>
                             <div 
                                 className={

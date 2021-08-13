@@ -358,10 +358,10 @@ $fade-out-distance: 0.9375rem;
 
 @keyframes breath {
     0% {
-        opacity: 1;
+        opacity: 0;
     }
     50% {
-        opacity: 0.5;
+        opacity: 1;
     }
     100% {
         opacity: 0;
