@@ -11,11 +11,12 @@
     line-height: 1.25rem;
 }
 
-
-.error-tips-container img {
+.error-tips-container .img-content {
+    width: 2.63rem;
+}
+.img-content img {
     width: 1.75rem;
     height: 1.75rem;
-    margin-right: 0.88rem;
 }
 
 .error-tips-container .text {
