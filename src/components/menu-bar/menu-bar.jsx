@@ -250,13 +250,19 @@ class MenuBar extends React.Component {
         // TODO 太耗资源
         addEventListener('projectLoadSucceed', e => {
             var timer = setInterval(() => {
-                console.log(`每${state._timeout}秒检查是否要自动保存`, this.props.projectChanged);
+                console.log(`每${state._timeout}秒检查是否要自动保存`);
+                console.log('projectChanged:', this.props.projectChanged);
+                console.log('projectRunning:', this.props.projectRunning);
 
                 if (!(/^(course)$/.test(state.mode) && state.id && state.token)) {
                     console.warn('state.mode:', state.mode);
                     console.warn('state.id:', state.id);
                     console.warn('state.token:', state.token);
                     clearInterval(timer);
+                    return;
+                }
+
+                if (this.props.projectRunning) {
                     return;
                 }
 
