@@ -401,7 +401,7 @@ class TaskBar extends React.Component{
                         className={`${c.input}`}
                         placeholder="作品名称"
                         maxLength={20}
-                        value={this.props.projectTitle}
+                        defaultValue={this.props.projectTitle}
                         onInput={this.handleInput}
                     />
                 </div>}
