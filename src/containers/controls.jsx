@@ -42,9 +42,6 @@ class Controls extends React.Component {
     }
 
     initGuide () {
-        this.setState({
-            guide: false
-        });
         window.addEventListener(`noAction:${timerType.CODE}:${CODE_TIME_1}`, () => {
             console.log('71秒代码区域无变化');
             // 显示引导提示
