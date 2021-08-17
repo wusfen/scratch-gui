@@ -52,6 +52,12 @@ function request (options) {
     xhr.responseType = responseType;
     xhr.open(method.toUpperCase(), url, true);
 
+    // cache
+    if (responseType === 'blob') {
+        delete headers['Cache-Control'];
+        delete headers['If-Modified-Since'];
+    }
+
     // headers
     for (const key in headers) {
         // FormData file
