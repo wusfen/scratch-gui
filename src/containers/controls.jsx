@@ -135,7 +135,8 @@ Controls.propTypes = {
     isStarted: PropTypes.bool.isRequired,
     projectRunning: PropTypes.bool.isRequired,
     turbo: PropTypes.bool.isRequired,
-    vm: PropTypes.instanceOf(VM)
+    vm: PropTypes.instanceOf(VM),
+    isPlayerOnly: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
