@@ -83,13 +83,13 @@ $header-height: calc($stage-menu-height - 0.125rem);
 }
 
 .label {
-    margin: 0.5rem 0;
-    font-size: 0.6rem;
+    margin-top: 0.38rem;
+    font-size: 1rem;
     user-select: none;
     text-align: center;
 
     /* margin: 0; */
-    color: #0091FF;
+    color: #2671D0;
 }
 
 .costume-canvas {

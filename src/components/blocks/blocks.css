@@ -91,9 +91,9 @@
     make the change here instead of in scratch-blocks.
 */
 .blocks :global(.scratchCategoryMenuItemLabel) {
-    font-size: 0.75rem;
+    font-size: 1rem;
     line-height: 1.13rem;
-    color: #0091ff;
+    color: #2671D0;
 }
 
 .blocks :global(.blocklyMinimalBody) {
@@ -218,7 +218,7 @@
 }
 
 .blocks :global(.blocklyText) {
-    font-size: 13.5pt;
+    font-size: 15.5pt;
 }
 
 .blocks :global(.blocklyMainWorkspaceScrollbar) {
@@ -273,6 +273,7 @@
     width: 2rem;
     background-size: 100% 100%;
 }
+
 
 .trashcan-init-style {
     display: none;

@@ -121,8 +121,7 @@ class Blocks extends React.Component {
         window.workspace = this.workspace;
         const workspace = this.workspace;
         const toolbox_ = workspace.toolbox_;
-
-        const startScale = workspaceConfig.zoom.startScale * (1 / .75);
+        const startScale = workspaceConfig.zoom.startScale * (1 / this.ScratchBlocks.getFitScale());
         toolbox_.flyout_.DEFAULT_WIDTH = 250 * startScale;
         toolbox_.width = toolbox_.flyout_.DEFAULT_WIDTH + (73 * startScale);
         toolbox_.flyout_.autoClose = true;

@@ -135,10 +135,11 @@ button::-moz-focus-inner {
 
     width: 100%;
     background: transparent;
+    margin-bottom: 0.5rem;
 }
 
 .tip-text {
-    font-size: 0.75rem;
+    font-size: 1rem;
     color: #fff;
 }
 

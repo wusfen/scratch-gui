@@ -124,3 +124,8 @@ span[class*="paint-editor_bitmap-button"] {
 span[class*="paint-editor_bitmap-button"] img {
     display: none;
 }
+
+/* scratchCommentTextarea */
+textarea[class*="scratchCommentTextarea"] {
+    font-size: 1.12rem;
+}
