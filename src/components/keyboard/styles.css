@@ -22,6 +22,15 @@
     backdrop-filter: blur(5px);
     animation: fadeIn 0.3s 0.1s backwards;
 }
+.commonContainer{
+    left: 23.75rem;
+    box-shadow: none;
+    backdrop-filter:none;
+    background: none;
+}
+.isPlayerOnly{
+    left: 0;
+}
 
 .direction {
     flex: none;

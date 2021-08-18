@@ -437,7 +437,7 @@ const GUIComponent = props => {
                 <DragLayer />
 
                 <SubmitResultDialog vm={vm} />
-                <Keyboard vm={vm} />
+                <Keyboard vm={vm} isPlayerOnly={isPlayerOnly}/>
                 <CopyCodeHideModal></CopyCodeHideModal>
             </Box>
         );

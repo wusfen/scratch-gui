@@ -10,6 +10,7 @@ class Component extends React.Component{
         super(props);
 
         this.state = {
+
         };
 
         bindAll(this, [
@@ -36,10 +37,8 @@ class Component extends React.Component{
                     <div className={classNames(styles.iconWrap)}>
                         <span className={classNames(styles.icon, styles.icon1)} />
                         <span className={classNames(styles.icon, styles.icon2)} />
-                        <span className={classNames(styles.icon, styles.icon3)} />
                     </div>
-                    <p className={classNames(styles.text1)}>{'积木块运行中...'}</p>
-                    <span className={classNames(styles.text2)}>{'点击停止'}</span>
+                    <p className={classNames(styles.text1)}>{'积木运行中...'}</p>
                 </div>
             </div>
         );

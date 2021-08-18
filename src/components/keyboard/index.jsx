@@ -134,7 +134,7 @@ class Component extends React.Component{
         return (
             <div
                 hidden={!(projectRunning && keys.length)}
-                className={classNames(styles.container)}
+                className={classNames(styles.container,props.isPlayerOnly ? styles.isPlayerOnly:styles.commonContainer)}
                 onTouchEnd={e => e.preventDefault()}
             >
                 <div

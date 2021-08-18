@@ -67,7 +67,7 @@ const Controls = function (props) {
                 onClick={active ? onStopAllClick : onGreenFlagClick}
             >
                 <img
-                    src={!active ? require('../../assets/icons/star.svg') : require('../../assets/icons/stop.png')}
+                    src={!active ? require('../../assets/icons/star.svg') : require('../../assets/icons/red_stop.png')}
                     alt=""
                 />
                 {active ? '停止' : '开始'}
