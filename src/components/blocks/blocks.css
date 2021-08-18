@@ -217,8 +217,12 @@
     /* line-height: 1.17rem; */
 }
 
+/* 在代码栏中的初始大小不变，只是拖出来之后才自动放大 */
+.blocks :global(.blocklyFlyout) :global(.blocklyText) {
+    font-size: 13.5pt;
+}
 .blocks :global(.blocklyText) {
-    font-size: 15.5pt;
+    font-size: 15pt;
 }
 
 .blocks :global(.blocklyMainWorkspaceScrollbar) {

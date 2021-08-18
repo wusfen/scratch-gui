@@ -181,6 +181,13 @@ const config = {
                 from: 'extension-worker.{js,js.map}',
                 context: 'node_modules/scratch-vm/dist/web'
             }
+        ]),
+        new CopyWebpackPlugin([
+            {
+                from: 'path-replace-loader-files/node_modules/scratch-blocks/media', // 替换scratch-blocks/media中的图标
+                to: 'static/blocks-media',
+                force: true // 强制覆盖
+            }
         ])
     ]
 };
