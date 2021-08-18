@@ -34,6 +34,7 @@ const Controls = function (props) {
         onGreenFlagClick,
         onStopAllClick,
         turbo,
+        isPlayerOnly,
         ...componentProps
     } = props;
 
@@ -57,11 +58,23 @@ const Controls = function (props) {
                 title={intl.formatMessage(messages.stopTitle)}
                 onClick={onStopAllClick}
             />
+
+            <button
+                hidden={!(isPlayerOnly)}
+                className={classNames({
+                    [styles.button]: true,
+                    [styles.skipButton]: true,
+                })}
+                type="button"
+                onClick={e => window.bridge.emit('exitEditor', {type: 'skip'})}
+            >
+                {'跳过'}
+            </button>
             <button
                 className={classNames({
                     [styles.button]: !active,
                     [styles.stopButton]: active,
-                    [styles.blingBlingHigh]: guide, // TODO 按钮动效，切换 true false
+                    [styles.blingBlingHigh]: guide,
                 })}
                 type="button"
                 onClick={active ? onStopAllClick : onGreenFlagClick}
@@ -83,7 +96,8 @@ Controls.propTypes = {
     intl: intlShape.isRequired,
     onGreenFlagClick: PropTypes.func.isRequired,
     onStopAllClick: PropTypes.func.isRequired,
-    turbo: PropTypes.bool
+    turbo: PropTypes.bool,
+    isPlayerOnly: PropTypes.bool,
 };
 
 Controls.defaultProps = {

@@ -34,6 +34,7 @@ const StageWrapperComponent = function (props) {
                 {
                     isRendererSupported ?
                         <Stage
+                            isPlayerOnly={isPlayerOnly}
                             stageSize={stageSize}
                             vm={vm}
                         /> :
