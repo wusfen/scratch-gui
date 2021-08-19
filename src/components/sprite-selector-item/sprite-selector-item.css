@@ -130,6 +130,11 @@
     text-align: center;
 }
 
+.sprite-name {
+    font-size: 1rem;
+    color: #2671D0;
+}
+
 .sprite-name,
 .sprite-details {
     /*
@@ -221,7 +226,7 @@
 .is-edit-space.sprite-selector-item.is-selected {
     margin: 0.5rem auto;
     width: 4.06rem;
-    height: 5.56rem;
+    height: 5.7rem;
     background: #9ee4ff;
     border-radius: 0.63rem;
     border: 0.03rem solid #ffffff;

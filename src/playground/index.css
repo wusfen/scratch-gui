@@ -124,3 +124,64 @@ span[class*="paint-editor_bitmap-button"] {
 span[class*="paint-editor_bitmap-button"] img {
     display: none;
 }
+
+/* scratchCommentTextarea */
+
+body[class*="blocklyMinimalBody"] {
+    background: transparent;
+    color: #FFFFFF;
+}
+textarea[class*="scratchCommentTextarea"] {
+    font-size: 1.12rem;
+    background-color: transparent;
+    color: #FFFFFF;
+}
+
+rect[class*="scratchCommentRect"] {
+    fill: rgb(0 182 255);
+    stroke: #FFFFFF;
+    stroke-width: 0.09rem;
+    rx: 15;
+    ry: 15;
+    filter: drop-shadow(0px 0px 2px #32C5FF);
+}
+
+rect[class*="scratchCommentTopBar"] {
+    fill-opacity: 0;
+}
+
+foreignObject[class*="scratchCommentForeignObject"] {
+    background: #76cbff;
+    border-bottom-left-radius: 0.66rem;
+}
+
+g[class*="blocklyBubbleCanvas"] line {
+    /* stroke: #32C5FF; */
+}
+
+g[class*="scratchCommentResizeSE"] {
+    fill: #ffffff;
+}
+
+rect[class*="scratchCommentTopBar"] ~ text[class*="scratchCommentText"] {
+    font-size: 0;
+}
+
+textarea[class*="scratchCommentTextarea"]::-webkit-input-placeholder { /* WebKit browsers*/
+    color: #FFFFFF;
+    font-style: normal;
+}
+textarea[class*="scratchCommentTextarea"]:-moz-placeholder {  /* Mozilla Firefox 4 to 18*/
+    color: #FFFFFF;
+    font-style: normal;
+}
+textarea[class*="scratchCommentTextarea"]:-moz-placeholder {  /* Mozilla Firefox 19+*/
+    color: #FFFFFF;
+    font-style: normal;
+}
+textarea[class*="scratchCommentTextarea"]:-ms-input-placeholder { /* Internet Explorer 10+*/
+    color: #FFFFFF;
+    font-style: normal;
+}
+
+

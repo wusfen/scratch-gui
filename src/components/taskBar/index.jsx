@@ -179,6 +179,14 @@ class TaskBar extends React.Component{
         this.setState({
             videoContentShow: true
         });
+        const timer = setTimeout(() => { // 如果一直没有点击展开视频提示，那么动效在播放10次后关闭
+            if (this.state.videoContentShow) {
+                this.setState({
+                    videoContentShow: false
+                });
+            }
+            clearTimeout(timer);
+        }, 12000);
         if (this.audio) {
             this.audio.pause();
         }

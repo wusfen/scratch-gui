@@ -91,9 +91,9 @@
     make the change here instead of in scratch-blocks.
 */
 .blocks :global(.scratchCategoryMenuItemLabel) {
-    font-size: 0.75rem;
+    font-size: 1rem;
     line-height: 1.13rem;
-    color: #0091ff;
+    color: #2671D0;
 }
 
 .blocks :global(.blocklyMinimalBody) {
@@ -172,9 +172,9 @@
 
 .blocks :global(.blocklyFlyout) {
     /* overflow: visible; */
-    max-width: 15.11rem;
+    max-width: 17.5rem;
     /* max-width: 320px; */
-    /* min-width: 150px; */
+    min-width: 15rem;
     z-index: 41;
     /* transform: translate(calc(4.375rem - 1px), 0rem) !important; */
     transform: translate(calc(4.59rem - 1px), 0rem) !important;
@@ -217,8 +217,12 @@
     /* line-height: 1.17rem; */
 }
 
-.blocks :global(.blocklyText) {
+/* 在代码栏中的初始大小不变，只是拖出来之后才自动放大 */
+.blocks :global(.blocklyFlyout) :global(.blocklyText) {
     font-size: 13.5pt;
+}
+.blocks :global(.blocklyText) {
+    font-size: 15pt;
 }
 
 .blocks :global(.blocklyMainWorkspaceScrollbar) {
@@ -273,6 +277,7 @@
     width: 2rem;
     background-size: 100% 100%;
 }
+
 
 .trashcan-init-style {
     display: none;
