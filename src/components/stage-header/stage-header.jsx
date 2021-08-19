@@ -166,7 +166,10 @@ const StageHeaderComponent = function (props) {
                             </Button>
                         </div>
                     </div>
-                    <Controls vm={vm} />
+                    <Controls
+                        isPlayerOnly={isPlayerOnly}
+                        vm={vm}
+                    />
                 </Box>
             </Box>
         );

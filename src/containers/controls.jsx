@@ -17,10 +17,12 @@ class Controls extends React.Component {
         super(props);
         this.state = {
             guide: false,
+            skipButtonShow: false
         };
         bindAll(this, [
             'handleGreenFlagClick',
             'handleStopAllClick',
+            'showSkipButtonFunc'
         ]);
 
         if (param('mode') === 'course' || param('mode') === 'normal'){
@@ -30,6 +32,9 @@ class Controls extends React.Component {
         window.bridge.on('pause', e => {
             props.vm.stopAll();
         });
+        
+        this.showSkipButtonFunc();
+        
     }
     componentDidUpdate (preProps) {
         // 运行停止后查询作业是否正确
@@ -37,6 +42,19 @@ class Controls extends React.Component {
             this.checkWork();
         }
     }
+
+    // 纯玩模式下，30秒后出现跳过按钮
+    showSkipButtonFunc () {
+        if (this.props.isPlayerOnly) {
+            const timer = setTimeout(() => {
+                this.setState({
+                    skipButtonShow: true
+                });
+                clearTimeout(timer);
+            }, 30000);
+        }
+    }
+
     playSound () {
         playTipAudio(startBgS);
     }
@@ -103,6 +121,7 @@ class Controls extends React.Component {
 
     }
     render () {
+        const {skipButtonShow} = this.state;
         const {
             vm, // eslint-disable-line no-unused-vars
             isStarted, // eslint-disable-line no-unused-vars
@@ -123,6 +142,7 @@ class Controls extends React.Component {
                 turbo={turbo}
                 onGreenFlagClick={this.handleGreenFlagClick}
                 onStopAllClick={this.handleStopAllClick}
+                skipButtonShow={skipButtonShow}
             />
         );
     }
@@ -132,7 +152,8 @@ Controls.propTypes = {
     isStarted: PropTypes.bool.isRequired,
     projectRunning: PropTypes.bool.isRequired,
     turbo: PropTypes.bool.isRequired,
-    vm: PropTypes.instanceOf(VM)
+    vm: PropTypes.instanceOf(VM),
+    isPlayerOnly: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
