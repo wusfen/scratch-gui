@@ -1200,6 +1200,7 @@ class MenuBar extends React.Component {
                                     className={`${c.button} ${c.pink}`}
                                     onClick={e => this.handleSave()}
                                 >
+                                    <i className={`${c.iSave} ${c.iSizeL}`}></i>
                                     {'保存'}
                                 </button>
                             </>

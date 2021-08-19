@@ -44,6 +44,10 @@
     background-image: url("../assets/icons/check.svg");
 }
 
+.i-save:before {
+    background-image: url("../assets/icons/folder.png");
+}
+
 button i[class*="i-"]:first-child {
     margin-right: 0.25rem;
 }
