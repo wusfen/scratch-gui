@@ -44,6 +44,7 @@ import {
     saveProjectAsCopy
 } from '../../reducers/project-state';
 import {setProjectTitle} from '../../reducers/project-title';
+import {setUploadingProgress} from '../../reducers/uploading';
 import {
     openAboutMenu,
     closeAboutMenu,
@@ -451,6 +452,7 @@ class MenuBar extends React.Component {
             this.props.onRequestCloseAbout();
         };
     }
+    // TODO remove
     getProjectCover (silence) {
         if (silence) return;
 
@@ -505,38 +507,81 @@ class MenuBar extends React.Component {
 
         return curBlocksNum;
     }
-    async uploadSb3 (silence) {
-        silence || Loading.show();
+    getCover () {
+        return new Promise(rs => {
+            this.props.vm.renderer.requestSnapshot(async dataURL => {
 
-        const blob = await this.props.vm.saveProjectSb3();
-        let formData = new FormData();
-        formData.append('file', blob, `${this.props.projectTitle || 'project'}.sb3`);
+                var blob = await (await fetch(dataURL)).blob();
 
-        // TODO remove
-        if (/mock/.test(location)) {
-            formData = null;
-        }
+                rs(blob);
+            });
+        });
+    }
+    getWorkName () {
+        return this.props.projectTitle || param('workName') || '我的作品';
+    }
+    async uploadToOss (blob, name = 'test', ext = 'sb3', silence) {
+        var self = this;
+        silence || self.props.setUploadingProgress(1);
 
-        // {domain, path}
-        const {data} = await ajax.post('/file/upload', formData, {silence});
+        var {data} = await ajax.get('file/getSign', {
+            driver: 'aly_oss',
+            name,
+            ext,
+        });
+        var ossToken = JSON.parse(data.ossToken);
 
-        Loading.hide();
+        const formData = new FormData();
+        formData.append('OSSAccessKeyId', ossToken.accessid);
+        formData.append('signature', ossToken.signature);
+        formData.append('policy', ossToken.policy);
+        formData.append('key', data.path);
+        formData.append('success_action_status', 200);
+        formData.append('file', blob, `${name}.${ext}`);
+
+        silence || self.props.setUploadingProgress(2);
+        await ajax.post(`//${data.bucket}.${data.region}.aliyuncs.com`, formData, {
+            silence: true,
+            onprogress (e) {
+                if (silence) return;
+                var value = parseInt(e.loaded * 100 / e.total, 10) || 1;
+                self.props.setUploadingProgress(value);
+            },
+            onload (){}
+        });
+        silence || self.props.setUploadingProgress(0);
+
         return data;
+    }
+    async uploadSb3 (silence) {
+        const blob = await this.props.vm.saveProjectSb3();
+        const workName = this.getWorkName();
+
+        return this.uploadToOss(blob, workName, 'sb3', silence);
+    }
+    async uploadCover () {
+        var cover = await this.getCover();
+        const workName = this.getWorkName();
+
+        return this.uploadToOss(cover, workName, 'png', true);
     }
     handleInput (e) {
         this.props.setProjectTitle(e.target.value);
     }
     async handleSave (silence) {
         const id = this.state.id;
+        const workName = this.getWorkName();
 
-        const workName = this.props.projectTitle || param('workName') || '';
+        const uploadSb3Promise = this.uploadSb3(silence);
+        const uploadCoverPromise = this.uploadCover();
 
-        const sb3PathInfo = await this.uploadSb3(silence);
         var {data} = await ajax.put('/hwUserWork/submitIdeaWork', {
             id: id,
-            workCoverPath: await this.getProjectCover(silence),
             workName: workName,
-            workPath: sb3PathInfo.path,
+            // workCoverPath: await this.getProjectCover(silence),
+            // workPath: sb3PathInfo.path,
+            attachId: (await uploadSb3Promise).id,
+            workCoverAttachId: (await uploadCoverPromise).id,
         }, {silence});
         this.state.id = data;
         param('id', this.state.id);
@@ -627,17 +672,23 @@ class MenuBar extends React.Component {
         }
 
         // 上传文件
-        const fileData = await this.uploadSb3(silence);
+        const uploadSb3Promise = this.uploadSb3(silence);
+        const uploadCoverPromise = this.uploadCover();
+
+        await uploadSb3Promise;
+        silence || this.props.setUploadingProgress(98, '正在批改中...');
 
         // 提交
         const {data: workId} = await ajax.put('/hwUserWork/submitWork', {
             id: workInfo.id,
+            workId: workInfo.analystStatus === -1 ? workInfo.workId : '',
             submitType: silence ? 1 : 2,
-            workCoverPath: await this.getProjectCover(silence),
-            workPath: fileData.path,
             userBlockNum: _userBlockNum,
+            // workCoverPath: await this.getProjectCover(silence),
+            // workPath: fileData.path,
             // analystStatus: undefined,
-            workId: workInfo.analystStatus === -1 ? workInfo.workId : ''
+            attachId: (await uploadSb3Promise).id,
+            workCoverAttachId: (await uploadCoverPromise).id,
         }, {silence});
 
         // 标记已保存
@@ -649,38 +700,26 @@ class MenuBar extends React.Component {
             return;
         }
 
-        dispatchEvent(new Event('submit:提交中'));
+        silence || this.props.setUploadingProgress(99, '正在批改中...');
+        var isRight = await this.checkWork();
+        silence || this.props.setUploadingProgress(0, '');
 
-        // 轮询批改结果
-        // TODO hwUserWork/autoAnalyst
-        const checkStartTime = new Date();
-        // eslint-disable-next-line func-style, require-jsdoc
-        async function checkResult () {
-            const {data} = await ajax.get(`/hwUserWork/getWorkData/${workId}`);
-
-            if (data.analystStatus === 1) {
-                dispatchEvent(new Event('submit:已提交正确'));
-                return;
-            }
-            if (data.analystStatus === 2) {
-                dispatchEvent(new Event('submit:已提交错误'));
-                return;
-            }
-            if (data.analystStatus === 3) {
-                dispatchEvent(new Event('submit:已提交人工'));
-                return;
-            }
-
-            // 超时
-            if (new Date() - checkStartTime > 10 * 1000) {
-                dispatchEvent(new Event('submit:已提交未知'));
-            } else {
-                setTimeout(() => {
-                    checkResult();
-                }, 2000);
-            }
+        // TODO 目前只有正确错误，之前有规划有人工批改
+        if (isRight) {
+            dispatchEvent(new Event('submit:已提交正确'));
+        } else {
+            dispatchEvent(new Event('submit:已提交错误'));
         }
-        checkResult();
+    }
+    async checkWork () {
+        var json = this.props.vm.toJSON();
+
+        var {data} = await ajax.post('hwUserWork/autoAnalyst', {
+            workCode: window._workInfo.workCode,
+            projectJsonStr: json,
+        });
+
+        return data === 1;
     }
     handleSkip () {
         dispatchEvent(new Event('submit:跳过'));
@@ -1334,6 +1373,7 @@ MenuBar.propTypes = {
     onProjectSaved: PropTypes.func,
     setProjectTitle: PropTypes.func,
     projectRunning: PropTypes.bool,
+    setUploadingProgress: PropTypes.func,
 };
 
 MenuBar.defaultProps = {
@@ -1386,6 +1426,7 @@ const mapDispatchToProps = dispatch => ({
     onClickSaveAsCopy: () => dispatch(saveProjectAsCopy()),
     onSeeCommunity: () => dispatch(setPlayer(true)),
     setProjectTitle: title => dispatch(setProjectTitle(title)),
+    setUploadingProgress: (progress, text) => dispatch(setUploadingProgress(progress, text)),
 });
 
 export default compose(

@@ -20,6 +20,7 @@ function request (options) {
         onerror,
         ontimeout,
         onloadstart,
+        onprogress,
         onloadend
     } = options;
 
@@ -69,6 +70,10 @@ function request (options) {
     let resolve;
     const promise = new Promise(rs => (resolve = rs));
 
+    xhr.onprogress = onprogress;
+    if (xhr.upload) {
+        xhr.upload.onprogress = onprogress;
+    }
     // start
     onloadstart.call(xhr, options);
 
@@ -171,6 +176,7 @@ Ajax.settings = {
     onerror (e, options) {},
     ontimeout (e, options) {},
     onloadstart (options) {},
+    onprogress (options) {},
     onloadend (res, options) {},
 };
 
