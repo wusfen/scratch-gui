@@ -144,6 +144,7 @@ rect[class*="scratchCommentRect"] {
     rx: 15;
     ry: 15;
     filter: drop-shadow(0px 0px 2px #32C5FF);
+    opacity: 0.9;
 }
 
 rect[class*="scratchCommentTopBar"] {
