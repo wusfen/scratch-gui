@@ -1181,11 +1181,10 @@ class MenuBar extends React.Component {
                                 {/* TODO 没有 token 不能保存和提交 */}
 
                                 <button
-                                    hidden={!(!isSaveAs)}
-                                    className={`${c.button} ${c.yellow}`}
-                                    onClick={e => this.handleSave()}
+                                    className={`${c.button}`}
+                                    onClick={e => this.handleExit()}
                                 >
-                                    {'保存'}
+                                    {'退出'}
                                 </button>
 
                                 <button
@@ -1195,12 +1194,13 @@ class MenuBar extends React.Component {
                                 >
                                     {'另存为'}
                                 </button>
-
+                                
                                 <button
+                                    hidden={!(!isSaveAs)}
                                     className={`${c.button} ${c.pink}`}
-                                    onClick={e => this.handleExit()}
+                                    onClick={e => this.handleSave()}
                                 >
-                                    {'退出'}
+                                    {'保存'}
                                 </button>
                             </>
                         ) : null
