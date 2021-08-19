@@ -136,6 +136,7 @@ const GUIComponent = props => {
         closePromptArea,
         errorText,
         showErrorTips,
+        setProjectTitle,
         ...componentProps
     } = omit(props, 'dispatch');
     if (children) {
@@ -510,7 +511,8 @@ GUIComponent.propTypes = {
     promptAreaShow: PropTypes.bool,
     closePromptArea: PropTypes.func,
     errorText: PropTypes.string,
-    showErrorTips: PropTypes.bool
+    showErrorTips: PropTypes.bool,
+    setProjectTitle: PropTypes.func
 };
 GUIComponent.defaultProps = {
     backpackHost: null,
