@@ -23,12 +23,12 @@ class Component extends React.Component{
             children,
             ...props
         } = this.props;
-        
+
         const {
             isShow,
             ...state
         } = this.state;
-        
+
         return (
             <div
                 hidden={!isShow}
