@@ -23,15 +23,20 @@ class Component extends React.Component{
             isPlayerOnly,
             ...props
         } = this.props;
-        
+
         const {
             ...state
         } = this.state;
-        
+
         return (
             <div
                 hidden={!active}
-                className={classNames(styles.container,!isPlayerOnly ? styles.commonStyle:null)}
+                className={classNames(
+                    styles.container,
+                    {
+                        [styles.commonStyle]: !isPlayerOnly,
+                    }
+                )}
                 onClick={onStopAllClick}
             >
                 <div>
