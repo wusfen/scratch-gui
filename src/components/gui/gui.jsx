@@ -440,7 +440,10 @@ const GUIComponent = props => {
 
                 <SubmitResultDialog vm={vm} />
                 <Uploading></Uploading>
-                <Keyboard vm={vm} />
+                <Keyboard
+                    vm={vm}
+                    isPlayerOnly={isPlayerOnly}
+                />
                 <CopyCodeHideModal></CopyCodeHideModal>
             </Box>
         );
