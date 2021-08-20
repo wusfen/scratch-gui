@@ -108,7 +108,7 @@ class Controls extends React.Component {
                 projectJsonStr: json,
             }, {silence: true});
 
-            if (data == 1) {
+            if (data === 1) {
                 dispatchEvent(new Event('运行时判断正确'));
             } else {
                 dispatchEvent(new Event('运行时判断不正确'));

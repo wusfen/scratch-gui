@@ -120,9 +120,10 @@ class Component extends React.Component{
         const {
             projectRunning,
             children,
+            isPlayerOnly,
             ...props
         } = this.props;
-        
+
         let {
             isShow,
             keys,
@@ -134,7 +135,11 @@ class Component extends React.Component{
         return (
             <div
                 hidden={!(projectRunning && keys.length)}
-                className={classNames(styles.container)}
+                className={classNames(
+                    styles.container,
+                    props.isPlayerOnly ?
+                        styles.isPlayerOnly : styles.commonContainer
+                )}
                 onTouchEnd={e => e.preventDefault()}
             >
                 <div
@@ -200,7 +205,7 @@ class Component extends React.Component{
                             onTouchEnd={this.handleMouseUp}
                         >{this.toShowKey(e)}</button>
                     ))}
-                    
+
                 </div>
             </div>
         );
@@ -210,6 +215,7 @@ class Component extends React.Component{
 Component.propTypes = {
     children: PropTypes.node,
     projectRunning: PropTypes.bool,
+    isPlayerOnly: PropTypes.bool,
     vm: PropTypes.instanceOf(VM)
 };
 

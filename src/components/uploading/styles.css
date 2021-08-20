@@ -1,0 +1,97 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.container {
+    position: relative;
+    width: 26rem;
+    height: 18rem;
+}
+
+.container button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1.38rem;
+    height: 1.38rem;
+    border: 0;
+    background: center/contain no-repeat
+        url("../submit-result-dialog/img/close.svg");
+    color: transparent;
+}
+.container img {
+    margin: auto;
+    display: block;
+    width: 14.91rem;
+    height: 9.44rem;
+    animation: img 0.5s infinite alternate-reverse;
+}
+.container h2 {
+    margin: 0.56rem;
+    height: 1.25rem;
+    font-size: 1.25rem;
+    font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+    font-weight: 500;
+    color: #ffffff;
+    line-height: 1.88rem;
+    text-align: center;
+}
+.container p {
+    margin-top: 3.13rem;
+    box-sizing: content-box;
+    width: 25.63rem;
+    height: 1.88rem;
+    background: #ffffff;
+    background-clip: content-box;
+    border-radius: 9rem;
+    border: 0.34rem solid rgba(255, 255, 255, 0.39);
+}
+.container p span {
+    position: relative;
+    display: block;
+    min-width: 10%;
+    height: 100%;
+    background-color: #f7b500;
+    border-radius: 99rem;
+    text-align: center;
+    transition: 0.25s;
+}
+.container p span em {
+    /* margin-left: 0.31rem; */
+    /* position: absolute; */
+    /* left: 100%; */
+    font-size: 1rem;
+    font-family: Arial-BoldMT, Arial;
+    font-weight: normal;
+    color: #fff;
+    line-height: 1.88rem;
+    font-style: normal;
+}
+.container h3 {
+    margin: 0.88rem;
+    height: 0.88rem;
+    font-size: 0.88rem;
+    font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+    font-weight: 500;
+    color: #ffffff;
+    line-height: 1.31rem;
+    text-align: right;
+}
+
+@keyframes img {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-2rem);
+    }
+}

@@ -44,6 +44,7 @@ import costumesIcon from './icon--costumes.svg';
 import soundsIcon from './icon--sounds.svg';
 
 import SubmitResultDialog from '../submit-result-dialog/index.jsx';
+import Uploading from '../uploading/index.jsx';
 import Keyboard from '../keyboard/index.jsx';
 import CopyCodeHideModal from '../copy-code-hide/index.jsx';
 import PromptArea from '../prompt-area/prompt-area.jsx';
@@ -174,7 +175,10 @@ const GUIComponent = props => {
                         <Alerts className={styles.alertsContainer} />
                     ) : null}
                 </StageWrapper>
-                <Keyboard vm={vm} />
+                <Keyboard
+                    vm={vm}
+                    isPlayerOnly={isPlayerOnly}
+                />
             </div>
         ) : (
             <Box
@@ -271,7 +275,7 @@ const GUIComponent = props => {
                         onToggleLoginOpen={onToggleLoginOpen}
                     />
                 </div>
-                
+
                 <Box className={styles.bodyWrapper}>
                     <Box className={styles.flexWrapper}>
                         <Box className={styles.editorWrapper}>
@@ -347,7 +351,10 @@ const GUIComponent = props => {
                                             stageSize={stageSize}
                                             vm={vm}
                                         />
-                                        <Running vm={vm} />
+                                        <Running
+                                            vm={vm}
+                                            isPlayerOnly={isPlayerOnly}
+                                        />
                                         {/* <AudioCourse />
                                         <Tips /> */}
                                     </Box>
@@ -393,13 +400,13 @@ const GUIComponent = props => {
                             vm={vm}
                             stageSize={stageSize}
                         />
-                        
+
                         <Box
                             className={
                                 classNames(
                                     styles.stageAndTargetWrapper,
                                     styles[stageSize]
-                                )     
+                                )
                             }
                         >
                             {/* 任务栏 */}
@@ -414,7 +421,7 @@ const GUIComponent = props => {
                                     text={errorText}
                                 ></ErrorTips>
                             </div>}
-                            
+
                             <StageWrapper
                                 isFullScreen={isFullScreen}
                                 isRendererSupported={isRendererSupported}
@@ -430,15 +437,19 @@ const GUIComponent = props => {
                                     vm={vm}
                                 />
                             </Box> */}
-                            
+
                         </Box>
-                        
+
                     </Box>
                 </Box>
                 <DragLayer />
 
                 <SubmitResultDialog vm={vm} />
-                <Keyboard vm={vm} />
+                <Uploading></Uploading>
+                <Keyboard
+                    vm={vm}
+                    isPlayerOnly={isPlayerOnly}
+                />
                 <CopyCodeHideModal></CopyCodeHideModal>
             </Box>
         );

@@ -12,6 +12,7 @@
 
         <!-- arms -->
         <script>
+            // prettier-ignore
             !(function (isOpen) {
                 if (!isOpen) return;
                 window.__bl = {
@@ -22,7 +23,15 @@
                         sendResource: true,
                         enableLinkTrace: true,
                         behavior: true,
-                    },
+                        release: "v2.3.2",
+                        environment: (function () {
+                            if (/\/uat\/|\/uat-/.test(location)) return "daily";
+                            if (/\/prod\//.test(location)) return "prod";
+                            if (/\/scratch\.app/.test(location)) return "prod";
+                            if (/\/ide-code\./.test(location)) return "prod";
+                            return "local";
+                        })()
+                    }
                 };
                 var script = document.createElement("script");
                 script.src = "https://retcode.alicdn.com/retcode/bl.js";
@@ -33,6 +42,7 @@
 
         <!-- console.js -->
         <script>
+            // prettier-ignore
             function loadConsole() {
                 if (loadConsole.yes) return;
                 loadConsole.yes = true;
@@ -51,7 +61,7 @@
                     console.log("tools =>", {
                         exitEditor: function () {
                             bridge.emit("exitEditor");
-                        },
+                        }
                     });
                 }, 300);
             }

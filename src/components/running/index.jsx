@@ -10,6 +10,7 @@ class Component extends React.Component{
         super(props);
 
         this.state = {
+
         };
 
         bindAll(this, [
@@ -19,27 +20,31 @@ class Component extends React.Component{
         const {
             active,
             onStopAllClick,
+            isPlayerOnly,
             ...props
         } = this.props;
-        
+
         const {
             ...state
         } = this.state;
-        
+
         return (
             <div
                 hidden={!active}
-                className={classNames(styles.container)}
+                className={classNames(
+                    styles.container,
+                    {
+                        [styles.commonStyle]: !isPlayerOnly,
+                    }
+                )}
                 onClick={onStopAllClick}
             >
                 <div>
                     <div className={classNames(styles.iconWrap)}>
                         <span className={classNames(styles.icon, styles.icon1)} />
                         <span className={classNames(styles.icon, styles.icon2)} />
-                        <span className={classNames(styles.icon, styles.icon3)} />
                     </div>
-                    <p className={classNames(styles.text1)}>{'积木块运行中...'}</p>
-                    <span className={classNames(styles.text2)}>{'点击停止'}</span>
+                    <p className={classNames(styles.text1)}>{'积木运行中...'}</p>
                 </div>
             </div>
         );
@@ -48,6 +53,7 @@ class Component extends React.Component{
 
 Component.propTypes = {
     active: PropTypes.bool,
+    isPlayerOnly: PropTypes.bool,
     onStopAllClick: PropTypes.func
 };
 
