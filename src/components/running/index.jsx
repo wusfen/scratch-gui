@@ -20,6 +20,7 @@ class Component extends React.Component{
         const {
             active,
             onStopAllClick,
+            isPlayerOnly,
             ...props
         } = this.props;
         
@@ -30,7 +31,7 @@ class Component extends React.Component{
         return (
             <div
                 hidden={!active}
-                className={classNames(styles.container)}
+                className={classNames(styles.container,!isPlayerOnly ? styles.commonStyle:null)}
                 onClick={onStopAllClick}
             >
                 <div>
@@ -47,6 +48,7 @@ class Component extends React.Component{
 
 Component.propTypes = {
     active: PropTypes.bool,
+    isPlayerOnly: PropTypes.bool,
     onStopAllClick: PropTypes.func
 };
 

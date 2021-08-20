@@ -120,6 +120,7 @@ class Component extends React.Component{
         const {
             projectRunning,
             children,
+            isPlayerOnly,
             ...props
         } = this.props;
 
@@ -214,6 +215,7 @@ class Component extends React.Component{
 Component.propTypes = {
     children: PropTypes.node,
     projectRunning: PropTypes.bool,
+    isPlayerOnly: PropTypes.bool,
     vm: PropTypes.instanceOf(VM)
 };
 
