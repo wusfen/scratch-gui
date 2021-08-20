@@ -293,6 +293,14 @@ export default function (Blockly, vm){
         } while (block);
     };
 
+    const orgIsConnectionAllowed = Blockly.Connection.prototype.isConnectionAllowed;
+    Blockly.Connection.prototype.isConnectionAllowed = function(candidate) {
+        if (!candidate.sourceBlock_.rendered) {
+            return false;
+        }
+        return orgIsConnectionAllowed.apply(this, arguments);
+    };
+
     const orgToJSON = vm.toJSON.bind(vm);
     // 保存toolbox配置
     vm.toJSON = function (){
