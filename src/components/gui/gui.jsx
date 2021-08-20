@@ -174,7 +174,7 @@ const GUIComponent = props => {
                         <Alerts className={styles.alertsContainer} />
                     ) : null}
                 </StageWrapper>
-                <Keyboard vm={vm} />
+                <Keyboard vm={vm} isPlayerOnly={isPlayerOnly}/>
             </div>
         ) : (
             <Box
@@ -347,7 +347,7 @@ const GUIComponent = props => {
                                             stageSize={stageSize}
                                             vm={vm}
                                         />
-                                        <Running vm={vm} />
+                                        <Running vm={vm} isPlayerOnly={isPlayerOnly} />
                                         {/* <AudioCourse />
                                         <Tips /> */}
                                     </Box>
