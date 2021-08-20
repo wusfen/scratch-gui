@@ -88,11 +88,12 @@ const StageSelector = props => {
                 />
             ) : null}
             <div className={styles.label}>
-                <FormattedMessage
+                {/* <FormattedMessage
                     defaultMessage="Backdrops"
                     description="Label for the backdrops in the stage selector"
                     id="gui.stageSelector.backdrops"
-                />
+                /> */}
+                Backdrops
             </div>
             <div
                 hidden

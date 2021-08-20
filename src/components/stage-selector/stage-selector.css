@@ -89,6 +89,11 @@ $header-height: calc($stage-menu-height - 0.125rem);
     text-align: center;
 
     /* margin: 0; */
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 4rem;
     color: #2671D0;
 }
 
