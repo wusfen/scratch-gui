@@ -84,7 +84,6 @@ class TaskBar extends React.Component{
 
     componentDidMount () {
         this.handleMode();
-        this.touchTip();
     }
 
     componentWillUnmount () {
