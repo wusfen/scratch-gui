@@ -522,7 +522,7 @@ class MenuBar extends React.Component {
     }
     async uploadToOss (blob, name = 'test', ext = 'sb3', silence) {
         var self = this;
-        silence || self.props.setUploadingProgress(1);
+        silence || self.props.setUploadingProgress(10);
 
         var {data} = await ajax.get('file/getSign', {
             driver: 'aly_oss',
@@ -539,12 +539,14 @@ class MenuBar extends React.Component {
         formData.append('success_action_status', 200);
         formData.append('file', blob, `${name}.${ext}`);
 
-        silence || self.props.setUploadingProgress(2);
+        silence || self.props.setUploadingProgress(20);
         await ajax.post(`//${data.bucket}.${data.region}.aliyuncs.com`, formData, {
             silence: true,
             onprogress (e) {
                 if (silence) return;
-                var value = parseInt(e.loaded * 100 / e.total, 10) || 1;
+                var value = e.loaded * 100 / e.total;
+                value = 20 + (value * .6);
+                value = parseInt(value, 10);
                 self.props.setUploadingProgress(value);
             },
             onload (){}
@@ -572,9 +574,12 @@ class MenuBar extends React.Component {
         const id = this.state.id;
         const workName = this.getWorkName();
 
-        const uploadSb3Promise = this.uploadSb3(silence);
+        silence || this.props.setUploadingProgress(1);
         const uploadCoverPromise = this.uploadCover();
+        const uploadSb3Promise = this.uploadSb3(silence);
+        await uploadSb3Promise;
 
+        silence || this.props.setUploadingProgress(95, '正在保存...');
         var {data} = await ajax.put('/hwUserWork/submitIdeaWork', {
             id: id,
             workName: workName,
@@ -583,6 +588,8 @@ class MenuBar extends React.Component {
             attachId: (await uploadSb3Promise).id,
             workCoverAttachId: (await uploadCoverPromise).id,
         }, {silence});
+        silence || this.props.setUploadingProgress(100, '正在保存...');
+
         this.state.id = data;
         param('id', this.state.id);
 
@@ -590,6 +597,9 @@ class MenuBar extends React.Component {
             title: workName
         });
 
+        setTimeout(() => {
+            silence || this.props.setUploadingProgress(0);
+        }, 500);
         alert('保存成功');
     }
     async handleSaveAs () {
@@ -672,11 +682,12 @@ class MenuBar extends React.Component {
         }
 
         // 上传文件
-        const uploadSb3Promise = this.uploadSb3(silence);
+        silence || this.props.setUploadingProgress(1);
         const uploadCoverPromise = this.uploadCover();
+        const uploadSb3Promise = this.uploadSb3(silence);
 
         await uploadSb3Promise;
-        silence || this.props.setUploadingProgress(98, '正在批改中...');
+        silence || this.props.setUploadingProgress(90, '正在保存...');
 
         // 提交
         const {data: workId} = await ajax.put('/hwUserWork/submitWork', {
@@ -700,9 +711,9 @@ class MenuBar extends React.Component {
             return;
         }
 
-        silence || this.props.setUploadingProgress(99, '正在批改中...');
+        silence || this.props.setUploadingProgress(95, '正在批改中...');
         var isRight = await this.checkWork();
-        silence || this.props.setUploadingProgress(0, '');
+        silence || this.props.setUploadingProgress(100, '正在批改中...');
 
         // TODO 目前只有正确错误，之前有规划有人工批改
         if (isRight) {
@@ -710,6 +721,10 @@ class MenuBar extends React.Component {
         } else {
             dispatchEvent(new Event('submit:已提交错误'));
         }
+
+        setTimeout(() => {
+            silence || this.props.setUploadingProgress(0);
+        }, 500);
     }
     async checkWork () {
         var json = this.props.vm.toJSON();
@@ -1233,7 +1248,7 @@ class MenuBar extends React.Component {
                                 >
                                     {'另存为'}
                                 </button>
-                                
+
                                 <button
                                     hidden={!(!isSaveAs)}
                                     className={`${c.button} ${c.pink}`}
