@@ -323,6 +323,18 @@ class TargetPane$ extends React.Component {
         } = this.props;
         /* eslint-disable no-unused-vars, max-len */
         const items = window.MODE === 'teacher' ? Object.values(sprites) : Object.values(sprites).filter(this._filterSprite);
+        let selectChange = true;
+        for(let item of items){
+            if(editingTarget === item.id){
+                selectChange = false;
+                break;
+            }
+        }
+        if(selectChange && items.length > 0){
+            setTimeout(()=>{
+                this.handleSelectSprite(items[0].id);
+            });
+        }
         return (
             <div
                 className={
