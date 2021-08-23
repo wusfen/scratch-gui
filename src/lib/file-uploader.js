@@ -97,7 +97,7 @@ const createVMAsset = function (storage, assetType, dataFormat, data) {
  * adding the costume to the VM and handling other UI flow that should come after adding the costume
  * @param {Function} handleError The function to execute if there is an error parsing the costume
  */
-const costumeUpload = function (fileData, fileType, storage, handleCostume, handleError = () => {}) {
+const costumeUpload = function (fileData, fileType, storage, handleCostume, handleError = () => {}, backdrop = false) {
     let costumeFormat = null;
     let assetType = null;
     switch (fileType) {
@@ -115,7 +115,7 @@ const costumeUpload = function (fileData, fileType, storage, handleCostume, hand
         // Convert .bmp files to .png to compress them. .bmps are completely uncompressed,
         // and would otherwise take up a lot of storage space and take much longer to upload and download.
         bmpConverter(fileData).then(dataUrl => {
-            costumeUpload(dataUrl, 'image/png', storage, handleCostume);
+            costumeUpload(dataUrl, 'image/png', storage, handleCostume, handleError, backdrop);
         });
         return; // Return early because we're triggering another proper costumeUpload
     }
@@ -132,7 +132,7 @@ const costumeUpload = function (fileData, fileType, storage, handleCostume, hand
                 if (frameNumber === numFrames - 1) {
                     handleCostume(costumes);
                 }
-            }, handleError);
+            }, handleError, backdrop);
         });
         return; // Abandon this load, do not try to load gif itself
     }
@@ -160,7 +160,7 @@ const costumeUpload = function (fileData, fileType, storage, handleCostume, hand
         addCostumeFromBuffer(new Uint8Array(fileData));
     } else {
         // otherwise it's a bitmap
-        bitmapAdapter.importBitmap(fileData, fileType).then(addCostumeFromBuffer)
+        bitmapAdapter.importBitmap(fileData, fileType, backdrop).then(addCostumeFromBuffer)
             .catch(handleError);
     }
 };
