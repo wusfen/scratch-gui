@@ -331,9 +331,9 @@ class TargetPane$ extends React.Component {
                     break;
                 }
             }
-            if(selectChange && items.length > 0){
+            if(selectChange){
                 setTimeout(()=>{
-                    this.handleSelectSprite(items[0].id);
+                    this.handleSelectSprite(items.length > 0?items[0].id:stage.id);
                 });
             }
         }
