@@ -551,7 +551,7 @@ class MenuBar extends React.Component {
             },
             onload (){}
         });
-        silence || self.props.setUploadingProgress(0);
+        // silence || self.props.setUploadingProgress(false);
 
         return data;
     }
@@ -574,7 +574,7 @@ class MenuBar extends React.Component {
         const id = this.state.id;
         const workName = this.getWorkName();
 
-        silence || this.props.setUploadingProgress(1);
+        silence || this.props.setUploadingProgress(true);
         const uploadCoverPromise = this.uploadCover();
         const uploadSb3Promise = this.uploadSb3(silence);
         await uploadSb3Promise;
@@ -598,7 +598,7 @@ class MenuBar extends React.Component {
         });
 
         setTimeout(() => {
-            silence || this.props.setUploadingProgress(0);
+            silence || this.props.setUploadingProgress(false);
         }, 500);
         alert('保存成功');
     }
@@ -682,7 +682,7 @@ class MenuBar extends React.Component {
         }
 
         // 上传文件
-        silence || this.props.setUploadingProgress(1);
+        silence || this.props.setUploadingProgress(true);
         const uploadCoverPromise = this.uploadCover();
         const uploadSb3Promise = this.uploadSb3(silence);
 
@@ -723,7 +723,7 @@ class MenuBar extends React.Component {
         }
 
         setTimeout(() => {
-            silence || this.props.setUploadingProgress(0);
+            silence || this.props.setUploadingProgress(false);
         }, 500);
     }
     async checkWork () {

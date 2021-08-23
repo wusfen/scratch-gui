@@ -27,6 +27,7 @@
     background: center/contain no-repeat
         url("../submit-result-dialog/img/close.svg");
     color: transparent;
+    animation: delayShow 0.5s 10s both;
 }
 .container img {
     margin: auto;
@@ -93,5 +94,16 @@
     }
     100% {
         transform: translateY(-2rem);
+    }
+}
+
+@keyframes delayShow {
+    0% {
+        opacity: 0;
+        display: none;
+    }
+    100% {
+        display: block;
+        opacity: 1;
     }
 }

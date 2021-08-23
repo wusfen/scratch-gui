@@ -42,6 +42,7 @@ module.exports = {
         'require-jsdoc': 0,
         'func-style': 0,
         'camelcase': 1,
+        'arrow-body-style': 0,
     },
     settings: {
         react: {
