@@ -50,7 +50,7 @@
     height: 5.56rem;
     background-image: url("./icon.png");
     background-size: 100% 100%;
-    animation: gear-rotate 3s linear infinite;
+    animation: gear-rotate2 3s linear infinite;
 }
 
 .icon3 {
@@ -139,5 +139,15 @@
 
     100% {
         transform: rotate(360deg);
+    }
+}
+
+@keyframes gear-rotate2 {
+    0% {
+        transform: rotate(360deg);
+    }
+
+    360% {
+        transform: rotate(0);
     }
 }
