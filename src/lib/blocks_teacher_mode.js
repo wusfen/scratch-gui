@@ -35,12 +35,11 @@ export default function (Blockly, vm){
                     }
                 }
             }
-        } else {
-            const childCount = xmlNode.childNodes.length;
-            for (let i = 0; i < childCount; i++){
-                if (needHide_(xmlNode.childNodes[i])){
-                    return true;
-                }
+        }
+        const childCount = xmlNode.childNodes.length;
+        for (let i = 0; i < childCount; i++){
+            if (needHide_(xmlNode.childNodes[i])){
+                return true;
             }
         }
         return false; 
