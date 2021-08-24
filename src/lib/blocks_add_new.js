@@ -21,7 +21,7 @@ export default function (Blockly){
         init: function() {
           this.jsonInit({
             "id": "event_next_lesson",
-            "message0": "隐藏此积木",
+            "message0": "隐藏积木代码",
             "args0": [
             ],
             "category": Blockly.Categories.control,
