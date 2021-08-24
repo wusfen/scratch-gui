@@ -19,6 +19,9 @@ export default function (Blockly, vm){
         if (!xmlNode.getElementsByTagName){
             return false;
         }
+        if(xmlNode.getAttribute && xmlNode.getAttribute("type") === 'control_block_hide'){
+            return true;
+        }
         const fields = xmlNode.getElementsByTagName('field');
         const fieldCount = fields.length;
         if (fieldCount > 0){
