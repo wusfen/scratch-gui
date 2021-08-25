@@ -132,7 +132,7 @@ body[class*="blocklyMinimalBody"] {
     color: #FFFFFF;
 }
 textarea[class*="scratchCommentTextarea"] {
-    font-size: 1.12rem;
+    font-size: 1.4rem;
     background-color: transparent;
     color: #FFFFFF;
 }

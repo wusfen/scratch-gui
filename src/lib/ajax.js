@@ -118,11 +118,13 @@ function request (options) {
     // send
     xhr.send(data);
 
+    promise.xhr = xhr;
     return promise;
 }
 
 class Ajax {
     constructor (settings) {
+        this.list = [];
         this.setSettings(settings);
     }
     setSettings (settings) {
@@ -135,7 +137,19 @@ class Ajax {
     }
     request (options) {
         options = this.mergeOptions(this.settings, options);
-        return request(options);
+        var promise = request(options);
+        var xhr = promise.xhr;
+        this.list.push(xhr);
+        xhr.addEventListener('loadend', e => {
+            // wait ajax.abort
+            setTimeout(() => {
+                var index = this.list.indexOf(xhr);
+                if (index !== -1) {
+                    this.list.splice(index, 1);
+                }
+            }, 1);
+        });
+        return promise;
     }
     get (url, data, options = {}) {
         options = Object.assign(options, {url, data, method: 'get'});
@@ -156,6 +170,11 @@ class Ajax {
     options (url, data, options = {}) {
         options = Object.assign(options, {url, data, method: 'options'});
         return this.request(options);
+    }
+    abort () {
+        this.list.forEach(xhr => {
+            xhr.abort();
+        });
     }
 }
 

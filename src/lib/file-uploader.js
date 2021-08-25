@@ -96,6 +96,7 @@ const createVMAsset = function (storage, assetType, dataFormat, data) {
  * caching this costume in storage - This function should be responsible for
  * adding the costume to the VM and handling other UI flow that should come after adding the costume
  * @param {Function} handleError The function to execute if there is an error parsing the costume
+ * @param {boolean} backdrop is backdrop?
  */
 const costumeUpload = function (fileData, fileType, storage, handleCostume, handleError = () => {}, backdrop = false) {
     let costumeFormat = null;

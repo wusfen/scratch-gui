@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import bindAll from 'lodash.bindall';
 import {connect} from 'react-redux';
 import {setUploadingProgress} from '../../reducers/uploading';
+import {ajax} from '../../lib/ajax';
 
 import styles from './styles.css';
 const c = styles;
@@ -18,6 +19,10 @@ class Component extends React.Component{
         bindAll(this, [
         ]);
     }
+    abort () {
+        this.props.setUploadingProgress(false);
+        ajax.abort();
+    }
     render () {
         const {
             children,
@@ -30,11 +35,11 @@ class Component extends React.Component{
 
         return (
             <div
-                hidden={!(props.progress)}
+                hidden={!(props.isShow)}
                 className={classNames(c.overlay)}
             >
                 <main className={classNames(c.container)}>
-                    <button onClick={e => props.setUploadingProgress(0)}>x</button>
+                    <button onClick={e => this.abort()}>x</button>
                     <img src={require('../submit-result-dialog/img/ing.png')} />
                     <h2>作业提交中···</h2>
                     <p>
@@ -51,11 +56,14 @@ class Component extends React.Component{
 
 Component.propTypes = {
     children: PropTypes.node,
+    isShow: PropTypes.bool,
     progress: PropTypes.number,
     text: PropTypes.string,
+    setUploadingProgress: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
+    isShow: state.scratchGui.uploading.isShow,
     progress: state.scratchGui.uploading.progress,
     text: state.scratchGui.uploading.text,
 });
