@@ -45,6 +45,10 @@ STAGE_DISPLAY_SCALES[STAGE_DISPLAY_SIZES.large] = 1; // large mode, wide browser
 STAGE_DISPLAY_SCALES[STAGE_DISPLAY_SIZES.largeConstrained] = 1; // large mode but narrow browser
 STAGE_DISPLAY_SCALES[STAGE_DISPLAY_SIZES.small] = 0.5; // small mode, regardless of browser size
 
+
+window.MAX_STAGE_WIDTH = 1186;
+window.MAX_STAGE_HEIGHT = 667;// 舞台最大大小
+
 window.STAGE_WIDTH = 375;
 window.STAGE_HEIGHT = 667;// 舞台真实大小
 window.UI_WIDTH = 1024;
