@@ -52,7 +52,7 @@ class ActionMenu extends React.Component {
             this.setState({isOpen: false});
             this.closeTimeoutId = null;
         }, CLOSE_DELAY);
-        this.iconRef.style.transform = `rotate(0deg)`;
+        // this.iconRef.style.transform = `rotate(0deg)`;
     }
     handleToggleOpenState () {
         // Mouse enter back in after timeout was started prevents it from closing.
@@ -65,7 +65,7 @@ class ActionMenu extends React.Component {
                 forceHide: false
             });
         }
-        this.iconRef.style.transform = `rotate(45deg)`;
+        // this.iconRef.style.transform = `rotate(45deg)`;
     }
     handleTouchOutside (e) {
         if (this.state.isOpen && !this.containerRef.contains(e.target)) {
@@ -129,19 +129,19 @@ class ActionMenu extends React.Component {
                     aria-label={mainTitle}
                     className={classNames(styles.button, styles.mainButton)}
                     data-for={this.mainTooltipId}
-                    data-tip={mainTitle}
+                    // data-tip={mainTitle}
                     ref={this.setButtonRef}
                     onClick={this.clickDelayer(onClick)}
                 >
-                    <span
+                    {/* <span
                         ref={this.setIconRef}
                         className={styles.addIcon}
-                    >+</span>
-                    {/* <img
+                    >+</span> */}
+                    <img
                         className={styles.mainIcon}
                         draggable={false}
                         src={mainImg}
-                    /> */}
+                    />
                 </button>
                 <ReactTooltip
                     className={styles.tooltip}

@@ -38,7 +38,7 @@ import layout, {STAGE_SIZE_MODES} from '../../lib/layout-constants';
 import {resolveStageSize} from '../../lib/screen-utils';
 
 import styles from './gui.css';
-import addExtensionIcon from './icon--extensions.svg';
+import addExtensionIcon from './add.svg';
 import codeIcon from './icon--code.svg';
 import costumesIcon from './icon--costumes.svg';
 import soundsIcon from './icon--sounds.svg';
@@ -364,12 +364,12 @@ const GUIComponent = props => {
                                             title={intl.formatMessage(messages.addExtension)}
                                             onClick={onExtensionButtonClick}
                                         >
-                                            {/* <img
+                                            <img
                                                 className={styles.extensionButtonIcon}
                                                 draggable={false}
                                                 src={addExtensionIcon}
-                                            /> */}
-                                            <span>+</span>
+                                            />
+                                            {/* <span>+</span> */}
                                         </button>
                                     </Box>
                                     <Box className={styles.watermark}>
