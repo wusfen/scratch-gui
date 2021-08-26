@@ -35,6 +35,7 @@ const Controls = function (props) {
         onStopAllClick,
         turbo,
         skipButtonShow,
+        isPlayerOnly,
         ...componentProps
     } = props;
 
