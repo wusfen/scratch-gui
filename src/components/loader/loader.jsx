@@ -124,7 +124,9 @@ class LoaderComponent extends React.Component {
         super(props);
         this.state = {
             messageNumber: this.chooseRandomMessage(),
-            isPlayerOnly: this.props.isPlayerOnly
+            isPlayerOnly: this.props.isPlayerOnly,
+            retryBtnShow: false,
+            backBtnShow: false
         };
         console.log('LoaderComponent===>>>');
         console.log(props);
@@ -134,10 +136,22 @@ class LoaderComponent extends React.Component {
         this.intervalId = setInterval(() => {
             this.setState({messageNumber: this.chooseRandomMessage()});
         }, 5000);
+        this.retryBtnShowTimer = setTimeout(() => { // 加载时间太久，超过20秒，允许点击重试
+            this.setState({
+                retryBtnShow: true
+            });
+        }, 10000);
+        this.backBtnShowTimer = setTimeout(() => { // 在hello world界面停留超过20秒，则出现按钮：退出
+            this.setState({
+                backBtnShow: true
+            });
+        }, 20000);
     }
     componentWillUnmount () {
         dispatchEvent(new Event('projectLoadSucceedLoaderUnmount'));
         clearInterval(this.intervalId);
+        clearTimeout(this.retryBtnShowTimer);
+        clearTimeout(this.backBtnShowTimer);
     }
     chooseRandomMessage () {
         let messageNumber;
@@ -174,6 +188,28 @@ class LoaderComponent extends React.Component {
                     {/* <div className={classNames(styles.loadingTxt)}>
                         Hello World<span className={styles.shadowDot}></span></div> */}
                 </div>}
+                <div className={styles.retryContent}>
+                    <div
+                        hidden={!this.state.retryBtnShow}
+                        className={styles.retryItem}
+                    >
+                        <span>加载时间太久，请点击</span>
+                        <button
+                            className={classNames(styles.button, styles.retry)}
+                            onClick={() => window.location.reload()}
+                        >
+                            {'重试'}
+                        </button>
+                    </div>
+                    <button
+                        hidden={!this.state.backBtnShow}
+                        className={classNames(styles.button, styles.back)}
+                        onClick={() => window.bridge.emit('exitEditor', {type: 'submit'})}
+                    >
+                        {'退出'}
+                    </button>
+                </div>
+                
 
                 {/* <div className={styles.container}>
                     <div className={styles.blockAnimation}>
