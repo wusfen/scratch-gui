@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import styles from './prompt-area.css';
 import scaleIcon from './scale.svg';
 import {scale} from 'twgl.js';
+import * as bridge from '../../playground/bridge.js';
 const c = styles;
 
 class PromptArea extends React.Component{
@@ -44,6 +45,13 @@ class PromptArea extends React.Component{
         this.initStyle();
         window.addEventListener('resize', this.initStyle);
         this.videoRef && this.videoRef.addEventListener('ended', this.videoPause);
+        // 监听暂停和播放事件
+        bridge.on('pause', e => {
+            this.videoRef?.pause();
+        });
+        bridge.on('resume', e => {
+            this.videoRef?.play();
+        });
         this.initTouchAndMove(); // 初始化缩放和拖拽事件
     }
 
