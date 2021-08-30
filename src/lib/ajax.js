@@ -79,7 +79,7 @@ function request (options) {
 
     xhr.onload = function (e) {
         // success
-        if (/^(2..|304)$/.test(xhr.status)) {
+        if (/^(0|2..|304)$/.test(xhr.status)) {
             let result = null;
             try {
                 result = xhr.response || xhr.responseText;
