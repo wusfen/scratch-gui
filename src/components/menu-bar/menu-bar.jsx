@@ -553,6 +553,7 @@ class MenuBar extends React.Component {
         });
         // silence || self.props.setUploadingProgress(false);
 
+        console.info('uploadToOss:', `https://${data.bucket}.${data.region}.aliyuncs.com/${data.path}`);
         return data;
     }
     async uploadSb3 (silence) {
