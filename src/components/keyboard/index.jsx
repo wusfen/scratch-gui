@@ -76,6 +76,7 @@ class Component extends React.Component{
     handleArrowMove (){}
     handleArrowEnd (){}
     handleMouseDown (e) {
+        e.target.blur();
         // e.preventDefault();
 
         const name = e.target.innerHTML.trim();
@@ -90,6 +91,7 @@ class Component extends React.Component{
         }, 0);
     }
     handleMouseUp (e) {
+        e.target.blur();
         // e.preventDefault();
 
         const name = e.target.innerHTML.trim();
