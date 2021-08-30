@@ -503,7 +503,7 @@ export default function (Blockly, vm){
                 if (childShadowElement && block.nextConnection) {
                     block.nextConnection.setShadowDom(childShadowElement);
                 }
-                if (childBlockElement) {
+                if (childBlockElement && block.nextConnection) {
                 // goog.asserts.assert(block.nextConnection,
                 //     'Next statement does not exist.');
                 // // If there is more than one XML 'next' tag.
