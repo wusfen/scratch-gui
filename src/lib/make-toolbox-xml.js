@@ -444,6 +444,9 @@ const control = function (isInitialSetup, isStage) {
             </block>
             <block type="control_delete_this_clone"/>
         `}
+        ${window.MODE === 'teacher' ? `
+            <block type="control_block_hide"/>
+        ` : ''}
         ${categorySeparator}
     </category>
     `;
