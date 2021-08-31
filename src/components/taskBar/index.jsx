@@ -59,7 +59,10 @@ class TaskBar extends React.Component{
             },
             oriLeft: '',
             oriTop: '',
-            isAlreadyInitTouchMove: false
+            oriWidth: 0,
+            oriHeight: 0,
+            isAlreadyInitTouchMove: false,
+            isDrag: false
         };
         this.introVideoSrc = '';
         this.titleAudioSrc = '';
@@ -282,27 +285,40 @@ class TaskBar extends React.Component{
     }
 
     clickCourseMode = () => {
+        this.judgeIsShowVideoContent();
+    }
+
+    judgeIsShowVideoContent = () => {
         if (this.state.videoContentShow) {
-            console.log('click');
+            if (this.state.isDrag) {
+                this.setState({
+                    isDrag: false
+                });
+                return;
+            }
             this.setState({
                 videoContentShow: false
             });
+            this.recover();
             return;
         }
     }
 
+    recover = () => { // 复原 + 取消拖动事件
+        this.myRef.style.left = this.state.oriLeft;
+        this.myRef.style.top = this.state.oriTop;
+        this.myRef.style.width = `${this.state.oriWidth}px`;
+        this.myRef.style.height = `${this.state.oriHeight}px`;
+        this.myRef.ontouchstart = undefined;
+        this.myRef.onmousedown = undefined;
+    }
+
     openTitleAudio = () => {
-        if (this.state.videoContentShow) {
-            this.setState({
-                videoContentShow: false
-            });
-            return;
-        }
+        this.judgeIsShowVideoContent();
         if (this.titleAudioSrc){
             this.setState({
                 audioPlaying: true
             });
-            console.log('openTitleAudio');
             this.audio = playTipAudio(this.titleAudioSrc);
             this.audio.removeEventListener('ended', this.stopAudioPlay);
             this.audio.addEventListener('ended', this.stopAudioPlay);
@@ -311,8 +327,7 @@ class TaskBar extends React.Component{
 
     handleVideoContent = () => {
         if (this.state.videoContentShow) {
-            this.myRef.style.left = this.state.oriLeft;
-            this.myRef.style.top = this.state.oriTop;
+            this.recover();
         }
         if (!this.state.videoContentShow && this.state.tipsShow) {
             this.setState({
@@ -416,17 +431,16 @@ class TaskBar extends React.Component{
     init = () => {
         setTimeout(() => {
             this.initStyle();
-            !this.isAlreadyInitTouchMove && this.initTouchAndMove();
-            this.setState({
-                isAlreadyInitTouchMove: true
-            });
+            this.initTouchAndMove();
         }, 300);
     }
 
     initStyle = () => {
         this.setState({
             oriLeft: window.getComputedStyle(this.myRef, null).left,
-            oriTop: window.getComputedStyle(this.myRef, null).top
+            oriTop: window.getComputedStyle(this.myRef, null).top,
+            oriWidth: this.myRef.clientWidth,
+            oriHeight: this.myRef.clientHeight
         });
         const rate = this.videoRef.clientWidth / this.videoRef.clientHeight; // 计算展示区的缩放比例
         this.setState({style: { // 将展示区定位到屏幕中心
@@ -436,13 +450,12 @@ class TaskBar extends React.Component{
             height: this.myRef.clientHeight
         },
         rate: rate});
-        console.log('rate--------', rate);
     }
 
     initTouchAndMove = () => { // 初始化缩放和拖拽事件
         const dragObj = this.myRef;
         const scaleRef = this.scaleRef;
-        const shieldList = [this.videoRef]; // 不允许触发move的对象 
+        const shieldList = [this.videoRef, this.closeIconRef]; // 不允许触发move的对象 
         let mouseX;
         let mouseY;
         let objX;
@@ -452,7 +465,6 @@ class TaskBar extends React.Component{
         let diffY;
         let isScale = false;
         const handleStart = event => { // 拖动开始
-            console.log('拖动开始');
             const e = this.judgeTouchOrMoveReturnEvent(event);
             if (shieldList.includes(e.target)) {
                 return;
@@ -483,13 +495,20 @@ class TaskBar extends React.Component{
                     return;
                 }
                 // 元素左边距等于鼠标移动的宽度加上元素本身的位置
-                dragObj.style.left = `${e.clientX - mouseX + objX}px`;
-                dragObj.style.top = `${e.clientY - mouseY + objY}px`;
+                const leftOffset = e.clientX - mouseX + objX;
+                const topOffset = e.clientY - mouseY + objY;
+                if (leftOffset || topOffset) {
+                    this.setState({
+                        isDrag: true
+                    });
+                }
+                dragObj.style.left = `${leftOffset}px`;
+                dragObj.style.top = `${topOffset}px`;
                 
                 // 设置边界
                 if ((e.clientX - diffX) < 0) { // 鼠标到浏览器左边距小于鼠标到obj的左边距
                     dragObj.style.left = `${0}px`;
-                } else if ((e.clientX - diffX) > (window.innerWidth - dragObj.offsetWidth)) { 
+                } else if ((e.clientX - diffX) > (window.innerWidth - dragObj.offsetWidth)) {
                     // window.innerWidth浏览器显示区域的宽度，dragObj.offsetWidth物体宽度
                     dragObj.style.left = `${window.innerWidth - dragObj.offsetWidth}px`;
                 }
@@ -501,7 +520,6 @@ class TaskBar extends React.Component{
             } 
         };
         const handleEnd = event => { // 拖动结束
-            console.log('拖动结束');
             dragging = false;
             isScale = false;
         };
@@ -709,6 +727,10 @@ class TaskBar extends React.Component{
                                             [c.closeIcon]: videoContentShow,
                                         })
                                     }
+                                    ref={r => {
+                                        this.closeIconRef = r;
+                                    }}
+                                    draggable={false}
                                     src={videoContentShow ? close : video}
                                     alt="video"
                                     onClick={this.handleVideoContent}

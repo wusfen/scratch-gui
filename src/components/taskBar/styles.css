@@ -138,7 +138,7 @@
 
 .course-mode {
     position: relative;
-    min-width: 22.4rem;
+    min-width: 22.3rem;
     height: 1.75rem;
     background: #FF457F;
     border-radius: 0.5rem;
@@ -148,6 +148,8 @@
     align-items: center;
     padding: 0 0.5rem;
     z-index: 200;
+    margin-left: 0.05rem;
+    margin-right: 0.05rem;
 }
 .course-mode.video-content-is-open {
     background-color: #32C5FF;
@@ -200,6 +202,7 @@
 }
 
 .video {
+    min-height: 12.44rem;
     width: 98%;
     object-fit: fill;
 }
