@@ -126,8 +126,6 @@ class LoaderComponent extends React.Component {
             messageNumber: this.chooseRandomMessage(),
             isPlayerOnly: this.props.isPlayerOnly
         };
-        console.log('LoaderComponent===>>>');
-        console.log(props);
     }
     componentDidMount () {
         // Start an interval to choose a new message every 5 seconds
@@ -136,7 +134,7 @@ class LoaderComponent extends React.Component {
         }, 5000);
     }
     componentWillUnmount () {
-        dispatchEvent(new Event('projectLoadSucceedLoaderUnmount'));
+        dispatchEvent(new Event('loaderUnmount'));
         clearInterval(this.intervalId);
     }
     chooseRandomMessage () {
