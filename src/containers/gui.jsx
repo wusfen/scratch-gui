@@ -75,6 +75,10 @@ class GUI extends React.Component {
         }
         window.addEventListener('openErrorTips', this.initErrorTipsListener); // 初始化错误提示的监听
         window.addEventListener('运行时判断不正确', this.tipsStartError); // 当学生点击开始的时候，会提交json进行判断（已有功能），如果收到的结果是错误的，则出现错误提示效果
+        this.editorWrapperDom = document.querySelector('[class*="editor-wrapper"]');
+        this.editorWrapperDom?.addEventListener('mousemove', this.handleMove.bind(this));
+        this.editorWrapperDom?.addEventListener('touchmove', this.handleMove.bind(this));
+        
     }
 
     componentDidUpdate (prevProps) {
@@ -96,7 +100,25 @@ class GUI extends React.Component {
         window.submitErrorCounter.removeListener();
         window.removeEventListener('openErrorTips', this.initErrorTipsListener);
         window.removeEventListener('运行时判断不正确', this.tipsStartError);
+        this.editorWrapperDom?.removeEventListener('mousemove', this.handleMove.bind(this));
+        this.editorWrapperDom?.removeEventListener('touchmove', this.handleMove.bind(this));
 
+    }
+
+    judgeTouchOrMoveReturnEvent = event => { // 兼容touch和move事件target的获取
+        let touchObj;
+        if (event.touches) {
+            touchObj = event.touches[0];
+        } else {
+            touchObj = event;
+        }
+        return touchObj;
+    }
+
+    handleMove (event) {
+        const e = this.judgeTouchOrMoveReturnEvent(event);
+        window.dragBlockClientX = e.clientX;
+        window.dragBlockClientY = e.clientY;
     }
 
     tipsStartError = () => {

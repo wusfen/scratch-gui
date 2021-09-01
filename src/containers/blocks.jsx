@@ -28,6 +28,9 @@ import {setConnectionModalExtensionId} from '../reducers/connection-modal';
 import {updateMetrics} from '../reducers/workspace-metrics';
 import classNames from 'classnames';
 import styles from './blocks.css';
+import disappearGif from '../assets/icons/disappear.gif';
+import {playTipAudio} from '../lib/courseTip/TipAudio.js';
+import disappearMp3 from '../assets/sounds/disappear.mp3';
 
 import {
     activateTab,
@@ -75,7 +78,8 @@ class Blocks extends React.Component {
             'onWorkspaceUpdate',
             'onWorkspaceMetricsChange',
             'setBlocks',
-            'setLocale'
+            'setLocale',
+            'workSpaceChangeHandle'
         ]);
         this.ScratchBlocks.prompt = this.handlePromptStart;
         this.ScratchBlocks.statusButtonCallback = this.handleConnectionModalStart;
@@ -333,8 +337,42 @@ class Blocks extends React.Component {
         }
     }
 
+    createDeleteEffectInXY () { // 创建消失gif特效
+        const imgDom = document.createElement('img');
+        imgDom.src = disappearGif;
+        
+        imgDom.style.position = 'absolute';
+        imgDom.style.zIndex = 999999999;
+        imgDom.style.width = '3rem';
+        imgDom.style.height = '3rem';
+        imgDom.style.left = `${window.dragBlockClientX}px`;
+        imgDom.style.top = `${window.dragBlockClientY}px`;
+        document.body.appendChild(imgDom);
+        playTipAudio(disappearMp3);
+        setTimeout(() => {
+            document.body.removeChild(imgDom);
+        }, 500);
+    }
+
+    getClientRectInWindow (dom) { // 记录所操作块的坐标
+        if (!dom) {
+            return;
+        }
+        window.dragBlockClientX = dom.left + 24;
+        window.dragBlockClientY = dom.top + 24;
+    }
+
+    workSpaceChangeHandle (event) {
+        const dom = document.getElementsByClassName('blocklySelected');
+        this.getClientRectInWindow(dom[0]?.getBoundingClientRect());
+        if (event.type === 'delete') { // 处理块删除事件
+            this.createDeleteEffectInXY();
+        }
+    }
+
     attachVM () {
         this.workspace.addChangeListener(this.props.vm.blockListener);
+        this.workspace.addChangeListener(this.workSpaceChangeHandle); // 自定义workspace监听事件
         this.flyoutWorkspace = this.workspace
             .getFlyout()
             .getWorkspace();
