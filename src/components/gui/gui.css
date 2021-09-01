@@ -241,9 +241,8 @@ html {
     bottom: 0;
     left: 0.4rem;
     width: 3.69rem;
-    height: 4.2rem;
+    height: 3.7rem;
     z-index: $z-index-extension-button;
-    padding-top: 1.2rem;
 }
 
 $fade-out-distance: 0.9375rem;

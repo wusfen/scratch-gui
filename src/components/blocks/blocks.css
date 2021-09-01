@@ -93,7 +93,7 @@
 .blocks :global(.scratchCategoryMenuItemLabel) {
     font-size: 1rem;
     line-height: 1.13rem;
-    color: #2671D0;
+    color: #2671d0;
 }
 
 .blocks :global(.blocklyMinimalBody) {
@@ -139,7 +139,7 @@
     border-bottom-left-radius: inherit;
     /* box-shadow: 1px 0 0.4375rem #e6c8ff; */
     border-right: solid 0.1rem #ddf4fb;
-    padding: 0 0.38rem;
+    /* padding: 0 0.38rem; */
 }
 
 .blocks :global(.scratchCategoryMenu) {
@@ -277,7 +277,6 @@
     width: 2rem;
     background-size: 100% 100%;
 }
-
 
 .trashcan-init-style {
     display: none;
