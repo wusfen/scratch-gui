@@ -311,6 +311,7 @@ class TaskBar extends React.Component{
         this.myRef.style.height = `${this.state.oriHeight}px`;
         this.myRef.ontouchstart = undefined;
         this.myRef.onmousedown = undefined;
+        this.removeEventListener();
     }
 
     openTitleAudio = () => {
@@ -431,7 +432,7 @@ class TaskBar extends React.Component{
     init = () => {
         setTimeout(() => {
             this.initStyle();
-            this.initTouchAndMove();
+            this.removeEventListener = this.initTouchAndMove();
         }, 300);
     }
 
@@ -464,8 +465,24 @@ class TaskBar extends React.Component{
         let diffX;
         let diffY;
         let isScale = false;
+        let operateTarget;
+
+        const judgeDomIsIn = dom => { // 判断当前点击的是目标拖拽对象
+            if (dom === dragObj) {
+                return true;
+            }
+            while (dom) {
+                dom = dom.parentNode;
+                if (dom === dragObj) {
+                    return true;
+                }
+            }
+            return false;
+        };
+
         const handleStart = event => { // 拖动开始
             const e = this.judgeTouchOrMoveReturnEvent(event);
+            operateTarget = e.target;
             if (shieldList.includes(e.target)) {
                 return;
             }  
@@ -478,6 +495,9 @@ class TaskBar extends React.Component{
             diffY = mouseY - objY;
         };
         const handleMove = event => { // 拖动中
+            if (!judgeDomIsIn(operateTarget)) {
+                return;
+            }
             const e = this.judgeTouchOrMoveReturnEvent(event);
             if (dragging) {
                 if (isScale) {
@@ -522,6 +542,7 @@ class TaskBar extends React.Component{
         const handleEnd = event => { // 拖动结束
             dragging = false;
             isScale = false;
+            operateTarget = undefined;
         };
         const handleScaleStart = event => { // 缩放开始
             const e = this.judgeTouchOrMoveReturnEvent(event);
@@ -535,19 +556,26 @@ class TaskBar extends React.Component{
         };
         // 注册touch事件（移动端）
         dragObj.ontouchstart = handleStart;
-        document.ontouchmove = handleMove;
-        document.ontouchend = handleEnd;
+        document.addEventListener('touchmove', handleMove);
+        document.addEventListener('touchend', handleEnd);
         
         // 注册move事件（pc端）
         dragObj.onmousedown = handleStart;
-        document.onmousemove = handleMove;
-        document.onmouseup = handleEnd;
+        document.addEventListener('mousemove', handleMove);
+        document.addEventListener('mouseup', handleEnd);
 
         // 注册缩放事件（移动端）
         scaleRef.ontouchstart = handleScaleStart;
 
         // 注册缩放事件（pc端）
         scaleRef.onmousedown = handleScaleStart;
+
+        return () => {
+            document.removeEventListener('touchmove', handleMove);
+            document.removeEventListener('touchend', handleEnd);
+            document.removeEventListener('mousemove', handleMove);
+            document.removeEventListener('mouseup', handleEnd);
+        };
     }
 
     render () {
