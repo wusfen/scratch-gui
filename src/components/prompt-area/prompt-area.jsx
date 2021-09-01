@@ -240,7 +240,11 @@ class PromptArea extends React.Component{
                     className={c.title}
                 >{title}</div>
                 <img
-                    className={c.closeIcon}
+                    className={
+                        classNames('play_audio', {
+                            [c.closeIcon]: true
+                        })
+                    }
                     src={require('./close.svg')}
                     alt={''}
                     onClick={closePromptArea}

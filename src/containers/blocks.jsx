@@ -31,6 +31,9 @@ import styles from './blocks.css';
 import disappearGif from '../assets/icons/disappear.gif';
 import {playTipAudio} from '../lib/courseTip/TipAudio.js';
 import disappearMp3 from '../assets/sounds/disappear.mp3';
+import dragBlockFromFlyoutMp3 from '../assets/sounds/dragBlockFromFlyout.mp3';
+import jointBlockMp3 from '../assets/sounds/jointBlock.mp3';
+import separateBlockMp3 from '../assets/sounds/separateBlock.mp3';
 
 import {
     activateTab,
@@ -349,8 +352,9 @@ class Blocks extends React.Component {
         imgDom.style.top = `${window.dragBlockClientY}px`;
         document.body.appendChild(imgDom);
         playTipAudio(disappearMp3);
-        setTimeout(() => {
+        this.deleteEffectTimer = setTimeout(() => {
             document.body.removeChild(imgDom);
+            clearTimeout(this.deleteEffectTimer);
         }, 500);
     }
 
@@ -363,10 +367,28 @@ class Blocks extends React.Component {
     }
 
     workSpaceChangeHandle (event) {
+        if (window.btnPlayAudioIng) { // 当点击代码块后退、前进操作时，也会触发事件，所以要丢弃后退、前进按钮被点击内1000ms触发的该事件。
+            return;
+        }
+        console.log(123, event, event.type);
         const dom = document.getElementsByClassName('blocklySelected');
         this.getClientRectInWindow(dom[0]?.getBoundingClientRect());
         if (event.type === 'delete') { // 处理块删除事件
             this.createDeleteEffectInXY();
+        } else if (event.type === 'ui') {
+            const regex = new RegExp('^([a-zA-Z0-9_]){1,}$');
+            if (event.newValue && regex.test(event.oldValue)) { // 从flyout拖出来
+                console.log('播放从flyout拖出来的音效');
+                playTipAudio(dragBlockFromFlyoutMp3);
+            }
+        } else if (event.type === 'move') {
+            if (!event.oldParentId && event.newParentId) { // 拼接
+                console.log('播放拼接的音效');
+                playTipAudio(jointBlockMp3);
+            } else if (event.oldParentId && !event.newParentId) { // 分开
+                console.log('播放分开的音效');
+                playTipAudio(separateBlockMp3);
+            }
         }
     }
 

@@ -538,7 +538,7 @@ class TaskBar extends React.Component{
                             </div>
                             <div 
                                 className={
-                                    classNames({
+                                    classNames('play_audio', {
                                         [c.iconList]: true,
                                         [c.blingBling]: tipsShow
                                     })
@@ -586,9 +586,11 @@ class TaskBar extends React.Component{
                                             hidden={!item.show()}
                                             className={
                                                 classNames(
+                                                    'play_audio',
                                                     {
                                                         [c.option]: true,
-                                                        [c.active]: currentFuncIndex === index
+                                                        [c.active]: currentFuncIndex === index,
+                                                       
                                                     }
                                                 )
                                             }

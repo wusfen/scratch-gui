@@ -47,6 +47,8 @@ import Counter from '../components/counter/index';
 import {counterType} from '../components/counter/data';
 
 import {param} from '../lib/param.js';
+import {playTipAudio} from '../lib/courseTip/TipAudio.js';
+import soundBtnClickMp3 from '../assets/sounds/sound_btnClick.mp3';
 
 class GUI extends React.Component {
     constructor (props) {
@@ -78,7 +80,7 @@ class GUI extends React.Component {
         this.editorWrapperDom = document.querySelector('[class*="editor-wrapper"]');
         this.editorWrapperDom?.addEventListener('mousemove', this.handleMove.bind(this));
         this.editorWrapperDom?.addEventListener('touchmove', this.handleMove.bind(this));
-        
+        document.body.addEventListener('click', this.handleBtnClick.bind(this));
     }
 
     componentDidUpdate (prevProps) {
@@ -113,6 +115,31 @@ class GUI extends React.Component {
             touchObj = event;
         }
         return touchObj;
+    }
+
+    judgeIsNeedPlayAudio (dom) {
+        let count = 3; // 性能考虑，一般向上寻找三级父节点就可以
+        if (!dom) {
+            return;
+        }
+        while (dom && count > 0) {
+            if (dom.nodeName === 'BUTTON' || dom.className?.indexOf('play_audio') !== -1) {
+                console.log('播放点击按钮音效');
+                window.btnPlayAudioIng = true;
+                this.btnPlayAudioIngTimer = setTimeout(() => {
+                    window.btnPlayAudioIng = false;
+                }, 1000);
+                playTipAudio(soundBtnClickMp3);
+                return;
+            }
+            dom = dom.parentNode;
+            count--;
+        }
+        
+    }
+
+    handleBtnClick (event) { // 给所有的按钮、和需要有音效的dom，设置点击音效
+        this.judgeIsNeedPlayAudio(event.target);
     }
 
     handleMove (event) {
