@@ -2,21 +2,21 @@
 @import "../../css/z-index.css";
 
 .background {
-    position          : absolute;
-    top               : 0;
-    left              : 0;
-    width             : 100%;
-    height            : 100%;
-    z-index           : $z-index-loader;
-    display           : flex;
-    justify-content   : center;
-    align-items       : center;
-    background-color  : #FFFAEA;
-    font-family       : "Helvetica Neue", Helvetica, Arial, sans-serif;
-    text-align        : center;
-    color             : white;
-    display           : flex;
-    flex-direction    : column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: $z-index-loader;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fffaea;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-align: center;
+    color: white;
+    display: flex;
+    flex-direction: column;
 
     /* backdrop-filter: blur(5px); */
 }
@@ -28,26 +28,26 @@
 }
 
 .retry-item {
-    width: 17.19rem;
     height: 2.69rem;
-    background: #32C5FF;
+    padding: 0 1.22rem;
+    background: #32c5ff;
     border-radius: 1.25rem;
     display: flex;
     align-items: center;
     justify-content: space-around;
-    padding: 0 0.5rem;
 }
 .retry-item .retry {
-    width: 4rem;
-    height: 1.75rem;
-    background: #FFFFFF;
+    margin-left: 1rem;
+    line-height: 1.75rem;
+    padding: 0 0.88rem;
+    background: #ffffff;
     border-radius: 0.63rem;
-    color: #32C5FF;
+    color: #32c5ff;
     font-size: 1rem;
 }
 
 .retry-content .back {
-    color: #32C5FF;
+    color: #32c5ff;
     background: transparent;
     font-size: 1rem;
     margin-top: 1.09rem;
@@ -56,23 +56,24 @@
 
 /* box-shadow+animate方法  */
 .shadow-dot {
-    display          : inline-block;
-    min-width        : 4px;
-    min-height       : 4px;
-    box-shadow       : 4px 0 currentColor, 12px 0 currentColor, 20px 0 currentColor, 28px 0 currentColor, 36px 0 currentColor, 44px 0 currentColor;
+    display: inline-block;
+    min-width: 4px;
+    min-height: 4px;
+    box-shadow: 4px 0 currentColor, 12px 0 currentColor, 20px 0 currentColor,
+        28px 0 currentColor, 36px 0 currentColor, 44px 0 currentColor;
     -webkit-animation: shadow-dot 6s infinite step-start both;
-    animation        : shadow-dot 6s infinite step-start both;
-    *zoom            : expression(this.innerHTML='......');
+    animation: shadow-dot 6s infinite step-start both;
+    *zoom: expression(this.innerHTML= "......");
     /* IE7 */
 }
 
 .shadow-dot:before {
-    content: '......';
+    content: "......";
 }
 
 /* IE8 */
 .shadow-dot::before {
-    content: '';
+    content: "";
 }
 
 :root .shadow-dot {
@@ -105,20 +106,21 @@
     }
 
     37.5% {
-        box-shadow:  4px 0 currentColor,12px 0 currentColor;
+        box-shadow: 4px 0 currentColor, 12px 0 currentColor;
     }
 
-
     50% {
-        box-shadow:  4px 0 currentColor,12px 0 currentColor,20px 0 currentColor;
+        box-shadow: 4px 0 currentColor, 12px 0 currentColor, 20px 0 currentColor;
     }
 
     62.5% {
-        box-shadow:   4px 0 currentColor,12px 0 currentColor,20px 0 currentColor,28px 0 currentColor;
+        box-shadow: 4px 0 currentColor, 12px 0 currentColor, 20px 0 currentColor,
+            28px 0 currentColor;
     }
 
     75% {
-        box-shadow:  4px 0 currentColor,12px 0 currentColor,20px 0 currentColor,28px 0 currentColor,36px 0 currentColor;
+        box-shadow: 4px 0 currentColor, 12px 0 currentColor, 20px 0 currentColor,
+            28px 0 currentColor, 36px 0 currentColor;
     }
 }
 
@@ -127,28 +129,27 @@
 }
 
 .loading-txt {
-    color    : purple;
+    color: purple;
     font-size: 30px;
-
 }
 
 .fullscreen {
     /* Break out of the layout using position: fixed to cover the whole screen */
     position: fixed;
     /* Use the fullscreen stage z-index to allow covering full-screen mode */
-    z-index : $z-index-stage-wrapper-overlay;
+    z-index: $z-index-stage-wrapper-overlay;
 }
 
 .block-animation {
-    width : 7.8125rem;
+    width: 7.8125rem;
     height: 9.375rem;
     margin: 3.125rem auto 0rem;
 }
 
 .block-animation img {
-    display   : block;
-    position  : relative;
-    height    : 30%;
+    display: block;
+    position: relative;
+    height: 30%;
     margin-top: -4px;
 }
 
@@ -179,113 +180,113 @@
 @keyframes top-slide-in {
     0% {
         transform: translateY(50px);
-        opacity  : 0;
+        opacity: 0;
     }
 
     33% {
         transform: translateY(0px);
-        opacity  : 1;
+        opacity: 1;
     }
 }
 
 @keyframes middle-slide-in {
     0% {
         transform: translateY(50px);
-        opacity  : 0;
+        opacity: 0;
     }
 
     33% {
         transform: translateY(50px);
-        opacity  : 0;
+        opacity: 0;
     }
 
     66% {
         transform: translateY(0px);
-        opacity  : 1;
+        opacity: 1;
     }
 }
 
 @keyframes bottom-slide-in {
     0% {
         transform: translateY(50px);
-        opacity  : 0;
+        opacity: 0;
     }
 
     66% {
         transform: translateY(50px);
-        opacity  : 0;
+        opacity: 0;
     }
 
     100% {
         transform: translateY(0px);
-        opacity  : 1;
+        opacity: 1;
     }
 }
 
 @keyframes top-slide-in-rtl {
     0% {
         transform: translateY(50px) scaleX(-1);
-        opacity  : 0;
+        opacity: 0;
     }
 
     33% {
         transform: translateY(0px) scaleX(-1);
-        opacity  : 1;
+        opacity: 1;
     }
 
     100% {
         transform: translateY(0px) scaleX(-1);
-        opacity  : 1;
+        opacity: 1;
     }
 }
 
 @keyframes middle-slide-in-rtl {
     0% {
         transform: translateY(50px) scaleX(-1);
-        opacity  : 0;
+        opacity: 0;
     }
 
     33% {
         transform: translateY(50px) scaleX(-1);
-        opacity  : 0;
+        opacity: 0;
     }
 
     66% {
         transform: translateY(0px) scaleX(-1);
-        opacity  : 1;
+        opacity: 1;
     }
 
     100% {
         transform: translateY(0px) scaleX(-1);
-        opacity  : 1;
+        opacity: 1;
     }
 }
 
 @keyframes bottom-slide-in-rtl {
     0% {
         transform: translateY(50px) scaleX(-1);
-        opacity  : 0;
+        opacity: 0;
     }
 
     66% {
         transform: translateY(50px) scaleX(-1);
-        opacity  : 0;
+        opacity: 0;
     }
 
     100% {
         transform: translateY(0px) scaleX(-1);
-        opacity  : 1;
+        opacity: 1;
     }
 }
 
 .title {
-    font-size  : 2rem;
+    font-size: 2rem;
     font-weight: bold;
-    margin     : 0.75rem 0;
+    margin: 0.75rem 0;
 }
 
 .message-container-outer {
-    height  : 30px;
+    height: 30px;
     overflow: hidden;
 }
 
