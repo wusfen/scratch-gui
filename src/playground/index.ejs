@@ -16,15 +16,16 @@
             !(function (isOpen) {
                 var version = "v2.4"
                 var getEnv = function () {
-                    if (/\/prod\//.test(location)) return "prod";
-                    if (/\/scratch\.app/.test(location)) return "prod";
-                    if (/\/ide-code\./.test(location)) return "prod";
+                    if (/\b(base=uat)\b/.test(location)) return "pre"
                     if (/\/uat\/|\/uat-/.test(location)) return "pre";
-                    return "local";
+
+                    if (/^https?:\/\/(1|localhost)/) return "local"
+
+                    return "prod";
                 }
                 var env = getEnv()
 
-                if (!/^(prod|gray|pre)$/.test(env)) {
+                if (/^(local)$/.test(env)) {
                     isOpen = false
                 }
 
