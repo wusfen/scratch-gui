@@ -118,12 +118,12 @@ class GUI extends React.Component {
     }
 
     judgeIsNeedPlayAudio (dom) {
-        let count = 3; // 性能考虑，一般向上寻找三级父节点就可以
+        let count = 4; // 性能考虑，一般向上寻找4级父节点就可以
         if (!dom) {
             return;
         }
         while (dom && count > 0) {
-            if (dom.nodeName === 'BUTTON' || dom.className?.indexOf('play_audio') !== -1) {
+            if (dom.nodeName === 'BUTTON' || (dom.className && (typeof dom.className === 'string' && dom.className?.indexOf('play_audio') !== -1))) {
                 console.log('播放点击按钮音效');
                 window.btnPlayAudioIng = true;
                 this.btnPlayAudioIngTimer = setTimeout(() => {
