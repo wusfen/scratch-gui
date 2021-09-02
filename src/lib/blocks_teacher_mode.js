@@ -19,6 +19,9 @@ export default function (Blockly, vm){
         if (!xmlNode.getElementsByTagName){
             return false;
         }
+        if(xmlNode.getAttribute && xmlNode.getAttribute("type") === 'control_block_hide'){
+            return true;
+        }
         const fields = xmlNode.getElementsByTagName('field');
         const fieldCount = fields.length;
         if (fieldCount > 0){
@@ -32,12 +35,11 @@ export default function (Blockly, vm){
                     }
                 }
             }
-        } else {
-            const childCount = xmlNode.childNodes.length;
-            for (let i = 0; i < childCount; i++){
-                if (needHide_(xmlNode.childNodes[i])){
-                    return true;
-                }
+        }
+        const childCount = xmlNode.childNodes.length;
+        for (let i = 0; i < childCount; i++){
+            if (needHide_(xmlNode.childNodes[i])){
+                return true;
             }
         }
         return false; 

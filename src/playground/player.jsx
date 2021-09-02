@@ -18,8 +18,13 @@ if (process.env.NODE_ENV === 'production' && typeof window === 'object') {
 }
 
 import './index.js';
-
 import styles from './player.css';
+
+// see also: src\components\menu-bar\menu-bar.jsx:274
+window.bridge.on('requireExitEditor', e => {
+    window.bridge.emit('requireExitEditor');
+});
+
 
 // 禁止触摸滚动
 addEventListener('touchmove', e => {

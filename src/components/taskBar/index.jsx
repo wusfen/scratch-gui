@@ -24,6 +24,7 @@ import {OPERATE_TIME_1, RIGHT_ANSWER_1, RIGHT_ANSWER_2, timerType} from '../time
 import {
     closeFileMenu
 } from '../../reducers/menus';
+import * as bridge from '../../playground/bridge.js';
 const c = styles;
 Object.assign(c, require('../../css/animate.css'));
 
@@ -117,6 +118,14 @@ class TaskBar extends React.Component{
             window.addEventListener('submitErrorCounter2', this.autoPlayTipVideo); // 第二次提交错误，自动播放视频
             window.addEventListener('jsonErrorCounterInRange', this.touchTip); // json自动批改错误，容错小范围内
             window.addEventListener('jsonErrorCounterOutRange', this.autoPlayTipVideo); // json自动批改错误，超过容错小范围
+
+            // 监听暂停和播放事件
+            bridge.on('pause', e => {
+                this.videoRef?.pause();
+            });
+            bridge.on('resume', e => {
+                this.videoRef?.play();
+            });
             break;
         case 'teacher':
             this.moreFuncBtnRef && this.moreFuncBtnRef.addEventListener('touchstart', this.handleTouchStart);

@@ -540,7 +540,7 @@ class MenuBar extends React.Component {
         formData.append('file', blob, `${name}.${ext}`);
 
         silence || self.props.setUploadingProgress(20);
-        await ajax.post(`//${data.bucket}.${data.region}.aliyuncs.com`, formData, {
+        await ajax.post(`https://${data.bucket}.${data.region}.aliyuncs.com`, formData, {
             silence: true,
             onprogress (e) {
                 if (silence) return;
@@ -553,6 +553,7 @@ class MenuBar extends React.Component {
         });
         // silence || self.props.setUploadingProgress(false);
 
+        console.info('uploadToOss:', `https://${data.bucket}.${data.region}.aliyuncs.com/${data.path}`);
         return data;
     }
     async uploadSb3 (silence) {

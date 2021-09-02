@@ -14,6 +14,21 @@
         <script>
             // prettier-ignore
             !(function (isOpen) {
+                var version = "v2.4"
+                var getEnv = function () {
+                    if (/\b(base=uat)\b/.test(location)) return "pre"
+                    if (/\/uat\/|\/uat-/.test(location)) return "pre";
+
+                    if (/^https?:\/\/(1|localhost)/) return "local"
+
+                    return "prod";
+                }
+                var env = getEnv()
+
+                if (/^(local)$/.test(env)) {
+                    isOpen = false
+                }
+
                 if (!isOpen) return;
                 window.__bl = {
                     config: {
@@ -23,14 +38,9 @@
                         sendResource: true,
                         enableLinkTrace: true,
                         behavior: true,
-                        release: "v2.3.2",
-                        environment: (function () {
-                            if (/\/uat\/|\/uat-/.test(location)) return "daily";
-                            if (/\/prod\//.test(location)) return "prod";
-                            if (/\/scratch\.app/.test(location)) return "prod";
-                            if (/\/ide-code\./.test(location)) return "prod";
-                            return "local";
-                        })()
+                        enableConsole: true,
+                        release: version,
+                        environment: env
                     }
                 };
                 var script = document.createElement("script");
@@ -71,7 +81,7 @@
                     loadConsole();
                     console.f12 = 1;
                 }
-                if (localStorage.f12) {
+                if (localStorage.f12 || sessionStorage.f12) {
                     loadConsole();
                     console.f12 = 1;
                 }
@@ -81,6 +91,7 @@
                 if (e.touches && e.touches.length >= 6) {
                     loadConsole();
                     console.f12 = 2;
+                    sessionStorage.f12 = 1;
                 }
             });
         </script>
