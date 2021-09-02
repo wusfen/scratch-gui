@@ -14,6 +14,8 @@
     justify-content: center;
     width: 22.31rem;
     height: 39.69rem;
+
+    margin: 0 -0.72rem;
 }
 
 .stage-wrapper.full-screen {

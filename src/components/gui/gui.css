@@ -30,12 +30,6 @@ html {
     */
     flex-direction: row;
     height: 100%;
-
-    /*
-        Stop scrollbar popping in and out from scratch-blocks border issue
-        https://github.com/LLK/scratch-gui/issues/318
-    */
-    overflow-y: hidden;
 }
 
 .editor-wrapper {
@@ -205,10 +199,10 @@ html {
 
 .stage-and-target-wrapper {
     position: relative;
-    width: 23.75rem;
+    width: 22.3125rem;
     padding: 0.41rem 0.72rem;
     background: #47caff;
-    box-shadow: inset 0 1px 0.625rem 0 $motion-primary;
+    box-shadow: 0 1px 0.625rem 0 $motion-primary;
     border-radius: 0.63rem;
     display: flex;
     flex-direction: column;
