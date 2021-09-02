@@ -370,7 +370,6 @@ class Blocks extends React.Component {
         if (window.btnPlayAudioIng) { // 当点击代码块后退、前进操作时，也会触发事件，所以要丢弃后退、前进按钮被点击内1000ms触发的该事件。
             return;
         }
-        console.log(123, event, event.type);
         const dom = document.getElementsByClassName('blocklySelected');
         this.getClientRectInWindow(dom[0]?.getBoundingClientRect());
         if (event.type === 'delete') { // 处理块删除事件
