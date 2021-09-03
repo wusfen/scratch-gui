@@ -123,8 +123,8 @@ class GUI extends React.Component {
             return;
         }
         while (dom && count > 0) {
-            if (dom.nodeName === 'BUTTON' || (dom.className && (typeof dom.className === 'string' && dom.className?.indexOf('play_audio') !== -1))) {
-                console.log('播放点击按钮音效');
+            if (dom.nodeName === 'BUTTON' ||
+            (dom.className && (typeof dom.className === 'string' && dom.className?.indexOf('play_audio') !== -1))) {
                 window.btnPlayAudioIng = true;
                 this.btnPlayAudioIngTimer = setTimeout(() => {
                     window.btnPlayAudioIng = false;

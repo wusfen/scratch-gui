@@ -377,15 +377,12 @@ class Blocks extends React.Component {
         } else if (event.type === 'ui') {
             const regex = new RegExp('^([a-zA-Z0-9_]){1,}$');
             if (event.newValue && regex.test(event.oldValue)) { // 从flyout拖出来
-                console.log('播放从flyout拖出来的音效');
                 playTipAudio(dragBlockFromFlyoutMp3);
             }
         } else if (event.type === 'move') {
             if (!event.oldParentId && event.newParentId) { // 拼接
-                console.log('播放拼接的音效');
                 playTipAudio(jointBlockMp3);
             } else if (event.oldParentId && !event.newParentId) { // 分开
-                console.log('播放分开的音效');
                 playTipAudio(separateBlockMp3);
             }
         }
