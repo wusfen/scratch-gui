@@ -56,10 +56,10 @@ button::-moz-focus-inner {
     line-height: 1.75rem;
 }
 
-.main-button:hover img {
+/* .main-button:hover img {
     transform: rotate(45deg);
     transition: all 0.2s ease-in;
-}
+} */
 
 .main-icon {
     width: 0.75rem;

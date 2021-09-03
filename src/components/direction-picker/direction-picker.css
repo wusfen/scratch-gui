@@ -17,6 +17,9 @@
     user-select: none;
 }
 
+.container{
+    position: relative;
+}
 
 .close-icon{
     position: absolute;
@@ -42,7 +45,7 @@
     background: #fff;
 }
 
-.icon-button > img {
+.icon-button img {
     width:1.13rem;
     height:1.13rem;
 }

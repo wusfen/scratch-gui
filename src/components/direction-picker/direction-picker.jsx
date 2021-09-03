@@ -66,7 +66,7 @@ const DirectionPicker = props => (
         /> */}
         <Popover
             body={
-                <div>
+                <div className={styles.container}>
                     <img
                         draggable={false}
                         src={closeIcon}
@@ -87,7 +87,7 @@ const DirectionPicker = props => (
                         >
                             <img
                                 draggable={false}
-                                src={props.rotationStyle === RotationStyles.ALL_AROUND  ?  selectedAround :allAroundIcon}
+                                src={props.rotationStyle === RotationStyles.ALL_AROUND ? selectedAround : allAroundIcon}
                             />
                         </button>
                         <button

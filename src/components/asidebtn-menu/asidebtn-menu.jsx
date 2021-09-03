@@ -2,21 +2,26 @@ import React from 'react';
 import classNames from 'classnames';
 import styles from './asidebtn-menu.css';
 import ReactTooltip from 'react-tooltip';
+import bindAll from 'lodash.bindall';
 
 const c = styles;
 
 class Component extends React.Component{
     constructor (props) {
         super(props);
+        bindAll(this,['initState','mouseUp','undo','click']);
         this.state = {
             undoStack: false,
             redoStack: false
         };
     }
-
-
-    componentDidUpdate(){
-        this.undo(this,true)
+    
+    componentDidMount(){
+        document.addEventListener('mouseup',this.mouseUp,true)
+    }
+    
+    mouseUp(){
+        this.initState()
     }
 
     undo (type) {

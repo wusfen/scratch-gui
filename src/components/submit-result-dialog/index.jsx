@@ -10,7 +10,7 @@ import styles from './styles.css';
 
 const statusMap = {
     跳过: {
-        text: `即将跳过本次挑战`,
+        text: `跳过成功，即将返回课程哦~`,
         style: styles.submitX
     },
     提交中: {
@@ -24,11 +24,11 @@ const statusMap = {
         style: styles.submitIng
     },
     已提交正确: {
-        text: `恭喜你答对了！\n马上继续上课了哦`,
+        text: `作品任务完成，\n你太棒啦！`,
         style: styles.submitCorrect
     },
     已提交错误: {
-        text: `答案还差一点点\n再改一下试试吧！`,
+        text: `作品差一点就完成啦，\n再去试试吧！`,
         style: styles.submitFault
     },
     已提交人工: {
@@ -174,7 +174,7 @@ class Component extends React.Component{
                         className={classNames(styles.button)}
                         onClick={this.handleExit}
                     >
-                        {`返回课程 (${backTimeRemain}s)`}
+                        {`好的 (${backTimeRemain}s)后自动跳转`}
                     </button>
                     <button
                         hidden={!(/错误/.test(status))}
