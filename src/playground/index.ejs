@@ -19,7 +19,7 @@
                     if (/\b(base=uat)\b/.test(location)) return "pre"
                     if (/\/uat\/|\/uat-/.test(location)) return "pre";
 
-                    if (/^https?:\/\/(1|localhost)/) return "local"
+                    if (/^https?:\/\/(1|localhost)/.test(location)) return "local"
 
                     return "prod";
                 }
