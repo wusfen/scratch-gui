@@ -53,11 +53,13 @@ class PromptArea extends React.Component{
             this.videoRef?.play();
         });
         this.initTouchAndMove(); // 初始化缩放和拖拽事件
+        this.removeTouchAndMove = this.initTouchAndMove(); // 初始化缩放和拖拽事件
     }
 
     componentWillUnmount (){
         window.removeEventListener('resize', this.initStyle);
         this.videoRef && this.videoRef.removeEventListener('ended', this.videoPause);
+        this.removeTouchAndMove();
     }
 
     judgeTouchOrMoveReturnEvent = event => {
@@ -134,8 +136,24 @@ class PromptArea extends React.Component{
         let diffX;
         let diffY;
         let isScale = false;
+        let operateTarget;
+
+        const judgeDomIsIn = dom => { // 判断当前点击的是目标拖拽对象
+            if (dom === dragObj) {
+                return true;
+            }
+            while (dom) {
+                dom = dom.parentNode;
+                if (dom === dragObj) {
+                    return true;
+                }
+            }
+            return false;
+        };
+
         const handleStart = event => { // 拖动开始
             const e = this.judgeTouchOrMoveReturnEvent(event);
+            operateTarget = e.target;
             if (shieldList.includes(e.target)) {
                 return;
             }  
@@ -148,6 +166,9 @@ class PromptArea extends React.Component{
             diffY = mouseY - objY;
         };
         const handleMove = event => { // 拖动中
+            if (!judgeDomIsIn(operateTarget)) {
+                return;
+            }
             const e = this.judgeTouchOrMoveReturnEvent(event);
             if (dragging) {
                 if (isScale) {
@@ -185,6 +206,7 @@ class PromptArea extends React.Component{
         const handleEnd = () => { // 拖动结束
             dragging = false;
             isScale = false;
+            operateTarget = undefined;
         };
         const handleScaleStart = event => { // 缩放开始
             const e = this.judgeTouchOrMoveReturnEvent(event);
@@ -198,19 +220,26 @@ class PromptArea extends React.Component{
         };
         // 注册touch事件（移动端）
         dragObj.ontouchstart = handleStart;
-        document.ontouchmove = handleMove;
-        document.ontouchend = handleEnd;
+        document.addEventListener('touchmove', handleMove);
+        document.addEventListener('touchend', handleEnd);
         
         // 注册move事件（pc端）
         dragObj.onmousedown = handleStart;
-        document.onmousemove = handleMove;
-        document.onmouseup = handleEnd;
+        document.addEventListener('mousemove', handleMove);
+        document.addEventListener('mouseup', handleEnd);
 
         // 注册缩放事件（移动端）
         scaleRef.ontouchstart = handleScaleStart;
 
         // 注册缩放事件（pc端）
         scaleRef.onmousedown = handleScaleStart;
+
+        return () => {
+            document.removeEventListener('touchmove', handleMove);
+            document.removeEventListener('touchend', handleEnd);
+            document.removeEventListener('mousemove', handleMove);
+            document.removeEventListener('mouseup', handleEnd);
+        };
     }
 
     render () {
