@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -99,7 +100,7 @@ const DirectionPicker = props => (
                         >
                             <img
                                 draggable={false}
-                                src={props.rotationStyle === RotationStyles.LEFT_RIGHT  ?  selectedLeftRight :leftRightIcon}
+                                src={props.rotationStyle === RotationStyles.LEFT_RIGHT ? selectedLeftRight : leftRightIcon}
                             />
                         </button>
                         <button
@@ -111,7 +112,7 @@ const DirectionPicker = props => (
                         >
                             <img
                                 draggable={false}
-                                src={props.rotationStyle === RotationStyles.DONT_ROTATE  ?  selectedDontRotate :dontRotateIcon}
+                                src={props.rotationStyle === RotationStyles.DONT_ROTATE ? selectedDontRotate : dontRotateIcon}
                             />
                         </button>
                     </div>
@@ -121,7 +122,7 @@ const DirectionPicker = props => (
             preferPlace="above"
             onOuterAction={props.onClosePopover}
         >
-          
+
             <BufferedInput
                 className={classNames(
                     styles.smallInput,

@@ -378,40 +378,40 @@ export default function (vm) {
     };
 
     const updateCursorDuringBlockDrag_ = ScratchBlocks.BlockDragger.prototype.updateCursorDuringBlockDrag_;
-    ScratchBlocks.BlockDragger.prototype.updateCursorDuringBlockDrag_ = function(){
-       const toolBoxDom = document.getElementById('toolboxTrashcan')
-       const trashCanDom = document.getElementById('trashcanImg')
-       const trashDom = document.getElementById('trashImg')
-       const selectedBlockly = document.querySelector('.blocklySelected')
-       const left = toolBoxDom.getBoundingClientRect().left
-       const right = toolBoxDom.getBoundingClientRect().right
+    ScratchBlocks.BlockDragger.prototype.updateCursorDuringBlockDrag_ = function (){
+        const toolBoxDom = document.getElementById('toolboxTrashcan');
+        const trashCanDom = document.getElementById('trashcanImg');
+        const trashDom = document.getElementById('trashImg');
+        const selectedBlockly = document.querySelector('.blocklySelected');
+        const left = toolBoxDom.getBoundingClientRect().left;
+        const right = toolBoxDom.getBoundingClientRect().right;
 
-        selectedBlockly.ontouchmove = function(e){
+        selectedBlockly.ontouchmove = function (e){
             const touchObj = e.touches[0];
-            if(touchObj.pageX > left && touchObj.pageX < right){
-                trashCanDom.style.display = 'block'
-                trashDom.style.display = 'none'
-                selectedBlockly.style.opacity = 0.5
+            if (touchObj.pageX > left && touchObj.pageX < right){
+                trashCanDom.style.display = 'block';
+                trashDom.style.display = 'none';
+                selectedBlockly.style.opacity = 0.5;
             } else {
-                trashCanDom.style.display = 'none'
-                trashDom.style.display = 'block'
-                selectedBlockly.style.opacity = 1 
+                trashCanDom.style.display = 'none';
+                trashDom.style.display = 'block';
+                selectedBlockly.style.opacity = 1; 
             }
-        } 
+        }; 
 
-        toolBoxDom.onmouseover= function (){
-            trashCanDom.style.display = 'block'
-            trashDom.style.display = 'none'
-            selectedBlockly.style.opacity = 0.5
+        toolBoxDom.onmouseover = function (){
+            trashCanDom.style.display = 'block';
+            trashDom.style.display = 'none';
+            selectedBlockly.style.opacity = 0.5;
             
-        }
-        toolBoxDom.onmouseout= function (){
-            trashCanDom.style.display = 'none'
-            trashDom.style.display = 'block'
-            selectedBlockly.style.opacity = 1
-        }
+        };
+        toolBoxDom.onmouseout = function (){
+            trashCanDom.style.display = 'none';
+            trashDom.style.display = 'block';
+            selectedBlockly.style.opacity = 1;
+        };
         return (updateCursorDuringBlockDrag_.apply(this, arguments)); 
-    } 
+    }; 
     const oldEndBlockDrag = ScratchBlocks.BlockDragger.prototype.endBlockDrag;
     ScratchBlocks.BlockDragger.prototype.endBlockDrag = function () {
         document.getElementById('toolboxTrashcan').style.display = 'none';

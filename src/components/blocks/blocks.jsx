@@ -23,15 +23,15 @@ const BlocksComponent = props => {
         >
             <div
                 id="toolboxTrashcan"
-                className={styles.trashcanInitStyle}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                className={styles.trashcanInitStyle}
             >
                 <img
-                    id='trashImg'
+                    id="trashImg"
                     src={iconDeleteClose}
                     className={styles.trashImg}
                 />
                 <img
-                    id='trashcanImg'
+                    id="trashcanImg"
                     src={iconClose}
                     className={styles.trashcanImg}
                 />

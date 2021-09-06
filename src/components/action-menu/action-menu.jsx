@@ -49,26 +49,27 @@ class ActionMenu extends React.Component {
     }
     handleClosePopover () {
         this.closeTimeoutId = setTimeout(() => {
-            this.setState({isOpen: false,forceHide: true});
+            this.setState({isOpen: false, forceHide: true});
             this.closeTimeoutId = null;
         }, CLOSE_DELAY);
     }
     handleToggleOpenState () {
         // Mouse enter back in after timeout was started prevents it from closing.
+        // eslint-disable-next-line no-negated-condition
         if (!this.state.isOpen) {
             this.setState({
                 isOpen: true,
                 forceHide: false
             });
             this.iconRef.style.transform = `rotate(45deg)`;
-            this.iconRef.style.transition= `all 0.2s ease-in`;
-        }else{
+            this.iconRef.style.transition = `all 0.2s ease-in`;
+        } else {
             this.setState({
                 isOpen: false,
                 forceHide: true
-            }); 
+            });
             this.iconRef.style.transform = `rotate(0deg)`;
-            this.iconRef.style.transition= `all 0.2s ease-in`;
+            this.iconRef.style.transition = `all 0.2s ease-in`;
         }
     }
     handleTouchOutside (e) {
@@ -77,7 +78,7 @@ class ActionMenu extends React.Component {
             ReactTooltip.hide();
         }
     }
-    clickDelayer (fn,title) {
+    clickDelayer (fn, title) {
         // Return a wrapped action that manages the menu closing.
         // @todo we may be able to use react-transition for this in the future
         // for now all this work is to ensure the menu closes BEFORE the
@@ -88,11 +89,11 @@ class ActionMenu extends React.Component {
             // Blur the button so it does not keep focus after being clicked
             // This prevents keyboard events from triggering the button
             this.buttonRef.blur();
-            if(title!=='随机'){
+            if (title !== '随机'){
                 this.setState({forceHide: true, isOpen: false}, () => {
                     setTimeout(() => this.setState({forceHide: false}));
                     this.iconRef.style.transform = `rotate(0deg)`;
-                    this.iconRef.style.transition= `all 0.2s ease-in`;
+                    this.iconRef.style.transition = `all 0.2s ease-in`;
                 });
             }
         };
@@ -173,7 +174,7 @@ class ActionMenu extends React.Component {
                                         })}
                                         data-for={tooltipId}
                                         data-tip={title}
-                                        onClick={this.clickDelayer(handleClick,title)}
+                                        onClick={this.clickDelayer(handleClick, title)}
                                     >
                                         <img
                                             className={styles.moreIcon}
