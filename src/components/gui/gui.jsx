@@ -52,6 +52,7 @@ import AudioCourse from '../audio-course/index.jsx';
 import Tips from '../tips/index.jsx';
 import TaskBar from '../taskBar/index.jsx';
 import ErrorTips from '../errorTips/index.jsx';
+import {param} from '../../lib/param.js';
 
 const messages = defineMessages({
     addExtension: {
@@ -64,6 +65,8 @@ const messages = defineMessages({
 // Cache this value to only retrieve it once the first time.
 // Assume that it doesn't change for a session.
 let isRendererSupported = null;
+
+const mode = param('mode');
 
 const GUIComponent = props => {
     const {
@@ -156,7 +159,7 @@ const GUIComponent = props => {
     if (isRendererSupported === null) {
         isRendererSupported = Renderer.isSupported();
     }
-
+    
     return (<MediaQuery minWidth={layout.fullSizeMinWidth}>{isFullSize => {
         const stageSize = resolveStageSize(stageSizeMode, isFullSize);
 
@@ -242,7 +245,11 @@ const GUIComponent = props => {
                     />
                 ) : null}
                 {/* 隐藏顶部菜单栏 */}
-                <div className={styles.menuBarContainer}>
+                <div
+                    className={classNames(styles.menuBarContainer, {
+                        [styles.menuBarContainerRight]: mode === 'normal'
+                    })}
+                >
                     <MenuBar
                         accountNavOpen={accountNavOpen}
                         authorId={authorId}
