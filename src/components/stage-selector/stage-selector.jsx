@@ -104,7 +104,11 @@ const StageSelector = props => {
             {selected ?
                 <div className={styles.editSprite}>
                     <img
-                        className={styles.editImg}
+                        className={
+                            classNames('play_audio', {
+                                [styles.editImg]: true
+                            })
+                        }
                         src={require('../../assets/icons/triangle.svg')}
                         alt="*"
                         onClick={function (e) {

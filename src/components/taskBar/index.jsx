@@ -233,7 +233,7 @@ class TaskBar extends React.Component{
 
     handleTouchStart = e => {
         if (!this.state.moreFuncShow) {
-            e.preventDefault();
+            // e.preventDefault();
             this.showMoreFunc();
         }
     }
@@ -626,7 +626,7 @@ class TaskBar extends React.Component{
                         onInput={this.handleInput}
                     />
                 </div>}
-                {mode === 'teacher' && <div className={c.teacherMode}>
+                {mode === 'teacher' && <div className={classNames('play_audio', {[c.teacherMode]: true})}>
                     <div
                         className={c.moreFuncContainer}
                         ref={r => {
@@ -636,7 +636,7 @@ class TaskBar extends React.Component{
                         onMouseEnter={this.showMoreFunc}
                     >
                         <div
-                            className={classNames({
+                            className={classNames('play_audio', {
                                 [c.teacherModeItem]: true
                             })}
                             ref={r => {
@@ -751,7 +751,7 @@ class TaskBar extends React.Component{
                             </div>
                             <div 
                                 className={
-                                    classNames({
+                                    classNames('play_audio', {
                                         [c.iconList]: true,
                                         [c.blingBling]: tipsShow
                                     })
@@ -803,9 +803,11 @@ class TaskBar extends React.Component{
                                             hidden={!item.show()}
                                             className={
                                                 classNames(
+                                                    'play_audio',
                                                     {
                                                         [c.option]: true,
-                                                        [c.active]: currentFuncIndex === index
+                                                        [c.active]: currentFuncIndex === index,
+                                                       
                                                     }
                                                 )
                                             }
