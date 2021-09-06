@@ -145,6 +145,10 @@ class TargetPane$ extends React.Component {
         this.props.vm.setEditingTarget(id);
         if (this.props.stage && id !== this.props.stage.id) {
             this.props.onHighlightTarget(id);
+            // setTimeout(() => {
+            //     Blockly.getMainWorkspace().getFlyout().setVisible(false)
+            //     Blockly.getMainWorkspace().getFlyout().getWorkspace().setVisible(false)
+            // }, 1);
         }
         window.dispatchEvent(new Event('selectSprite'));
         document.querySelector('[role="tablist"]').children[0].click();
