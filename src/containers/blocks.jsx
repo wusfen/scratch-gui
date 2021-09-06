@@ -18,6 +18,7 @@ import {BLOCKS_DEFAULT_SCALE, STAGE_DISPLAY_SIZES} from '../lib/layout-constants
 import DropAreaHOC from '../lib/drop-area-hoc.jsx';
 import DragConstants from '../lib/drag-constants';
 import defineDynamicBlock from '../lib/define-dynamic-block';
+import AutoClose from '../components/auto-close/auto-close.jsx';
 
 import {connect} from 'react-redux';
 import {updateToolbox} from '../reducers/toolbox';
@@ -26,6 +27,7 @@ import {closeExtensionLibrary, openSoundRecorder, openConnectionModal} from '../
 import {activateCustomProcedures, deactivateCustomProcedures} from '../reducers/custom-procedures';
 import {setConnectionModalExtensionId} from '../reducers/connection-modal';
 import {updateMetrics} from '../reducers/workspace-metrics';
+import {setAutoClose, setVisible} from '../reducers/auto-close';
 import classNames from 'classnames';
 import styles from './blocks.css';
 import disappearGif from '../assets/icons/disappear.gif';
@@ -96,6 +98,7 @@ class Blocks extends React.Component {
     }
 
     componentDidMount () {
+        var props = this.props;
         this.ScratchBlocks.FieldColourSlider.activateEyedropper_ = this.props.onActivateColorPicker;
         this.ScratchBlocks.Procedures.externalProcedureDefCallback = this.props.onActivateCustomProcedures;
         this.ScratchBlocks.ScratchMsgs.setLocale(this.props.locale);
@@ -131,10 +134,9 @@ class Blocks extends React.Component {
         const startScale = workspaceConfig.zoom.startScale * (1 / this.ScratchBlocks.getFitScale());
         toolbox_.flyout_.DEFAULT_WIDTH = 250 * startScale;
         toolbox_.width = toolbox_.flyout_.DEFAULT_WIDTH + (73 * startScale);
-        toolbox_.flyout_.autoClose = true;
+        toolbox_.flyout_.autoClose = this.props.autoClose;
         // // autoClose 时会执行它
         toolbox_.clearSelection = function () {
-            // console.log('clearSelection:', 'clearSelection');
             // null 后，更新 toolbox xml 时，不能走依赖 selectedItem 的逻辑
             // this.setSelectedItem(null);
 
@@ -146,6 +148,11 @@ class Blocks extends React.Component {
             }
         };
         // toolbox_.clearSelection(); // 初始关闭
+        var _setVisible = this.ScratchBlocks.mainWorkspace.toolbox_.flyout_.setVisible;
+        this.ScratchBlocks.mainWorkspace.toolbox_.flyout_.setVisible = function (bool) {
+            props.setVisible(bool);
+            return _setVisible.apply(this, arguments);
+        };
 
         // 修正 toolbox 边界，以前是往左延伸，影响到代码拖动到另一角色
         const rect = toolbox_.getClientRect();
@@ -220,7 +227,8 @@ class Blocks extends React.Component {
             this.props.customProceduresVisible !== nextProps.customProceduresVisible ||
             this.props.locale !== nextProps.locale ||
             this.props.anyModalVisible !== nextProps.anyModalVisible ||
-            this.props.stageSize !== nextProps.stageSize
+            this.props.stageSize !== nextProps.stageSize ||
+            this.props.autoClose !== nextProps.autoClose
         );
     }
     componentDidUpdate (prevProps) {
@@ -228,6 +236,27 @@ class Blocks extends React.Component {
         // 切换角色 Category 也会变化
 
         // console.log('this.props.toolboxXML:', prevProps.toolboxXML === this.props.toolboxXML);
+
+        if (this.props.autoClose !== prevProps.autoClose) {
+            this.ScratchBlocks.mainWorkspace.getFlyout().autoClose = this.props.autoClose;
+
+            var Blockly = this.ScratchBlocks;
+            var mainWorkspace = this.ScratchBlocks.mainWorkspace;
+
+            Blockly.hideChaffOnResize(true);
+            const scale = Blockly.getFitScale();
+            mainWorkspace.options.zoomOptions.startScale = scale;
+            mainWorkspace.setScale(scale);
+            Blockly.svgResize(mainWorkspace);
+            // mainWorkspace.scrollCenter();
+            // const toolbox = mainWorkspace.toolbox_;
+            if (mainWorkspace.toolbox_ && mainWorkspace.toolbox_.flyout_){
+                const flyout = mainWorkspace.toolbox_.flyout_;
+                flyout.workspace_.scale = scale;
+                flyout.reflow();
+            }
+
+        }
 
         // If any modals are open, call hideChaff to close z-indexed field editors
         if (this.props.anyModalVisible && !prevProps.anyModalVisible) {
@@ -688,6 +717,7 @@ class Blocks extends React.Component {
         /* eslint-enable no-unused-vars */
         return (
             <React.Fragment>
+                <AutoClose></AutoClose>
                 <img
                     hidden
                     className={
@@ -787,7 +817,10 @@ Blocks.propTypes = {
     vm: PropTypes.instanceOf(VM).isRequired,
     workspaceMetrics: PropTypes.shape({
         targets: PropTypes.objectOf(PropTypes.object)
-    })
+    }),
+    autoClose: PropTypes.bool,
+    setAutoClose: PropTypes.func,
+    setVisible: PropTypes.func,
 };
 
 Blocks.defaultOptions = {
@@ -834,7 +867,8 @@ const mapStateToProps = state => ({
     messages: state.locales.messages,
     toolboxXML: state.scratchGui.toolbox.toolboxXML,
     customProceduresVisible: state.scratchGui.customProcedures.active,
-    workspaceMetrics: state.scratchGui.workspaceMetrics
+    workspaceMetrics: state.scratchGui.workspaceMetrics,
+    autoClose: state.scratchGui.autoClose.autoClose,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -859,7 +893,9 @@ const mapDispatchToProps = dispatch => ({
     },
     updateMetrics: metrics => {
         dispatch(updateMetrics(metrics));
-    }
+    },
+    setAutoClose: autoClose => dispatch(setAutoClose(autoClose)),
+    setVisible: isVisible => dispatch(setVisible(isVisible)),
 });
 
 export default errorBoundaryHOC('Blocks')(
