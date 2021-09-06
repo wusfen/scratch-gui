@@ -47,6 +47,8 @@ import Counter from '../components/counter/index';
 import {counterType} from '../components/counter/data';
 
 import {param} from '../lib/param.js';
+import {playTipAudio} from '../lib/courseTip/TipAudio.js';
+import soundBtnClickMp3 from '../assets/sounds/sound_btnClick.mp3';
 
 class GUI extends React.Component {
     constructor (props) {
@@ -75,6 +77,10 @@ class GUI extends React.Component {
         }
         window.addEventListener('openErrorTips', this.initErrorTipsListener); // 初始化错误提示的监听
         window.addEventListener('运行时判断不正确', this.tipsStartError); // 当学生点击开始的时候，会提交json进行判断（已有功能），如果收到的结果是错误的，则出现错误提示效果
+        this.editorWrapperDom = document.querySelector('[class*="editor-wrapper"]');
+        this.editorWrapperDom?.addEventListener('mousemove', this.handleMove.bind(this));
+        this.editorWrapperDom?.addEventListener('touchmove', this.handleMove.bind(this));
+        document.body.addEventListener('click', this.handleBtnClick.bind(this));
     }
 
     componentDidUpdate (prevProps) {
@@ -96,7 +102,50 @@ class GUI extends React.Component {
         window.submitErrorCounter.removeListener();
         window.removeEventListener('openErrorTips', this.initErrorTipsListener);
         window.removeEventListener('运行时判断不正确', this.tipsStartError);
+        this.editorWrapperDom?.removeEventListener('mousemove', this.handleMove.bind(this));
+        this.editorWrapperDom?.removeEventListener('touchmove', this.handleMove.bind(this));
 
+    }
+
+    judgeTouchOrMoveReturnEvent = event => { // 兼容touch和move事件target的获取
+        let touchObj;
+        if (event.touches) {
+            touchObj = event.touches[0];
+        } else {
+            touchObj = event;
+        }
+        return touchObj;
+    }
+
+    judgeIsNeedPlayAudio (dom) {
+        let count = 4; // 性能考虑，一般向上寻找4级父节点就可以
+        if (!dom) {
+            return;
+        }
+        while (dom && count > 0) {
+            if (dom.nodeName === 'BUTTON' ||
+            (dom.className && (typeof dom.className === 'string' && dom.className?.indexOf('play_audio') !== -1))) {
+                window.btnPlayAudioIng = true;
+                this.btnPlayAudioIngTimer = setTimeout(() => {
+                    window.btnPlayAudioIng = false;
+                }, 1000);
+                playTipAudio(soundBtnClickMp3);
+                return;
+            }
+            dom = dom.parentNode;
+            count--;
+        }
+        
+    }
+
+    handleBtnClick (event) { // 给所有的按钮、和需要有音效的dom，设置点击音效
+        this.judgeIsNeedPlayAudio(event.target);
+    }
+
+    handleMove (event) {
+        const e = this.judgeTouchOrMoveReturnEvent(event);
+        window.dragBlockClientX = e.clientX;
+        window.dragBlockClientY = e.clientY;
     }
 
     tipsStartError = () => {
@@ -141,7 +190,9 @@ class GUI extends React.Component {
             });
         } else {
             videoSrc = '';
-            window.dispatchEvent(new Event('noVideoGuide'));
+            addEventListener('projectLoadSucceedLoaderUnmount', () => { // 等待工程加载完毕
+                window.dispatchEvent(new Event('noVideoGuide'));
+            });
         }
         this.setState({videoSrc: videoSrc});
     }

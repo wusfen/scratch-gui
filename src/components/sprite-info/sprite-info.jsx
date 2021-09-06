@@ -255,7 +255,7 @@ class SpriteInfo extends React.Component {
                                     <Icon name="show" />
                                 </b> :
                                 <b
-                                    className={classNames(styles.iconWrap)}
+                                    className={classNames('play_audio', {[styles.iconWrap]: true})}
                                     name="hide"
                                     onClick={this.props.onClickVisible}
                                 >

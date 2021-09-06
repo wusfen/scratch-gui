@@ -57,7 +57,8 @@ class TargetPane$ extends React.Component {
             'handlePaintSpriteClick',
             'handleFileUploadClick',
             'handleSpriteUpload',
-            'setFileInput'
+            'setFileInput',
+            'deleteSprite'
         ]);
     }
     componentDidMount () {
@@ -88,8 +89,6 @@ class TargetPane$ extends React.Component {
         this.props.vm.postSpriteInfo({y});
     }
     handleDeleteSprite (id) {
-
-
         var curTarget;
         for (var i = 0; i < this.props.vm.runtime.targets.length; i++) {
             if (this.props.vm.runtime.targets[i].id === id) {
@@ -99,14 +98,29 @@ class TargetPane$ extends React.Component {
         }
 
         if (curTarget && curTarget.hidden) {
-            Dialog.alert({
+            Dialog.confirm({
                 title: '求求你，别删我',
-                content: '小朋友，想要完成这次任务，可不能丢下我哦！',
-                isConfirm: true
+                content: '小朋友，想要完成这次任务，可不能丢下我哦！'
             });
             return;
         }
 
+        if (Object.keys(curTarget?.sprite?.blocks?._blocks).length) { // 有积木的角色，增加删除确认框
+            Dialog.confirm({
+                title: '删除确认',
+                content: '删除角色之后，角色内的积木也会被同时删除哦，是否确定删除？',
+                onCancel: () => {
+
+                },
+                onConfirm: () => {
+                    this.deleteSprite(id);
+                },
+            });
+        } else {
+            this.deleteSprite(id);
+        }
+    }
+    deleteSprite (id) {
         const restoreSprite = this.props.vm.deleteSprite(id);
         const restoreFun = () => restoreSprite().then(this.handleActivateBlocksTab);
 
@@ -114,7 +128,6 @@ class TargetPane$ extends React.Component {
             restoreFun: restoreFun,
             deletedItem: 'Sprite'
         });
-
     }
     handleDuplicateSprite (id) {
         this.props.vm.duplicateSprite(id);

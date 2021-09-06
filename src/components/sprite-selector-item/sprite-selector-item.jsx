@@ -51,7 +51,13 @@ const SpriteSelectorItem = props => {
 
         {(props.selected && props.onDeleteButtonClick) ? (
             <section>
-                <div className={styles.deleteSprite}>
+                <div
+                    className={
+                        classNames('play_audio', {
+                            [styles.deleteSprite]: true
+                        })
+                    }
+                >
                     <img
                         className={styles.deleteImg}
                         src={require('../../assets/icons/delete.svg')}
@@ -62,7 +68,7 @@ const SpriteSelectorItem = props => {
 
                 <div className={styles.editSprite}>
                     <img
-                        className={classNames(styles.editImg, {
+                        className={classNames('play_audio', styles.editImg, {
                             [styles.isSelect]: isClickEdit
                         })}
                         src={require('../../assets/icons/triangle.svg')}

@@ -7,7 +7,7 @@
     top: 8.25rem;
     left: 7rem;
     box-sizing: border-box;
-    z-index: 500;
+    z-index: 999999999;
     padding: 0.72rem 0.59rem 0.59rem 0.59rem;
     box-sizing: border-box;
     background: rgba(50, 197, 255, 1);
@@ -33,6 +33,7 @@
     /* overflow: hidden; */
 }
 .video {
+    height: 100%;
     width: 100%;
     object-fit: fill;
 }

@@ -23,7 +23,6 @@ class Component extends React.Component{
         return (
             <div
                 className={classNames(c.container)}
-                {...props}
             >
                 <div className={classNames(c.dialog)} >
                     <button
@@ -123,7 +122,7 @@ Component.propTypes = {
     onConfirm: PropTypes.func,
     onCancel: PropTypes.func,
     onClose: PropTypes.func,
-    isConfirm: PropTypes.func,
+    isConfirm: PropTypes.bool,
 };
 
 export default Component;

@@ -33,7 +33,7 @@ body {
 .stage-only [class*="stage-header-wrapper"] {
     position: fixed;
     top: 0;
-    right: 0;
+    right: 4rem;
 }
 .stage-only [class*="stage-header_stage-menu-wrapper"] {
     margin: 0.5rem;

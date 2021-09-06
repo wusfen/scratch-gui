@@ -21,10 +21,12 @@ import {playTipAudio} from '../../lib/courseTip/TipAudio.js';
 import getTipParam from '../../lib/courseTip/getTipParam';
 import tipAudio from './tips.mp3';
 import {OPERATE_TIME_1, RIGHT_ANSWER_1, RIGHT_ANSWER_2, timerType} from '../timer/data';
+import pullSvg from './pull.svg';
 import {
     closeFileMenu
 } from '../../reducers/menus';
 import * as bridge from '../../playground/bridge.js';
+import {pull} from 'lodash';
 const c = styles;
 Object.assign(c, require('../../css/animate.css'));
 
@@ -42,7 +44,26 @@ class TaskBar extends React.Component{
             currentVideoSrc: '',
             currentFuncIndex: -1,
             alreadyClickVideo: [],
-            tipsShow: false
+            tipsShow: false,
+            rate: 0, // 缩放比例
+            style: {
+                left: '1.31rem',
+                top: '1.13rem',
+                width: '22.5rem',
+                height: '20rem'
+            },
+            oriPos: { // 开始状态
+                top: 0, // 元素的坐标
+                left: 0,
+                cX: 0, // 鼠标的坐标
+                cY: 0
+            },
+            oriLeft: '',
+            oriTop: '',
+            oriWidth: 0,
+            oriHeight: 0,
+            isAlreadyInitTouchMove: false,
+            isDrag: false
         };
         this.introVideoSrc = '';
         this.titleAudioSrc = '';
@@ -196,6 +217,7 @@ class TaskBar extends React.Component{
         this.setState({
             videoContentShow: true
         });
+        this.init();
         if (this.audio) {
             this.audio.pause();
         }
@@ -211,7 +233,7 @@ class TaskBar extends React.Component{
 
     handleTouchStart = e => {
         if (!this.state.moreFuncShow) {
-            e.preventDefault();
+            // e.preventDefault();
             this.showMoreFunc();
         }
     }
@@ -272,26 +294,41 @@ class TaskBar extends React.Component{
     }
 
     clickCourseMode = () => {
+        this.judgeIsShowVideoContent();
+    }
+
+    judgeIsShowVideoContent = () => {
         if (this.state.videoContentShow) {
+            if (this.state.isDrag) {
+                this.setState({
+                    isDrag: false
+                });
+                return;
+            }
             this.setState({
                 videoContentShow: false
             });
+            this.recover();
             return;
         }
     }
 
+    recover = () => { // 复原 + 取消拖动事件
+        this.myRef.style.left = this.state.oriLeft;
+        this.myRef.style.top = this.state.oriTop;
+        this.myRef.style.width = `${this.state.oriWidth}px`;
+        this.myRef.style.height = `${this.state.oriHeight}px`;
+        this.myRef.ontouchstart = undefined;
+        this.myRef.onmousedown = undefined;
+        this.removeEventListener();
+    }
+
     openTitleAudio = () => {
-        if (this.state.videoContentShow) {
-            this.setState({
-                videoContentShow: false
-            });
-            return;
-        }
+        this.judgeIsShowVideoContent();
         if (this.titleAudioSrc){
             this.setState({
                 audioPlaying: true
             });
-            console.log('openTitleAudio');
             this.audio = playTipAudio(this.titleAudioSrc);
             this.audio.removeEventListener('ended', this.stopAudioPlay);
             this.audio.addEventListener('ended', this.stopAudioPlay);
@@ -299,6 +336,9 @@ class TaskBar extends React.Component{
     }
 
     handleVideoContent = () => {
+        if (this.state.videoContentShow) {
+            this.recover();
+        }
         if (!this.state.videoContentShow && this.state.tipsShow) {
             this.setState({
                 tipsShow: false
@@ -388,6 +428,165 @@ class TaskBar extends React.Component{
         });
     }
 
+    judgeTouchOrMoveReturnEvent = event => {
+        let touchObj;
+        if (event.touches) {
+            touchObj = event.touches[0];
+        } else {
+            touchObj = event;
+        }
+        return touchObj;
+    }
+
+    init = () => {
+        setTimeout(() => {
+            this.initStyle();
+            this.removeEventListener = this.initTouchAndMove();
+        }, 300);
+    }
+
+    initStyle = () => {
+        this.setState({
+            oriLeft: window.getComputedStyle(this.myRef, null).left,
+            oriTop: window.getComputedStyle(this.myRef, null).top,
+            oriWidth: this.myRef.clientWidth,
+            oriHeight: this.myRef.clientHeight
+        });
+        const rate = this.videoRef.clientWidth / this.videoRef.clientHeight; // 计算展示区的缩放比例
+        this.setState({style: { // 将展示区定位到屏幕中心
+            left: window.getComputedStyle(this.myRef, null).left,
+            top: window.getComputedStyle(this.myRef, null).top,
+            width: this.myRef.clientWidth,
+            height: this.myRef.clientHeight
+        },
+        rate: rate});
+    }
+
+    initTouchAndMove = () => { // 初始化缩放和拖拽事件
+        const dragObj = this.myRef;
+        const scaleRef = this.scaleRef;
+        const shieldList = [this.videoRef, this.closeIconRef]; // 不允许触发move的对象 
+        let mouseX;
+        let mouseY;
+        let objX;
+        let objY;
+        let dragging = false;
+        let diffX;
+        let diffY;
+        let isScale = false;
+        let operateTarget;
+
+        const judgeDomIsIn = dom => { // 判断当前点击的是目标拖拽对象
+            if (dom === dragObj) {
+                return true;
+            }
+            while (dom) {
+                dom = dom.parentNode;
+                if (dom === dragObj) {
+                    return true;
+                }
+            }
+            return false;
+        };
+
+        const handleStart = event => { // 拖动开始
+            const e = this.judgeTouchOrMoveReturnEvent(event);
+            operateTarget = e.target;
+            if (shieldList.includes(e.target)) {
+                return;
+            }  
+            dragging = true;      
+            mouseX = e.clientX;// 初始位置时鼠标的坐标
+            mouseY = e.clientY;
+            objX = dragObj.offsetLeft; // 元素的初始位置
+            objY = dragObj.offsetTop;   
+            diffX = mouseX - objX;// 相当于鼠标距物体左边的距离
+            diffY = mouseY - objY;
+        };
+        const handleMove = event => { // 拖动中
+            if (!judgeDomIsIn(operateTarget)) {
+                return;
+            }
+            const e = this.judgeTouchOrMoveReturnEvent(event);
+            if (dragging) {
+                if (isScale) {
+                    const newStyle = {...this.state.oriPos};
+                    const offsetX = e.clientX - this.state.oriPos.mouseX;
+                    newStyle.width += offsetX;
+                    newStyle.height += offsetX / this.state.rate; // 根据width和缩放比例算出height
+                    if (
+                        (newStyle.width < 200 && offsetX <= 0) ||
+                         (newStyle.width > document.documentElement.clientWidth && offsetX >= 0)
+                    ) return;
+                    this.setState({
+                        style: newStyle
+                    });
+                    return;
+                }
+                // 元素左边距等于鼠标移动的宽度加上元素本身的位置
+                const leftOffset = e.clientX - mouseX + objX;
+                const topOffset = e.clientY - mouseY + objY;
+                if (leftOffset || topOffset) {
+                    this.setState({
+                        isDrag: true
+                    });
+                }
+                dragObj.style.left = `${leftOffset}px`;
+                dragObj.style.top = `${topOffset}px`;
+                
+                // 设置边界
+                if ((e.clientX - diffX) < 0) { // 鼠标到浏览器左边距小于鼠标到obj的左边距
+                    dragObj.style.left = `${0}px`;
+                } else if ((e.clientX - diffX) > (window.innerWidth - dragObj.offsetWidth)) {
+                    // window.innerWidth浏览器显示区域的宽度，dragObj.offsetWidth物体宽度
+                    dragObj.style.left = `${window.innerWidth - dragObj.offsetWidth}px`;
+                }
+                if ((e.clientY - diffY) < 0) {
+                    dragObj.style.top = `0px`;
+                } else if ((e.clientY - diffY) > (window.innerHeight - dragObj.offsetHeight)) {
+                    dragObj.style.top = `${window.innerHeight - dragObj.offsetHeight}px`;
+                }
+            } 
+        };
+        const handleEnd = event => { // 拖动结束
+            dragging = false;
+            isScale = false;
+            operateTarget = undefined;
+        };
+        const handleScaleStart = event => { // 缩放开始
+            const e = this.judgeTouchOrMoveReturnEvent(event);
+            dragging = true;   
+            isScale = true;     
+            mouseX = e.clientX;// 初始位置时鼠标的坐标
+            mouseY = e.clientY;
+            this.setState({oriPos: {
+                ...this.state.style, mouseX, mouseY
+            }});
+        };
+        // 注册touch事件（移动端）
+        dragObj.ontouchstart = handleStart;
+        document.addEventListener('touchmove', handleMove);
+        document.addEventListener('touchend', handleEnd);
+        
+        // 注册move事件（pc端）
+        dragObj.onmousedown = handleStart;
+        document.addEventListener('mousemove', handleMove);
+        document.addEventListener('mouseup', handleEnd);
+
+        // 注册缩放事件（移动端）
+        scaleRef.ontouchstart = handleScaleStart;
+
+        // 注册缩放事件（pc端）
+        scaleRef.onmousedown = handleScaleStart;
+
+        return () => {
+            document.removeEventListener('touchmove', handleMove);
+            document.removeEventListener('touchend', handleEnd);
+            document.removeEventListener('mousemove', handleMove);
+            document.removeEventListener('mouseup', handleEnd);
+        };
+    }
+
     render () {
         const {
             onStartSelectingFileUpload,
@@ -403,6 +602,7 @@ class TaskBar extends React.Component{
             currentVideoSrc,
             currentFuncIndex,
             tipsShow,
+            style,
             ...state
         } = this.state;
 
@@ -410,6 +610,10 @@ class TaskBar extends React.Component{
             <div
                 className={classNames({
                     [styles.container]: true})}
+                ref={r => {
+                    this.myRef = r;
+                }}
+                style={style}
             >
                 {mode === 'normal' && <div className={c.productionName}>
                     <div>作品名：</div>
@@ -422,7 +626,7 @@ class TaskBar extends React.Component{
                         onInput={this.handleInput}
                     />
                 </div>}
-                {mode === 'teacher' && <div className={c.teacherMode}>
+                {mode === 'teacher' && <div className={classNames('play_audio', {[c.teacherMode]: true})}>
                     <div
                         className={c.moreFuncContainer}
                         ref={r => {
@@ -432,7 +636,7 @@ class TaskBar extends React.Component{
                         onMouseEnter={this.showMoreFunc}
                     >
                         <div
-                            className={classNames({
+                            className={classNames('play_audio', {
                                 [c.teacherModeItem]: true
                             })}
                             ref={r => {
@@ -547,7 +751,7 @@ class TaskBar extends React.Component{
                             </div>
                             <div 
                                 className={
-                                    classNames({
+                                    classNames('play_audio', {
                                         [c.iconList]: true,
                                         [c.blingBling]: tipsShow
                                     })
@@ -560,6 +764,10 @@ class TaskBar extends React.Component{
                                             [c.closeIcon]: videoContentShow,
                                         })
                                     }
+                                    ref={r => {
+                                        this.closeIconRef = r;
+                                    }}
+                                    draggable={false}
                                     src={videoContentShow ? close : video}
                                     alt="video"
                                     onClick={this.handleVideoContent}
@@ -595,9 +803,11 @@ class TaskBar extends React.Component{
                                             hidden={!item.show()}
                                             className={
                                                 classNames(
+                                                    'play_audio',
                                                     {
                                                         [c.option]: true,
-                                                        [c.active]: currentFuncIndex === index
+                                                        [c.active]: currentFuncIndex === index,
+                                                       
                                                     }
                                                 )
                                             }
@@ -606,9 +816,18 @@ class TaskBar extends React.Component{
                                     )
                                 )}
                             </div>
+                            <img
+                                className={c.pullSvg}
+                                src={pullSvg}
+                                ref={r => {
+                                    this.scaleRef = r;
+                                }}
+                                draggable={false}
+                            />
                         </div>}
                     </section>
                 )}
+                
             </div>
         );
     }

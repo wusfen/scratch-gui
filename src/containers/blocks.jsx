@@ -28,6 +28,12 @@ import {setConnectionModalExtensionId} from '../reducers/connection-modal';
 import {updateMetrics} from '../reducers/workspace-metrics';
 import classNames from 'classnames';
 import styles from './blocks.css';
+import disappearGif from '../assets/icons/disappear.gif';
+import {playTipAudio} from '../lib/courseTip/TipAudio.js';
+import disappearMp3 from '../assets/sounds/disappear.mp3';
+import dragBlockFromFlyoutMp3 from '../assets/sounds/dragBlockFromFlyout.mp3';
+import jointBlockMp3 from '../assets/sounds/jointBlock.mp3';
+import separateBlockMp3 from '../assets/sounds/separateBlock.mp3';
 
 import {
     activateTab,
@@ -75,7 +81,8 @@ class Blocks extends React.Component {
             'onWorkspaceUpdate',
             'onWorkspaceMetricsChange',
             'setBlocks',
-            'setLocale'
+            'setLocale',
+            'workSpaceChangeHandle'
         ]);
         this.ScratchBlocks.prompt = this.handlePromptStart;
         this.ScratchBlocks.statusButtonCallback = this.handleConnectionModalStart;
@@ -333,8 +340,57 @@ class Blocks extends React.Component {
         }
     }
 
+    createDeleteEffectInXY () { // 创建消失gif特效
+        const imgDom = document.createElement('img');
+        imgDom.src = disappearGif;
+        
+        imgDom.style.position = 'absolute';
+        imgDom.style.zIndex = 999999999;
+        imgDom.style.width = '3rem';
+        imgDom.style.height = '3rem';
+        imgDom.style.left = `${window.dragBlockClientX}px`;
+        imgDom.style.top = `${window.dragBlockClientY}px`;
+        document.body.appendChild(imgDom);
+        playTipAudio(disappearMp3);
+        this.deleteEffectTimer = setTimeout(() => {
+            document.body.removeChild(imgDom);
+            clearTimeout(this.deleteEffectTimer);
+        }, 500);
+    }
+
+    getClientRectInWindow (dom) { // 记录所操作块的坐标
+        if (!dom) {
+            return;
+        }
+        window.dragBlockClientX = dom.left + 24;
+        window.dragBlockClientY = dom.top + 24;
+    }
+
+    workSpaceChangeHandle (event) {
+        if (window.btnPlayAudioIng) { // 当点击代码块后退、前进操作时，也会触发事件，所以要丢弃后退、前进按钮被点击内1000ms触发的该事件。
+            return;
+        }
+        const dom = document.getElementsByClassName('blocklySelected');
+        this.getClientRectInWindow(dom[0]?.getBoundingClientRect());
+        if (event.type === 'delete') { // 处理块删除事件
+            this.createDeleteEffectInXY();
+        } else if (event.type === 'ui') {
+            const regex = new RegExp('^([a-zA-Z0-9_]){1,}$');
+            if (event.newValue && regex.test(event.oldValue)) { // 从flyout拖出来
+                playTipAudio(dragBlockFromFlyoutMp3);
+            }
+        } else if (event.type === 'move') {
+            if (!event.oldParentId && event.newParentId) { // 拼接
+                playTipAudio(jointBlockMp3);
+            } else if (event.oldParentId && !event.newParentId) { // 分开
+                playTipAudio(separateBlockMp3);
+            }
+        }
+    }
+
     attachVM () {
         this.workspace.addChangeListener(this.props.vm.blockListener);
+        this.workspace.addChangeListener(this.workSpaceChangeHandle); // 自定义workspace监听事件
         this.flyoutWorkspace = this.workspace
             .getFlyout()
             .getWorkspace();
