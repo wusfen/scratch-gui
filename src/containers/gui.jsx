@@ -190,7 +190,9 @@ class GUI extends React.Component {
             });
         } else {
             videoSrc = '';
-            window.dispatchEvent(new Event('noVideoGuide'));
+            addEventListener('projectLoadSucceedLoaderUnmount', () => { // 等待工程加载完毕
+                window.dispatchEvent(new Event('noVideoGuide'));
+            });
         }
         this.setState({videoSrc: videoSrc});
     }
