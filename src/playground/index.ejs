@@ -88,9 +88,9 @@
             }
 
             addEventListener("touchstart", function (e) {
-                if (e.touches && e.touches.length >= 6) {
+                if (e.touches && e.touches.length === 9) {
                     loadConsole();
-                    console.f12 = 2;
+                    console.f12 = 1;
                     sessionStorage.f12 = 1;
                 }
             });
