@@ -383,5 +383,59 @@ export default function (vm) {
         return (oldEndBlockDrag.apply(this, arguments));
     };
 
+
+    // ===== Blockly =====
+    const Blockly = ScratchBlocks;
+
+    /**
+     * Show the context menu for this block.
+     * @param {!Event} e Mouse event.
+     * @private
+     */
+    Blockly.BlockSvg.prototype.showContextMenu_ = function (e) {
+        if (this.workspace.options.readOnly || !this.contextMenu) {
+            return;
+        }
+        // Save the current block in a variable for use in closures.
+        var block = this;
+        var menuOptions = [];
+        if (this.isDeletable() && this.isMovable() && !block.isInFlyout) {
+            menuOptions.push(
+                Blockly.ContextMenu.blockDuplicateOption(block, e));
+            if (this.isEditable() && this.workspace.options.comments) {
+                menuOptions.push(Blockly.ContextMenu.blockCommentOption(block));
+            }
+            menuOptions.push(Blockly.ContextMenu.blockDeleteOption(block));
+
+            var collapsed_ = this.collapsed_;
+            var startHat_ = this.startHat_;
+            menuOptions.push({
+                text: collapsed_ ? Blockly.Msg.EXPAND : Blockly.Msg.COLLAPSE,
+                enabled: true,
+                callback () {
+                    if (startHat_) {
+                        while (block) {
+                            block.setCollapsed(!collapsed_);
+                            block = block.getNextBlock();
+                        }
+                    } else {
+                        block.setCollapsed(!collapsed_);
+                    }
+                }
+            });
+        } else if (this.parentBlock_ && this.isShadow_) {
+            this.parentBlock_.showContextMenu_(e);
+            return;
+        }
+
+        // Allow the block to add or modify menuOptions.
+        if (this.customContextMenu) {
+            this.customContextMenu(menuOptions);
+        }
+        Blockly.ContextMenu.show(e, menuOptions, this.RTL);
+        Blockly.ContextMenu.currentBlock = this;
+    };
+
+
     return ScratchBlocks;
 }
