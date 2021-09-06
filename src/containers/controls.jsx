@@ -32,9 +32,9 @@ class Controls extends React.Component {
         window.bridge.on('pause', e => {
             props.vm.stopAll();
         });
-        
+
         this.showSkipButtonFunc();
-        
+
     }
     componentDidUpdate (preProps) {
         // 运行停止后查询作业是否正确
@@ -96,7 +96,7 @@ class Controls extends React.Component {
         this.props.vm.stopAll();
     }
     async checkWork () {
-        if (window._workInfo) {
+        if (param('mode') === 'course' && window._workInfo) {
             var json = this.props.vm.toJSON();
             if (this.lastVmJSON === json) {
                 return;
