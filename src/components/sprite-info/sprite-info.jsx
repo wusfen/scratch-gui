@@ -17,7 +17,8 @@ import {
     manualUpdateProject
 } from '../../reducers/project-state';
 import {
-    closeFileMenu
+    closeFileMenu,
+    closeLanguageMenu
 } from '../../reducers/menus';
 import styles from './sprite-info.css';
 import Icon from '../../assets/icons/icon.jsx';
@@ -41,6 +42,7 @@ import fileUp from '../../assets/icons/fileUp.svg';
 import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
 import collectMetadata from '../../lib/collect-metadata';
 import getParam from '../../lib/param';
+import {selectLocale} from '../../reducers/locales';
 const BufferedInput = BufferedInputHOC(Input);
 
 
@@ -62,7 +64,8 @@ class SpriteInfo extends React.Component {
             'showMoreFunc',
             'hideMoreFunc',
             'handleTouchStart',
-            'handleTouchOutside'
+            'handleTouchOutside',
+            'handleLanguageChange'
         ]);
         this.state = {
             file: param('file'),
@@ -175,6 +178,14 @@ class SpriteInfo extends React.Component {
             this.closeTimeoutId = null;
             clearTimeout(this.closeTimeoutId);
         }, 200);
+    }
+
+    handleLanguageChange (e) {
+        const newLocale = e.target.name;
+        if (this.props.messagesByLocale[newLocale]) {
+            this.props.onChangeLanguage(newLocale);
+            document.documentElement.lang = newLocale;
+        }
     }
 
     render () {
@@ -394,22 +405,54 @@ class SpriteInfo extends React.Component {
                         />
                     </div>
 
-                    {(mode === 'normal' || this.state.file !== undefined) && <div
+                    <div
                         className={classNames(
                             styles.group,
                             styles.moreFunc)}
                         ref={r => {
                             this.containerRef = r;
                         }}
-                        
-                        
-                    >   
+                    > 
                         {moreFuncShow && <div
                             className={classNames(styles.moreContent)}
                             onMouseLeave={this.hideMoreFunc}
                             onMouseEnter={this.showMoreFunc}
                         >
-                            {mode === 'normal' && <div className={classNames(styles.item)}>
+                            <div className={classNames(styles.item)}>
+                                <div className={classNames(styles.languageContent)}>
+                                    <div className={styles.lanItem}>
+                                        <button
+                                            type="button"
+                                            className={classNames(styles.lanFuncItem, styles.red)}
+                                            onClick={this.handleLanguageChange}
+                                            name={'zh-cn'}
+                                        >
+                                            简
+                                        </button>
+                                    </div>
+                                    <div className={styles.lanItem}>
+                                        <button
+                                            type="button"
+                                            className={classNames(styles.lanFuncItem, styles.blue)}
+                                            onClick={this.handleLanguageChange}
+                                            name={'zh-tw'}
+                                        >
+                                            繁
+                                        </button>
+                                    </div>
+                                    <div className={styles.lanItem}>
+                                        <button
+                                            type="button"
+                                            className={classNames(styles.lanFuncItem, styles.blue)}
+                                            onClick={this.handleLanguageChange}
+                                            name={'en'}
+                                        >
+                                            En
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            {(mode === 'teacher' || mode === 'normal') && <div className={classNames(styles.item)}>
                                 <button
                                     type="button"
                                     className={`${styles.funcItem}`}
@@ -429,7 +472,7 @@ class SpriteInfo extends React.Component {
                                     )}</SB3Downloader>
                                 </button>
                             </div>}
-                            {mode === 'normal' && <div className={classNames(styles.item)}>
+                            {(mode === 'teacher' || mode === 'normal') && <div className={classNames(styles.item)}>
                                 <button
                                     type="button"
                                     className={`${styles.funcItem}`}
@@ -443,7 +486,7 @@ class SpriteInfo extends React.Component {
                                     加载本地文件
                                 </button>
                             </div>}
-                            <div className={classNames(styles.item)}>
+                            {mode === 'course' && <div className={classNames(styles.item)}>
                                 <button
                                     hidden={!(this.state.file)}
                                     type="button"
@@ -457,7 +500,7 @@ class SpriteInfo extends React.Component {
                                     />
                                     重做
                                 </button>
-                            </div>
+                            </div>}
                         </div>}
                         <div
                             className={classNames(styles.more)}
@@ -470,7 +513,7 @@ class SpriteInfo extends React.Component {
                             <img src={omit} />
                         </div>
                         
-                    </div>}
+                    </div>
                 </div>
             </Box>
         );
@@ -517,6 +560,8 @@ SpriteInfo.propTypes = {
     locale: PropTypes.string.isRequired,
     onProjectTelemetryEvent: PropTypes.func,
     onStartSelectingFileUpload: PropTypes.func,
+    messagesByLocale: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+    onChangeLanguage: PropTypes.func.isRequired
 };
 
 
@@ -524,13 +569,19 @@ const mapStateToProps = state => {
     const test = null;
     return {
         locale: state.locales.locale,
-        projectTitle: state.scratchGui.projectTitle
+        projectTitle: state.scratchGui.projectTitle,
+        currentLocale: state.locales.locale,
+        messagesByLocale: state.locales.messagesByLocale
     };
 };
 
 const mapDispatchToProps = dispatch => ({
     onClickSave: () => dispatch(manualUpdateProject()),
     onRequestCloseFile: () => dispatch(closeFileMenu()),
+    onChangeLanguage: locale => {
+        dispatch(selectLocale(locale));
+        dispatch(closeLanguageMenu());
+    }
 });
 
 export default compose(
