@@ -486,9 +486,11 @@ class SpriteInfo extends React.Component {
                                     加载本地文件
                                 </button>
                             </div>}
-                            {mode === 'course' && <div className={classNames(styles.item)}>
+                            {mode === 'course' && <div
+                                hidden={!(this.state.file)}
+                                className={classNames(styles.item)}
+                            >
                                 <button
-                                    hidden={!(this.state.file)}
                                     type="button"
                                     className={`${styles.funcItem}`}
                                     onClick={this.handleClickResetFile}
