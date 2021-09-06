@@ -93,7 +93,7 @@
 .blocks :global(.scratchCategoryMenuItemLabel) {
     font-size: 1rem;
     line-height: 1.13rem;
-    color: #2671D0;
+    color: #2671d0;
 }
 
 .blocks :global(.blocklyMinimalBody) {
@@ -258,8 +258,8 @@
     background: none;
 }
 
-.blocks :global(.blocklySvg) g * {
-    /* transition: 0.5s; */
+.blocks :global(.blocklySvg) :global(.blocklyBlockCanvas) {
+    transition: 0.3s;
 }
 
 .blocks :global(.blocklyZoom) {
@@ -277,7 +277,6 @@
     width: 2rem;
     background-size: 100% 100%;
 }
-
 
 .trashcan-init-style {
     display: none;

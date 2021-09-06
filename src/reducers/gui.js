@@ -27,6 +27,7 @@ import vmReducer, {vmInitialState} from './vm';
 import vmStatusReducer, {vmStatusInitialState} from './vm-status';
 import tipAudioReducer, {tipAudioInitialState} from './tipAudio';
 import uploadingReducer, {initialState as uploadingInitialState} from './uploading';
+import autoCloseReducer, {initialState as autoCloseInitialState} from './auto-close';
 import workspaceMetricsReducer, {workspaceMetricsInitialState} from './workspace-metrics';
 import throttle from 'redux-throttle';
 
@@ -64,6 +65,7 @@ const guiInitialState = {
     workspaceMetrics: workspaceMetricsInitialState,
     tipAudio: tipAudioInitialState,
     uploading: uploadingInitialState,
+    autoClose: autoCloseInitialState,
 };
 
 const initPlayer = function (currentState) {
@@ -165,6 +167,7 @@ const guiReducer = combineReducers({
     workspaceMetrics: workspaceMetricsReducer,
     tipAudio: tipAudioReducer,
     uploading: uploadingReducer,
+    autoClose: autoCloseReducer,
 });
 
 export {
