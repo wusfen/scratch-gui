@@ -401,12 +401,16 @@ export default function (vm) {
                 selectedBlockly.style.opacity = 1;
             }
         };
+        const exr = /^[a-zA-z_]{1,}$/;
+        const selectId = selectedBlockly.dataset.id;
 
         toolBoxDom.onmouseover = function (){
             trashCanDom.style.display = 'block';
             trashDom.style.display = 'none';
             // selectedBlockly.style.opacity = 0.5;
-            selectedBlockly.classList.add(`${Style.selectedblocklyOpacity}`);
+            if (!exr.test(selectId)){
+                selectedBlockly.classList.add(`${Style.selectedblocklyOpacity}`);
+            }
         };
         toolBoxDom.onmouseout = function (){
             trashCanDom.style.display = 'none';
