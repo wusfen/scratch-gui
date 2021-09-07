@@ -395,7 +395,6 @@ class Blocks extends React.Component {
     }
 
     workSpaceChangeHandle (event) {
-        console.log(event.type, event);
         if (window.btnPlayAudioIng) { // 当点击代码块后退、前进操作时，也会触发事件，所以要丢弃后退、前进按钮被点击内1000ms触发的该事件。
             return;
         }
