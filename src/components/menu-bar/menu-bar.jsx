@@ -236,7 +236,7 @@ class MenuBar extends React.Component {
             this.setState({
                 isShowPublishButtonBling: true,
             });
-            this.audio = new Audio(require('../../assets/sounds/提交按钮.mp3')).play();
+            this.audio = new Audio(require('../../assets/sounds/ti-jiao-an-niu.mp3')).play();
         });
         addEventListener('clickTips', e => {
             console.log('clickTips');
