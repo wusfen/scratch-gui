@@ -50,7 +50,7 @@ class TaskBar extends React.Component{
                 left: '1.31rem',
                 top: '1.13rem',
                 width: '22.5rem',
-                height: '20rem'
+                height: ''
             },
             oriPos: { // 开始状态
                 top: 0, // 元素的坐标
@@ -62,8 +62,7 @@ class TaskBar extends React.Component{
             oriTop: '',
             oriWidth: 0,
             oriHeight: 0,
-            isAlreadyInitTouchMove: false,
-            isDrag: false
+            isAlreadyInitTouchMove: false
         };
         this.introVideoSrc = '';
         this.titleAudioSrc = '';
@@ -294,15 +293,16 @@ class TaskBar extends React.Component{
     }
 
     clickCourseMode = () => {
+        if (window.ontouchstart !== undefined) {
+            this.isDrag = false;
+        }
         this.judgeIsShowVideoContent();
     }
 
     judgeIsShowVideoContent = () => {
         if (this.state.videoContentShow) {
-            if (this.state.isDrag) {
-                this.setState({
-                    isDrag: false
-                });
+            if (this.isDrag) {
+                this.isDrag = false;
                 return;
             }
             this.setState({
@@ -317,13 +317,18 @@ class TaskBar extends React.Component{
         this.myRef.style.left = this.state.oriLeft;
         this.myRef.style.top = this.state.oriTop;
         this.myRef.style.width = `${this.state.oriWidth}px`;
-        this.myRef.style.height = `${this.state.oriHeight}px`;
+        this.myRef.style.height = ``;
         this.myRef.ontouchstart = undefined;
         this.myRef.onmousedown = undefined;
         this.removeEventListener();
     }
 
-    openTitleAudio = () => {
+    openTitleAudio = event => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (window.ontouchstart !== undefined) {
+            this.isDrag = false;
+        }
         this.judgeIsShowVideoContent();
         if (this.titleAudioSrc){
             this.setState({
@@ -465,7 +470,8 @@ class TaskBar extends React.Component{
     initTouchAndMove = () => { // 初始化缩放和拖拽事件
         const dragObj = this.myRef;
         const scaleRef = this.scaleRef;
-        const shieldList = [this.videoRef, this.closeIconRef]; // 不允许触发move的对象 
+        const shieldList = [this.videoRef, this.closeIconRef]; // 不允许触发move的对象
+        const noPreventDafualtShieldList = [this.audioTipsTextRef];
         let mouseX;
         let mouseY;
         let objX;
@@ -490,21 +496,26 @@ class TaskBar extends React.Component{
         };
 
         const handleStart = event => { // 拖动开始
-            event.preventDefault();
             const e = this.judgeTouchOrMoveReturnEvent(event);
             operateTarget = e.target;
             if (shieldList.includes(e.target)) {
                 return;
-            }  
-            dragging = true;      
+            }
+            const testtimer = setTimeout(() => {
+                event.preventDefault();
+                clearTimeout(testtimer);
+            }, 200);
+            
+            dragging = true;
             mouseX = e.clientX;// 初始位置时鼠标的坐标
             mouseY = e.clientY;
             objX = dragObj.offsetLeft; // 元素的初始位置
-            objY = dragObj.offsetTop;   
+            objY = dragObj.offsetTop;
             diffX = mouseX - objX;// 相当于鼠标距物体左边的距离
             diffY = mouseY - objY;
         };
         const handleMove = event => { // 拖动中
+            event.preventDefault();
             if (!judgeDomIsIn(operateTarget)) {
                 return;
             }
@@ -528,9 +539,7 @@ class TaskBar extends React.Component{
                 const leftOffset = e.clientX - mouseX + objX;
                 const topOffset = e.clientY - mouseY + objY;
                 if (leftOffset || topOffset) {
-                    this.setState({
-                        isDrag: true
-                    });
+                    this.isDrag = true;
                 }
                 dragObj.style.left = `${leftOffset}px`;
                 dragObj.style.top = `${topOffset}px`;
@@ -566,7 +575,7 @@ class TaskBar extends React.Component{
         };
         // 注册touch事件（移动端）
         dragObj.ontouchstart = handleStart;
-        document.addEventListener('touchmove', handleMove);
+        document.addEventListener('touchmove', handleMove, {passive: false});
         document.addEventListener('touchend', handleEnd);
         
         // 注册move事件（pc端）
@@ -581,7 +590,7 @@ class TaskBar extends React.Component{
         scaleRef.onmousedown = handleScaleStart;
 
         return () => {
-            document.removeEventListener('touchmove', handleMove);
+            document.removeEventListener('touchmove', handleMove, {passive: false});
             document.removeEventListener('touchend', handleEnd);
             document.removeEventListener('mousemove', handleMove);
             document.removeEventListener('mouseup', handleEnd);
@@ -748,7 +757,11 @@ class TaskBar extends React.Component{
                                     src={audio}
                                     alt="audio"
                                 />
-                                <span>点击这里，会告诉你本次的任务哦</span>
+                                <span
+                                    ref={r => {
+                                        this.audioTipsTextRef = r;
+                                    }}
+                                >点击这里，会告诉你本次的任务哦</span>
                             </div>
                             <div 
                                 className={

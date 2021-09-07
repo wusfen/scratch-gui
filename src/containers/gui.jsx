@@ -129,7 +129,7 @@ class GUI extends React.Component {
                 this.btnPlayAudioIngTimer = setTimeout(() => {
                     window.btnPlayAudioIng = false;
                 }, 1000);
-                playTipAudio(soundBtnClickMp3);
+                // playTipAudio(soundBtnClickMp3); 暂时隐藏掉按钮音效
                 return;
             }
             dom = dom.parentNode;
@@ -185,7 +185,7 @@ class GUI extends React.Component {
     handleVideoSrc = () => {
         let videoSrc = getTipParam('introVideo');
         if (videoSrc){ // 有初始引导
-            addEventListener('projectLoadSucceedLoaderUnmount', () => { // 等待工程加载完毕
+            addEventListener('loaderUnmount', () => { // 等待工程加载完毕
                 this.setState({promptAreaShow: true});
             });
         } else {

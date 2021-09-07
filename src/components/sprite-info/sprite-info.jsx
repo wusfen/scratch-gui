@@ -37,6 +37,7 @@ import Dialog from '../dialog/index.jsx';
 import VM from 'scratch-vm';
 import resetIcon from '../../assets/icons/redo.svg';
 import {param} from '../../lib/param.js';
+import {ajax} from '../../lib/ajax.js';
 import folderIcon from '../../assets/icons/folder.svg';
 import fileUp from '../../assets/icons/fileUp.svg';
 import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
@@ -94,7 +95,7 @@ class SpriteInfo extends React.Component {
             Math.round(this.props.direction) !== Math.round(nextProps.direction) ||
             Math.round(this.props.size) !== Math.round(nextProps.size) ||
             Math.round(this.props.x) !== Math.round(nextProps.x) ||
-            Math.round(this.props.y) !== Math.round(nextProps.y) || 
+            Math.round(this.props.y) !== Math.round(nextProps.y) ||
             this.state.moreFuncShow !== nextState.moreFuncShow
         );
     }
@@ -128,7 +129,7 @@ class SpriteInfo extends React.Component {
 
         if (fileUrl) {
             const bufferPromise = new Promise(async r => {
-                const res = await fetch(fileUrl);
+                const res = await ajax.get(fileUrl, {}, {responseType: 'blob', base: ''});
                 const blob = await res.blob();
                 const buffer = await blob.arrayBuffer();
                 r(buffer);
@@ -194,7 +195,7 @@ class SpriteInfo extends React.Component {
             onStartSelectingFileUpload
         } = this.props;
 
-        const {moreFuncShow, mode} = this.state; 
+        const {moreFuncShow, mode} = this.state;
 
         const sprite = (
             <FormattedMessage
@@ -222,7 +223,7 @@ class SpriteInfo extends React.Component {
 
         return (
             <Box className={styles.spriteInfo}>
-                <div 
+                <div
                     className={classNames(
                         styles.row
                     )}
@@ -236,7 +237,7 @@ class SpriteInfo extends React.Component {
                             text={''}
                         >
                             <BufferedInput
-                                
+
                                 className={classNames(
                                     styles.spriteInput,
                                     {
@@ -274,7 +275,7 @@ class SpriteInfo extends React.Component {
                                 </b>
                         }
                     </div>
-                    
+
 
                     <div
                         hidden
@@ -392,7 +393,7 @@ class SpriteInfo extends React.Component {
                             />
                         </Label>
                     </div>
-                    
+
                     <div className={classNames(styles.group)}>
                         <div className={styles.title}>方向</div>
                         <DirectionPicker
@@ -412,7 +413,7 @@ class SpriteInfo extends React.Component {
                         ref={r => {
                             this.containerRef = r;
                         }}
-                    > 
+                    >
                         {moreFuncShow && <div
                             className={classNames(styles.moreContent)}
                             onMouseLeave={this.hideMoreFunc}
@@ -514,7 +515,7 @@ class SpriteInfo extends React.Component {
                         >
                             <img src={omit} />
                         </div>
-                        
+
                     </div>
                 </div>
             </Box>

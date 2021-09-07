@@ -378,6 +378,7 @@ class Blocks extends React.Component {
         imgDom.style.height = '3rem';
         imgDom.style.left = `${window.dragBlockClientX}px`;
         imgDom.style.top = `${window.dragBlockClientY}px`;
+        imgDom.style.pointerEvents = 'none';
         document.body.appendChild(imgDom);
         playTipAudio(disappearMp3);
         this.deleteEffectTimer = setTimeout(() => {
