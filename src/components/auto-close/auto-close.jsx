@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import bindAll from 'lodash.bindall';
 import {connect} from 'react-redux';
-// eslint-disable-next-line import/named
-import {setAutoClose, setIsVisible} from '../../reducers/auto-close';
+import {setAutoClose, setVisible} from '../../reducers/auto-close';
 
 
 import styles from './styles.css';
@@ -58,7 +57,7 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = dispatch => ({
     setAutoClose: autoClose => dispatch(setAutoClose(autoClose)),
-    setIsVisible: autoClose => dispatch(setIsVisible(autoClose)),
+    setVisible: autoClose => dispatch(setVisible(autoClose)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

@@ -236,7 +236,7 @@ class MenuBar extends React.Component {
             this.setState({
                 isShowPublishButtonBling: true,
             });
-            this.audio = new Audio(require('../../assets/sounds/提交按钮.mp3')).play();
+            this.audio = new Audio(require('../../assets/sounds/ti-jiao-an-niu.mp3')).play();
         });
         addEventListener('clickTips', e => {
             console.log('clickTips');
@@ -474,7 +474,7 @@ class MenuBar extends React.Component {
 
         if (fileUrl) {
             const bufferPromise = new Promise(async r => {
-                const res = await fetch(fileUrl);
+                const res = await ajax.get(fileUrl, {}, {responseType: 'blob', base: ''});
                 const blob = await res.blob();
                 const buffer = await blob.arrayBuffer();
                 r(buffer);
@@ -571,6 +571,10 @@ class MenuBar extends React.Component {
     handleInput (e) {
         this.props.setProjectTitle(e.target.value);
     }
+    handleClickSaveButton (silence) {
+        dispatchEvent(new Event('clickSave'));
+        return this.handleSave(silence);
+    }
     async handleSave (silence) {
         const id = this.state.id;
         const workName = this.getWorkName();
@@ -590,6 +594,7 @@ class MenuBar extends React.Component {
             workCoverAttachId: (await uploadCoverPromise).id,
         }, {silence});
         silence || this.props.setUploadingProgress(100, '正在保存...');
+        dispatchEvent(new Event('saveEnd'));
 
         this.state.id = data;
         param('id', this.state.id);
@@ -653,8 +658,11 @@ class MenuBar extends React.Component {
 
         window.bridge.emit(e, {type: exitType});
     }
-    async handleSubmit (isNoCheckResult, silence) {
+    handleClickSubmitButton (isNoCheckResult, silence) {
         dispatchEvent(new Event('clickSubmit'));
+        return this.handleSubmit(isNoCheckResult, silence);
+    }
+    async handleSubmit (isNoCheckResult, silence) {
         const workInfo = window._workInfo || {};
 
         if (!workInfo.id) {
@@ -702,6 +710,7 @@ class MenuBar extends React.Component {
             attachId: (await uploadSb3Promise).id,
             workCoverAttachId: (await uploadCoverPromise).id,
         }, {silence});
+        dispatchEvent(new Event('submitEnd'));
 
         // 标记已保存
         this.props.onProjectSaved({
@@ -715,6 +724,7 @@ class MenuBar extends React.Component {
         silence || this.props.setUploadingProgress(95, '正在批改中...');
         var isRight = await this.checkWork();
         silence || this.props.setUploadingProgress(100, '正在批改中...');
+        dispatchEvent(new Event('checkWorkEnd'));
 
         // TODO 目前只有正确错误，之前有规划有人工批改
         if (isRight) {
@@ -1253,7 +1263,7 @@ class MenuBar extends React.Component {
                                 <button
                                     hidden={!(!isSaveAs)}
                                     className={`${c.button} ${c.pink}`}
-                                    onClick={e => this.handleSave()}
+                                    onClick={e => this.handleClickSaveButton()}
                                 >
                                     <i className={`${c.iSave} ${c.iSizeL}`}></i>
                                     {'保存'}
@@ -1274,7 +1284,7 @@ class MenuBar extends React.Component {
                                     className={classNames(c.button, c.pink, {
                                         [c.blingBling]: this.state.isShowPublishButtonBling,
                                     })}
-                                    onClick={e => this.handleSubmit()}
+                                    onClick={e => this.handleClickSubmitButton()}
                                 >
                                     <i className={`${c.iCheck} ${c.iSizeL}`} />
                                     {'提交'}

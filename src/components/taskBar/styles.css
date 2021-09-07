@@ -7,7 +7,7 @@
     position: fixed;
     top: 1.13rem;
     left: 1.31rem;
-    min-height: 20rem;
+    /* min-height: 20rem; */
 }
 
 .pull-svg {

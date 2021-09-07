@@ -152,7 +152,6 @@ class PromptArea extends React.Component{
         };
 
         const handleStart = event => { // 拖动开始
-            event.preventDefault();
             const e = this.judgeTouchOrMoveReturnEvent(event);
             operateTarget = e.target;
             if (shieldList.includes(e.target)) {
@@ -167,6 +166,7 @@ class PromptArea extends React.Component{
             diffY = mouseY - objY;
         };
         const handleMove = event => { // 拖动中
+            event.preventDefault();
             if (!judgeDomIsIn(operateTarget)) {
                 return;
             }
@@ -221,7 +221,7 @@ class PromptArea extends React.Component{
         };
         // 注册touch事件（移动端）
         dragObj.ontouchstart = handleStart;
-        document.addEventListener('touchmove', handleMove);
+        document.addEventListener('touchmove', handleMove, {passive: false});
         document.addEventListener('touchend', handleEnd);
         
         // 注册move事件（pc端）
@@ -236,7 +236,7 @@ class PromptArea extends React.Component{
         scaleRef.onmousedown = handleScaleStart;
 
         return () => {
-            document.removeEventListener('touchmove', handleMove);
+            document.removeEventListener('touchmove', handleMove, {passive: false});
             document.removeEventListener('touchend', handleEnd);
             document.removeEventListener('mousemove', handleMove);
             document.removeEventListener('mouseup', handleEnd);
