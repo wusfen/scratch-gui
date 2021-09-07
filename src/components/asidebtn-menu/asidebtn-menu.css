@@ -52,3 +52,10 @@ button.disable {
 .tooltip:after{
    border-bottom-color: #76CBFF88 !important;
 }
+
+
+@media (pointer: coarse) {
+    .tooltip {
+      display: none;
+    }
+  }

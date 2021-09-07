@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import bindAll from 'lodash.bindall';
 import {connect} from 'react-redux';
+// eslint-disable-next-line import/named
 import {setAutoClose, setIsVisible} from '../../reducers/auto-close';
 
 
@@ -21,11 +22,13 @@ class Component extends React.Component{
     }
     render () {
         const {
+            // eslint-disable-next-line no-unused-vars
             children,
             ...props
         } = this.props;
 
         const {
+            // eslint-disable-next-line no-unused-vars
             ...state
         } = this.state;
 
@@ -33,6 +36,7 @@ class Component extends React.Component{
             <button
                 hidden={!(props.isVisible)}
                 className={classNames(c.button, {[c.autoClose]: props.autoClose})}
+                // eslint-disable-next-line no-unused-vars
                 onClick={e => props.setAutoClose(!props.autoClose)}
             >
                 {`pin`}

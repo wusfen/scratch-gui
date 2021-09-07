@@ -2,8 +2,10 @@ import ScratchBlocks from 'scratch-blocks';
 import fixBugs from './blocks_fix_bugs';
 import teacherMode from './blocks_teacher_mode';
 import optimize from './blocks_optimize';
+// eslint-disable-next-line camelcase
 import appear_modify from './blocks_appearance_modify';
 import addNew from './blocks_add_new';
+import Style from '../css/blockly.css';
 
 addNew(ScratchBlocks);// 增加积木块
 appear_modify(ScratchBlocks);// UI样式修改
@@ -134,6 +136,7 @@ export default function (vm) {
     const spriteMenu = function () {
         const sprites = [];
         for (const targetId in vm.runtime.targets) {
+            // eslint-disable-next-line no-prototype-builtins
             if (!vm.runtime.targets.hasOwnProperty(targetId)) continue;
             if (vm.runtime.targets[targetId].isOriginal) {
                 if (!vm.runtime.targets[targetId].isStage) {
@@ -395,23 +398,24 @@ export default function (vm) {
             } else {
                 trashCanDom.style.display = 'none';
                 trashDom.style.display = 'block';
-                selectedBlockly.style.opacity = 1; 
+                selectedBlockly.style.opacity = 1;
             }
-        }; 
+        };
 
         toolBoxDom.onmouseover = function (){
             trashCanDom.style.display = 'block';
             trashDom.style.display = 'none';
-            selectedBlockly.style.opacity = 0.5;
-            
+            // selectedBlockly.style.opacity = 0.5;
+            selectedBlockly.classList.add(`${Style.selectedblocklyOpacity}`);
         };
         toolBoxDom.onmouseout = function (){
             trashCanDom.style.display = 'none';
             trashDom.style.display = 'block';
-            selectedBlockly.style.opacity = 1;
+            // selectedBlockly.style.opacity = 0.5;
+            selectedBlockly.classList.remove(`${Style.selectedblocklyOpacity}`);
         };
-        return (updateCursorDuringBlockDrag_.apply(this, arguments)); 
-    }; 
+        return (updateCursorDuringBlockDrag_.apply(this, arguments));
+    };
     const oldEndBlockDrag = ScratchBlocks.BlockDragger.prototype.endBlockDrag;
     ScratchBlocks.BlockDragger.prototype.endBlockDrag = function () {
         document.getElementById('toolboxTrashcan').style.display = 'none';
