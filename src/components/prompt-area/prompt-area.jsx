@@ -152,6 +152,7 @@ class PromptArea extends React.Component{
         };
 
         const handleStart = event => { // 拖动开始
+            event.preventDefault();
             const e = this.judgeTouchOrMoveReturnEvent(event);
             operateTarget = e.target;
             if (shieldList.includes(e.target)) {
