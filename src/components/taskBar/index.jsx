@@ -490,17 +490,16 @@ class TaskBar extends React.Component{
         };
 
         const handleStart = event => { // 拖动开始
-            event.preventDefault();
             const e = this.judgeTouchOrMoveReturnEvent(event);
             operateTarget = e.target;
             if (shieldList.includes(e.target)) {
                 return;
             }  
-            dragging = true;      
+            dragging = true;
             mouseX = e.clientX;// 初始位置时鼠标的坐标
             mouseY = e.clientY;
             objX = dragObj.offsetLeft; // 元素的初始位置
-            objY = dragObj.offsetTop;   
+            objY = dragObj.offsetTop;
             diffX = mouseX - objX;// 相当于鼠标距物体左边的距离
             diffY = mouseY - objY;
         };
