@@ -63,14 +63,18 @@ addEventListener('message', e => {
     }
 });
 
-export {
+const bridge = {
     emit,
     on,
     trigger,
 };
 
-window.bridge = {
+export {
+    bridge as default,
+    bridge,
     emit,
     on,
     trigger,
 };
+
+window.bridge = bridge;

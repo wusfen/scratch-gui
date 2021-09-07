@@ -128,8 +128,6 @@ class LoaderComponent extends React.Component {
             retryBtnShow: false,
             backBtnShow: false
         };
-        console.log('LoaderComponent===>>>');
-        console.log(props);
     }
     componentDidMount () {
         // Start an interval to choose a new message every 5 seconds
@@ -148,7 +146,7 @@ class LoaderComponent extends React.Component {
         }, 20000);
     }
     componentWillUnmount () {
-        dispatchEvent(new Event('projectLoadSucceedLoaderUnmount'));
+        dispatchEvent(new Event('loaderUnmount'));
         clearInterval(this.intervalId);
         clearTimeout(this.retryBtnShowTimer);
         clearTimeout(this.backBtnShowTimer);

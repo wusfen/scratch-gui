@@ -72,6 +72,8 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             }
         }
         async fetchProject (projectId, loadingState) {
+            dispatchEvent(new Event('fetchProject'));
+
             // ?id 用户作业id
             const searchParams = new URL(location).searchParams;
             const id = searchParams.get('id');
