@@ -230,17 +230,21 @@ class GUI extends React.Component {
         } = this.props;
         const {videoSrc, promptAreaShow, errorText, showErrorTips} = this.state;
         return (
-            <GUIComponent
-                loading={fetchingProject || isLoading || loadingStateVisible}
-                {...componentProps}
-                videoSrc={videoSrc}
-                promptAreaShow={promptAreaShow}
-                closePromptArea={this.closePromptArea}
-                errorText={errorText}
-                showErrorTips={showErrorTips}
-            >
-                {children}
-            </GUIComponent>
+            <section>
+                <GUIComponent
+                    loading={fetchingProject || isLoading || loadingStateVisible}
+                    {...componentProps}
+                    videoSrc={videoSrc}
+                    promptAreaShow={promptAreaShow}
+                    closePromptArea={this.closePromptArea}
+                    errorText={errorText}
+                    showErrorTips={showErrorTips}
+                >
+                    {children}
+                </GUIComponent>
+                <div>1231231</div>
+            </section>
+            
         );
     }
 }
