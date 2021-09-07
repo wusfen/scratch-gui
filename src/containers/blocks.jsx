@@ -372,7 +372,6 @@ class Blocks extends React.Component {
     createDeleteEffectInXY () { // 创建消失gif特效
         const imgDom = document.createElement('img');
         imgDom.src = disappearGif;
-        
         imgDom.style.position = 'absolute';
         imgDom.style.zIndex = 999999999;
         imgDom.style.width = '3rem';
@@ -396,13 +395,14 @@ class Blocks extends React.Component {
     }
 
     workSpaceChangeHandle (event) {
+        console.log(event.type, event);
         if (window.btnPlayAudioIng) { // 当点击代码块后退、前进操作时，也会触发事件，所以要丢弃后退、前进按钮被点击内1000ms触发的该事件。
             return;
         }
         const dom = document.getElementsByClassName('blocklySelected');
         this.getClientRectInWindow(dom[0]?.getBoundingClientRect());
         if (event.type === 'delete') { // 处理块删除事件
-            this.createDeleteEffectInXY();
+            event.recordUndo && this.createDeleteEffectInXY(); // 切换角色触发的delete不触发动效，这时event对象recordUndo为false
         } else if (event.type === 'ui') {
             const regex = new RegExp('^([a-zA-Z0-9_]){1,}$');
             if (event.newValue && regex.test(event.oldValue)) { // 从flyout拖出来
