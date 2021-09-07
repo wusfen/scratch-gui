@@ -95,11 +95,11 @@ class GUI extends React.Component {
     }
 
     componentWillUnmount () {
-        window.operateTimer.removeListener();
-        window.codeTimer.removeListener();
-        window.rightAnswerTimer.removeListener();
-        window.jsonErrorCounter.removeListener();
-        window.submitErrorCounter.removeListener();
+        window.operateTimer?.removeListener();
+        window.codeTimer?.removeListener();
+        window.rightAnswerTimer?.removeListener();
+        window.jsonErrorCounter?.removeListener();
+        window.submitErrorCounter?.removeListener();
         window.removeEventListener('openErrorTips', this.initErrorTipsListener);
         window.removeEventListener('运行时判断不正确', this.tipsStartError);
         this.editorWrapperDom?.removeEventListener('mousemove', this.handleMove.bind(this));

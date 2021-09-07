@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="59px" height="77px" viewBox="0 0 59 77" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60.1 (88133) - https://sketch.com -->
+    <title>Group 2</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-45.5%" y="-93.8%" width="190.9%" height="287.5%" filterUnits="objectBoundingBox" id="filter-1">
+            <feGaussianBlur stdDeviation="5" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <polygon id="path-2" points="1.41605581e-16 0 51 0 51 51 1.41605581e-16 51"></polygon>
+        <path d="M35.297568,1.28540402 C35.3432948,1.32238409 35.3852888,1.36179214 35.426163,1.4038772 L35.4249187,1.4038772 C36.6485306,2.60155825 49.1917973,15.1407895 49.3230674,15.2733325 C50.4027799,16.3537855 50.9974772,17.7898448 51,19.3162998 C51.0013344,20.8439999 50.4078814,22.2773822 49.3305952,23.3554072 C47.5873775,25.1010034 45.2317939,25.0018296 43.678389,24.9354024 C43.3104593,24.9278694 42.9080012,24.9189046 42.5325438,24.9189046 C40.998114,24.9189046 39.1633182,25.9942526 37.3705786,27.9451068 C34.8416687,30.697258 33.2844066,34.2522005 33.4180408,35.8450827 C33.4742195,36.3560177 33.5784268,37.2579827 33.5976507,37.3854208 C35.4336908,44.8369044 30.4563749,48.2349617 29.8833278,48.5971049 C28.853386,49.2186689 27.5763328,49.0644608 26.7474023,48.2364559 L18.5612862,39.9708393 C18.3446117,40.3683351 17.6420809,40.8045175 17.3124918,41.0394656 C14.3622958,43.142517 9.93700176,46.2970942 4.03660976,50.5031971 C3.5909134,50.8356441 3.07012555,51 2.54809342,51 C1.89995486,51 1.25306057,50.7466181 0.755353866,50.248321 C-0.146304046,49.343679 -0.253186562,47.9548097 0.501834512,46.9443947 L11.106098,32.5844244 L2.79501816,24.2678935 C1.9840673,23.4561374 1.8236191,22.1869243 2.40425618,21.1803691 C2.80155056,20.552206 6.22160441,15.5612665 13.8256919,17.4445107 C13.9518606,17.4598257 14.08817,17.4712808 14.2344957,17.4839188 C14.5464956,17.5108756 14.8952636,17.5425017 15.2733963,17.6038238 C16.8829176,17.8649878 19.7286801,16.5716815 22.1989851,14.4642535 C24.566016,12.4472211 26.0953443,10.0936951 26.0953443,8.47043195 C26.0953443,8.09322281 26.0863856,7.69198285 26.0776135,7.29821361 C26.0139692,5.77294146 25.9169786,3.42862929 27.6691551,1.67649625 C29.7421035,-0.400364113 33.0221774,-0.567147953 35.297568,1.28540402 Z M4.821,45.384 L2.54691137,48.4657448 L3.917,47.452 L3,48 L4.821,45.384 Z" id="path-4"></path>
+        <filter x="-8.8%" y="-8.8%" width="117.6%" height="117.6%" filterUnits="objectBoundingBox" id="filter-5">
+            <feGaussianBlur stdDeviation="4.5" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="0" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0.568627451   0 0 0 0 1  0 0 0 1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="最终版" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="03-main-page-代码列表+滑动效果图（隐藏式）" transform="translate(-1541.000000, -54.000000)">
+            <g id="Group-18" transform="translate(1117.000000, 24.000000)">
+                <g id="Group-2" transform="translate(454.000000, 64.500000) rotate(-45.000000) translate(-454.000000, -64.500000) translate(421.000000, 32.000000)">
+                    <ellipse id="Oval" fill="#B3B2B2" filter="url(#filter-1)" transform="translate(18.136039, 47.050253) scale(1, -1) rotate(-45.000000) translate(-18.136039, -47.050253) " cx="18.136039" cy="47.0502525" rx="16.5" ry="8"></ellipse>
+                    <g id="Group" transform="translate(15.000000, 0.000000)">
+                        <mask id="mask-3" fill="white">
+                            <use xlink:href="#path-2"></use>
+                        </mask>
+                        <g id="Clip-2"></g>
+                        <g id="Combined-Shape" mask="url(#mask-3)">
+                            <use fill="#32C5FF" fill-rule="evenodd" xlink:href="#path-4"></use>
+                            <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"></use>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
