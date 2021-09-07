@@ -590,7 +590,7 @@ class TaskBar extends React.Component{
         scaleRef.onmousedown = handleScaleStart;
 
         return () => {
-            document.removeEventListener('touchmove', handleMove);
+            document.removeEventListener('touchmove', handleMove, {passive: false});
             document.removeEventListener('touchend', handleEnd);
             document.removeEventListener('mousemove', handleMove);
             document.removeEventListener('mouseup', handleEnd);
