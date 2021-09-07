@@ -50,7 +50,7 @@ class TaskBar extends React.Component{
                 left: '1.31rem',
                 top: '1.13rem',
                 width: '22.5rem',
-                height: '20rem'
+                height: ''
             },
             oriPos: { // 开始状态
                 top: 0, // 元素的坐标
@@ -317,7 +317,7 @@ class TaskBar extends React.Component{
         this.myRef.style.left = this.state.oriLeft;
         this.myRef.style.top = this.state.oriTop;
         this.myRef.style.width = `${this.state.oriWidth}px`;
-        this.myRef.style.height = `${this.state.oriHeight}px`;
+        this.myRef.style.height = ``;
         this.myRef.ontouchstart = undefined;
         this.myRef.onmousedown = undefined;
         this.removeEventListener();

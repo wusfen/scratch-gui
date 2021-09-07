@@ -129,7 +129,7 @@ class GUI extends React.Component {
                 this.btnPlayAudioIngTimer = setTimeout(() => {
                     window.btnPlayAudioIng = false;
                 }, 1000);
-                playTipAudio(soundBtnClickMp3);
+                // playTipAudio(soundBtnClickMp3); 暂时隐藏掉按钮音效
                 return;
             }
             dom = dom.parentNode;
