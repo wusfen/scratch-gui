@@ -10,6 +10,9 @@ const autoprefixer = require('autoprefixer');
 const postcssVars = require('postcss-simple-vars');
 const postcssImport = require('postcss-import');
 
+// version
+const packageJson = require('./package.json');
+const version = packageJson.version;
 const buildTime = [
     new Date().getFullYear(),
     new Date().getMonth() + 1,
@@ -36,7 +39,7 @@ const config = {
         {
             publicPath: process.env.PUBLIC_PATH || './',
             path: path.resolve(__dirname, 'dist'),
-            filename: `[name].js____${buildTime}.${commit}.js`,
+            filename: `[name].js____v${version}.${buildTime}.${commit}.js`,
             chunkFilename: 'chunks/[name].js____[contenthash:5].js'
         } :
         {},
