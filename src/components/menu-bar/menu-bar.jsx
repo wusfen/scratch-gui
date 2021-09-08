@@ -474,8 +474,7 @@ class MenuBar extends React.Component {
 
         if (fileUrl) {
             const bufferPromise = new Promise(async r => {
-                const res = await ajax.get(fileUrl, {}, {responseType: 'blob', base: ''});
-                const blob = await res.blob();
+                const blob = await ajax.get(fileUrl, {}, {responseType: 'blob', base: ''});
                 const buffer = await blob.arrayBuffer();
                 r(buffer);
             });
