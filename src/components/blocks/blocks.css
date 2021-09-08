@@ -172,9 +172,10 @@
 
 .blocks :global(.blocklyFlyout) {
     /* overflow: visible; */
-    max-width: 17.5rem;
     /* max-width: 320px; */
+    max-width: 17.5rem;
     min-width: 15rem;
+    width: 15.5rem;
     z-index: 41;
     /* transform: translate(calc(4.375rem - 1px), 0rem) !important; */
     transform: translate(calc(4.59rem - 1px), 0rem) !important;
