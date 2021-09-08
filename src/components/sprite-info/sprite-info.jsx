@@ -76,6 +76,7 @@ class SpriteInfo extends React.Component {
     }
 
     componentDidMount () {
+        console.log(123123, this.props.locale);
         this.moreFuncBtnRef?.addEventListener('touchstart', this.handleTouchStart);
         document.addEventListener('touchstart', this.handleTouchOutside);
         const blocklyWorkspaces = Array.from(document.getElementsByClassName('blocklyWorkspace'));
@@ -191,7 +192,8 @@ class SpriteInfo extends React.Component {
     render () {
         const {
             stageSize,
-            onStartSelectingFileUpload
+            onStartSelectingFileUpload,
+            locale
         } = this.props;
 
         const {moreFuncShow, mode} = this.state;
@@ -423,7 +425,9 @@ class SpriteInfo extends React.Component {
                                     <div className={styles.lanItem}>
                                         <button
                                             type="button"
-                                            className={classNames(styles.lanFuncItem, styles.red)}
+                                            className={classNames(styles.lanFuncItem, {
+                                                [styles.red]: locale === 'zh-cn'
+                                            })}
                                             onClick={this.handleLanguageChange}
                                             name={'zh-cn'}
                                         >
@@ -433,7 +437,9 @@ class SpriteInfo extends React.Component {
                                     <div className={styles.lanItem}>
                                         <button
                                             type="button"
-                                            className={classNames(styles.lanFuncItem, styles.blue)}
+                                            className={classNames(styles.lanFuncItem, {
+                                                [styles.red]: locale === 'zh-tw'
+                                            })}
                                             onClick={this.handleLanguageChange}
                                             name={'zh-tw'}
                                         >
@@ -443,7 +449,9 @@ class SpriteInfo extends React.Component {
                                     <div className={styles.lanItem}>
                                         <button
                                             type="button"
-                                            className={classNames(styles.lanFuncItem, styles.blue)}
+                                            className={classNames(styles.lanFuncItem, {
+                                                [styles.red]: locale === 'en'
+                                            })}
                                             onClick={this.handleLanguageChange}
                                             name={'en'}
                                         >
