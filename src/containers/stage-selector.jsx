@@ -19,7 +19,7 @@ import {getEventXY} from '../lib/touch-utils';
 
 import StageSelectorComponent from '../components/stage-selector/stage-selector.jsx';
 
-import backdropLibraryContent from '../lib/libraries/backdrops.json';
+import backdropLibraryContent from '../lib/libraries/wandou/backdrops.js';
 import {handleFileUpload, costumeUpload} from '../lib/file-uploader.js';
 
 const dragTypes = [

@@ -9,7 +9,7 @@ function bi (data) {
         eventId: 'programming_editor_loadingtime',
         eventData: {
             mode,
-            workId,
+            work_id: workId,
             ...data,
         },
     };
@@ -23,7 +23,7 @@ addEventListener('fetchProject', e => {
     fetchProjectTime = +new Date();
     bi({
         pageProperties: 'readyDuration',
-        timelong: +new Date() - timeOrigin
+        timelong: (+new Date() - timeOrigin) / 1000,
     });
 });
 
@@ -33,7 +33,7 @@ addEventListener('projectLoadSucceed', e => {
     projectLoadSucceedTime = +new Date();
     bi({
         pageProperties: 'fetchProjectDuration',
-        timelong: +new Date() - fetchProjectTime
+        timelong: (+new Date() - fetchProjectTime) / 1000,
     });
 });
 
@@ -43,7 +43,7 @@ addEventListener('loaderUnmount', e => {
     loaderUnmountTime = +new Date();
     bi({
         pageProperties: 'renderProjectDuration',
-        timelong: +new Date() - projectLoadSucceedTime
+        timelong: (+new Date() - projectLoadSucceedTime) / 1000,
     });
 });
 
@@ -63,7 +63,7 @@ addEventListener('submitEnd', e => {
     submitEndTime = +new Date();
     bi({
         pageProperties: 'saveDuration',
-        timelong: +new Date() - clickSubmitTime
+        timelong: (+new Date() - clickSubmitTime) / 1000,
     });
 });
 addEventListener('saveEnd', e => {
@@ -71,7 +71,7 @@ addEventListener('saveEnd', e => {
     submitEndTime = +new Date();
     bi({
         pageProperties: 'saveDuration',
-        timelong: +new Date() - clickSubmitTime
+        timelong: (+new Date() - clickSubmitTime) / 1000,
     });
 });
 
@@ -79,6 +79,6 @@ addEventListener('saveEnd', e => {
 addEventListener('checkWorkEnd', e => {
     bi({
         pageProperties: 'checkWorkDuration',
-        timelong: +new Date() - submitEndTime
+        timelong: (+new Date() - submitEndTime) / 1000,
     });
 });
