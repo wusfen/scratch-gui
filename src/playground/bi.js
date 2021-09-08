@@ -9,7 +9,6 @@ function bi (data) {
         eventId: 'programming_editor_loadingtime',
         eventData: {
             mode,
-            workId,
             work_id: workId,
             ...data,
         },
