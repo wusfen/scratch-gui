@@ -1,0 +1,72 @@
+[
+    {
+        "name": "天空幻境",
+        "tags": [],
+        "assetId": "cd15d6c4a7b6ddd98bbf4fe76100359b",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "cd15d6c4a7b6ddd98bbf4fe76100359b.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "极地冰川",
+        "tags": [],
+        "assetId": "2a4a9ae315e0274b4ff3edf2d5566082",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "2a4a9ae315e0274b4ff3edf2d5566082.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "校园课室",
+        "tags": [],
+        "assetId": "4aeccea8e6e1b8be528cc99f0cc5df06",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "4aeccea8e6e1b8be528cc99f0cc5df06.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "森林秘境",
+        "tags": [],
+        "assetId": "51817ac12b4463ec67c7042088d2d4c1",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "51817ac12b4463ec67c7042088d2d4c1.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "沙漠绿洲",
+        "tags": [],
+        "assetId": "98585b5db9992a0ee771721458503960",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "98585b5db9992a0ee771721458503960.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "科幻实验室",
+        "tags": [],
+        "assetId": "599b59a4de66877f8ab563a8ada162c2",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "599b59a4de66877f8ab563a8ada162c2.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "餐厅厨房",
+        "tags": [],
+        "assetId": "6d816f8a0b531fdad64e3f3634aedec5",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "6d816f8a0b531fdad64e3f3634aedec5.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    }
+]
