@@ -17,6 +17,9 @@ const buildTime = [
     new Date().getHours(),
     new Date().getMinutes()
 ].map(e => ''.padStart.call(e, 2, 0)).join('');
+const commit = require('child_process').execSync('git log --oneline -n 1')
+    .toString()
+    .split(' ')[0];
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -33,7 +36,7 @@ const config = {
         {
             publicPath: process.env.PUBLIC_PATH || './',
             path: path.resolve(__dirname, 'dist'),
-            filename: `[name].js____${buildTime}.js`,
+            filename: `[name].js____${buildTime}.${commit}.js`,
             chunkFilename: 'chunks/[name].js____[contenthash:5].js'
         } :
         {},

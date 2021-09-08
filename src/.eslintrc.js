@@ -43,6 +43,7 @@ module.exports = {
         'func-style': 0,
         'camelcase': 1,
         'arrow-body-style': 0,
+        'import/no-nodejs-modules': 1,
     },
     settings: {
         react: {
