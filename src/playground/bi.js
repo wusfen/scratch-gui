@@ -10,6 +10,7 @@ function bi (data) {
         eventData: {
             mode,
             workId,
+            work_id: workId,
             ...data,
         },
     };
