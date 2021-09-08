@@ -1090,7 +1090,10 @@ class MenuBar extends React.Component {
 
                 {/* show the proper UI in the account menu, given whether the user is
                 logged in, and whether a session is available to log in with */}
-                <div className={styles.accountInfoGroup}>
+                <div
+                    hidden
+                    className={styles.accountInfoGroup}
+                >
                     <div className={styles.menuBarItem}>
                         {this.props.canSave && (
                             <SaveStatus />
