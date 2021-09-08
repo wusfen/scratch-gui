@@ -4,7 +4,7 @@ import React from 'react';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
 import VM from 'scratch-vm';
 
-import backdropLibraryContent from '../lib/libraries/backdrops.json';
+import backdropLibraryContent from '../lib/libraries/wandou/backdrops.js';
 import backdropTags from '../lib/libraries/backdrop-tags';
 import LibraryComponent from '../components/library/library.jsx';
 
