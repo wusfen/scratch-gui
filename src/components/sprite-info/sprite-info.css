@@ -319,6 +319,7 @@
     white-space: nowrap;
     height: $menu-bar-height;
     font-size: 1rem;
+    color: #2F9CEF;
 }
 
 .red {
