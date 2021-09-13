@@ -111,7 +111,7 @@ class Component extends React.Component{
                         workspace.setScale(workspace.options.zoomOptions.startScale);
                         workspace.centerOnBlock(workspace.topBlocks_.sort((a, b) => {
                             return a.getRelativeToSurfaceXY().y - b.getRelativeToSurfaceXY().y;
-                        })[0].id);
+                        })[0]?.id);
                     }}
                     type="button"
                     data-tip="整理代码"

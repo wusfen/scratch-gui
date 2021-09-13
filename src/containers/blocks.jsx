@@ -142,15 +142,19 @@ class Blocks extends React.Component {
 
             // 只改变样式，以免影响到 toolbox xml
             toolbox_.flyout_.setVisible(false);
-            const categorySelected = document.querySelector('.scratchCategoryMenuItem.categorySelected');
-            if (categorySelected) {
-                categorySelected.classList.remove('categorySelected');
-            }
         };
         // toolbox_.clearSelection(); // 初始关闭
         var _setVisible = this.ScratchBlocks.mainWorkspace.toolbox_.flyout_.setVisible;
         this.ScratchBlocks.mainWorkspace.toolbox_.flyout_.setVisible = function (bool) {
             props.setVisible(bool);
+
+            if (!bool) {
+                const categorySelected = document.querySelector('.scratchCategoryMenuItem.categorySelected');
+                if (categorySelected) {
+                    categorySelected.classList.remove('categorySelected');
+                }
+            }
+
             return _setVisible.apply(this, arguments);
         };
 
@@ -321,10 +325,11 @@ class Blocks extends React.Component {
 
     updateToolbox () {
         this.toolboxUpdateTimeout = false;
+        const isVisible_ = this.workspace.toolbox_?.flyout_.isVisible_;
 
         // FIXED: autoClose 时 toolbox 关闭时，从舞台切换到角色，有些块（如当开始被点击）变成无法拖动
-        //        切换前没有的块可以，广播消息也可以
-        this.workspace.toolbox_.flyout_.setVisible(true);
+        //        切换前没有的块可以，广播消息也可以。必须 setVisible(true)
+        this.workspace.toolbox_?.flyout_.setVisible(true);
 
         // TODO 有问题，暂不设置 selectedItem_ = null
         // 只更新 xml ，不能走依赖 selectedItem_ 的逻辑
@@ -353,6 +358,16 @@ class Blocks extends React.Component {
             }
         }
 
+        this.workspace.toolbox_?.flyout_.setVisible(isVisible_);
+
+        // 定位第一块积木
+        if (!this.props.vm.editingTarget?.__hasCenterOnBlock) {
+            // this.props.vm.editingTarget.__hasCenterOnBlock = true;
+
+            this.workspace.centerOnBlock(this.workspace.topBlocks_.sort((a, b) => {
+                return a.getRelativeToSurfaceXY().y - b.getRelativeToSurfaceXY().y;
+            })[0]?.id);
+        }
 
         const queue = this.toolboxUpdateQueue;
         this.toolboxUpdateQueue = [];
