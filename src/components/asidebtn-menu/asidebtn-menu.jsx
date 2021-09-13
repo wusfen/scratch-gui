@@ -15,11 +15,11 @@ class Component extends React.Component{
             redoStack: false
         };
     }
-    
+
     componentDidMount (){
         document.addEventListener('mouseup', this.mouseUp, true);
     }
-    
+
     mouseUp (){
         this.initState();
     }
@@ -106,7 +106,12 @@ class Component extends React.Component{
                 ></ReactTooltip>
                 <button
                     onClick={e => {
-                        this.click(document.querySelector('.blocklyZoom image:nth-child(3)'));
+                        const workspace = Blockly.getMainWorkspace();
+                        workspace.cleanUp();
+                        workspace.setScale(workspace.options.zoomOptions.startScale);
+                        workspace.centerOnBlock(workspace.topBlocks_.sort((a, b) => {
+                            return a.getRelativeToSurfaceXY().y - b.getRelativeToSurfaceXY().y;
+                        })[0].id);
                     }}
                     type="button"
                     data-tip="整理代码"
