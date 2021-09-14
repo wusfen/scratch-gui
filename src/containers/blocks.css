@@ -16,3 +16,16 @@
     display: none;
     bottom: 0.5rem;
 }
+
+.node-wrap-hide {
+    animation: flyin 0.3s !important;
+}
+
+@keyframes flyin {
+    0% {
+        max-width: 17.5rem;
+    }
+    100% {
+        max-width: 0;
+    }
+}

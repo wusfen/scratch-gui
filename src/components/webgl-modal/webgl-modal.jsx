@@ -50,8 +50,15 @@ const WebGlModal = ({intl, ...props}) => (
                             )
                         }}
                     />
-                    { /* eslint-enable max-len */ }
                 </p>
+                <Box className={styles.solution}>
+                    <FormattedMessage
+                        defaultMessage="WebGL missing message"
+                        description="WebGL missing message"
+                        id="gui.webglModal.solution"
+                    />
+                    { /* eslint-enable max-len */ }
+                </Box>
 
                 <Box className={styles.buttonRow}>
                     <button

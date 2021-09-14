@@ -48,8 +48,6 @@ import Uploading from '../uploading/index.jsx';
 import Keyboard from '../keyboard/index.jsx';
 import CopyCodeHideModal from '../copy-code-hide/index.jsx';
 import PromptArea from '../prompt-area/prompt-area.jsx';
-import AudioCourse from '../audio-course/index.jsx';
-import Tips from '../tips/index.jsx';
 import TaskBar from '../taskBar/index.jsx';
 import ErrorTips from '../errorTips/index.jsx';
 import {param} from '../../lib/param.js';
@@ -140,6 +138,7 @@ const GUIComponent = props => {
         closePromptArea,
         errorText,
         showErrorTips,
+        // eslint-disable-next-line no-unused-vars
         setProjectTitle,
         ...componentProps
     } = omit(props, 'dispatch');
@@ -159,7 +158,7 @@ const GUIComponent = props => {
     if (isRendererSupported === null) {
         isRendererSupported = Renderer.isSupported();
     }
-    
+
     return (<MediaQuery minWidth={layout.fullSizeMinWidth}>{isFullSize => {
         const stageSize = resolveStageSize(stageSizeMode, isFullSize);
 
@@ -366,7 +365,7 @@ const GUIComponent = props => {
                                         <Tips /> */}
                                     </Box>
                                     <Box className={styles.extensionButtonContainer}>
-                                        <button
+                                        {mode === 'student' ? null : <button
                                             className={styles.extensionButton}
                                             title={intl.formatMessage(messages.addExtension)}
                                             onClick={onExtensionButtonClick}
@@ -375,9 +374,7 @@ const GUIComponent = props => {
                                                 className={styles.extensionButtonIcon}
                                                 draggable={false}
                                                 src={addExtensionIcon}
-                                            />
-                                            {/* <span>+</span> */}
-                                        </button>
+                                            /></button>}
                                     </Box>
                                     <Box className={styles.watermark}>
                                         <Watermark />
