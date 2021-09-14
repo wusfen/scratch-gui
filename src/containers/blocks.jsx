@@ -139,8 +139,7 @@ class Blocks extends React.Component {
         toolbox_.clearSelection = function () {
             // null 后，更新 toolbox xml 时，不能走依赖 selectedItem 的逻辑
             // this.setSelectedItem(null);
-
-            // 只改变样式，以免影响到 toolbox xml
+            // 只改变样式，以免影响到 toolbox xml;
             toolbox_.flyout_.setVisible(false);
             const categorySelected = document.querySelector('.scratchCategoryMenuItem.categorySelected');
             if (categorySelected) {
@@ -149,7 +148,19 @@ class Blocks extends React.Component {
         };
         // toolbox_.clearSelection(); // 初始关闭
         var _setVisible = this.ScratchBlocks.mainWorkspace.toolbox_.flyout_.setVisible;
-        this.ScratchBlocks.mainWorkspace.toolbox_.flyout_.setVisible = function (bool) {
+        this.ScratchBlocks.mainWorkspace.toolbox_.flyout_.setVisible = async function (bool) {
+            const categorySelected = document.querySelector('.scratchCategoryMenuItem.categorySelected');
+            var blocklyFlyout = document.querySelector('.blocklyFlyout');
+            // eslint-disable-next-line no-negated-condition
+            if (!bool && categorySelected) {
+                blocklyFlyout.classList.add(`${styles['node-wrap-hide']}`);
+                await new Promise(resolve => {
+                    setTimeout(() => resolve(), 200);
+                });
+                // eslint-disable-next-line no-undef
+            } else {
+                blocklyFlyout.classList.remove(`${styles['node-wrap-hide']}`);
+            }
             props.setVisible(bool);
             return _setVisible.apply(this, arguments);
         };
@@ -198,6 +209,7 @@ class Blocks extends React.Component {
             this.setToolboxRefreshEnabled(false);
         };
 
+        // eslint-disable-next-line no-warning-comments
         // @todo change this when blockly supports UI events
         addFunctionListener(this.workspace, 'translate', this.onWorkspaceMetricsChange);
         addFunctionListener(this.workspace, 'zoom', this.onWorkspaceMetricsChange);
@@ -209,11 +221,11 @@ class Blocks extends React.Component {
             this.setLocale();
         }
 
-        addEventListener('updateToolBox', e => {
+        addEventListener('updateToolBox', () => {
             this.requestToolboxUpdate();
         });
 
-        addEventListener('updateWorkspace_', e => {
+        addEventListener('updateWorkspace_', () => {
             this.props.vm.refreshWorkspace();
             this.requestToolboxUpdate();
         });
@@ -277,7 +289,9 @@ class Blocks extends React.Component {
             }
             return;
         }
+        // eslint-disable-next-line no-warning-comments
         // @todo hack to resize blockly manually in case resize happened while hidden
+        // eslint-disable-next-line no-warning-comments
         // @todo hack to reload the workspace due to gui bug #413
         if (this.props.isVisible) { // Scripts tab
             this.workspace.setVisible(true);
@@ -326,6 +340,7 @@ class Blocks extends React.Component {
         //        切换前没有的块可以，广播消息也可以
         this.workspace.toolbox_.flyout_.setVisible(true);
 
+        // eslint-disable-next-line no-warning-comments
         // TODO 有问题，暂不设置 selectedItem_ = null
         // 只更新 xml ，不能走依赖 selectedItem_ 的逻辑
         // eslint-disable-next-line no-negated-condition
@@ -476,6 +491,7 @@ class Blocks extends React.Component {
         if (target && target.id) {
             // Dispatch updateMetrics later, since onWorkspaceMetricsChange may be (very indirectly)
             // called from a reducer, i.e. when you create a custom procedure.
+            // eslint-disable-next-line no-warning-comments
             // TODO: Is this a vehement hack?
             setTimeout(() => {
                 this.props.updateMetrics({
@@ -612,6 +628,7 @@ class Blocks extends React.Component {
         }
     }
     handleBlocksInfoUpdate (categoryInfo) {
+        // eslint-disable-next-line no-warning-comments
         // @todo Later we should replace this to avoid all the warnings from redefining blocks.
         this.handleExtensionAdded(categoryInfo);
     }

@@ -63,6 +63,12 @@
     font-size: 0.875rem;
 }
 
+.solution {
+    text-align: left;
+    white-space: pre-line;
+    line-height: 1.5rem;
+    padding: 0 0.5rem;
+}
 .faq-link-text {
     margin: 2rem 0 0.5rem 0;
     font-size: 0.875rem;
