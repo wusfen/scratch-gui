@@ -1,6 +1,4 @@
 /* eslint-disable comma-dangle, require-jsdoc, func-style */
-// TODO responseType: blob
-// TODO catch
 
 /**
  * xhr
@@ -21,7 +19,8 @@ function request (options) {
         ontimeout,
         onloadstart,
         onprogress,
-        onloadend
+        onloadend,
+        retry,
     } = options;
 
     // search
@@ -68,7 +67,11 @@ function request (options) {
 
     // promise
     let resolve;
-    const promise = new Promise(rs => (resolve = rs));
+    let reject;
+    const promise = new Promise((rs, rj) => {
+        resolve = rs;
+        reject = rj;
+    });
 
     xhr.onprogress = onprogress;
     if (xhr.upload) {
@@ -105,6 +108,14 @@ function request (options) {
     };
 
     xhr.onerror = function (e) {
+        if (retry) {
+            options.retry--;
+            setTimeout(() => {
+                request(options).then(res => resolve(res))
+                    .catch(error => reject(error));
+            }, 1000);
+            return;
+        }
         onerror.call(this, e, options);
     };
 
@@ -191,6 +202,7 @@ Ajax.settings = {
     },
     responseType: 'text',
     timeout: 0,
+    retry: 3,
     onload (res, options) {},
     onerror (e, options) {},
     ontimeout (e, options) {},

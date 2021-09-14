@@ -548,7 +548,10 @@ class MenuBar extends React.Component {
                 value = parseInt(value, 10);
                 self.props.setUploadingProgress(value);
             },
-            onload (){}
+            onload () {},
+            onerror () {
+                alert('上传失败');
+            },
         });
         // silence || self.props.setUploadingProgress(false);
 
@@ -581,6 +584,7 @@ class MenuBar extends React.Component {
         silence || this.props.setUploadingProgress(true);
         const uploadCoverPromise = this.uploadCover();
         const uploadSb3Promise = this.uploadSb3(silence);
+        await uploadCoverPromise;
         await uploadSb3Promise;
 
         silence || this.props.setUploadingProgress(95, '正在保存...');
