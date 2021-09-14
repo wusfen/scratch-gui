@@ -144,28 +144,26 @@ class Blocks extends React.Component {
         };
         toolbox_.clearSelection(); // 初始关闭
         var _setVisible = this.ScratchBlocks.mainWorkspace.toolbox_.flyout_.setVisible;
-        this.ScratchBlocks.mainWorkspace.toolbox_.flyout_.setVisible = async function (bool) {
+        this.ScratchBlocks.mainWorkspace.toolbox_.flyout_.setVisible = function (bool) {
+            // console.warn('bool:', bool);
+            var blocklyFlyout = this.svgGroup_;
             const categorySelected = document.querySelector('.scratchCategoryMenuItem.categorySelected');
-            var blocklyFlyout = document.querySelector('.blocklyFlyout');
-            // eslint-disable-next-line no-negated-condition
-            if (!bool && categorySelected) {
-                blocklyFlyout.classList.add(`${styles['node-wrap-hide']}`);
-                await new Promise(resolve => {
-                    setTimeout(() => resolve(), 200);
-                });
-                // eslint-disable-next-line no-undef
+
+            if (bool && categorySelected) {
+                blocklyFlyout.classList.add(`${styles['flyout-open']}`);
+                blocklyFlyout.classList.remove(`${styles['flyout-close']}`);
             } else {
-                blocklyFlyout.classList.remove(`${styles['node-wrap-hide']}`);
+                blocklyFlyout.classList.add(`${styles['flyout-close']}`);
+                blocklyFlyout.classList.remove(`${styles['flyout-open']}`);
             }
-            props.setVisible(bool);
 
             if (!bool) {
-                const categorySelected = document.querySelector('.scratchCategoryMenuItem.categorySelected');
                 if (categorySelected) {
                     categorySelected.classList.remove('categorySelected');
                 }
             }
 
+            props.setVisible(bool);
             return _setVisible.apply(this, arguments);
         };
 

@@ -182,20 +182,11 @@
     box-shadow: 0.11rem 0rem 0.31rem 0rem rgba(0, 0, 0, 0.13);
     border-radius: 0rem 0.56rem 0.56rem 0rem;
     backdrop-filter: blur(5px);
-    animation: flyout 0.2s;
 }
 @supports (backdrop-filter: blur(5px)) {
     .blocks :global(.blocklyFlyout) {
         background: rgba(255, 255, 255, 0.5);
         backdrop-filter: blur(5px);
-    }
-}
-@keyframes flyout {
-    from {
-        max-width: 0;
-    }
-    to {
-        max-width: 17.5rem;
     }
 }
 

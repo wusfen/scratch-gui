@@ -1,10 +1,10 @@
 .dir-btn {
-    position  : absolute;
-    z-index   : 100;
+    position: absolute;
+    z-index: 100;
     text-align: center;
-    cursor    : pointer;
-    width     : 0.75rem;
-    height    : 0.59rem;
+    cursor: pointer;
+    width: 0.75rem;
+    height: 0.59rem;
     left: 1.83rem;
 }
 
@@ -17,15 +17,19 @@
     bottom: 0.5rem;
 }
 
-.node-wrap-hide {
-    animation: flyin 0.3s !important;
+:global(.blocklyFlyout) {
+    transition: 0.3s;
 }
 
-@keyframes flyin {
-    0% {
-        max-width: 17.5rem;
-    }
-    100% {
-        max-width: 0;
-    }
+:global(.blocklyFlyout).flyout-open {
+    max-width: 15.5rem;
+}
+
+:global(.blocklyFlyout).flyout-close {
+    display: block !important;
+    pointer-events: none;
+    opacity: 0 !important;
+    z-index: 1;
+    max-width: 4.59rem;
+    transform: translate(0, 0) !important;
 }
