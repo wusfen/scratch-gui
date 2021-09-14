@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import bindAll from 'lodash.bindall';
-  
+
 
 import styles from './styles.css';
 const c = styles;
@@ -26,6 +26,7 @@ class Component extends React.Component{
             >
                 <div className={classNames(c.dialog)} >
                     <button
+                        hidden
                         type="button"
                         className={classNames(c.close)}
                         onClick={props.onClose}
