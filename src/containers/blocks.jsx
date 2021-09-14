@@ -143,7 +143,7 @@ class Blocks extends React.Component {
             // 只改变样式，以免影响到 toolbox xml
             toolbox_.flyout_.setVisible(false);
         };
-        // toolbox_.clearSelection(); // 初始关闭
+        toolbox_.clearSelection(); // 初始关闭
         var _setVisible = this.ScratchBlocks.mainWorkspace.toolbox_.flyout_.setVisible;
         this.ScratchBlocks.mainWorkspace.toolbox_.flyout_.setVisible = function (bool) {
             props.setVisible(bool);
