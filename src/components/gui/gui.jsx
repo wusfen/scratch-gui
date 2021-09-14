@@ -365,7 +365,7 @@ const GUIComponent = props => {
                                         <Tips /> */}
                                     </Box>
                                     <Box className={styles.extensionButtonContainer}>
-                                        {mode === 'student' ? null : <button
+                                        {mode === 'course' ? null : <button
                                             className={styles.extensionButton}
                                             title={intl.formatMessage(messages.addExtension)}
                                             onClick={onExtensionButtonClick}
