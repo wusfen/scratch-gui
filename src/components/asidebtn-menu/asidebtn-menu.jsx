@@ -18,6 +18,9 @@ class Component extends React.Component{
 
     componentDidMount (){
         document.addEventListener('mouseup', this.mouseUp, true);
+        addEventListener('submit:已提交错误', e => {
+            document.querySelector('#cleanUpButton').click();
+        });
     }
 
     mouseUp (){
@@ -105,6 +108,7 @@ class Component extends React.Component{
                     className={classNames(styles.tooltip)}
                 ></ReactTooltip>
                 <button
+                    id="cleanUpButton"
                     onClick={e => {
                         const workspace = Blockly.getMainWorkspace();
                         workspace.cleanUp();
