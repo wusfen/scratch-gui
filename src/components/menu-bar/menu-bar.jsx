@@ -676,8 +676,10 @@ class MenuBar extends React.Component {
     }
     
     async handleSubmit (isNoCheckResult, silence) {
-        if (silence || !this.judgeIsRunCode()) {
-            return;
+        if (!silence) { // 自动保存不需要判断是否运行过
+            if (!this.judgeIsRunCode()) {
+                return;
+            }
         }
         const workInfo = window._workInfo || {};
 
