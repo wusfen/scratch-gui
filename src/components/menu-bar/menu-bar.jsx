@@ -744,7 +744,7 @@ class MenuBar extends React.Component {
             checkRes = 1;
         } else { // 前端批改非正确，需要后端批改
             while (checkRes < 1) { // 如果查询状态是未批改，那就轮询
-                checkRes = await this.checkWork();
+                checkRes = await this.checkWork(workId);
             }
         }
         silence || this.props.setUploadingProgress(100, '正在批改中...');
@@ -761,8 +761,10 @@ class MenuBar extends React.Component {
             silence || this.props.setUploadingProgress(false);
         }, 500);
     }
-    async checkWork () {
-        var {analystStatus} = await ajax.get('hwUserWork/getWorkData', {});
+    async checkWork (workId) {
+        var {analystStatus} = await ajax.get('hwUserWork/getWorkData', {
+            workId: workId
+        });
         return analystStatus;
     }
 
