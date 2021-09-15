@@ -198,7 +198,8 @@ class MenuBar extends React.Component {
             'handleLanguageMouseUp',
             'handleRestoreOption',
             'getSaveToComputerHandler',
-            'restoreOptionMessage'
+            'restoreOptionMessage',
+            'judgeIsRunCode'
         ]);
         this.audio = null;
 
@@ -665,7 +666,19 @@ class MenuBar extends React.Component {
         dispatchEvent(new Event('clickSubmit'));
         return this.handleSubmit(isNoCheckResult, silence);
     }
+
+    judgeIsRunCode () { // 点击提交按钮的时候增加判断，学生是否运行过代码
+        if (window.alreadyRunCode === undefined) {
+            dispatchEvent(new Event('submit:错误未运行'));
+            return false;
+        }
+        return true;
+    }
+    
     async handleSubmit (isNoCheckResult, silence) {
+        if (!this.judgeIsRunCode()) {
+            return;
+        }
         const workInfo = window._workInfo || {};
 
         if (!workInfo.id) {
@@ -705,13 +718,14 @@ class MenuBar extends React.Component {
         const {data: workId} = await ajax.put('/hwUserWork/submitWork', {
             id: workInfo.id,
             workId: workInfo.analystStatus === -1 ? workInfo.workId : '',
-            submitType: silence ? 1 : 2,
+            submitType: silence ? 1 : 3,
             userBlockNum: _userBlockNum,
             // workCoverPath: await this.getProjectCover(silence),
             // workPath: fileData.path,
             // analystStatus: undefined,
             attachId: (await uploadSb3Promise).id,
             workCoverAttachId: (await uploadCoverPromise).id,
+            analystStatus: window.codeRunningResult === 1 ? 1 : 2
         }, {silence});
         dispatchEvent(new Event('submitEnd'));
 
@@ -725,12 +739,19 @@ class MenuBar extends React.Component {
         }
 
         silence || this.props.setUploadingProgress(95, '正在批改中...');
-        var isRight = await this.checkWork();
+        var checkRes = 0;
+        if (window.codeRunningResult === 1) { // 前端批改正确
+            checkRes = 1;
+        } else { // 前端批改非正确，需要后端批改
+            while (checkRes < 1) { // 如果查询状态是未批改，那就轮询
+                checkRes = await this.checkWork();
+            }
+        }
         silence || this.props.setUploadingProgress(100, '正在批改中...');
         dispatchEvent(new Event('checkWorkEnd'));
 
         // TODO 目前只有正确错误，之前有规划有人工批改
-        if (isRight) {
+        if (checkRes === 1) {
             dispatchEvent(new Event('submit:已提交正确'));
         } else {
             dispatchEvent(new Event('submit:已提交错误'));
@@ -741,15 +762,10 @@ class MenuBar extends React.Component {
         }, 500);
     }
     async checkWork () {
-        var json = this.props.vm.toJSON();
-
-        var {data} = await ajax.post('hwUserWork/autoAnalyst', {
-            workCode: window._workInfo.workCode,
-            projectJsonStr: json,
-        });
-
-        return data === 1;
+        var {analystStatus} = await ajax.get('hwUserWork/getWorkData', {});
+        return analystStatus;
     }
+
     handleSkip () {
         dispatchEvent(new Event('submit:跳过'));
     }
