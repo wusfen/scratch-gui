@@ -424,13 +424,25 @@ class Blocks extends React.Component {
     }
 
     workSpaceChangeHandle (event) {
+        if (event.type === 'delete' || (event.type === 'move' &&
+        ((!event.oldParentId && event.newParentId) || (event.oldParentId && !event.newParentId)))) { // 对删除、拼接、分开事件做节流处理
+            if (window.throttlrTimer) {
+                return;
+            }
+            window.throttlrTimer = setTimeout(() => {
+                clearTimeout(this.throttlrTimer);
+                window.throttlrTimer = null;
+            }, 200);
+        }
+        
         if (window.btnPlayAudioIng) { // 当点击代码块后退、前进操作时，也会触发事件，所以要丢弃后退、前进按钮被点击内1000ms触发的该事件。
             return;
         }
         const dom = document.getElementsByClassName('blocklySelected');
         this.getClientRectInWindow(dom[0]?.getBoundingClientRect());
         if (event.type === 'delete') { // 处理块删除事件
-            event.recordUndo && this.createDeleteEffectInXY(); // 切换角色触发的delete不触发动效，这时event对象recordUndo为false
+            if (!event.recordUndo) return; // 切换角色触发的delete不触发动效，这时event对象recordUndo为false
+            this.createDeleteEffectInXY();
         } else if (event.type === 'ui') {
             const regex = new RegExp('^([a-zA-Z0-9_]){1,}$');
             if (event.newValue && regex.test(event.oldValue)) { // 从flyout拖出来
