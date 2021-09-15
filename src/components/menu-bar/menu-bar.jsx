@@ -665,7 +665,7 @@ class MenuBar extends React.Component {
 
     judgeIsRunCode () { // 点击提交按钮的时候增加判断，学生是否运行过代码
         if (window.alreadyRunCode === undefined) {
-            dispatchEvent(new Event('submit:错误未运行'));
+            dispatchEvent(new Event('submit:从未运行'));
             return false;
         }
         return true;
