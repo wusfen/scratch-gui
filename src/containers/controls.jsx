@@ -47,7 +47,10 @@ class Controls extends React.Component {
     componentDidUpdate (preProps) {
         // 运行停止后查询作业是否正确
         if (preProps.projectRunning !== this.props.projectRunning && !this.props.projectRunning) {
-            if (window.codeRunningResult === 1) return; // 前端批改正确，无需后端批改
+            if (window.codeRunningResult === 1) { // 前端批改正确，无需后端批改
+                dispatchEvent(new Event('运行时判断正确'));
+                return;
+            }
             this.checkWork();
         }
         
