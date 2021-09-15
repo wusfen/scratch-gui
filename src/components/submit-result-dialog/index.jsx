@@ -38,6 +38,10 @@ const statusMap = {
     已提交未知: {
         text: `作品已提交！\n老师正在批改，请稍候！`,
         style: styles.submitEd
+    },
+    错误未运行: {
+        text: `我们先运行一下代码吧。\n点击确定则开始运行代码哦`,
+        style: styles.submitFault
     }
 };
 
@@ -92,6 +96,13 @@ class Component extends React.Component{
         };
     }
     handleClose () {
+        if (/错误未运行/.test(this.state.status)) { // 未运行代码的错误弹窗：点击确定，则自动开始运行代码
+            window.dispatchEvent(new Event('runCode'));
+            this.setState(this.getInitState());
+            clearInterval(this.timer);
+            return;
+        }
+
         // TODO 这里已有 `submit:已提交错误` 事件
         if (/错误/.test(this.state.status)) {
             window.dispatchEvent(new Event('提交错误:关闭弹窗'));

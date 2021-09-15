@@ -14,12 +14,27 @@ class Controls extends React.Component {
             'handleStopAllClick'
         ]);
     }
+
+    componentDidMount () {
+        // 监听代码运行正确
+        window.addEventListener('codeRunningRight', this.handleCodeRunningRight);
+    }
+
+    componentWillUnmount () {
+        window.removeEventListener('codeRunningRight', this.handleCodeRunningRight);
+    }
+
+    handleCodeRunningRight () {
+        window.codeRunningResult = 1;
+    }
+
     handleGreenFlagClick (e) {
         e.preventDefault();
         if (e.shiftKey) {
             this.props.vm.setTurboMode(!this.props.turbo);
         } else {
             if (!this.props.isStarted) {
+                window.alreadyRunCode = true; // 记录已经点击过开始
                 this.props.vm.start();
             }
             this.props.vm.greenFlag();

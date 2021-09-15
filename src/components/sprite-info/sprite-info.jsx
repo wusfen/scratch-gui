@@ -76,7 +76,6 @@ class SpriteInfo extends React.Component {
     }
 
     componentDidMount () {
-        console.log(123123, this.props.locale);
         this.moreFuncBtnRef?.addEventListener('touchstart', this.handleTouchStart);
         document.addEventListener('touchstart', this.handleTouchOutside);
         const blocklyWorkspaces = Array.from(document.getElementsByClassName('blocklyWorkspace'));
