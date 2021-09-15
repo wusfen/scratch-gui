@@ -762,9 +762,7 @@ class MenuBar extends React.Component {
         }, 500);
     }
     async checkWork (workId) {
-        var {analystStatus} = await ajax.get('hwUserWork/getWorkData', {
-            workId: workId
-        });
+        var {analystStatus} = await ajax.get(`hwUserWork/getWorkData/${workId}`, {});
         return analystStatus;
     }
 
