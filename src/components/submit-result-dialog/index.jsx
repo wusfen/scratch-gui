@@ -13,6 +13,10 @@ const statusMap = {
         text: `跳过成功，即将返回课程哦~`,
         style: styles.submitX
     },
+    从未运行: {
+        text: `我们先运行一下代码吧。\n点击确定则开始运行代码哦`,
+        style: styles.submitFault
+    },
     提交中: {
         text1: '正在提交作业···',
         text2: '请稍等',
@@ -39,10 +43,6 @@ const statusMap = {
         text: `作品已提交！\n老师正在批改，请稍候！`,
         style: styles.submitEd
     },
-    错误未运行: {
-        text: `我们先运行一下代码吧。\n点击确定则开始运行代码哦`,
-        style: styles.submitFault
-    }
 };
 
 
@@ -64,7 +64,7 @@ class Component extends React.Component{
                     status: status
                 });
 
-                if (!/提交中|错误/.test(status)) {
+                if (!/从未运行|提交中|错误/.test(status)) {
                     this.startBackTimer();
                 }
 
@@ -96,7 +96,7 @@ class Component extends React.Component{
         };
     }
     handleClose () {
-        if (/错误未运行/.test(this.state.status)) { // 未运行代码的错误弹窗：点击确定，则自动开始运行代码
+        if (/从未运行/.test(this.state.status)) { // 未运行代码的错误弹窗：点击确定，则自动开始运行代码
             window.dispatchEvent(new Event('runCode'));
             this.setState(this.getInitState());
             clearInterval(this.timer);
@@ -188,7 +188,7 @@ class Component extends React.Component{
                         {`好的 (${backTimeRemain}s)后自动跳转`}
                     </button>
                     <button
-                        hidden={!(/错误/.test(status))}
+                        hidden={!(/从未运行|错误/.test(status))}
                         type="button"
                         className={classNames(styles.button)}
                         onClick={this.handleClose}
