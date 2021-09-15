@@ -676,7 +676,7 @@ class MenuBar extends React.Component {
     }
     
     async handleSubmit (isNoCheckResult, silence) {
-        if (!this.judgeIsRunCode()) {
+        if (silence || !this.judgeIsRunCode()) {
             return;
         }
         const workInfo = window._workInfo || {};
