@@ -479,6 +479,110 @@ export default function (vm) {
         Blockly.ContextMenu.currentBlock = this;
     };
 
+    /**
+     * Show the context menu for the workspace.
+     * @param {!Event} e Mouse event.
+     * @private
+     */
+    Blockly.WorkspaceSvg.prototype.showContextMenu_ = function (e) {
+        /* eslint-disable block-scoped-var */
+        if (this.options.readOnly || this.isFlyout) {
+            return;
+        }
+        var menuOptions = [];
+        var topBlocks = this.getTopBlocks(true);
+        var eventGroup = Blockly.utils.genUid();
+        var ws = this;
+
+        // Options to undo/redo previous action.
+        menuOptions.push(Blockly.ContextMenu.wsUndoOption(this));
+        menuOptions.push(Blockly.ContextMenu.wsRedoOption(this));
+
+        // Option to clean up blocks.
+        if (this.scrollbar) {
+            menuOptions.push(
+                Blockly.ContextMenu.wsCleanupOption(this, topBlocks.length));
+        }
+
+        if (this.options.collapse) {
+            var hasCollapsedBlocks = false;
+            var hasExpandedBlocks = false;
+            for (var i = 0; i < topBlocks.length; i++) {
+                var block = topBlocks[i];
+                while (block) {
+                    if (block.isCollapsed()) {
+                        hasCollapsedBlocks = true;
+                    } else {
+                        hasExpandedBlocks = true;
+                    }
+                    block = block.getNextBlock();
+                }
+            }
+
+            menuOptions.push(Blockly.ContextMenu.wsCollapseOption(hasExpandedBlocks,
+                topBlocks));
+
+            menuOptions.push(Blockly.ContextMenu.wsExpandOption(hasCollapsedBlocks,
+                topBlocks));
+        }
+
+        // Option to add a workspace comment.
+        if (this.options.comments) {
+            menuOptions.push(Blockly.ContextMenu.workspaceCommentOption(ws, e));
+        }
+
+        // Option to delete all blocks.
+        // Count the number of blocks that are deletable.
+        var deleteList = Blockly.WorkspaceSvg.buildDeleteList_(topBlocks);
+        // Scratch-specific: don't count shadow blocks in delete count
+        var deleteCount = 0;
+        for (var i = 0; i < deleteList.length; i++) {
+            if (!deleteList[i].isShadow()) {
+                deleteCount++;
+            }
+        }
+
+        var DELAY = 10;
+        function deleteNext () {
+            Blockly.Events.setGroup(eventGroup);
+            var block = deleteList.shift();
+            if (block) {
+                if (block.workspace) {
+                    block.dispose(false, true);
+                    setTimeout(deleteNext, DELAY);
+                } else {
+                    deleteNext();
+                }
+            }
+            Blockly.Events.setGroup(false);
+        }
+
+        var deleteOption = {
+            text: deleteCount == 1 ? Blockly.Msg.DELETE_BLOCK :
+                Blockly.Msg.DELETE_X_BLOCKS.replace('%1', String(deleteCount)),
+            enabled: deleteCount > 0,
+            callback: function () {
+                if (ws.currentGesture_) {
+                    ws.currentGesture_.cancel();
+                }
+                if (deleteCount < 2) {
+                    deleteNext();
+                } else {
+                    Blockly.confirm(
+                        Blockly.Msg.DELETE_ALL_BLOCKS.replace('%1', String(deleteCount)),
+                        ok => {
+                            if (ok) {
+                                deleteNext();
+                            }
+                        });
+                }
+            }
+        };
+        // menuOptions.push(deleteOption);
+
+        Blockly.ContextMenu.show(e, menuOptions, this.RTL);
+    };
+
 
     return ScratchBlocks;
 }
