@@ -145,11 +145,12 @@ class Blocks extends React.Component {
         toolbox_.clearSelection(); // 初始关闭
         var _setVisible = this.ScratchBlocks.mainWorkspace.toolbox_.flyout_.setVisible;
         this.ScratchBlocks.mainWorkspace.toolbox_.flyout_.setVisible = function (bool) {
-            // console.warn('bool:', bool);
-            var blocklyFlyout = this.svgGroup_;
+            const blocklyFlyout = this.svgGroup_;
             const categorySelected = document.querySelector('.scratchCategoryMenuItem.categorySelected');
+            const isSelectedAndVisible = !!categorySelected && bool;
+            // console.warn('bool:', bool, isSelectedAndVisible);
 
-            if (bool && categorySelected) {
+            if (isSelectedAndVisible) {
                 blocklyFlyout.classList.add(`${styles['flyout-open']}`);
                 blocklyFlyout.classList.remove(`${styles['flyout-close']}`);
             } else {
@@ -163,7 +164,7 @@ class Blocks extends React.Component {
                 }
             }
 
-            props.setVisible(bool);
+            props.setVisible(isSelectedAndVisible);
             return _setVisible.apply(this, arguments);
         };
 
@@ -434,7 +435,7 @@ class Blocks extends React.Component {
                 window.throttlrTimer = null;
             }, 200);
         }
-        
+
         if (window.btnPlayAudioIng) { // 当点击代码块后退、前进操作时，也会触发事件，所以要丢弃后退、前进按钮被点击内1000ms触发的该事件。
             return;
         }
