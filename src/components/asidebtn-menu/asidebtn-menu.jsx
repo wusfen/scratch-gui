@@ -113,7 +113,7 @@ class Component extends React.Component{
                         const workspace = Blockly.getMainWorkspace();
                         workspace.cleanUp();
                         workspace.setScale(workspace.options.zoomOptions.startScale);
-                        workspace.centerOnBlock(workspace.topBlocks_.sort((a, b) => {
+                        workspace.centerOnBlock(workspace.topBlocks_.filter(e => e.rendered).sort((a, b) => {
                             return a.getRelativeToSurfaceXY().y - b.getRelativeToSurfaceXY().y;
                         })[0]?.id);
                     }}

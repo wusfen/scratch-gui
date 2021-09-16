@@ -376,9 +376,9 @@ class Blocks extends React.Component {
 
         // 定位第一块积木
         if (!this.props.vm.editingTarget?.__hasCenterOnBlock) {
-            // this.props.vm.editingTarget.__hasCenterOnBlock = true;
+            this.props.vm.editingTarget.__hasCenterOnBlock = true;
 
-            this.workspace.centerOnBlock(this.workspace.topBlocks_.sort((a, b) => {
+            this.workspace.centerOnBlock(this.workspace.topBlocks_.filter(e => e.rendered).sort((a, b) => {
                 return a.getRelativeToSurfaceXY().y - b.getRelativeToSurfaceXY().y;
             })[0]?.id);
         }
