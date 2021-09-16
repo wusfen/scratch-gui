@@ -249,7 +249,7 @@
 }
 
 .blocks :global(.blocklySvg) :global(.blocklyBlockCanvas) {
-    transition: 0.3s;
+    /* transition: 0.3s; */
 }
 
 .blocks :global(.blocklyZoom) {

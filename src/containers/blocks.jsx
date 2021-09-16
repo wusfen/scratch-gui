@@ -375,12 +375,14 @@ class Blocks extends React.Component {
         this.workspace.toolbox_?.flyout_.setVisible(isVisible_);
 
         // 定位第一块积木
-        if (!this.props.vm.editingTarget?.__hasCenterOnBlock) {
-            this.props.vm.editingTarget.__hasCenterOnBlock = true;
+        if (this.props.vm.editingTarget) {
+            if (!this.props.vm.editingTarget.__hasCenterOnBlock) {
+                this.props.vm.editingTarget.__hasCenterOnBlock = true;
 
-            this.workspace.centerOnBlock(this.workspace.topBlocks_.filter(e => e.rendered).sort((a, b) => {
-                return a.getRelativeToSurfaceXY().y - b.getRelativeToSurfaceXY().y;
-            })[0]?.id);
+                this.workspace.centerOnBlock(this.workspace.topBlocks_.filter(e => e.rendered).sort((a, b) => {
+                    return a.getRelativeToSurfaceXY().y - b.getRelativeToSurfaceXY().y;
+                })[0]?.id);
+            }
         }
 
         const queue = this.toolboxUpdateQueue;
