@@ -409,7 +409,7 @@ class Blocks extends React.Component {
         imgDom.style.top = `${window.dragBlockClientY}px`;
         imgDom.style.pointerEvents = 'none';
         document.body.appendChild(imgDom);
-        playTipAudio(disappearMp3);
+        // playTipAudio(disappearMp3); 2.5需求去掉删除音效
         this.deleteEffectTimer = setTimeout(() => {
             document.body.removeChild(imgDom);
             clearTimeout(this.deleteEffectTimer);
@@ -447,7 +447,7 @@ class Blocks extends React.Component {
         } else if (event.type === 'ui') {
             const regex = new RegExp('^([a-zA-Z0-9_]){1,}$');
             if (event.newValue && regex.test(event.oldValue)) { // 从flyout拖出来
-                playTipAudio(dragBlockFromFlyoutMp3);
+                playTipAudio(jointBlockMp3); // 2.5需求改为和拼接音效相同
             }
         } else if (event.type === 'move') {
             if (!event.oldParentId && event.newParentId) { // 拼接
