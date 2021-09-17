@@ -152,16 +152,20 @@ const config = {
         new HtmlWebpackPlugin({
             chunks: ['lib', 'gui'],
             template: 'src/playground/index.ejs',
-            title: '',
-            PUBLIC_PATH: process.env.PUBLIC_PATH || '',
             sentryConfig: process.env.SENTRY_CONFIG ?
                 `"${process.env.SENTRY_CONFIG}"` :
-                null
+                null,
+            title: '',
+            PUBLIC_PATH: process.env.PUBLIC_PATH || '',
+            version: `"${version}"`,
         }),
         new HtmlWebpackPlugin({
             chunks: ['lib', 'player'],
             template: 'src/playground/index.ejs',
             filename: 'player.html',
+            title: '',
+            PUBLIC_PATH: process.env.PUBLIC_PATH || '',
+            version: `"${version}"`,
         }),
         new CopyWebpackPlugin([
             {

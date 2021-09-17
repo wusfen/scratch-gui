@@ -10,11 +10,13 @@
         <link rel="shortcut icon" href="static/favicon.ico" />
         <title>豌豆编程</title>
 
+        <script>
+            var version = <%= htmlWebpackPlugin.options.version %>
+        </script>
         <!-- arms -->
         <script>
             // prettier-ignore
             !(function (isOpen) {
-                var version = "v2.4"
                 var getEnv = function () {
                     if (/\b(base=uat)\b/.test(location)) return "pre"
                     if (/\/uat\/|\/uat-/.test(location)) return "pre";
@@ -39,7 +41,7 @@
                         enableLinkTrace: true,
                         behavior: true,
                         enableConsole: true,
-                        release: version,
+                        release: window.version,
                         environment: env
                     }
                 };
