@@ -1,0 +1,108 @@
+@import "../../css/colors.css";
+@import "../../css/units.css";
+@import "../../css/z-index.css";
+
+
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+    background-color: $ui-modal-overlay;
+}
+
+.modal-content * {
+    box-sizing: border-box;
+}
+
+.close-icon{
+    position: absolute;
+    top:0;
+    right: 0.3rem;
+    width: 1.2rem;
+    transform: rotate(45deg);
+}
+
+.close-icon:hover{
+    cursor: pointer;
+}
+
+.modal-content {
+    outline: none;
+    border: 0.25rem solid $ui-white-transparent;
+    padding: 0;
+    border-radius: $space;
+    user-select: none;
+
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: $text-primary;
+    overflow: hidden;
+}
+
+.modal-content.full-screen {
+    position: absolute;
+
+    display: flex;
+    height: 100%;
+    width: 100%;
+
+    overflow-y: auto;
+    -webkit-overflow-scrolling: "touch";
+    user-select: none;
+
+    background-color: #fff;
+
+    /* Default modal resets */
+    margin: 0;
+    border: none;
+    border-radius: 0;
+}
+
+
+
+.stage-and-target-wrapper {
+    position: relative;
+    width: 23.75rem;
+    padding: 0.41rem 0.72rem;
+    background: #47caff;
+    box-shadow: inset 0 1px 0.625rem 0 $motion-primary;
+    border-radius: 0.63rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.stage-and-target-wrapper .error-tips {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999999;
+}
+
+.stage-and-target-wrapper .warning-border {
+    position: absolute;
+    width: 22.31rem;
+    height: 39.69rem;
+    top: 2.47rem;
+    border-radius: 0.31rem;
+    border: 0.44rem solid rgba(255, 56, 123, 0.5);
+    z-index: 100;
+    animation: breath 1.6s both infinite;
+}
+
+.full-screen-modal{
+    margin: 0.2rem;
+    padding:1.5rem 0.5rem;
+    background: #fff;
+    border: 0.2rem solid hsla( 0, 100%, 100%, 0.25 );
+    position: relative;
+    box-shadow: 0 0 8px 0 rgb(0 0 0 / 30%);
+}

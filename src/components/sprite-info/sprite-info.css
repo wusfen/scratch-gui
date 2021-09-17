@@ -290,6 +290,13 @@
     z-index: 200;
 }
 
+.sprite-full-screen {
+    position: absolute;
+    left: -18.5rem;
+    top: -1rem;
+    z-index: 200;
+}
+
 .language-content {
     display: flex;
     align-items: center;

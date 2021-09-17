@@ -81,6 +81,20 @@ const initPlayer = function (currentState) {
         }}
     );
 };
+const initStage = function (currentState) {
+    return Object.assign(
+        {},
+        currentState,
+        {mode: {
+            isFullScreen: currentState.mode.isFullScreen,
+            isPlayerOnly: currentState.mode.isPlayerOnly,
+            isStageScreenFull: true,
+            // When initializing in player mode, make sure to reset
+            // hasEverEnteredEditorMode
+            hasEverEnteredEditor: currentState.mode.hasEverEnteredEditor
+        }}
+    );
+};
 const initFullScreen = function (currentState) {
     return Object.assign(
         {},
@@ -176,6 +190,7 @@ export {
     guiMiddleware,
     initEmbedded,
     initFullScreen,
+    initStage,
     initPlayer,
     initTelemetryModal,
     initTutorialCard

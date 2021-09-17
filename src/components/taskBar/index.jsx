@@ -600,6 +600,7 @@ class TaskBar extends React.Component{
     render () {
         const {
             onStartSelectingFileUpload,
+            isStageFullScreen,
             ...props
         } = this.props;
 
@@ -619,7 +620,7 @@ class TaskBar extends React.Component{
         return (
             <div
                 className={classNames({
-                    [styles.container]: true})}
+                    [styles.container]: true, [styles.stageScreen]: isStageFullScreen})}
                 ref={r => {
                     this.myRef = r;
                 }}
@@ -853,6 +854,7 @@ TaskBar.propTypes = {
     onRequestCloseFile: PropTypes.func,
     onProjectTelemetryEvent: PropTypes.func,
     locale: PropTypes.string,
+    isStageFullScreen: PropTypes.bool,
     vm: PropTypes.instanceOf(VM).isRequired,
     onStartSelectingFileUpload: PropTypes.func
 };

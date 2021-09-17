@@ -44,6 +44,7 @@ import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
 import collectMetadata from '../../lib/collect-metadata';
 import getParam from '../../lib/param';
 import {selectLocale} from '../../reducers/locales';
+import {setStage} from '../../reducers/mode.js';
 const BufferedInput = BufferedInputHOC(Input);
 
 
@@ -66,7 +67,8 @@ class SpriteInfo extends React.Component {
             'hideMoreFunc',
             'handleTouchStart',
             'handleTouchOutside',
-            'handleLanguageChange'
+            'handleLanguageChange',
+            'handleClickFullScreen'
         ]);
         this.state = {
             file: param('file'),
@@ -122,6 +124,10 @@ class SpriteInfo extends React.Component {
                 moreFuncShow: false
             });
         }
+    }
+
+    handleClickFullScreen () {
+        this.props.onSetStageFull(true);
     }
 
     async handleClickResetFile () {
@@ -256,6 +262,16 @@ class SpriteInfo extends React.Component {
                     </div>
                     {/* 显示 */}
                     {/* 控制隐藏和显示（先注释） */}
+                    {/* 添加全屏按钮 */}
+                    <div className={styles.spriteFullScreen}>
+                        <b
+                            className={classNames('play_audio', {[styles.iconWrap]: true})}
+                            name="full screen"
+                            onClick={this.handleClickFullScreen}
+                        >
+                            <Icon name="full screen" />
+                        </b>
+                    </div>
                     <div className={styles.spriteShowOrHide}>
                         {
                             this.props.visible ?
@@ -570,7 +586,8 @@ SpriteInfo.propTypes = {
     onProjectTelemetryEvent: PropTypes.func,
     onStartSelectingFileUpload: PropTypes.func,
     messagesByLocale: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-    onChangeLanguage: PropTypes.func.isRequired
+    onChangeLanguage: PropTypes.func.isRequired,
+    onSetStageFull: PropTypes.func.isRequired
 };
 
 
@@ -587,6 +604,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
     onClickSave: () => dispatch(manualUpdateProject()),
     onRequestCloseFile: () => dispatch(closeFileMenu()),
+    onSetStageFull: val => dispatch(setStage(val)),
     onChangeLanguage: locale => {
         dispatch(selectLocale(locale));
         dispatch(closeLanguageMenu());

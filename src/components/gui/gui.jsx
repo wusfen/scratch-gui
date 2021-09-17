@@ -9,7 +9,7 @@ import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 import tabStyles from 'react-tabs/style/react-tabs.css';
 import VM from 'scratch-vm';
 import Renderer from 'scratch-render';
-
+import FullScreenModal from '../fullscreen-modal/fullscreen-modal.jsx';
 import Blocks from '../../containers/blocks.jsx';
 import CostumeTab from '../../containers/costume-tab.jsx';
 import TargetPane from '../../containers/target-pane.jsx';
@@ -97,6 +97,7 @@ const GUIComponent = props => {
         intl,
         isCreating,
         isFullScreen,
+        isStageFullScreen,
         isPlayerOnly,
         isRtl,
         isShared,
@@ -244,6 +245,20 @@ const GUIComponent = props => {
                     />
                 ) : null}
                 {/* 隐藏顶部菜单栏 */}
+                {isStageFullScreen ?
+                    <FullScreenModal
+                        className={classNames(styles.stageAndTargetWrapper,
+                            styles[stageSize])}
+                        onProjectTelemetryEvent={onProjectTelemetryEvent}
+                        onStartSelectingFileUpload={onStartSelectingFileUpload}
+                        showErrorTips={showErrorTips}
+                        errorText={errorText}
+                        isRendererSupported={isRendererSupported}
+                        isRtl={isRtl}
+                        stageSize={stageSize}
+                        isStageFullScreen={isStageFullScreen}
+                        vm={vm}
+                    ></FullScreenModal> : null}
                 <div
                     className={classNames(styles.menuBarContainer, {
                         [styles.menuBarContainerRight]: mode === 'normal'
@@ -428,6 +443,7 @@ const GUIComponent = props => {
 
                             <StageWrapper
                                 isFullScreen={isFullScreen}
+                                isStageFullScreen={isStageFullScreen}
                                 isRendererSupported={isRendererSupported}
                                 isRtl={isRtl}
                                 stageSize={stageSize}
@@ -443,6 +459,7 @@ const GUIComponent = props => {
                             </Box> */}
 
                         </Box>
+                        
 
                     </Box>
                 </Box>
@@ -552,7 +569,8 @@ GUIComponent.defaultProps = {
 
 const mapStateToProps = state => ({
     // This is the button's mode, as opposed to the actual current state
-    stageSizeMode: state.scratchGui.stageSize.stageSize
+    stageSizeMode: state.scratchGui.stageSize.stageSize,
+    isStageFullScreen: state.scratchGui.mode.isStageFullScreen
 });
 
 export default injectIntl(connect(
