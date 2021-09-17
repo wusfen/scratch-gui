@@ -485,7 +485,7 @@ export default function (vm) {
      * @private
      */
     Blockly.WorkspaceSvg.prototype.showContextMenu_ = function (e) {
-        /* eslint-disable block-scoped-var */
+        /* eslint-disable block-scoped-var, no-redeclare */
         if (this.options.readOnly || this.isFlyout) {
             return;
         }
