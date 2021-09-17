@@ -32,6 +32,15 @@
     left: 0;
 }
 
+
+/* PC版纯玩模式不需要键盘 */
+@media (pointer: fine) {
+    .isPlayerOnly {
+      display: none;
+    }
+  }
+
+
 .direction {
     flex: none;
     position: relative;
