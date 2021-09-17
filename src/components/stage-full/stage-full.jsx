@@ -8,7 +8,7 @@ import ErrorTips from '../errorTips/index.jsx';
 import Box from '../box/box.jsx';
 import classNames from 'classnames';
 import VM from 'scratch-vm';
-import styles from './fullscreen-modal.css';
+import styles from './stage-full.css';
 import bindAll from 'lodash.bindall';
 import {setStage} from '../../reducers/mode.js';
 import closeIcon from './icon--close.svg';
