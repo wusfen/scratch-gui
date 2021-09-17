@@ -15,7 +15,7 @@ const statusMap = {
     },
     从未运行: {
         text: `我们先运行一下代码吧。\n点击确定则开始运行代码哦`,
-        style: styles.submitFault
+        style: styles.noRunCode
     },
     提交中: {
         text1: '正在提交作业···',
@@ -95,8 +95,8 @@ class Component extends React.Component{
             backTimeRemain: 10
         };
     }
-    handleClose () {
-        if (/从未运行/.test(this.state.status)) { // 未运行代码的错误弹窗：点击确定，则自动开始运行代码
+    handleClose (isHandle = true) {
+        if (/从未运行/.test(this.state.status) && isHandle) { // 未运行代码的错误弹窗：点击确定，则自动开始运行代码
             window.dispatchEvent(new Event('runCode'));
             this.setState(this.getInitState());
             clearInterval(this.timer);
@@ -197,10 +197,10 @@ class Component extends React.Component{
                     </button>
 
                     <button
-                        hidden={!(/跳过|超时|已提交/.test(status))}
+                        hidden={!(/从未运行|跳过|超时|已提交/.test(status))}
                         type="button"
                         className={classNames(styles.close)}
-                        onClick={this.handleClose}
+                        onClick={() => this.handleClose(false)}
                     >
                         {'x'}
                     </button>

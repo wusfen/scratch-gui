@@ -56,6 +56,12 @@
     background-image: url("./img/tiao-guo.png");
 }
 
+.no-run-code .bg-img {
+    width: 26.38rem;
+    height: 16.97rem;
+    background-image: url("./img/no-run-code.png");
+}
+
 .submit-ing .bg-img {
     width: 14.91rem;
     height: 9.44rem;
@@ -91,6 +97,7 @@
     height: calc(31.9375rem / 2);
     background-image: url("./img/zai-shi-shi.png");
 }
+
 
 .submit-ed .bg-img {
     width: 23.9375rem;

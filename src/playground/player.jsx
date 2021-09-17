@@ -32,7 +32,14 @@ addEventListener('touchmove', e => {
 }, {passive: false});
 
 const Player = ({isPlayerOnly, onSeeInside, projectId}) => (
-    <Box className={classNames(isPlayerOnly ? styles.stageOnly : styles.editor)}>
+    <Box
+        className={
+            classNames(
+                isPlayerOnly ? styles.stageOnly : styles.editor,
+                window.MODE === 'coursePlayer' && styles.bntMrgRight
+            )
+        }
+    >
         {/* {isPlayerOnly && <button onClick={onSeeInside}>{'See inside'}</button>} */}
         <GUI
             canEditTitle
