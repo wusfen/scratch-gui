@@ -10,6 +10,7 @@ const params = new URL(location).searchParams;
 const baseMap = {
     dev: 'https://dev-icode.vipthink.cn/v1/homework/',
     uat: 'https://uat-icode.vipthink.cn/v1/homework',
+    stress: 'https://stress-icode.vipthink.cn/v1/homework',
     prod: 'https://icode.vipthink.cn/v1/homework',
     mock: 'https://yapi.vipthink.net/mock/1788/',
 };
