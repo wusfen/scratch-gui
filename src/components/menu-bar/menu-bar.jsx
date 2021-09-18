@@ -67,7 +67,7 @@ import {
 } from '../../reducers/menus';
 
 import collectMetadata from '../../lib/collect-metadata';
-
+import saveProjectDifferenceSb3 from './diff-sb3';
 import styles from './menu-bar.css';
 const c = styles;
 Object.assign(
@@ -557,6 +557,8 @@ class MenuBar extends React.Component {
     }
     async uploadSb3 (silence) {
         const blob = await this.props.vm.saveProjectSb3();
+        // 得到差异化的文件，打包成sb3
+        // const blob = await this.props.vm.saveProjectDifferenceSb3(window.originSb3Json);
         const workName = this.getWorkName();
 
         return this.uploadToOss(blob, workName, 'sb3', silence);
@@ -662,6 +664,8 @@ class MenuBar extends React.Component {
         return this.handleSubmit(isNoCheckResult, silence);
     }
     async handleSubmit (isNoCheckResult, silence) {
+        const blob = await saveProjectDifferenceSb3(window.originSb3List);
+        debugger
         const workInfo = window._workInfo || {};
 
         if (!workInfo.id) {
