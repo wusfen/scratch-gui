@@ -249,13 +249,6 @@ const GUIComponent = props => {
                     <FullScreenModal
                         className={classNames(styles.stageAndTargetWrapper,
                             styles[stageSize])}
-                        onProjectTelemetryEvent={onProjectTelemetryEvent}
-                        onStartSelectingFileUpload={onStartSelectingFileUpload}
-                        showErrorTips={showErrorTips}
-                        errorText={errorText}
-                        isRendererSupported={isRendererSupported}
-                        isRtl={isRtl}
-                        stageSize={stageSize}
                         isStageFullScreen={isStageFullScreen}
                         vm={vm}
                     ></FullScreenModal> : null}
@@ -470,6 +463,7 @@ const GUIComponent = props => {
                 <Keyboard
                     vm={vm}
                     isPlayerOnly={isPlayerOnly}
+                    isStageFullScreen={isStageFullScreen}
                 />
                 <CopyCodeHideModal></CopyCodeHideModal>
             </Box>

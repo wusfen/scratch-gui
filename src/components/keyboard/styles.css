@@ -31,6 +31,9 @@
 .isPlayerOnly {
     left: 0;
 }
+.full-container{
+    left: 6.31rem;
+}
 
 .direction {
     flex: none;

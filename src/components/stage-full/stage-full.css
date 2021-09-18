@@ -36,7 +36,7 @@
 
 .modal-content {
     outline: none;
-    border: 0.25rem solid $ui-white-transparent;
+    /* border: 0.25rem solid $ui-white-transparent; */
     padding: 0;
     border-radius: $space;
     user-select: none;
@@ -63,7 +63,7 @@
 
 
 
-.stage-and-target-wrapper {
+/* .stage-and-target-wrapper {
     position: relative;
     width: 23.75rem;
     padding: 0.41rem 0.72rem;
@@ -73,7 +73,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-}
+} */
 
 .stage-and-target-wrapper .error-tips {
     position: absolute;
@@ -95,10 +95,5 @@
 }
 
 .full-screen-modal{
-    margin: 0.2rem;
-    padding:1.5rem 0.5rem;
-    background: #fff;
-    border: 0.2rem solid hsla( 0, 100%, 100%, 0.25 );
     position: relative;
-    box-shadow: 0 0 8px 0 rgb(0 0 0 / 30%);
 }

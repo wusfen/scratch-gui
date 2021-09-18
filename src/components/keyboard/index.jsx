@@ -167,6 +167,7 @@ class Component extends React.Component{
             // eslint-disable-next-line no-unused-vars
             children,
             isPlayerOnly,
+            isStageFullScreen,
             // eslint-disable-next-line no-unused-vars
             ...props
         } = this.props;
@@ -189,7 +190,8 @@ class Component extends React.Component{
                 className={classNames(
                     styles.container,
                     isPlayerOnly ?
-                        styles.isPlayerOnly : styles.commonContainer
+                        styles.isPlayerOnly : styles.commonContainer,
+                    isStageFullScreen ? styles.fullContainer : ''
                 )}
                 onTouchEnd={e => e.preventDefault()}
             >
@@ -266,6 +268,7 @@ class Component extends React.Component{
 Component.propTypes = {
     children: PropTypes.node,
     projectRunning: PropTypes.bool,
+    isStageFullScreen: PropTypes.bool,
     isPlayerOnly: PropTypes.bool,
     vm: PropTypes.instanceOf(VM)
 };

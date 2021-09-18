@@ -19,6 +19,26 @@
     height: 39.69rem;
 }
 
+
+.satge-full{
+    position: fixed;
+    z-index: 1000000 !important;
+    transform: translateX(-50%);
+    left: 50%;;
+}
+
+.close-icon{
+    position: absolute;
+    width: 1.38rem;
+    top:0;
+    right:-2rem;
+    transform: rotate(45deg) translateX(26%);
+}
+
+.close-icon:hover{
+    cursor: pointer;
+}
+
 .stage-wrapper.full-screen {
     position: fixed;
     top: $stage-menu-height;
