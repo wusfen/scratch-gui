@@ -138,12 +138,12 @@ class LoaderComponent extends React.Component {
             this.setState({
                 retryBtnShow: true
             });
-        }, 10000);
+        }, 20000);
         this.backBtnShowTimer = setTimeout(() => { // 在hello world界面停留超过20秒，则出现按钮：退出
             this.setState({
                 backBtnShow: true
             });
-        }, 20000);
+        }, 40000);
     }
     componentWillUnmount () {
         dispatchEvent(new Event('loaderUnmount'));
@@ -187,25 +187,27 @@ class LoaderComponent extends React.Component {
                         Hello World<span className={styles.shadowDot}></span></div> */}
                 </div>}
                 <div className={styles.retryContent}>
-                    <div
+                    <span
                         hidden={!this.state.retryBtnShow}
                         className={styles.retryItem}
                     >
-                        <span>加载时间太久，请点击</span>
-                        <button
-                            className={classNames(styles.button, styles.retry)}
+                        <span>加载时间太久，您可以</span>
+                        <a
+                            className={classNames(styles.commonA, styles.retry)}
                             onClick={() => window.location.reload()}
                         >
                             {'重试'}
-                        </button>
-                    </div>
-                    <button
-                        hidden={!this.state.backBtnShow}
-                        className={classNames(styles.button, styles.back)}
-                        onClick={() => window.bridge.emit('exitEditor', {type: 'submit'})}
-                    >
-                        {'退出'}
-                    </button>
+                        </a>
+                    </span>
+                    <span hidden={!this.state.backBtnShow}>
+                        或者
+                        <a
+                            className={classNames(styles.commonA, styles.back)}
+                            onClick={() => window.bridge.emit('exitEditor', {type: 'submit'})}
+                        >
+                            {'跳过'}
+                        </a>
+                    </span>
                 </div>
                 
 

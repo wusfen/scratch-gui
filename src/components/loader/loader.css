@@ -22,37 +22,41 @@
 }
 
 .retry-content {
-    margin-top: 2rem;
-    font-size: 1rem;
-    height: 6rem;
+    position: absolute;
+    bottom:1.94rem;
+    font-size: 0.75rem;
+    color:#32C5FF;
 }
 
 .retry-item {
-    height: 2.69rem;
-    padding: 0 1.22rem;
-    background: #32c5ff;
-    border-radius: 1.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-}
-.retry-item .retry {
-    margin-left: 1rem;
-    line-height: 1.75rem;
-    padding: 0 0.88rem;
-    background: #ffffff;
-    border-radius: 0.63rem;
-    color: #32c5ff;
-    font-size: 1rem;
+    /* height: 2.69rem; */
+    /* padding: 0 1.22rem; */
+    /* background: #32c5ff; */
+    /* border-radius: 1.25rem; */
+    /* display: flex; */
+    /* align-items: center;
+    justify-content: space-around; */
 }
 
-.retry-content .back {
-    color: #32c5ff;
-    background: transparent;
-    font-size: 1rem;
-    margin-top: 1.09rem;
-    font-weight: bold;
+.retry-content .common-a {
+    text-decoration: none;
+    border-bottom: 0.05rem solid;
+    padding-bottom: 0.05rem;
+    margin-left:0.3rem;
 }
+
+.retry-content .common-a:hover{
+    cursor: pointer;
+}
+.retry-item .retry {
+    margin-right:0.3rem;
+}
+
+/* .retry-content .back {
+    margin-left:0.3rem;
+    text-decoration: #32C5FF;
+    text-decoration: underline;
+} */
 
 /* box-shadow+animate方法  */
 .shadow-dot {
