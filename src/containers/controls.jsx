@@ -49,6 +49,7 @@ class Controls extends React.Component {
         if (preProps.projectRunning !== this.props.projectRunning && !this.props.projectRunning) {
             if (window.codeRunningResult === 1) { // 前端批改正确，无需后端批改
                 dispatchEvent(new Event('运行时判断正确'));
+                window.bridge.emit('submit.result', '答案正确');
                 return;
             }
             this.checkWork();
@@ -135,6 +136,7 @@ class Controls extends React.Component {
 
             if (data === 1) {
                 dispatchEvent(new Event('运行时判断正确'));
+                window.bridge.emit('submit.result', '答案正确');
             } else if (data === 2) {
                 dispatchEvent(new Event('运行时判断不正确'));
             } else {
