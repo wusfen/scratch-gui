@@ -1,5 +1,65 @@
 [
     {
+        "name": "魔术舞台",
+        "tags": [],
+        "assetId": "00000000000000000020210823b01c01",
+        "bitmapResolution": 2,
+        "dataFormat": "png",
+        "md5ext": "00000000000000000020210823b01c01.png",
+        "rotationCenterX": 375,
+        "rotationCenterY": 667
+    },
+    {
+        "name": "皮皮虎家",
+        "tags": [],
+        "assetId": "00000000000000000020210823b02c01",
+        "bitmapResolution": 2,
+        "dataFormat": "png",
+        "md5ext": "00000000000000000020210823b02c01.png",
+        "rotationCenterX": 375,
+        "rotationCenterY": 667
+    },
+    {
+        "name": "室内",
+        "tags": [],
+        "assetId": "00000000000000000020210823b03c01",
+        "bitmapResolution": 2,
+        "dataFormat": "png",
+        "md5ext": "00000000000000000020210823b03c01.png",
+        "rotationCenterX": 375,
+        "rotationCenterY": 667
+    },
+    {
+        "name": "体育场1",
+        "tags": [],
+        "assetId": "00000000000000000020210823b04c01",
+        "bitmapResolution": 2,
+        "dataFormat": "png",
+        "md5ext": "00000000000000000020210823b04c01.png",
+        "rotationCenterX": 375,
+        "rotationCenterY": 667
+    },
+    {
+        "name": "体育场2",
+        "tags": [],
+        "assetId": "00000000000000000020210823b05c01",
+        "bitmapResolution": 2,
+        "dataFormat": "png",
+        "md5ext": "00000000000000000020210823b05c01.png",
+        "rotationCenterX": 375,
+        "rotationCenterY": 667
+    },
+    {
+        "name": "舞台背景2",
+        "tags": [],
+        "assetId": "00000000000000000020210823b06c01",
+        "bitmapResolution": 2,
+        "dataFormat": "png",
+        "md5ext": "00000000000000000020210823b06c01.png",
+        "rotationCenterX": 375,
+        "rotationCenterY": 667
+    },
+    {
         "name": "天空幻境",
         "tags": [],
         "assetId": "cd15d6c4a7b6ddd98bbf4fe76100359b",
