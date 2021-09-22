@@ -1,5 +1,6 @@
 [
     {
+        "tags": [],
         "assetId": "e6b383d99e12cfb683a8b9cddcb00e8e",
         "name": "大力熊-01",
         "bitmapResolution": 2,
@@ -9,6 +10,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "eaedf70bea55dbc91fb0e98dcc511586",
         "name": "大力熊-02",
         "bitmapResolution": 2,
@@ -18,6 +20,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "a07809dfadb89e68bfcbde7d02ba2856",
         "name": "大力熊-03",
         "bitmapResolution": 2,
@@ -27,6 +30,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "07deb576378dcf8382dbe7abe0c87fab",
         "name": "大力熊-04",
         "bitmapResolution": 2,
@@ -36,6 +40,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "9a05ef52f059bcc332d6def117eeb41a",
         "name": "宝箱",
         "bitmapResolution": 2,
@@ -45,6 +50,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "76f1101e85cf490e7939a11f8fdd5e1f",
         "name": "山羊老师-01",
         "bitmapResolution": 2,
@@ -54,6 +60,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "fb63ae6799cd428733d76cac2b85e5b8",
         "name": "山羊老师-02",
         "bitmapResolution": 2,
@@ -63,6 +70,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "9f2327da576aa725c3ef3d6f55a9f431",
         "name": "山羊老师-03",
         "bitmapResolution": 2,
@@ -72,6 +80,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "2f3ff5e2d1caefe7bc2381b6c33dfb28",
         "name": "山羊老师-04",
         "bitmapResolution": 2,
@@ -81,6 +90,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "1befe659f3bdfa1907b35f949d1eeb49",
         "name": "再试试吧",
         "bitmapResolution": 2,
@@ -90,6 +100,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "5388a4a91a89d28eb456d3f58864a09e",
         "name": "挑战成功",
         "bitmapResolution": 2,
@@ -99,6 +110,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "722aadc53949e839a6ef99413b98611b",
         "name": "停止",
         "bitmapResolution": 2,
@@ -108,6 +120,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "f7b8fc8294573b2c775327315ea9f45d",
         "name": "播放",
         "bitmapResolution": 2,
@@ -117,6 +130,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "a963ee6b4c2f276e382b37191e92dbb2",
         "name": "暂停",
         "bitmapResolution": 2,
@@ -126,6 +140,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "800a64a7a1ac6910b28d2cb16873422b",
         "name": "星星",
         "bitmapResolution": 2,
@@ -135,6 +150,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "c7872d36225597925f3a4c0b74eaab36",
         "name": "灯泡",
         "bitmapResolution": 2,
@@ -144,6 +160,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "cb69853e0ff3c22696662bd4699adac5",
         "name": "皮皮虎-01",
         "bitmapResolution": 2,
@@ -153,6 +170,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "b4e020310d9ff8ce5c3bdbfdf2af5327",
         "name": "皮皮虎-02",
         "bitmapResolution": 2,
@@ -162,6 +180,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "89235da60a1d6684080a40e3981e3670",
         "name": "皮皮虎-03",
         "bitmapResolution": 2,
@@ -171,6 +190,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "71d9e03dbf7fb2f448d79977b21ed29a",
         "name": "皮皮虎-04",
         "bitmapResolution": 2,
@@ -180,6 +200,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "bc63e9f0e25195f16c9cfdb0147fb1b8",
         "name": "眯眯猫-01",
         "bitmapResolution": 2,
@@ -189,6 +210,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "6dd08a3982ee7270bfb7e49101fe210b",
         "name": "眯眯猫-02",
         "bitmapResolution": 2,
@@ -198,6 +220,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "4cc2ec7bfc0d63e258d1f57a664a9a5e",
         "name": "眯眯猫-03",
         "bitmapResolution": 2,
@@ -207,6 +230,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "21cdb9aff89f38231eca8668a809004a",
         "name": "眯眯猫-04",
         "bitmapResolution": 2,
@@ -216,6 +240,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "b84f9f131b73a41d3dbb628b1f30b589",
         "name": "箭头",
         "bitmapResolution": 2,
@@ -225,6 +250,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "e1fbacc1808ba7aa53b429d6d8288d2d",
         "name": "聪明鹿-01",
         "bitmapResolution": 2,
@@ -234,6 +260,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "7a2d9d5f127af45160cd208cc24658ff",
         "name": "聪明鹿-02",
         "bitmapResolution": 2,
@@ -243,6 +270,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "90655e94710e05fe3efc49ecee9a98bb",
         "name": "聪明鹿-03",
         "bitmapResolution": 2,
@@ -252,6 +280,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "7a1a67a4154846f5a4ca3438f6052c70",
         "name": "聪明鹿-04",
         "bitmapResolution": 2,
@@ -261,6 +290,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "0fe6f5eb9c204f3ce105d7ca98e103d2",
         "name": "金币",
         "bitmapResolution": 2,
@@ -270,6 +300,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "68a6fe6db2b28c3f728c30e79a856de0",
         "name": "锁",
         "bitmapResolution": 2,
@@ -279,6 +310,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "26058db59b2d95252f110992ea5e746e",
         "name": "问号",
         "bitmapResolution": 2,
@@ -288,6 +320,7 @@
         "rotationCenterY": 192
     },
     {
+        "tags": [],
         "assetId": "e6d8d9a827de853d6787d2dc1d6066c2",
         "name": "风车",
         "bitmapResolution": 2,
