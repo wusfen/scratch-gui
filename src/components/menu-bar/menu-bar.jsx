@@ -558,7 +558,8 @@ class MenuBar extends React.Component {
     async uploadSb3 (silence) {
         const blob = await this.props.vm.saveProjectSb3();
         // 得到差异化的文件，打包成sb3
-        // const blob = await this.props.vm.saveProjectDifferenceSb3(window.originSb3Json);
+        const diffBlob = await saveProjectDifferenceSb3(window.originSb3List);
+        console.log('差异文件blob------', diffBlob);
         const workName = this.getWorkName();
 
         return this.uploadToOss(blob, workName, 'sb3', silence);
@@ -664,8 +665,6 @@ class MenuBar extends React.Component {
         return this.handleSubmit(isNoCheckResult, silence);
     }
     async handleSubmit (isNoCheckResult, silence) {
-        const blob = await saveProjectDifferenceSb3(window.originSb3List);
-        debugger
         const workInfo = window._workInfo || {};
 
         if (!workInfo.id) {
