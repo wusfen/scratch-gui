@@ -459,7 +459,10 @@ class SpriteInfo extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            {(mode === 'teacher' || mode === 'normal') && <div className={classNames(styles.item)}>
+                            <div
+                                hidden={!(mode === 'teacher' || mode === 'normal')}
+                                className={classNames(styles.item)}
+                            >
                                 <button
                                     type="button"
                                     className={`${styles.funcItem}`}
@@ -478,8 +481,11 @@ class SpriteInfo extends React.Component {
                                         </div>
                                     )}</SB3Downloader>
                                 </button>
-                            </div>}
-                            {(mode === 'teacher' || mode === 'normal') && <div className={classNames(styles.item)}>
+                            </div>
+                            <div
+                                hidden={!(mode === 'teacher' || mode === 'normal')}
+                                className={classNames(styles.item)}
+                            >
                                 <button
                                     type="button"
                                     className={`${styles.funcItem}`}
@@ -492,7 +498,7 @@ class SpriteInfo extends React.Component {
                                     />
                                     加载本地文件
                                 </button>
-                            </div>}
+                            </div>
                             {mode === 'course' && <div
                                 hidden={!(this.state.file)}
                                 className={classNames(styles.item)}

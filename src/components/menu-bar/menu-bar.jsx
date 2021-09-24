@@ -95,6 +95,7 @@ import resetIcon from '../../assets/icons/redo.svg';
 
 import {ajax} from '../../lib/ajax.js';
 import {param} from '../../lib/param.js';
+import {project} from '../../lib/project.js';
 
 const ariaMessages = defineMessages({
     language: {
@@ -565,6 +566,12 @@ class MenuBar extends React.Component {
 
         return this.uploadToOss(blob, workName, 'sb3', silence);
     }
+    async uploadSb3Diff (silence) {
+        const blob = await project.getSb3Diff();
+        const workName = this.getWorkName();
+
+        return this.uploadToOss(blob, workName, 'sb3diff', silence);
+    }
     async uploadCover () {
         var cover = await this.getCover();
         const workName = this.getWorkName();
@@ -674,7 +681,7 @@ class MenuBar extends React.Component {
         }
         return true;
     }
-    
+
     async handleSubmit (isNoCheckResult, silence) {
         if (!silence) { // 自动保存不需要判断是否运行过
             if (!this.judgeIsRunCode()) {
@@ -711,9 +718,9 @@ class MenuBar extends React.Component {
         // 上传文件
         silence || this.props.setUploadingProgress(true);
         const uploadCoverPromise = this.uploadCover();
-        const uploadSb3Promise = this.uploadSb3(silence);
+        const uploadSb3DiffPromise = this.uploadSb3Diff(silence);
 
-        await uploadSb3Promise;
+        await uploadSb3DiffPromise;
         silence || this.props.setUploadingProgress(90, '正在保存...');
 
         // 提交
@@ -725,7 +732,7 @@ class MenuBar extends React.Component {
             // workCoverPath: await this.getProjectCover(silence),
             // workPath: fileData.path,
             // analystStatus: undefined,
-            attachId: (await uploadSb3Promise).id,
+            attachId: (await uploadSb3DiffPromise).id,
             workCoverAttachId: (await uploadCoverPromise).id,
             analystStatus: window.codeRunningResult === 1 ? 1 : 2
         }, {silence});
