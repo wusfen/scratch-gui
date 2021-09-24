@@ -379,7 +379,7 @@ class Blocks extends React.Component {
             if (!this.props.vm.editingTarget.__hasCenterOnBlock) {
                 this.props.vm.editingTarget.__hasCenterOnBlock = true;
 
-                this.workspace.centerOnBlock(this.workspace.topBlocks_.filter(e => e.rendered).sort((a, b) => {
+                this.workspace.topOnBlock(this.workspace.topBlocks_.filter(e => e.rendered).sort((a, b) => {
                     return a.getRelativeToSurfaceXY().y - b.getRelativeToSurfaceXY().y;
                 })[0]?.id);
             }
