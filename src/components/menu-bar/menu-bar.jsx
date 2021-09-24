@@ -652,6 +652,9 @@ class MenuBar extends React.Component {
 
     }
     async handleExit (e = 'exitEditor') {
+        if (this.handleExit.locked) return;
+        this.handleExit.locked = true;
+
         var exitType = 'exit';
         if (e === 'requireExitEditor') exitType = 'sidebar';
 
@@ -666,6 +669,7 @@ class MenuBar extends React.Component {
             await this.autoSave();
         }
 
+        this.handleExit.locked = false;
         window.bridge.emit(e, {type: exitType});
     }
     handleClickSubmitButton (isNoCheckResult, silence) {
