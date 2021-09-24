@@ -757,6 +757,9 @@ class Blocks extends React.Component {
             toolboxXML,
             updateMetrics: updateMetricsProp,
             workspaceMetrics,
+            autoClose,
+            setAutoClose,
+            setVisible,
             ...props
         } = this.props;
         /* eslint-enable no-unused-vars */
