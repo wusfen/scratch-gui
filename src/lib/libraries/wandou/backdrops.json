@@ -1,7 +1,67 @@
 [
     {
+        "name": "魔术舞台",
+        "tags": ["life"],
+        "assetId": "00000000000000000020210823b01c01",
+        "bitmapResolution": 2,
+        "dataFormat": "png",
+        "md5ext": "00000000000000000020210823b01c01.png",
+        "rotationCenterX": 375,
+        "rotationCenterY": 667
+    },
+    {
+        "name": "皮皮虎家",
+        "tags": ["life"],
+        "assetId": "00000000000000000020210823b02c01",
+        "bitmapResolution": 2,
+        "dataFormat": "png",
+        "md5ext": "00000000000000000020210823b02c01.png",
+        "rotationCenterX": 375,
+        "rotationCenterY": 667
+    },
+    {
+        "name": "室内",
+        "tags": ["life"],
+        "assetId": "00000000000000000020210823b03c01",
+        "bitmapResolution": 2,
+        "dataFormat": "png",
+        "md5ext": "00000000000000000020210823b03c01.png",
+        "rotationCenterX": 375,
+        "rotationCenterY": 667
+    },
+    {
+        "name": "体育场1",
+        "tags": ["life"],
+        "assetId": "00000000000000000020210823b04c01",
+        "bitmapResolution": 2,
+        "dataFormat": "png",
+        "md5ext": "00000000000000000020210823b04c01.png",
+        "rotationCenterX": 375,
+        "rotationCenterY": 667
+    },
+    {
+        "name": "体育场2",
+        "tags": ["life"],
+        "assetId": "00000000000000000020210823b05c01",
+        "bitmapResolution": 2,
+        "dataFormat": "png",
+        "md5ext": "00000000000000000020210823b05c01.png",
+        "rotationCenterX": 375,
+        "rotationCenterY": 667
+    },
+    {
+        "name": "舞台背景2",
+        "tags": ["life"],
+        "assetId": "00000000000000000020210823b06c01",
+        "bitmapResolution": 2,
+        "dataFormat": "png",
+        "md5ext": "00000000000000000020210823b06c01.png",
+        "rotationCenterX": 375,
+        "rotationCenterY": 667
+    },
+    {
         "name": "天空幻境",
-        "tags": [],
+        "tags": ["natural"],
         "assetId": "cd15d6c4a7b6ddd98bbf4fe76100359b",
         "bitmapResolution": 1,
         "dataFormat": "png",
@@ -11,7 +71,7 @@
     },
     {
         "name": "极地冰川",
-        "tags": [],
+        "tags": ["natural"],
         "assetId": "2a4a9ae315e0274b4ff3edf2d5566082",
         "bitmapResolution": 1,
         "dataFormat": "png",
@@ -21,7 +81,7 @@
     },
     {
         "name": "校园课室",
-        "tags": [],
+        "tags": ["life"],
         "assetId": "4aeccea8e6e1b8be528cc99f0cc5df06",
         "bitmapResolution": 1,
         "dataFormat": "png",
@@ -31,7 +91,7 @@
     },
     {
         "name": "森林秘境",
-        "tags": [],
+        "tags": ["natural"],
         "assetId": "51817ac12b4463ec67c7042088d2d4c1",
         "bitmapResolution": 1,
         "dataFormat": "png",
@@ -41,7 +101,7 @@
     },
     {
         "name": "沙漠绿洲",
-        "tags": [],
+        "tags": ["natural"],
         "assetId": "98585b5db9992a0ee771721458503960",
         "bitmapResolution": 1,
         "dataFormat": "png",
@@ -51,7 +111,7 @@
     },
     {
         "name": "科幻实验室",
-        "tags": [],
+        "tags": ["life"],
         "assetId": "599b59a4de66877f8ab563a8ada162c2",
         "bitmapResolution": 1,
         "dataFormat": "png",
@@ -61,12 +121,206 @@
     },
     {
         "name": "餐厅厨房",
-        "tags": [],
+        "tags": ["life"],
         "assetId": "6d816f8a0b531fdad64e3f3634aedec5",
         "bitmapResolution": 1,
         "dataFormat": "png",
         "md5ext": "6d816f8a0b531fdad64e3f3634aedec5.png",
         "rotationCenterX": 593,
         "rotationCenterY": 333.5
+    },
+    {
+        "name": "夜间小镇",
+        "tags": ["games"],
+        "assetId": "8105bf8240fdfe70376f901a06289309",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "8105bf8240fdfe70376f901a06289309.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "树林旷野",
+        "tags": ["games"],
+        "assetId": "81e65881ef9c433ca4b48d05363f30bc",
+        "bitmapResolution": 1,
+        "dataFormat": "jpg",
+        "md5ext": "81e65881ef9c433ca4b48d05363f30bc.jpg",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "机械工厂",
+        "tags": ["games"],
+        "assetId": "eb3d2cb6467710658de9902702808891",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "eb3d2cb6467710658de9902702808891.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "后花园",
+        "tags": ["natural"],
+        "assetId": "8f5321061b99ca326e8f4250cccc518f",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "8f5321061b99ca326e8f4250cccc518f.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "太空课室",
+        "tags": ["games"],
+        "assetId": "d39e6235bdacc820c8c4177817c4c1f8",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "d39e6235bdacc820c8c4177817c4c1f8.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "森林草原",
+        "tags": ["natural"],
+        "assetId": "430b60d7e078fe61a6da4055240cb48e",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "430b60d7e078fe61a6da4055240cb48e.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "青青草原",
+        "tags": ["natural"],
+        "assetId": "f8ed3d55eac3db1c37c5b1ed0d67c0da",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "f8ed3d55eac3db1c37c5b1ed0d67c0da.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "车道地图",
+        "tags": ["games"],
+        "assetId": "0332aa33fe2caeb115555973e2149eba",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "0332aa33fe2caeb115555973e2149eba.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "太空世界",
+        "tags": ["natural"],
+        "assetId": "e3f615285123ed1d412e69c4d414cd2b",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "e3f615285123ed1d412e69c4d414cd2b.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "滑雪道",
+        "tags": ["games"],
+        "assetId": "57b408657950ad939ecf1170cba26219",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "57b408657950ad939ecf1170cba26219.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "PK擂台",
+        "tags": ["games"],
+        "assetId": "27986138c1b5cc7920ecf49b79e4ba12",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "27986138c1b5cc7920ecf49b79e4ba12.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "电玩俱乐部",
+        "tags": ["games"],
+        "assetId": "e5e4174bd8db444ab5e0218caf10d716",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "e5e4174bd8db444ab5e0218caf10d716.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "急速赛车场",
+        "tags": ["games"],
+        "assetId": "08e74426060774ae639ec5929cd3f9db",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "08e74426060774ae639ec5929cd3f9db.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "商店抽奖站",
+        "tags": ["games"],
+        "assetId": "7798b6195abce0aed69ab866376740a8",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "7798b6195abce0aed69ab866376740a8.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "植物大战僵尸",
+        "tags": ["games"],
+        "assetId": "ea1921b8c3b8cdd565c04e3e25862e76",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "ea1921b8c3b8cdd565c04e3e25862e76.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "城市街道",
+        "tags": ["life"],
+        "assetId": "5bb02813abf80bb741d0bd3f5b46e3ca",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "5bb02813abf80bb741d0bd3f5b46e3ca.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "海洋探险",
+        "tags": ["natural"],
+        "assetId": "453b8486ca6dbeae3a926d9031bab013",
+        "bitmapResolution": 1,
+        "dataFormat": "jpg",
+        "md5ext": "453b8486ca6dbeae3a926d9031bab013.jpg",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "游乐场",
+        "tags": ["life"],
+        "assetId": "349ba00a613ba6fe2fc6ef4c0321a9fe",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "349ba00a613ba6fe2fc6ef4c0321a9fe.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "足球场",
+        "tags": ["life"],
+        "assetId": "72f6abe167cbe3678ff7522d0646e506",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "72f6abe167cbe3678ff7522d0646e506.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
     }
+    
+
+
+    
 ]
