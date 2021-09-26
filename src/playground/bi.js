@@ -87,18 +87,20 @@ addEventListener('checkWorkEnd', e => {
 
 // 提交作业正确
 addEventListener('submit:已提交正确', e => {
+    window.subjectPassOrNot = 1;
     bi('programming_app_interaction_link', {
         attempts_times: submitCount,
         subject_timeLong: (+new Date() - clickSubmitTime) / 1000,
-        subject_passOrNot: 1
+        subject_passOrNot: window.subjectPassOrNot
     });
 });
 
 // 提交作业失败
 addEventListener('submit:已提交错误', e => {
+    window.subjectPassOrNot = 2;
     bi('programming_app_interaction_link', {
         attempts_times: submitCount,
         subject_timeLong: (+new Date() - clickSubmitTime) / 1000,
-        subject_passOrNot: 0
+        subject_passOrNot: window.subjectPassOrNot
     });
 });

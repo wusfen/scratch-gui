@@ -203,7 +203,7 @@ class LoaderComponent extends React.Component {
                         或者
                         <a
                             className={classNames(styles.commonA, styles.back)}
-                            onClick={() => window.bridge.emit('exitEditor', {type: 'submit'})}
+                            onClick={() => window.bridge.emit('exitEditor', {type: 'submit', interaction_passOrNot: window.subjectPassOrNot})}
                         >
                             {'跳过'}
                         </a>

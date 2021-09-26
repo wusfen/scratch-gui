@@ -79,7 +79,7 @@ const Controls = function (props) {
                     [styles.skipButton]: true,
                 })}
                 type="button"
-                onClick={e => window.bridge.emit('exitEditor', {type: 'skip'})}
+                onClick={e => window.bridge.emit('exitEditor', {type: 'skip', interaction_passOrNot: window.subjectPassOrNot})}
             >
                 {'跳过'}
             </button>

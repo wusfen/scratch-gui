@@ -128,7 +128,7 @@ class Component extends React.Component{
         }
         if (/正确/.test(status)) {
             // dispatchEvent(new Event('submit-result-dialog:正确退出'));
-            window.bridge.emit('exitEditor', {type: 'submit'});
+            window.bridge.emit('exitEditor', {type: 'submit', interaction_passOrNot: window.subjectPassOrNot});
             return;
         }
 

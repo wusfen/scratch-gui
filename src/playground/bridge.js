@@ -11,6 +11,13 @@
 function emit (action, data) {
     console.info('[bridge.emit]', action, data);
 
+    const event = new Event('bridge.emit');
+    event.data = {
+        action,
+        data,
+    };
+    dispatchEvent(event);
+
     var options = {action, data};
 
     // ios

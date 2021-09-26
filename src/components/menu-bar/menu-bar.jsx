@@ -231,7 +231,7 @@ class MenuBar extends React.Component {
         addEventListener('submit-result-dialog:跳过退出', async e => {
             await this.autoSave();
 
-            window.bridge.emit('exitEditor', {type: 'skip'});
+            window.bridge.emit('exitEditor', {type: 'skip', interaction_passOrNot: window.subjectPassOrNot});
         });
 
         addEventListener('运行时判断正确', e => {
