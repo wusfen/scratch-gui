@@ -150,16 +150,6 @@
         "rotationCenterY": 333.5
     },
     {
-        "name": "机械工厂",
-        "tags": ["games"],
-        "assetId": "eb3d2cb6467710658de9902702808891",
-        "bitmapResolution": 1,
-        "dataFormat": "png",
-        "md5ext": "eb3d2cb6467710658de9902702808891.png",
-        "rotationCenterX": 593,
-        "rotationCenterY": 333.5
-    },
-    {
         "name": "后花园",
         "tags": ["natural"],
         "assetId": "8f5321061b99ca326e8f4250cccc518f",
@@ -200,32 +190,12 @@
         "rotationCenterY": 333.5
     },
     {
-        "name": "车道地图",
-        "tags": ["games"],
-        "assetId": "0332aa33fe2caeb115555973e2149eba",
-        "bitmapResolution": 1,
-        "dataFormat": "png",
-        "md5ext": "0332aa33fe2caeb115555973e2149eba.png",
-        "rotationCenterX": 593,
-        "rotationCenterY": 333.5
-    },
-    {
         "name": "太空世界",
         "tags": ["natural"],
         "assetId": "e3f615285123ed1d412e69c4d414cd2b",
         "bitmapResolution": 1,
         "dataFormat": "png",
         "md5ext": "e3f615285123ed1d412e69c4d414cd2b.png",
-        "rotationCenterX": 593,
-        "rotationCenterY": 333.5
-    },
-    {
-        "name": "滑雪道",
-        "tags": ["games"],
-        "assetId": "57b408657950ad939ecf1170cba26219",
-        "bitmapResolution": 1,
-        "dataFormat": "png",
-        "md5ext": "57b408657950ad939ecf1170cba26219.png",
         "rotationCenterX": 593,
         "rotationCenterY": 333.5
     },
