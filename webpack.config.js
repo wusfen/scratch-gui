@@ -160,9 +160,28 @@ const config = {
             version: `"${version}"`,
         }),
         new HtmlWebpackPlugin({
+            chunks: ['lib', 'gui'],
+            template: 'src/playground/index.ejs',
+            sentryConfig: process.env.SENTRY_CONFIG ?
+                `"${process.env.SENTRY_CONFIG}"` :
+                null,
+            title: '',
+            PUBLIC_PATH: process.env.PUBLIC_PATH || '',
+            version: `"${version}"`,
+            filename: `index.${version}.html`,
+        }),
+        new HtmlWebpackPlugin({
             chunks: ['lib', 'player'],
             template: 'src/playground/index.ejs',
             filename: 'player.html',
+            title: '',
+            PUBLIC_PATH: process.env.PUBLIC_PATH || '',
+            version: `"${version}"`,
+        }),
+        new HtmlWebpackPlugin({
+            chunks: ['lib', 'player'],
+            template: 'src/playground/index.ejs',
+            filename: `player.${version}.html`,
             title: '',
             PUBLIC_PATH: process.env.PUBLIC_PATH || '',
             version: `"${version}"`,
