@@ -20,7 +20,7 @@ export default function (Blockly){
       Blockly.Blocks['control_block_hide'] = {
         init: function() {
           this.jsonInit({
-            "id": "event_next_lesson",
+            "id": "control_block_hide",
             "message0": "隐藏积木代码",
             "args0": [
             ],
