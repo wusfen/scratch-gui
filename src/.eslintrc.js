@@ -45,6 +45,7 @@ module.exports = {
         'arrow-body-style': 0,
         'import/no-nodejs-modules': 1,
         'no-shadow': 1,
+        'max-len': 1,
     },
     settings: {
         react: {
