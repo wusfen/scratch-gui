@@ -44,7 +44,7 @@ export default function (Blockly){
         var scrollToBlockY = pixelY - metrics.contentTop;
       
         // viewHeight and viewWidth are in pixels.
-        var halfViewWidth = metrics.viewWidth / 1.6;
+        var halfViewWidth = metrics.viewWidth / 2;
         var halfViewHeight = metrics.viewHeight / 6.5;
       
         // Put the block in the center of the visible workspace instead.
