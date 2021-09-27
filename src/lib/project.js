@@ -80,7 +80,9 @@ class Project {
         if (json._originalFileURL) {
             let originalFile;
 
-            if (/^file:\//.test(json._originalFileURL)) {
+            // file:///
+            // 在不同设备上提交和访问本地的路径可能是不一样
+            if (/^file:\//.test(json._originalFileURL) && json._originalFileURL === param('file')) {
                 originalFile = await new Promise((rs, rj) => {
                     ajax.get(json._originalFileURL, {}, {
                         responseType: 'blob',
@@ -95,6 +97,7 @@ class Project {
                 });
             }
 
+            // online
             if (!originalFile) {
                 const onlineOriginalFileURL = this.localFileToOnlineURL(json._originalFileURL);
                 originalFile = await new Promise((rs, rj) => {
@@ -105,6 +108,7 @@ class Project {
                             rs(res);
                         },
                         onerror (){
+                            console.error('[onlineOriginalFileURL]', onlineOriginalFileURL);
                             rs();
                         }
                     });
@@ -146,7 +150,8 @@ class Project {
      */
     localFileToOnlineURL (file) {
         var url = file;
-        var path = file.match(/\/[^/]+\/scratch\/[^/]+$/)?.[0];
+        var path = file.replace(/\\/g, '/') // windows \
+            .match(/[/][^/]+[/]scratch[/][^/]+$/)?.[0];
 
         if (/^file:\//.test(file) && path) {
             if (param('base') === 'dev') {
