@@ -26,7 +26,8 @@ export default function (Blockly){
       
         // In RTL the block's position is the top right of the block, not top left.
         var multiplier = this.RTL ? -1 : 1;
-        var blockCenterX = xy.x + (multiplier * heightWidth.width / 2);
+        // var blockCenterX = xy.x + (multiplier * heightWidth.width / 2);
+        var blockCenterX = xy.x; // 调整x轴位置
       
         // Workspace scale, used to convert from workspace coordinates to pixels.
         var scale = this.scale;
