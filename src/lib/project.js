@@ -156,6 +156,8 @@ class Project {
         if (/^file:\//.test(file) && path) {
             if (param('base') === 'dev') {
                 url = `https://oss.wit-learn.com/s/platform/interactive/common/interactiveTemplate/wdProj/moduleRelease${path}`;
+            } else if (param('base') === 'uat') {
+                url = `https://oss.wit-learn.com/s/platform/interactive/common/interactiveTemplate/wdProj/moduleRelease${path}`;
             } else {
                 url = `https://oss.iandcode.com/s/platform/interactive/common/interactiveTemplate/wdProj/moduleRelease${path}`;
             }
