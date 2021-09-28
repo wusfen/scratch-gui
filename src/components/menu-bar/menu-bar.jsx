@@ -727,18 +727,19 @@ class MenuBar extends React.Component {
         silence || this.props.setUploadingProgress(90, '正在保存...');
 
         // 提交
-        const {data: workId} = await ajax.put('/hwUserWork/submitWork', {
+        const {data} = await ajax.put('/hwUserWork/newSubmitWork', {
             id: workInfo.id,
             workId: workInfo.analystStatus === -1 ? workInfo.workId : '',
             submitType: silence ? 1 : 3,
             userBlockNum: _userBlockNum,
-            // workCoverPath: await this.getProjectCover(silence),
-            // workPath: fileData.path,
-            // analystStatus: undefined,
+            workCoverPath: await this.getProjectCover(silence),
+            workPath: (await uploadSb3DiffPromise).path,
             attachId: (await uploadSb3DiffPromise).id,
             workCoverAttachId: (await uploadCoverPromise).id,
-            analystStatus: window.codeRunningResult === 1 ? 1 : 2
+            analystStatus: window.codeRunningResult === 1 ? 1 : 2,
+            projectJsonStr: this.props.vm.toJSON()
         }, {silence});
+        const {analystStatus} = data;
         dispatchEvent(new Event('submitEnd'));
 
         // 标记已保存
@@ -750,15 +751,8 @@ class MenuBar extends React.Component {
             return;
         }
 
-        silence || this.props.setUploadingProgress(95, '正在批改中...');
-        var checkRes = 0;
-        if (window.codeRunningResult === 1) { // 前端批改正确
-            checkRes = 1;
-        } else { // 前端批改非正确，需要后端批改
-            while (checkRes < 1) { // 如果查询状态是未批改，那就轮询
-                checkRes = await this.checkWork(workId);
-            }
-        }
+        // silence || this.props.setUploadingProgress(95, '正在批改中...');
+        const checkRes = window.codeRunningResult === 1 ? 1 : analystStatus;
         silence || this.props.setUploadingProgress(100, '正在批改中...');
         dispatchEvent(new Event('checkWorkEnd'));
 
@@ -773,6 +767,7 @@ class MenuBar extends React.Component {
             silence || this.props.setUploadingProgress(false);
         }, 500);
     }
+    
     async checkWork (workId) {
         var {data} = await ajax.get(`hwUserWork/getWorkData/${workId}`, {});
         return data?.analystStatus;
