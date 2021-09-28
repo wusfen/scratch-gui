@@ -150,7 +150,8 @@ class Project {
      */
     localFileToOnlineURL (file) {
         var url = file;
-        var path = file.replace(/\\/g, '/') // windows \
+        var path = file
+            .replace(/[\\/]+/g, '/') // fuck //\\ => /
             .match(/[/][^/]+[/]scratch[/][^/]+$/)?.[0];
 
         if (/^file:\//.test(file) && path) {
