@@ -154,7 +154,7 @@ class Project {
             .replace(/[\\/]+/g, '/') // fuck //\\ => /
             .match(/[/][^/]+[/]scratch[/][^/]+$/)?.[0];
 
-        if (/^file:\//.test(file) && path) {
+        if (path && !/^http/.test(file)) { // !(!file:///)
             if (param('base') === 'dev') {
                 url = `https://oss.wit-learn.com/s/platform/interactive/common/interactiveTemplate/wdProj/moduleRelease${path}`;
             } else if (param('base') === 'uat') {
