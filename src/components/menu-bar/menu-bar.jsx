@@ -466,7 +466,7 @@ class MenuBar extends React.Component {
 
                 // return `${data.domain}${data.path}`;
                 // return data.path;
-                rs(data.path);
+                rs(`${data.domain}${data.path}`);
             });
         });
     }
@@ -723,7 +723,7 @@ class MenuBar extends React.Component {
         const uploadCoverPromise = this.uploadCover();
         const uploadSb3DiffPromise = this.uploadSb3Diff(silence);
 
-        await uploadSb3DiffPromise;
+        const {ossDomain, path} = await uploadSb3DiffPromise;
         silence || this.props.setUploadingProgress(90, '正在保存...');
 
         // 提交
@@ -733,7 +733,7 @@ class MenuBar extends React.Component {
             submitType: silence ? 1 : 3,
             userBlockNum: _userBlockNum,
             workCoverPath: await this.getProjectCover(silence),
-            workPath: (await uploadSb3DiffPromise).path,
+            workPath: `${ossDomain}${path}`,
             attachId: (await uploadSb3DiffPromise).id,
             workCoverAttachId: (await uploadCoverPromise).id,
             analystStatus: window.codeRunningResult === 1 ? 1 : 2,
