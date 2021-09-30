@@ -77,6 +77,14 @@ const motion = function (isInitialSetup, isStage, targetId) {
             </value>
         </block>
         ${blockSeparator}
+        <block type="motion_pointindirection">
+            <value name="DIRECTION">
+                <shadow type="math_angle">
+                    <field name="NUM">90</field>
+                </shadow>
+            </value>
+        </block>
+        ${blockSeparator}
         <block type="motion_changexby">
             <value name="DX">
                 <shadow type="math_number">
