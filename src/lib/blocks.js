@@ -135,7 +135,7 @@ export default function (vm) {
 
     const spriteMenu = function () {
         const sprites = [];
-        let target, name;
+        let target;
         for (const targetId in vm.runtime.targets) {
             // eslint-disable-next-line no-prototype-builtins
             if (!vm.runtime.targets.hasOwnProperty(targetId)) continue;
@@ -145,11 +145,10 @@ export default function (vm) {
                     if (target === vm.editingTarget) {
                         continue;
                     }
-                    name = target.sprite.name;
-                    if((window.MODE !== 'teacher' && name.indexOf('#') === 0 && name.length - 1 === name.indexOf('*'))){
+                    if(window.MODE !== 'teacher' && target.spriteHidden){
                         continue;
                     }
-                    sprites.push([name, name]);
+                    sprites.push([target.sprite.name, target.sprite.name]);
                 }
             }
         }

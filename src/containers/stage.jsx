@@ -40,8 +40,7 @@ class Stage extends React.Component {
             'setDragCanvas',
             'clearDragCanvas',
             'drawDragCanvas',
-            'positionDragCanvas',
-            'clickHandle'
+            'positionDragCanvas'
         ]);
         this.state = {
             mouseDownTimeoutId: null,
@@ -138,7 +137,7 @@ class Stage extends React.Component {
         document.addEventListener('touchend', this.onMouseUp);
         canvas.addEventListener('mousedown', this.onMouseDown);
         canvas.addEventListener('touchstart', this.onMouseDown);
-        canvas.addEventListener('click', this.clickHandle);
+        canvas.addEventListener('click', this.handleDoubleClick);
         canvas.addEventListener('wheel', this.onWheel);
     }
     detachMouseEvents (canvas) {
@@ -148,7 +147,7 @@ class Stage extends React.Component {
         document.removeEventListener('touchend', this.onMouseUp);
         canvas.removeEventListener('mousedown', this.onMouseDown);
         canvas.removeEventListener('touchstart', this.onMouseDown);
-        canvas.removeEventListener('click', this.clickHandle);
+        canvas.removeEventListener('click', this.handleDoubleClick);
         canvas.removeEventListener('wheel', this.onWheel);
     }
     attachRectEvents () {
@@ -185,6 +184,7 @@ class Stage extends React.Component {
         };
     }
     handleDoubleClick (e) {
+        if(this.props.projectRunning) return;
         const {x, y} = getEventXY(e);
         // Set editing target from cursor position, if clicking on a sprite.
         const mousePosition = [x - this.rect.left, y - this.rect.top];
@@ -192,6 +192,8 @@ class Stage extends React.Component {
         if (drawableId === null) return;
         const targetId = this.props.vm.getTargetIdForDrawableId(drawableId);
         if (targetId === null) return;
+        const target = this.props.vm.runtime.getTargetById(targetId);
+        if(window.MODE !== 'teacher' && target.spriteHidden) return;
         this.props.vm.setEditingTarget(targetId);
     }
     onMouseMove (e) {
@@ -274,17 +276,6 @@ class Stage extends React.Component {
         }
     }
 
-    clickHandle (e) {
-        const {x, y} = getEventXY(e);
-        // Set editing target from cursor position, if clicking on a sprite.
-        const mousePosition = [x - this.rect.left, y - this.rect.top];
-        const drawableId = this.renderer.pick(mousePosition[0], mousePosition[1]);
-        if (drawableId === null) return;
-        const targetId = this.props.vm.getTargetIdForDrawableId(drawableId);
-        if (targetId === null) return;
-        this.props.vm.setEditingTarget(targetId);
-    }
-
     onMouseDown (e) {
         this.updateRect();
         const {x, y} = getEventXY(e);
@@ -296,14 +287,32 @@ class Stage extends React.Component {
             // Immediately update the color picker info
             this.setState({colorInfo: this.getColorInfo(this.pickX, this.pickY)});
         } else {
+            if(!this.props.projectRunning){
+                const drawableId = this.renderer.pick(mousePosition[0], mousePosition[1]);
+                if (drawableId !== null){
+                    const targetId = this.props.vm.getTargetIdForDrawableId(drawableId);
+                    if (targetId !== null){
+                        const target = this.props.vm.runtime.getTargetById(targetId);
+                        if(window.MODE !== 'teacher' && target.spriteHidden){
+                            if (e.preventDefault) {
+                                if (document.activeElement && document.activeElement.blur) {
+                                    document.activeElement.blur();
+                                }
+                            }
+                            return;
+                        }
+                    }
+                }
+               
+            }
             if (e.button === 0 || (window.TouchEvent && e instanceof TouchEvent)) {
                 this.setState({
                     mouseDown: true,
-                    mouseDownPosition: mousePosition,
-                    mouseDownTimeoutId: setTimeout(
-                        this.onStartDrag.bind(this, mousePosition[0], mousePosition[1]),
-                        400
-                    )
+                    mouseDownPosition: mousePosition//,
+                    // mouseDownTimeoutId: setTimeout(
+                    //     this.onStartDrag.bind(this, mousePosition[0], mousePosition[1]),
+                    //     400
+                    // )
                 });
             }
             const data = {
@@ -454,7 +463,7 @@ class Stage extends React.Component {
                 colorInfo={this.state.colorInfo}
                 dragRef={this.setDragCanvas}
                 question={this.state.question}
-                onDoubleClick={this.handleDoubleClick}
+                //onDoubleClick={this.handleDoubleClick}
                 onQuestionAnswered={this.handleQuestionAnswered}
                 {...props}
             />
