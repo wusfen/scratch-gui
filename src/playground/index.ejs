@@ -52,6 +52,22 @@
             })(true);
         </script>
 
+        <!-- detect -->
+        <script>
+            // prettier-ignore
+            setTimeout(function(){
+                try {
+                    try {
+                        var indexedDB = window.indexedDB || window.webkitIndexedDB
+                        indexedDB.open('test')
+                        __bl.sum('indexDB.yes')
+                    } catch (e) {
+                        __bl.sum('indexDB.no')
+                    }
+                } catch (e) {}
+            }, 10 * 1000);
+        </script>
+
         <!-- console.js -->
         <script>
             // prettier-ignore
