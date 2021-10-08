@@ -40,7 +40,8 @@ class Stage extends React.Component {
             'setDragCanvas',
             'clearDragCanvas',
             'drawDragCanvas',
-            'positionDragCanvas'
+            'positionDragCanvas',
+            'clickHandle'
         ]);
         this.state = {
             mouseDownTimeoutId: null,
@@ -137,6 +138,7 @@ class Stage extends React.Component {
         document.addEventListener('touchend', this.onMouseUp);
         canvas.addEventListener('mousedown', this.onMouseDown);
         canvas.addEventListener('touchstart', this.onMouseDown);
+        canvas.addEventListener('click', this.clickHandle);
         canvas.addEventListener('wheel', this.onWheel);
     }
     detachMouseEvents (canvas) {
@@ -146,6 +148,7 @@ class Stage extends React.Component {
         document.removeEventListener('touchend', this.onMouseUp);
         canvas.removeEventListener('mousedown', this.onMouseDown);
         canvas.removeEventListener('touchstart', this.onMouseDown);
+        canvas.removeEventListener('click', this.clickHandle);
         canvas.removeEventListener('wheel', this.onWheel);
     }
     attachRectEvents () {
@@ -270,6 +273,18 @@ class Stage extends React.Component {
             this.pickY = null;
         }
     }
+
+    clickHandle (e) {
+        const {x, y} = getEventXY(e);
+        // Set editing target from cursor position, if clicking on a sprite.
+        const mousePosition = [x - this.rect.left, y - this.rect.top];
+        const drawableId = this.renderer.pick(mousePosition[0], mousePosition[1]);
+        if (drawableId === null) return;
+        const targetId = this.props.vm.getTargetIdForDrawableId(drawableId);
+        if (targetId === null) return;
+        this.props.vm.setEditingTarget(targetId);
+    }
+
     onMouseDown (e) {
         this.updateRect();
         const {x, y} = getEventXY(e);
@@ -301,7 +316,7 @@ class Stage extends React.Component {
             this.props.vm.postIOData('mouse', data);
             if (e.preventDefault) {
                 // Prevent default to prevent touch from dragging page
-                e.preventDefault();
+                // e.preventDefault();
                 // But we do want any active input to be blurred
                 if (document.activeElement && document.activeElement.blur) {
                     document.activeElement.blur();
