@@ -137,8 +137,6 @@ class Stage extends React.Component {
         document.addEventListener('touchend', this.onMouseUp);
         canvas.addEventListener('mousedown', this.onMouseDown);
         canvas.addEventListener('touchstart', this.onMouseDown);
-        canvas.addEventListener('mouseup', this.handleDoubleClick);
-        canvas.addEventListener('touchend', this.handleDoubleClick);
         canvas.addEventListener('wheel', this.onWheel);
     }
     detachMouseEvents (canvas) {
@@ -147,9 +145,7 @@ class Stage extends React.Component {
         document.removeEventListener('touchmove', this.onMouseMove);
         document.removeEventListener('touchend', this.onMouseUp);
         canvas.removeEventListener('mousedown', this.onMouseDown);
-        canvas.removeEventListener('touchstart', this.onMouseDown);
-        canvas.removeEventListener('mouseup', this.handleDoubleClick);
-        canvas.addEventListener('touchend', this.handleDoubleClick);
+        canvas.removeEventListener('touchstart', this.onMouseDown);;
         canvas.removeEventListener('wheel', this.onWheel);
     }
     attachRectEvents () {
@@ -214,8 +210,9 @@ class Stage extends React.Component {
                 Math.pow(mousePosition[1] - this.state.mouseDownPosition[1], 2)
             );
             if (distanceFromMouseDown > dragThreshold) {
-                this.cancelMouseDownTimeout();
+                //this.cancelMouseDownTimeout();
                 this.onStartDrag(...this.state.mouseDownPosition);
+                this._isDown = false;
             }
         }
         if (this.state.mouseDown && this.state.isDragging) {
@@ -231,6 +228,7 @@ class Stage extends React.Component {
                     force: true
                 });
             }
+            this._isDown = false;
         }
         const coordinates = {
             x: mousePosition[0],
@@ -243,7 +241,11 @@ class Stage extends React.Component {
     onMouseUp (e) {
         const {x, y} = getEventXY(e);
         const mousePosition = [x - this.rect.left, y - this.rect.top];
-        this.cancelMouseDownTimeout();
+        //this.cancelMouseDownTimeout();
+        if (this._isDown) {
+            this.handleDoubleClick(e);
+            this._isDown = false;
+        }
         this.setState({
             mouseDown: false,
             mouseDownPosition: null
@@ -259,6 +261,7 @@ class Stage extends React.Component {
         if (this.state.isDragging) {
             this.onStopDrag(mousePosition[0], mousePosition[1]);
         }
+        
         this.props.vm.postIOData('mouse', data);
 
         if (this.props.isColorPicking &&
@@ -305,7 +308,7 @@ class Stage extends React.Component {
                         }
                     }
                 }
-               
+                this._isDown = true;
             }
             if (e.button === 0 || (window.TouchEvent && e instanceof TouchEvent)) {
                 this.setState({
