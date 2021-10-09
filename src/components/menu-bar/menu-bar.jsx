@@ -453,23 +453,7 @@ class MenuBar extends React.Component {
             this.props.onRequestCloseAbout();
         };
     }
-    // TODO remove
-    getProjectCover (silence) {
-        if (silence) return;
 
-        return new Promise(rs => {
-            this.props.vm.renderer.requestSnapshot(async dataURL => {
-                var blob = await (await fetch(dataURL)).blob();
-                const formData = new FormData();
-                formData.append('file', blob, `${this.props.projectTitle || 'project'}.png`);
-                const {data} = await ajax.post('/file/upload', formData, {silence});
-
-                // return `${data.domain}${data.path}`;
-                // return data.path;
-                rs(`${data.domain}${data.path}`);
-            });
-        });
-    }
     async handleClickResetFile () {
         const fileUrl = this.state.file;
 
@@ -732,7 +716,7 @@ class MenuBar extends React.Component {
             workId: workInfo.analystStatus === -1 ? workInfo.workId : '',
             submitType: silence ? 1 : 3,
             userBlockNum: _userBlockNum,
-            workCoverPath: await this.getProjectCover(silence),
+            workCoverPath: `${ossDomain}${path}`,
             workPath: `${ossDomain}${path}`,
             attachId: (await uploadSb3DiffPromise).id,
             workCoverAttachId: (await uploadCoverPromise).id,
