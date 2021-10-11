@@ -39,7 +39,7 @@ export function objToKeyValueArray (obj) {
     const arr = [];
     if (obj && typeof obj === 'object'){
         for (const key in obj) {
-            const value = obj[obj];
+            const value = obj[key];
             arr.push({
                 key,
                 value

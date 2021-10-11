@@ -18,7 +18,7 @@ export default class NativeRequestTrans{
 
     onNativeReceived (result){
         if (result.httpID === this.id){
-            this.successHandler(result.data);
+            this.successHandler(result.returnObject);
             this.destroy();
         }
     }

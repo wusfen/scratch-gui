@@ -67,8 +67,9 @@ export default class NativeAjax{
         // 代理responseType为json的GET、POST请求
         const method = options.method.toLocaleUpperCase();
         const headers = options.headers;
+        const responseType = options.responseType;
         const ContentType = headers['Content-Type'];
-        return (method === 'GET' || method === 'POST') && (ContentType === 'application/json');
+        return (method === 'GET' || method === 'POST') && (ContentType === 'application/json') && (responseType === 'json' || responseType === 'text');
     }
 }
 
