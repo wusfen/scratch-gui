@@ -119,7 +119,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
                 project.id = id;
                 project.idFile = idFile;
                 project.file = file;
-                const buffer = await project.loadProject(url);
+                const buffer = await project.loadProjectArrayBuffer(url);
 
                 this.props.onFetchedProjectData(buffer, loadingState);
                 return;

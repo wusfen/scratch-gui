@@ -1,6 +1,7 @@
 import JSZip from 'jszip';
 import {ajax} from './ajax.js';
 import {param} from './param.js';
+import Dialog from './../components/dialog/index.jsx';
 
 // TODO: sb3 内文件名必须是文件的 md5 ，如果不一致加载会找不到
 // TODO: 选择本地文件
@@ -31,14 +32,14 @@ class Project {
         json = JSON.stringify(json);
         zip.file('project.json', json);
 
-        // originList[]
-        const originList = [];
-        this.originalTargets.forEach(t => originList.push(...[...t.costumes, ...t.sounds]));
-        console.info('[diff] originList:', originList);
+        // originalList[]
+        const originalList = [];
+        this.originalTargets.forEach(t => originalList.push(...t.costumes, ...t.sounds));
+        console.info('[diff] originalList:', originalList);
 
-        // [...] - originList[]
+        // [...] - originalList[]
         vm.assets.forEach(asset => {
-            if (!originList.find(e => e.assetId === asset.assetId)) {
+            if (!originalList.find(e => e.assetId === asset.assetId)) {
                 // console.info('[diff] +:', name, asset.assetId);
 
                 zip.file(
@@ -62,9 +63,9 @@ class Project {
     /**
      * 加载解析 sb3
      * @param {string} url url
-     * @returns {Promise<ArrayBuffer>} arraybuffer
+     * @returns {Promise<ArrayBuffer>} arrayBuffer
      */
-    async loadProject (url) {
+    async loadProjectArrayBuffer (url) {
         const blob = await ajax.get(url, {}, {responseType: 'blob', base: ''});
         const zip = await JSZip.loadAsync(blob);
         let json = await zip.file('project.json').async('string');
@@ -137,6 +138,22 @@ class Project {
         return finalZip.generateAsync({
             type: 'arraybuffer',
         });
+    }
+
+    // TODO
+    loadProject () {
+    }
+
+    async resetProjectByFileParam () {
+        await Dialog.confirm({
+            title: '重做确认',
+            content: '将会清空当前作品记录，重新开始创作哦，是否确定重做？'
+        });
+
+        var file = param('file');
+        const arrayBuffer = await this.loadProjectArrayBuffer(file);
+
+        this.vm.loadProject(arrayBuffer);
     }
 
     /**

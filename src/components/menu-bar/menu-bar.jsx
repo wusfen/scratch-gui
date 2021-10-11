@@ -470,23 +470,8 @@ class MenuBar extends React.Component {
             });
         });
     }
-    async handleClickResetFile () {
-        const fileUrl = this.state.file;
-
-        if (fileUrl) {
-            const bufferPromise = new Promise(async r => {
-                const blob = await ajax.get(fileUrl, {}, {responseType: 'blob', base: ''});
-                const buffer = await blob.arrayBuffer();
-                r(buffer);
-            });
-
-            await Dialog.confirm({
-                title: '重做确认',
-                content: '将会清空当前作品记录，重新开始创作哦，是否确定重做？'
-            });
-
-            this.props.vm.loadProject(await bufferPromise);
-        }
+    handleClickResetFile () {
+        project.resetProjectByFileParam();
     }
     handleHideCode () {
         dispatchEvent(new Event('menu:hideCode'));
@@ -767,7 +752,7 @@ class MenuBar extends React.Component {
             silence || this.props.setUploadingProgress(false);
         }, 500);
     }
-    
+
     async checkWork (workId) {
         var {data} = await ajax.get(`hwUserWork/getWorkData/${workId}`, {});
         return data?.analystStatus;
