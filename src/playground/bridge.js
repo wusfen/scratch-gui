@@ -44,10 +44,18 @@ function emit (action, data) {
 function on (action, cb) {
     // TODO add once
 
-    addEventListener(`bridge:${action}`, e => {
+    var eventName = `bridge:${action}`;
+    var handler = e => {
         cb(e.data);
-    });
+    };
+
+    addEventListener(eventName, handler);
+
+    return function off () {
+        removeEventListener(eventName, handler);
+    };
 }
+
 
 function trigger (action, data) {
     console.info('[bridge.trigger]', action, data);
@@ -69,6 +77,7 @@ addEventListener('message', e => {
         trigger(action, options.data);
     }
 });
+
 
 const bridge = {
     emit,
