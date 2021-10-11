@@ -1,5 +1,6 @@
 import bridge from '../../playground/bridge';
 import BridgeAction from './bridge_action';
+import {objToKeyValueArray} from './utils';
 
 let httpid = 0;
 export default class NativeRequestTrans{
@@ -58,7 +59,7 @@ export default class NativeRequestTrans{
                 path: url,
                 requestType: method.toLocaleUpperCase(),
                 param: data,
-                header: headers,
+                header: objToKeyValueArray(headers),
                 httpDNS: true,
                 webSocket: false,
                 addTaskPool: false,

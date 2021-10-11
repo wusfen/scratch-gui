@@ -29,3 +29,22 @@ export function isElectron () {
 export function onNative () {
     return isIOS() || isAndroid() || isElectron();
 }
+
+/**
+ * 对象转成key value 的数组
+ * @param {object} obj 需要转换的对象
+ * @returns {{key:string,value:string}[]} key value Array
+ */
+export function objToKeyValueArray (obj) {
+    const arr = [];
+    if (obj && typeof obj === 'object'){
+        for (const key in obj) {
+            const value = obj[obj];
+            arr.push({
+                key,
+                value
+            });
+        }
+    }
+    return arr;
+}
