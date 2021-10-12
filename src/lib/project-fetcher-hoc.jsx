@@ -115,11 +115,9 @@ const ProjectFetcherHOC = function (WrappedComponent) {
 
             // fetch
             if (url) {
-                project.vm = vm;
-                project.id = id;
-                project.idFile = idFile;
-                project.file = file;
-                const buffer = await project.loadProjectArrayBuffer(url);
+
+                const blob = await ajax.get(url, {}, {responseType: 'blob', base: ''});
+                const buffer = await blob.arrayBuffer();
 
                 this.props.onFetchedProjectData(buffer, loadingState);
                 return;

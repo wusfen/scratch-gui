@@ -3,43 +3,44 @@ import {ajax} from './ajax.js';
 import {param} from './param.js';
 import Dialog from './../components/dialog/index.jsx';
 
-// TODO: sb3 内文件名必须是文件的 md5 ，如果不一致加载会找不到
-// TODO: 选择本地文件
+let vm;
 
+// WARNING: sb3 内文件名必须是文件的 md5 ，如果不一致加载会找不到
+
+/**
+ * single
+ */
 class Project {
-    vm = null
-    id = null
-    idFile = null
-    file = null
-    originalFileURL = ''
-    originalTargets = null
+    originalFileURL = '' // ?file=url
+    originalJson = {} // 最初的文件json
+    jsonAddon = { // project.json +
+        // 保存当前角色
+        get _editingTargetName () {
+            return vm.editingTarget.getName();
+        }
+    }
 
     /**
      * 获取拆分包
      * @returns {Promise<Blob>} blob
      */
     getSb3Diff () {
-        var vm = this.vm;
-        var runtime = vm.runtime;
-
         var zip = new JSZip();
         this.zip = zip;
 
         // project.json + _originalFileURL
+        this.jsonAddon._originalFileURL = this.originalFileURL;
         var json = vm.toJSON();
-        json = JSON.parse(json);
-        json._originalFileURL = this.originalFileURL;
-        json = JSON.stringify(json);
         zip.file('project.json', json);
 
-        // originalList[]
-        const originalList = [];
-        this.originalTargets.forEach(t => originalList.push(...t.costumes, ...t.sounds));
-        console.info('[diff] originalList:', originalList);
+        // originalAssets[]
+        const originalAssets = [];
+        this.originalJson.targets.forEach(t => originalAssets.push(...t.costumes, ...t.sounds));
+        console.info('[diff] originalAssets:', originalAssets);
 
-        // [...] - originalList[]
+        // currentAssets[] - originalAssets[]
         vm.assets.forEach(asset => {
-            if (!originalList.find(e => e.assetId === asset.assetId)) {
+            if (!originalAssets.find(e => e.assetId === asset.assetId)) {
                 // console.info('[diff] +:', name, asset.assetId);
 
                 zip.file(
@@ -49,7 +50,9 @@ class Project {
             }
         });
 
-        console.log('[diff] zip:', zip);
+        console.log('[diff] zip:', zip, {get json (){
+            return JSON.parse(json);
+        }});
         return zip.generateAsync({
             type: 'blob',
             mimeType: 'application/x.scratch.sb3diff',
@@ -62,20 +65,26 @@ class Project {
 
     /**
      * 加载解析 sb3
-     * @param {string} url url
+     * @param {string|Blob|ArrayBuffer} file .sb3|.sb3diff
      * @returns {Promise<ArrayBuffer>} arrayBuffer
      */
-    async loadProjectArrayBuffer (url) {
-        const blob = await ajax.get(url, {}, {responseType: 'blob', base: ''});
+    async getFullProjectArrayBuffer (file) {
+        let blob = file;
+        let url = '';
+        if (typeof file === 'string') {
+            url = file;
+            blob = await ajax.get(url, {}, {responseType: 'blob', base: ''});
+        }
+
         const zip = await JSZip.loadAsync(blob);
         let json = await zip.file('project.json').async('string');
         json = JSON.parse(json);
-        console.log('zip:', zip);
+        console.log('zip:', zip, json);
 
         // original
         let originalZip = zip;
-        this.originalFileURL = url;
-        this.originalTargets = json.targets;
+        this.originalFileURL = json._originalFileURL || url || param('file');
+        this.originalJson = json;
 
         // _originalFileURL
         if (json._originalFileURL) {
@@ -121,8 +130,7 @@ class Project {
                 let originalJson = await originalZip.file('project.json').async('string');
                 originalJson = JSON.parse(originalJson);
 
-                this.originalFileURL = json._originalFileURL;
-                this.originalTargets = originalJson.targets;
+                this.originalJson = originalJson;
             }
         }
 
@@ -140,10 +148,6 @@ class Project {
         });
     }
 
-    // TODO
-    loadProject () {
-    }
-
     async resetProjectByFileParam () {
         await Dialog.confirm({
             title: '重做确认',
@@ -151,7 +155,7 @@ class Project {
         });
 
         var file = param('file');
-        const arrayBuffer = await this.loadProjectArrayBuffer(file);
+        const arrayBuffer = await this.getFullProjectArrayBuffer(file);
 
         this.vm.loadProject(arrayBuffer);
     }
@@ -188,9 +192,52 @@ class Project {
 
 const project = new Project();
 
+/**
+ * inject: vm.toJSON, vm.loadProject
+ * @param {VM} _vm vm
+ */
+function injectVm (_vm) {
+    console.log('[injectVm]');
+    vm = _vm;
+
+    // TODO remove: src\lib\blocks_teacher_mode.js vm.toJSON
+    // inject toJSON
+    var toJSON = vm.toJSON;
+    vm.toJSON = function () {
+        var json = toJSON.apply(this, arguments);
+        json = JSON.parse(json);
+
+        json = {
+            ...json,
+            ...project.jsonAddon,
+        };
+
+        return JSON.stringify(json);
+    };
+
+    // inject loadProject
+    vm._loadProject = vm.loadProject;
+    vm.loadProject = async function (arrayBuffer) {
+        console.log('[injectVm] vm.loadProject');
+        const fullArrayBuffer = await project.getFullProjectArrayBuffer(arrayBuffer);
+        return vm._loadProject(fullArrayBuffer);
+    };
+
+
+    vm.runtime.on(vm.runtime.constructor.PROJECT_LOADED, e => {
+        console.log('PROJECT_LOADED', project.originalJson);
+
+        // 默认选中保存时选中的角色
+        var _editingTarget = vm.runtime.targets.find(e => e.sprite.name === project.originalJson._editingTargetName);
+        vm.setEditingTarget(_editingTarget?.id);
+    });
+
+}
+
 export {
     project as default,
     project,
+    injectVm,
 };
 
 // dev
