@@ -183,7 +183,17 @@ class GUI extends React.Component {
     }
 
     handleVideoSrc = () => {
-        let videoSrc = getTipParam('introVideo');
+        const isExplain = getTipParam('tipVideo')?.includes('_explain');
+        let videoSrc;
+        if (isExplain) { // 讲解视频就取第一个讲解视频作为入口
+            let tipVideos = getTipParam('tipVideo') || [];
+            if (typeof tipVideos === 'string') {
+                tipVideos = tipVideos.split('|');
+            }
+            videoSrc = tipVideos[0];
+        } else {
+            videoSrc = getTipParam('introVideo');
+        }
         if (videoSrc){ // 有初始引导
             addEventListener('loaderUnmount', () => { // 等待工程加载完毕
                 this.setState({promptAreaShow: true});

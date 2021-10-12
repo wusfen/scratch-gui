@@ -220,7 +220,8 @@ class MenuBar extends React.Component {
             _timeout: param('_timeout') || 30, // dev
         };
         var state = this.state;
-
+        this.uploadToOssRetryCount = 0;
+        this.uploadToOssProgressValue = 0;
         // 30秒显示跳过按钮
         setTimeout(() => {
             this.setState({
@@ -520,14 +521,15 @@ class MenuBar extends React.Component {
     getWorkName () {
         return this.props.projectTitle || param('workName') || '我的作品';
     }
-    async uploadToOss (blob, name = 'test', ext = 'sb3', silence) {
+    async uploadToOss (blob, name = 'test', ext = 'sb3', silence, driver = 'aly_oss', retry) {
         var self = this;
         silence || self.props.setUploadingProgress(10);
 
         var {data} = await ajax.get('file/getSign', {
-            driver: 'aly_oss',
+            driver: driver,
             name,
             ext,
+            retry
         });
         var ossToken = JSON.parse(data.ossToken);
 
@@ -540,23 +542,32 @@ class MenuBar extends React.Component {
         formData.append('file', blob, `${name}.${ext}`);
 
         silence || self.props.setUploadingProgress(20);
-        await ajax.post(`https://${data.bucket}.${data.region}.aliyuncs.com`, formData, {
+        await ajax.post(`${data.uploadDomain}`, formData, {
             silence: true,
             onprogress (e) {
                 if (silence) return;
                 var value = e.loaded * 100 / e.total;
                 value = 20 + (value * .6);
                 value = parseInt(value, 10);
-                self.props.setUploadingProgress(value);
+                self.uploadToOssProgressValue = (value > self.uploadToOssProgressValue) ? value : self.uploadToOssProgressValue; // 记录当前的进度，避免重试时进度条倒退
+                self.props.setUploadingProgress(self.uploadToOssProgressValue);
             },
-            onload () {},
+            onload () {
+                self.uploadToOssProgressValue = 0; // 重置
+            },
             onerror () {
-                alert('上传失败');
+                if (self.uploadToOssRetryCount >= 2) {
+                    alert('上传失败');
+                    self.uploadToOssProgressValue = 0;
+                    return;
+                }
+                self.uploadToOssRetryCount++;
+                self.uploadToOss(blob, name, ext, silence, driver, true); // 失败切云，默认将上一次的driver带上
             },
         });
         // silence || self.props.setUploadingProgress(false);
 
-        console.info('uploadToOss:', `https://${data.bucket}.${data.region}.aliyuncs.com/${data.path}`);
+        console.info('uploadToOss:', `${data.uploadDomain}`);
         return data;
     }
     async uploadSb3 (silence) {

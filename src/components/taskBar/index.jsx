@@ -67,6 +67,7 @@ class TaskBar extends React.Component{
         this.introVideoSrc = '';
         this.titleAudioSrc = '';
         this.tipVideos = [];
+        this.isExplain = false;
         this.videoFuncList = [
             {
                 funcName: '任务',
@@ -115,6 +116,7 @@ class TaskBar extends React.Component{
         const {mode} = this.state;
         switch (mode) {
         case 'course':
+            this.isExplain = getTipParam('tipVideo')?.includes('_explain');
             this.introVideoSrc = getTipParam('introVideo');
             this.titleAudioSrc = getTipParam('tipAudio');
             this.tipVideos = getTipParam('tipVideo') || [];
@@ -397,7 +399,7 @@ class TaskBar extends React.Component{
     openTipVideo = (funcIndex, index) => {
         if (!this.tipVideos[index - 1]) {
             // 提示没有该提示视频
-            window.editorErrorTipText = '对不起，没有该提示视频哦';
+            window.editorErrorTipText = `对不起，没有该${this.isExplain ? '讲解' : '提示'}视频哦`;
             dispatchEvent(new Event('openErrorTips'));
             return;
         }
@@ -826,7 +828,7 @@ class TaskBar extends React.Component{
                                                 )
                                             }
                                             onClick={() => item.func(index)}
-                                        >{item.funcName}</div>
+                                        >{this.isExplain ? item.funcName.replace(/提示/, '讲解') : item.funcName}</div>
                                     )
                                 )}
                             </div>
