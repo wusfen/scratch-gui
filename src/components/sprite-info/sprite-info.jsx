@@ -38,6 +38,7 @@ import VM from 'scratch-vm';
 import resetIcon from '../../assets/icons/redo.svg';
 import {param} from '../../lib/param.js';
 import {ajax} from '../../lib/ajax.js';
+import {project} from '../../lib/project.js';
 import folderIcon from '../../assets/icons/folder.svg';
 import fileUp from '../../assets/icons/fileUp.svg';
 import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
@@ -124,23 +125,8 @@ class SpriteInfo extends React.Component {
         }
     }
 
-    async handleClickResetFile () {
-        const fileUrl = this.state.file;
-
-        if (fileUrl) {
-            const bufferPromise = new Promise(async r => {
-                const blob = await ajax.get(fileUrl, {}, {responseType: 'blob', base: ''});
-                const buffer = await blob.arrayBuffer();
-                r(buffer);
-            });
-
-            await Dialog.confirm({
-                title: '重做确认',
-                content: '将会清空当前作品记录，重新开始创作哦，是否确定重做？'
-            });
-
-            this.props.vm.loadProject(await bufferPromise);
-        }
+    handleClickResetFile () {
+        project.resetProjectByFileParam();
     }
 
     handleClickSave () {

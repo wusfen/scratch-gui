@@ -4,7 +4,7 @@ import {intlShape, injectIntl} from 'react-intl';
 import bindAll from 'lodash.bindall';
 import {connect} from 'react-redux';
 import VM from 'scratch-vm';
-
+import {indexDB} from './indexDB';
 import {setProjectUnchanged} from '../reducers/project-changed';
 import {
     LoadingState,
@@ -114,11 +114,21 @@ const ProjectFetcherHOC = function (WrappedComponent) {
 
             // fetch
             if (url) {
-                project.vm = vm;
-                project.id = id;
-                project.idFile = idFile;
-                project.file = file;
-                const buffer = await project.loadProject(url);
+                let blob;
+                let projectData = null;
+                if (id) {
+                    try {
+                        projectData = await indexDB.getData(id); // 先查找本地是否有该工程数据
+                    } catch (error) {
+                        console.log('查找本地是否有该工程数据---error', error);
+                    }
+                }
+                if (projectData) {
+                    blob = projectData.zip;
+                } else {
+                    blob = await ajax.get(url, {}, {responseType: 'blob', base: ''});
+                }
+                const buffer = await blob.arrayBuffer();
 
                 this.props.onFetchedProjectData(buffer, loadingState);
                 return;

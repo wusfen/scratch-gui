@@ -46,7 +46,7 @@ class IDB {
     //  * @param {失败回调} error 
     //  */
     createTable (primaryKey, keyList, success, error) {
-        const req = this.openDB(this.version, success, error);
+        const req = this.openDB(success, error);
         req.onupgradeneeded = function (e) {
             const db = e.target.result;
             if (!db.objectStoreNames.contains(this.tableName)) {
@@ -68,29 +68,34 @@ class IDB {
     //  */
     add (data, isRetry = false, success, error) {
         return new Promise((resolve, reject) => {
-            const req = this.openDB(this.version);
+            const req = this.openDB();
             req.onsuccess = e => {
-                const store = this.getStore(e, this.tableName);
-                const request = store.add(data);
-                request.onsuccess = function () {
-                    success && (typeof success === 'function') ? success() : '';
-                    resolve();
-                };
-                request.onerror = async function (e) {
-                    error && (typeof error === 'function') ? error() : '';
-                    if (isRetry) { // 添加失败时，会删除占用存储最大的一条数据，然后再尝试添加
-                        try {
-                            const dataList = await this.indexDB.getList();
-                            const largestProject = dataList.find(item => item.zip.size === Math.max(...dataList.map(it => it.zip.size)));
-                            await this.deleteData(largestProject.id);
-                            await this.add(data);
-                        } catch (err) {
-                            console.log('indexDB---retry---error', err);
+                try {
+                    const store = this.getStore(e, this.tableName);
+                    const request = store.add(data);
+                    request.onsuccess = function () {
+                        success && (typeof success === 'function') ? success() : '';
+                        resolve();
+                    };
+                    request.onerror = async function (e) {
+                        error && (typeof error === 'function') ? error() : '';
+                        if (isRetry) { // 添加失败时，会删除占用存储最大的一条数据，然后再尝试添加
+                            try {
+                                const dataList = await this.indexDB.getList();
+                                const largestProject = dataList.find(item => item.zip.size === Math.max(...dataList.map(it => it.zip.size)));
+                                await this.deleteData(largestProject.id);
+                                await this.add(data);
+                            } catch (err) {
+                                console.log('indexDB---retry---error', err);
+                            }
+                        } else {
+                            reject(e);
                         }
-                    } else {
-                        reject(e);
-                    }
-                };
+                    };
+                } catch (err) {
+                    reject(err);
+                }
+                
             };
         });
         
@@ -104,18 +109,23 @@ class IDB {
     //  */
     getData (primaryKey, success, error) {
         return new Promise((resolve, reject) => {
-            const req = this.openDB(this.version);
+            const req = this.openDB();
             req.onsuccess = e => {
-                const store = this.getStore(e, this.tableName);
-                const request = store.get(primaryKey);
-                request.onsuccess = function () {
-                    success && (typeof success === 'function') ? success(request.result) : '';
-                    resolve(request.result);
-                };
-                request.onerror = function (e) {
-                    error && (typeof error === 'function') ? error() : '';
-                    reject(e);
-                };    
+                try {
+                    const store = this.getStore(e, this.tableName);
+                    const request = store.get(primaryKey);
+                    request.onsuccess = function () {
+                        success && (typeof success === 'function') ? success(request.result) : '';
+                        resolve(request.result);
+                    };
+                    request.onerror = function (e) {
+                        error && (typeof error === 'function') ? error() : '';
+                        reject(e);
+                    };    
+                } catch (err) {
+                    reject(err);
+                }
+                
             };
         });
         
@@ -128,24 +138,28 @@ class IDB {
     //  */
     getList (success, error) {
         return new Promise((resolve, reject) => {
-            const req = this.openDB(this.version);
+            const req = this.openDB();
             req.onsuccess = e => {
-                const store = this.getStore(e, this.tableName);
-                const result = [];
-                store.openCursor().onsuccess = function (e) {
-                    const cursor = e.target.result;
-                    if (cursor) {
-                        result.push(cursor.value);
-                        cursor.continue(); // 循环去获取数据
-                    } else {
-                        success && (typeof success === 'function') ? success(result) : '';
-                        resolve(result);
-                    }
-                };
-                store.openCursor().onerror = function (e) {
-                    error && (typeof error === 'function') ? error(e) : '';
-                    reject(e);
-                };
+                try {
+                    const store = this.getStore(e, this.tableName);
+                    const result = [];
+                    store.openCursor().onsuccess = function (e) {
+                        const cursor = e.target.result;
+                        if (cursor) {
+                            result.push(cursor.value);
+                            cursor.continue(); // 循环去获取数据
+                        } else {
+                            success && (typeof success === 'function') ? success(result) : '';
+                            resolve(result);
+                        }
+                    };
+                    store.openCursor().onerror = function (e) {
+                        error && (typeof error === 'function') ? error(e) : '';
+                        reject(e);
+                    }; 
+                } catch (err) {
+                    reject(err);
+                }
             };
         });
     }
@@ -158,18 +172,22 @@ class IDB {
     //  */
     deleteData (primaryKey, success, error) {
         return new Promise((resolve, reject) => {
-            const req = this.openDB(this.version);
+            const req = this.openDB();
             req.onsuccess = e => {
-                const store = this.getStore(e, this.tableName);
-                const request = store.delete(primaryKey);
-                request.onsuccess = function () {
-                    success && (typeof success === 'function') ? success(request.result) : '';
-                    resolve(request.result);
-                };
-                request.onerror = function (e) {
-                    error && (typeof error === 'function') ? error() : '';
-                    reject(e);
-                };      
+                try {
+                    const store = this.getStore(e, this.tableName);
+                    const request = store.delete(primaryKey);
+                    request.onsuccess = function () {
+                        success && (typeof success === 'function') ? success(request.result) : '';
+                        resolve(request.result);
+                    };
+                    request.onerror = function (e) {
+                        error && (typeof error === 'function') ? error() : '';
+                        reject(e);
+                    };  
+                } catch (err) {
+                    reject(err);
+                }  
             };
         });
         
@@ -184,29 +202,34 @@ class IDB {
     //  */
     update (primaryKey, newData, success, error) {
         return new Promise((resolve, reject) => {
-            const req = this.openDB(this.version);
+            const req = this.openDB();
             req.onsuccess = e => {
-                const store = this.getStore(e, this.tableName);
-                const request = store.get(primaryKey);
-                request.onerror = function (e) {
-                    console.error('数据服务器错误');
-                    reject(e);
-                };
-                request.onsuccess = function (e) {
-                    const data = e.target.result;
-                    for (const key in newData) {
-                        data[key] = newData[key];
-                    }
-                    const requestUpdate = store.put(data);
-                    requestUpdate.onerror = function (e) {
-                        error && (typeof error === 'function') ? error() : '';
+                try {
+                    const store = this.getStore(e, this.tableName);
+                    const request = store.get(primaryKey);
+                    request.onerror = function (e) {
+                        console.error('数据服务器错误');
                         reject(e);
                     };
-                    requestUpdate.onsuccess = function () {
-                        success && typeof success === 'function' ? success() : '';
-                        resolve();
-                    };
-                };
+                    request.onsuccess = function (e) {
+                        const data = e.target.result;
+                        for (const key in newData) {
+                            data[key] = newData[key];
+                        }
+                        const requestUpdate = store.put(data);
+                        requestUpdate.onerror = function (e) {
+                            error && (typeof error === 'function') ? error() : '';
+                            reject(e);
+                        };
+                        requestUpdate.onsuccess = function () {
+                            success && typeof success === 'function' ? success() : '';
+                            resolve();
+                        };
+                    }; 
+                } catch (err) {
+                    reject(err);
+                }
+                
             };
         });
         
