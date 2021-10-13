@@ -6,7 +6,6 @@ import {connect} from 'react-redux';
 import VM from 'scratch-vm';
 
 import {setProjectUnchanged} from '../reducers/project-changed';
-
 import {
     LoadingState,
     LoadingStates,

@@ -1,7 +1,7 @@
 import JSZip from 'jszip';
 import {ajax} from './ajax.js';
 import {param} from './param.js';
-
+import {indexDB} from './indexDB';
 // TODO: sb3 内文件名必须是文件的 md5 ，如果不一致加载会找不到
 // TODO: 选择本地文件
 
@@ -65,7 +65,19 @@ class Project {
      * @returns {Promise<ArrayBuffer>} arraybuffer
      */
     async loadProject (url) {
-        const blob = await ajax.get(url, {}, {responseType: 'blob', base: ''});
+        let blob;
+        let projectData = null;
+        try {
+            projectData = await indexDB.getData(this.id); // 先查找本地是否有该工程数据
+        } catch (error) {
+            console.log('查找本地是否有该工程数据---error', error);
+        }
+        
+        if (projectData) {
+            blob = projectData.zip;
+        } else {
+            blob = await ajax.get(url, {}, {responseType: 'blob', base: ''});
+        }
         const zip = await JSZip.loadAsync(blob);
         let json = await zip.file('project.json').async('string');
         json = JSON.parse(json);

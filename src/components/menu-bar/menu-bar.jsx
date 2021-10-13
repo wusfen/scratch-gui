@@ -96,6 +96,7 @@ import resetIcon from '../../assets/icons/redo.svg';
 import {ajax} from '../../lib/ajax.js';
 import {param} from '../../lib/param.js';
 import {project} from '../../lib/project.js';
+import {indexDB} from '../../lib/indexDB';
 
 const ariaMessages = defineMessages({
     language: {
@@ -220,7 +221,8 @@ class MenuBar extends React.Component {
             _timeout: param('_timeout') || 30, // dev
         };
         var state = this.state;
-
+        this.indexDB = indexDB;
+        this.indexDbProjectTableMaxDataCount = 3;
         // 30秒显示跳过按钮
         setTimeout(() => {
             this.setState({
@@ -229,8 +231,7 @@ class MenuBar extends React.Component {
         }, state._timeout * 1000);
         // TODO 提交保存另存为逻辑单独文件
         addEventListener('submit-result-dialog:跳过退出', async e => {
-            await this.autoSave();
-
+            await this.autoSaveToLocalIndexDB();
             window.bridge.emit('exitEditor', {type: 'skip', interaction_passOrNot: window.subjectPassOrNot});
         });
 
@@ -257,20 +258,20 @@ class MenuBar extends React.Component {
                 console.log('projectChanged:', this.props.projectChanged);
                 console.log('projectRunning:', this.props.projectRunning);
 
-                if (!(/^(course)$/.test(state.mode) && state.id && state.token)) {
-                    console.warn('state.mode:', state.mode);
-                    console.warn('state.id:', state.id);
-                    console.warn('state.token:', state.token);
-                    clearInterval(timer);
-                    return;
-                }
+                // if (!(/^(course)$/.test(state.mode) && state.id && state.token)) { 测试注释
+                //     console.warn('state.mode:', state.mode);
+                //     console.warn('state.id:', state.id);
+                //     console.warn('state.token:', state.token);
+                //     clearInterval(timer);
+                //     return;
+                // }
 
                 if (this.props.projectRunning) {
                     return;
                 }
-
-                this.autoSave(true);
-            }, state._timeout * 1000);
+                console.log(999);
+                this.autoSaveToLocalIndexDB();
+            }, 3 * 1000);
         });
 
         window.bridge.on('requireExitEditor', e => {
@@ -283,11 +284,28 @@ class MenuBar extends React.Component {
             this.setState({
                 workUserBlockNum: this.getUserBlocks()
             });
-
         });
+
+        if ('indexedDB' in window) {
+            try {
+                this.initIndexDB();
+            } catch (error) {
+                console.log('initIndexDB---error', error);
+            }
+        }
     }
     componentWillUnmount () {
         document.removeEventListener('keydown', this.handleKeyPress);
+    }
+    initIndexDB () {
+        if (!this.indexDB) {
+            return;
+        }
+        this.indexDB.createTable('id', [{name: 'zip', unique: false}, {name: 'timestamp', unique: true}],
+            () => {
+                console.log('indexDB打开或创建成功');
+            }
+        );
     }
     handleClickNew () {
         // if the project is dirty, and user owns the project, we will autosave.
@@ -628,6 +646,61 @@ class MenuBar extends React.Component {
             isSaveAsChanged: true,
         });
     }
+
+    async autoSaveToLocalIndexDB () {
+        if (!this.props.projectChanged) return;
+        console.log('开始保存文件');
+        try {
+            const projectId = this.state.id || 5;
+            const blob = await project.getSb3Diff();
+            if ((blob.size / 1024 / 1024) > 30) { // 30M大小限制
+                return;
+            }
+            const data = await this.indexDB.getData(projectId);
+            console.log('getData---', data);
+            if (data) { // 修改
+                
+                await this.indexDB.update(projectId, {
+                    zip: blob,
+                    timestamp: Date.now()
+                }, () => {
+                    console.log(`${projectId}---indexDB修改成功`);
+                });
+            } else if (!data) { // 添加
+                const dataList = await this.indexDB.getList();
+                console.log('dataList---', dataList);
+                if (dataList.length >= this.indexDbProjectTableMaxDataCount) { // 只维护三条数据
+                    const longestProject = dataList.find(item => item.timestamp === Math.min(...dataList.map(it => it.timestamp)));
+                    console.log('longestProject---', longestProject);
+                    await this.indexDB.deleteData(longestProject.id, () => {
+                        console.log(`${projectId}---indexDB删除成功`);
+                    });
+                } else {
+                    await this.indexDB.add(
+                        {
+                            id: projectId,
+                            zip: blob,
+                            timestamp: Date.now()
+                        },
+                        true,
+                        () => {
+                            // 添加成功
+                            console.log(`${projectId}---indexDB添加成功`);
+                        },
+                        () => {
+                            // 添加失败
+                            console.log(`${projectId}---indexDB添加失败`);
+                        }
+                    );
+                }
+            }
+        } catch (error) {
+            console.log('indexDB---error---', error);
+        }
+        return;
+    }
+
+    // ready remove
     async autoSave (silence) {
         if (!this.props.projectChanged) return;
 
@@ -665,8 +738,7 @@ class MenuBar extends React.Component {
                     window.bridge.emit(e, {type: exitType});
                 }
             });
-
-            await this.autoSave();
+            await this.autoSaveToLocalIndexDB();
         }
 
         this.handleExit.locked = false;
@@ -758,6 +830,14 @@ class MenuBar extends React.Component {
 
         // TODO 目前只有正确错误，之前有规划有人工批改
         if (checkRes === 1) {
+            try {
+                await this.indexDB.deleteData(this.indexDbVersion, 'project', this.state.id, () => {
+                    console.log(`${this.state.id}---提交后成功delete本地indexDB中的数据`);
+                }); 
+            } catch (error) {
+                console.log('indexDB---delete---error', error);
+            }
+            
             dispatchEvent(new Event('submit:已提交正确'));
         } else {
             dispatchEvent(new Event('submit:已提交错误'));
