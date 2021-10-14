@@ -2,6 +2,7 @@ import JSZip from 'jszip';
 import {ajax} from './ajax.js';
 import {param} from './param.js';
 import Dialog from './../components/dialog/index.jsx';
+import createSpriteResizer from '../components/sprite-resizer/index.jsx';
 
 let vm;
 
@@ -232,6 +233,8 @@ function injectVm (_vm) {
         vm.setEditingTarget(_editingTarget?.id);
     });
 
+    // SpriteResizer
+    createSpriteResizer();
 }
 
 export {
