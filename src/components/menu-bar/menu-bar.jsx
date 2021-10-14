@@ -609,7 +609,13 @@ class MenuBar extends React.Component {
         }, {silence});
         silence || this.props.setUploadingProgress(100, '正在保存...');
         dispatchEvent(new Event('saveEnd'));
-
+        try {
+            await this.indexDB.deleteData(this.state.id, () => {
+                console.log(`${this.state.id}---保存后成功delete本地indexDB中的数据`);
+            }); 
+        } catch (error) {
+            console.log('indexDB---delete---error', error);
+        }
         this.state.id = data;
         param('id', this.state.id);
 
