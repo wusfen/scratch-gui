@@ -441,6 +441,7 @@ export default function (vm) {
      * @private
      */
     Blockly.BlockSvg.prototype.showContextMenu_ = function (e) {
+        window.currWorkspace = this.workspace;
         if (this.workspace.options.readOnly || !this.contextMenu) {
             return;
         }
@@ -448,8 +449,23 @@ export default function (vm) {
         var block = this;
         var menuOptions = [];
         if (this.isDeletable() && this.isMovable() && !block.isInFlyout) {
-            menuOptions.push(
-                Blockly.ContextMenu.blockDuplicateOption(block, e));
+            menuOptions.push({
+                text: Blockly.Msg.DUPLICATE_AND_PASTE,
+                enabled: true,
+                callback: Blockly.scratchBlocksUtils.duplicateAndDragCallback(block, e)
+            }
+            );
+            menuOptions.push({
+                text: Blockly.Msg.COPY,
+                enabled: true,
+                callback: Blockly.scratchBlocksUtils.duplicate(block, e)
+            });
+            menuOptions.push({
+                text: Blockly.Msg.PASTE,
+                enabled: true,
+                callback: Blockly.scratchBlocksUtils.paste(e)
+            }
+            );
             if (this.isEditable() && this.workspace.options.comments) {
                 menuOptions.push(Blockly.ContextMenu.blockCommentOption(block));
             }
@@ -477,11 +493,155 @@ export default function (vm) {
         }
 
         // Allow the block to add or modify menuOptions.
-        if (this.customContextMenu) {
-            this.customContextMenu(menuOptions);
-        }
+        // if (this.customContextMenu) {
+        //     this.customContextMenu(menuOptions);
+        // }
         Blockly.ContextMenu.show(e, menuOptions, this.RTL);
         Blockly.ContextMenu.currentBlock = this;
+    };
+
+    // 复制
+    Blockly.scratchBlocksUtils.duplicate = function (oldBlock, event) {
+        var isMouseEvent = Blockly.Touch.getTouchIdentifierFromEvent(event) === 'mouse';
+        return function (e) {
+            setTimeout(() => {
+                var ws = oldBlock.workspace;
+                var svgRootOld = oldBlock.getSvgRoot();
+                if (!svgRootOld) {
+                    throw new Error('oldBlock is not rendered.');
+                }
+        
+                // Create the new block by cloning the block in the flyout (via XML).
+                var xml = Blockly.Xml.blockToDom(oldBlock);
+                window.duplicateXml = xml;
+                // The target workspace would normally resize during domToBlock, which
+                // will lead to weird jumps.
+                // Resizing will be enabled when the drag ends.
+                ws.setResizesEnabled(false);
+        
+                // Disable events and manually emit events after the block has been
+                // positioned and has had its shadow IDs fixed (Scratch-specific).
+                Blockly.Events.disable();
+                var newBlock;
+                try {
+                    // The position of the old block in workspace coordinates.
+                    var oldBlockPosWs = oldBlock.getRelativeToSurfaceXY();
+                    window.duplicateSpace = {
+                        pos: oldBlockPosWs
+                    };
+                } finally {
+                    Blockly.Events.enable();
+                }
+                if (Blockly.Events.isEnabled()) {
+                    Blockly.Events.fire(new Blockly.Events.BlockCreate(newBlock));
+                }
+            }, 0);
+        };
+    };
+
+    // paste
+    Blockly.scratchBlocksUtils.paste = function (event) {
+        if (!window.duplicateSpace && typeof window.duplicateSpace === 'object') {
+            return () => {};
+        }
+        return function (e) {
+            setTimeout(() => {
+                var newBlock = Blockly.Xml.domToBlock(window.duplicateXml, window.currWorkspace); // 用复制的xml to block，传入当前编辑器的workspace
+                Blockly.scratchBlocksUtils.changeObscuredShadowIds(newBlock);
+                var svgRootNew = newBlock.getSvgRoot();
+                if (!svgRootNew) {
+                    throw new Error('newBlock is not rendered.');
+                }
+                var ws = newBlock.workspace;
+                const oldBlockPosWs = window.duplicateSpace.pos;
+                newBlock.moveBy(oldBlockPosWs.x, oldBlockPosWs.y);
+                var offsetX = ws.RTL ? -100 : 100;
+                var offsetY = 100;
+                newBlock.moveBy(offsetX, offsetY); // Just offset the block for touch.
+                if (newBlock.type === 'procedures_definition') { // 复制定制积木的情况需要更新toolbox
+                    dispatchEvent(new Event('updateToolBox'));
+                }
+            }, 0);
+        };
+    };
+
+    Blockly.scratchBlocksUtils.duplicateAndDragCallback = function (oldBlock, event) {
+        var isMouseEvent = Blockly.Touch.getTouchIdentifierFromEvent(event) === 'mouse';
+        return function (e) {
+            // Give the context menu a chance to close.
+            setTimeout(() => {
+                var ws = oldBlock.workspace;
+                var svgRootOld = oldBlock.getSvgRoot();
+                if (!svgRootOld) {
+                    throw new Error('oldBlock is not rendered.');
+                }
+        
+                // Create the new block by cloning the block in the flyout (via XML).
+                var xml = Blockly.Xml.blockToDom(oldBlock);
+                // The target workspace would normally resize during domToBlock, which
+                // will lead to weird jumps.
+                // Resizing will be enabled when the drag ends.
+                ws.setResizesEnabled(false);
+        
+                // Disable events and manually emit events after the block has been
+                // positioned and has had its shadow IDs fixed (Scratch-specific).
+                Blockly.Events.disable();
+                var newBlock;
+                try {
+                    // Using domToBlock instead of domToWorkspace means that the new block
+                    // will be placed at position (0, 0) in main workspace units.
+                    newBlock = Blockly.Xml.domToBlock(xml, ws);
+            
+                    // Scratch-specific: Give shadow dom new IDs to prevent duplicating on paste
+                    Blockly.scratchBlocksUtils.changeObscuredShadowIds(newBlock);
+            
+                    var svgRootNew = newBlock.getSvgRoot();
+                    if (!svgRootNew) {
+                        throw new Error('newBlock is not rendered.');
+                    }
+            
+                    // The position of the old block in workspace coordinates.
+                    var oldBlockPosWs = oldBlock.getRelativeToSurfaceXY();
+            
+                    // Place the new block as the same position as the old block.
+                    // TODO: Offset by the difference between the mouse position and the upper
+                    // left corner of the block.
+                    newBlock.moveBy(oldBlockPosWs.x, oldBlockPosWs.y);
+                    // if (!isMouseEvent) {
+                    var offsetX = ws.RTL ? -100 : 100;
+                    var offsetY = 100;
+                    newBlock.moveBy(offsetX, offsetY); // Just offset the block for touch.
+                    // }
+                } finally {
+                    Blockly.Events.enable();
+                }
+                if (Blockly.Events.isEnabled()) {
+                    Blockly.Events.fire(new Blockly.Events.BlockCreate(newBlock));
+                }
+                if (newBlock.type === 'procedures_definition') { // 复制定制积木的情况需要更新toolbox
+                    dispatchEvent(new Event('updateToolBox'));
+                }
+        
+                // if (isMouseEvent) {
+                //     // e is not a real mouseEvent/touchEvent/pointerEvent.  It's an event
+                //     // created by the context menu and has the coordinates of the mouse
+                //     // click that opened the context menu.
+                //     var fakeEvent = {
+                //         clientX: event.clientX,
+                //         clientY: event.clientY,
+                //         type: 'mousedown',
+                //         preventDefault: function () {
+                //             e.preventDefault();
+                //         },
+                //         stopPropagation: function () {
+                //             e.stopPropagation();
+                //         },
+                //         target: e.target
+                //     };
+                //     ws.startDragWithFakeEvent(fakeEvent, newBlock);
+                // }
+            }, 0);
+        };
     };
 
     /**
@@ -498,7 +658,11 @@ export default function (vm) {
         var topBlocks = this.getTopBlocks(true);
         var eventGroup = Blockly.utils.genUid();
         var ws = this;
-
+        menuOptions.push({
+            text: Blockly.Msg.PASTE,
+            enabled: true,
+            callback: Blockly.scratchBlocksUtils.paste()
+        });
         // Options to undo/redo previous action.
         menuOptions.push(Blockly.ContextMenu.wsUndoOption(this));
         menuOptions.push(Blockly.ContextMenu.wsRedoOption(this));
