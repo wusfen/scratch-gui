@@ -32,7 +32,7 @@ class Component extends React.Component{
             downRotate: 90,
             downSize: 100,
 
-            isShow: !false,
+            isShow: false,
             target: null
         };
 
