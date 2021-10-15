@@ -7,6 +7,7 @@
         "start": "cross-env NODE_ENV=development webpack-dev-server --mode development",
         "build": "npm run clean && cross-env NODE_ENV=production devtool=source-map webpack --mode production",
         "build:progress": "npm run clean && cross-env NODE_ENV=production webpack --mode production --progress",
+        "build:zip": "npm run clean && cross-env NODE_ENV=production zip=true webpack --mode production --progress",
         "clean": "rimraf ./build && mkdirp build && rimraf ./dist && mkdirp dist",
         "deploy": "touch build/.nojekyll && gh-pages -t -d build -m \"Build for $(git log --pretty=format:%H -n1) [skip ci]\"",
         "prune": "./prune-gh-pages.sh",
