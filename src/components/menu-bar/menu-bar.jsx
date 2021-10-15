@@ -259,7 +259,6 @@ class MenuBar extends React.Component {
                 console.log(`每${state._timeout}秒检查是否要自动保存`);
                 console.log('projectChanged:', this.props.projectChanged);
                 console.log('projectRunning:', this.props.projectRunning);
-
                 if (!(/^(course)$/.test(state.mode) && state.id && state.token)) {
                     console.warn('state.mode:', state.mode);
                     console.warn('state.id:', state.id);
@@ -271,7 +270,6 @@ class MenuBar extends React.Component {
                 if (this.props.projectRunning) {
                     return;
                 }
-                console.log(999);
                 this.autoSaveToLocalIndexDB();
             }, state._timeout * 1000);
         });
