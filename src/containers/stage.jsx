@@ -367,7 +367,7 @@ class Stage extends React.Component {
         } = drawableData;
         this.dragCanvas.width = imageData.width;
         this.dragCanvas.height = imageData.height;
-        // On high-DPI devices, the canvas size in layout-pixels is not equal to the size of the extracted data.
+        // // On high-DPI devices, the canvas size in layout-pixels is not equal to the size of the extracted data.
         this.dragCanvas.style.width = `${boundsWidth}px`;
         this.dragCanvas.style.height = `${boundsHeight}px`;
 
@@ -400,7 +400,7 @@ class Stage extends React.Component {
         if (!(this.props.useEditorDragStyle || target.draggable)) return;
 
         // Dragging always brings the target to the front
-        target.goToFront();
+        // target.goToFront();
 
         const [scratchMouseX, scratchMouseY] = this.getScratchCoords(x, y);
         const offsetX = target.x - scratchMouseX;

@@ -61,6 +61,14 @@ class SpriteSelectorItem extends React.PureComponent {
         setTimeout(() => {
             this.noClick = false;
         });
+        const curr = this.props.vm.runtime.getTargetById(this.props.id);
+        const targetSum = window.runtime.targets.length;
+        const currIndex = window.runtime.targets.findIndex(t => t.id === this.props.id);
+        if (this.originIndex > currIndex) {
+            curr.goBackwardLayers(this.originIndex - currIndex);
+        } else if (this.originIndex < currIndex) {
+            curr.goForwardLayers(currIndex - this.originIndex);
+        }
     }
     handleDrag (currentOffset) {
         this.props.onDrag({
@@ -72,6 +80,7 @@ class SpriteSelectorItem extends React.PureComponent {
             payload: this.props.dragPayload
         });
         this.noClick = true;
+        this.originIndex = window.runtime.targets.findIndex(t => t.id === this.props.id);
     }
     handleTouchEnd (e) {
         const {x, y} = getEventXY(e);
