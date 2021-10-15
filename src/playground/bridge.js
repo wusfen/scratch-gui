@@ -20,25 +20,28 @@ function emit (action, data) {
 
     var options = {action, data};
 
-    // ios
-    try {
-        window.webkit.messageHandlers.webCall.postMessage(
-            JSON.stringify(options),
-            '*'
-        );
-    } catch (e) {}
+    // setTimeout处理：软键盘不收起，点击退出button，编辑器会闪退
+    setTimeout(() => {
+        // ios
+        try {
+            window.webkit.messageHandlers.webCall.postMessage(
+                JSON.stringify(options),
+                '*'
+            );
+        } catch (e) {}
 
-    // android
-    try {
-        window.native.call(JSON.stringify(options));
-    } catch (e) {}
+        // android
+        try {
+            window.native.call(JSON.stringify(options));
+        } catch (e) {}
 
-    // pc(iframe)
-    try {
-        if (window !== parent) {
-            parent.postMessage(options, '*');
-        }
-    } catch (e) {}
+        // pc(iframe)
+        try {
+            if (window !== parent) {
+                parent.postMessage(options, '*');
+            }
+        } catch (e) {}
+    }, 1);
 }
 
 function on (action, cb) {
