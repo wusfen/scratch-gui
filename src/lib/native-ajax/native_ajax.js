@@ -69,7 +69,10 @@ export default class NativeAjax{
         const headers = options.headers;
         const responseType = options.responseType;
         const ContentType = headers['Content-Type'];
-        return (method === 'GET' || method === 'POST') && (ContentType === 'application/json') && (responseType === 'json' || responseType === 'text');
+        return (method === 'GET' || method === 'POST') &&
+         (ContentType === 'application/json') &&
+         (responseType === 'json' || responseType === 'text') &&
+         !(options.data instanceof FormData);
     }
 }
 

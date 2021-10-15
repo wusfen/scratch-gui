@@ -8,7 +8,7 @@ import {onNative} from './native-ajax/utils';
  * @param {object} options options
  * @returns {promise} res
  */
-function request (options) {
+export function request (options) {
     let {
         method,
         base,
@@ -136,7 +136,7 @@ function request (options) {
     return promise;
 }
 
-class Ajax {
+export class Ajax {
     constructor (settings) {
         this.list = [];
         this.setSettings(settings);
@@ -213,12 +213,6 @@ Ajax.settings = {
     onprogress (options) {},
     onloadend (res, options) {},
 };
-console.log('是否原生环境', onNative());
-/** 原生环境下 ajax会被代理，，使用 ./lib/native-ajax/native_ajax.js的Native */
-const ajax = onNative() ? new NativeAjax() : new Ajax();
 
-export {
-    request,
-    Ajax,
-    ajax,
-};
+/** 原生环境下 ajax会被代理，，使用 ./lib/native-ajax/native_ajax.js的Native */
+export const ajax = onNative() ? new NativeAjax() : new Ajax();
