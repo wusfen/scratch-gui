@@ -11,12 +11,38 @@ import styles from './styles.css';
 const c = styles;
 
 class Component extends React.Component{
+    constructor (props) {
+        super(props);
+        bindAll(this, []);
+        this.state = {
+            countDown: this.props.countDown || null
+        };
+
+    }
+
+    componentDidMount () {
+        if (this.state.countDown) {
+            this.countDownTimer = setInterval(() => {
+                if (this.state.countDown > 0) {
+                    this.setState({
+                        countDown: this.state.countDown - 1
+                    });
+                } else {
+                    this.props.onConfirm();
+                    clearInterval(this.countDownTimer);
+                }
+            }, 1000);
+        }
+    }
+    componentWillUnmount () {
+    }
     render () {
         const {
             ...props
         } = this.props;
 
         const {
+            countDown,
             ...state
         } = this.state;
 
@@ -46,6 +72,9 @@ class Component extends React.Component{
                             onClick={props.onConfirm}
                         >
                             确认
+                            {
+                                (countDown !== null) && <span>（{countDown}）</span>
+                            }
                         </button>
                         <button
                             hidden={!props.isConfirm}
@@ -61,7 +90,15 @@ class Component extends React.Component{
     }
 }
 
-Component.alert = function (options, isConfirm) {
+Component.alert = function (options, isConfirmOrSecond, second) {
+    let isConfirm;
+    let countDown = second || null;
+    if (typeof isConfirmOrSecond === 'boolean') {
+        isConfirm = isConfirmOrSecond;
+    } else if (typeof isConfirmOrSecond === 'number') {
+        countDown = isConfirmOrSecond;
+    }
+    
     if (typeof options !== 'object') {
         options = {
             title: options
@@ -107,6 +144,7 @@ Component.alert = function (options, isConfirm) {
             onClose={close}
             onCancel={cancel}
             onConfirm={confirm}
+            countDown={countDown}
         />
     ), el);
 
@@ -123,7 +161,8 @@ Component.propTypes = {
     onConfirm: PropTypes.func,
     onCancel: PropTypes.func,
     onClose: PropTypes.func,
-    isConfirm: PropTypes.bool,
+    isConfirmOrSecond: PropTypes.bool || PropTypes.bool,
+    countDown: PropTypes.number,
 };
 
 export default Component;

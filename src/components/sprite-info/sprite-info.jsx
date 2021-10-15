@@ -72,7 +72,8 @@ class SpriteInfo extends React.Component {
         this.state = {
             file: param('file'),
             moreFuncShow: false,
-            mode: getParam('mode') || ''
+            mode: getParam('mode') || '',
+            isUat: getParam('base') === 'uat' || window.location.pathname.includes('/uat/') || window.location.origin.includes('//uat-')
         };
     }
 
@@ -181,7 +182,7 @@ class SpriteInfo extends React.Component {
             locale
         } = this.props;
 
-        const {moreFuncShow, mode} = this.state;
+        const {moreFuncShow, mode, isUat} = this.state;
 
         const sprite = (
             <FormattedMessage
@@ -446,7 +447,7 @@ class SpriteInfo extends React.Component {
                                 </div>
                             </div>
                             <div
-                                hidden={!(mode === 'teacher' || mode === 'normal')}
+                                hidden={!(mode === 'teacher' || mode === 'normal' || isUat)}
                                 className={classNames(styles.item)}
                             >
                                 <button
@@ -469,7 +470,7 @@ class SpriteInfo extends React.Component {
                                 </button>
                             </div>
                             <div
-                                hidden={!(mode === 'teacher' || mode === 'normal')}
+                                hidden={!(mode === 'teacher' || mode === 'normal' || isUat)}
                                 className={classNames(styles.item)}
                             >
                                 <button
