@@ -8,6 +8,7 @@ import styles from './prompt-area.css';
 import scaleIcon from './scale.svg';
 import {scale} from 'twgl.js';
 import * as bridge from '../../playground/bridge.js';
+import getTipParam from '../../lib/courseTip/getTipParam';
 const c = styles;
 
 class PromptArea extends React.Component{
@@ -28,7 +29,7 @@ class PromptArea extends React.Component{
                 cX: 0, // 鼠标的坐标
                 cY: 0
             },
-            title: '提示',
+            title: getTipParam('tipVideo')?.includes('_explain') ? '讲解' : '提示',
             imageTextScale: 1,
             imageTextScaleRate: 0.25,
             transformOrigin: 'center center'
