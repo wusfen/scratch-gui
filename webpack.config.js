@@ -109,16 +109,33 @@ const config = {
             },
             {
                 test: /\.(svg|png|wav|gif|jpg|mp3|mp4)$/,
-                use: [
+                oneOf: [
+                    process.env.zip && {
+                        test: /steps|thumbnails/,
+                        use: [
+                            {
+                                loader: 'file-loader',
+                                options: {
+                                    name: '[name].[ext]____[hash:5].[ext]',
+                                    publicPath: 'https://prod-xnpt-oss-2.vipthink.net/vipthinkcode-base/scratch/prod/static/assets/',
+                                    emitFile: false,
+                                }
+                            }
+                        ]
+                    },
                     {
-                        loader: 'file-loader',
-                        options: {
-                            name: '[name].[ext]____[hash:5].[ext]',
-                            outputPath: 'static/assets/'
-                        }
+                        use: [
+                            {
+                                loader: 'file-loader',
+                                options: {
+                                    name: '[name].[ext]____[hash:5].[ext]',
+                                    outputPath: 'static/assets/',
+                                }
+                            }
+                        ]
                     }
-                ]
-            }
+                ].filter(e => e),
+            },
         ]
     },
     resolve: {

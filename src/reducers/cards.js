@@ -20,7 +20,9 @@ const initialState = {
     x: 0,
     y: 0,
     expanded: true,
-    dragging: false
+    dragging: false,
+    // visible: !false,
+    // activeDeckId: 'intro-move-sayhello',
 };
 
 const reducer = function (state, action) {
