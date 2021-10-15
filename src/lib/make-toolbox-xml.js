@@ -25,7 +25,94 @@ const motion = function (isInitialSetup, isStage, targetId) {
     return `
     <category name="%{BKY_CATEGORY_MOTION}" id="motion" colour="#4C97FF" secondaryColour="#3373CC"  iconURI="${Group13}">
         ${isStage ? `
-        <label text="${stageSelected}"></label>
+        <block type="motion_movesteps">
+            <value name="STEPS">
+                <shadow type="math_number">
+                    <field name="NUM">10</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="motion_turnright">
+            <value name="DEGREES">
+                <shadow type="math_number">
+                    <field name="NUM">15</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="motion_turnleft">
+            <value name="DEGREES">
+                <shadow type="math_number">
+                    <field name="NUM">15</field>
+                </shadow>
+            </value>
+        </block>
+        ${blockSeparator}
+        <block type="motion_gotoxy">
+            <value name="X">
+                <shadow id="movex" type="math_number">
+                    <field name="NUM">0</field>
+                </shadow>
+            </value>
+            <value name="Y">
+                <shadow id="movey" type="math_number">
+                    <field name="NUM">0</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="motion_glidesecstoxy">
+            <value name="SECS">
+                <shadow type="math_number">
+                    <field name="NUM">1</field>
+                </shadow>
+            </value>
+            <value name="X">
+                <shadow id="glidex" type="math_number">
+                    <field name="NUM">0</field>
+                </shadow>
+            </value>
+            <value name="Y">
+                <shadow id="glidey" type="math_number">
+                    <field name="NUM">0</field>
+                </shadow>
+            </value>
+        </block>
+        ${blockSeparator}
+        <block type="motion_pointindirection">
+            <value name="DIRECTION">
+                <shadow type="math_angle">
+                    <field name="NUM">90</field>
+                </shadow>
+            </value>
+        </block>
+        ${blockSeparator}
+        <block type="motion_changexby">
+            <value name="DX">
+                <shadow type="math_number">
+                    <field name="NUM">10</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="motion_setx">
+            <value name="X">
+                <shadow id="setx" type="math_number">
+                    <field name="NUM">0</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="motion_changeyby">
+            <value name="DY">
+                <shadow type="math_number">
+                    <field name="NUM">10</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="motion_sety">
+            <value name="Y">
+                <shadow id="sety" type="math_number">
+                    <field name="NUM">0</field>
+                </shadow>
+            </value>
+        </block>
         ` : `
         <block type="motion_movesteps">
             <value name="STEPS">
