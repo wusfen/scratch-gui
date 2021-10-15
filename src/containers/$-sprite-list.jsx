@@ -211,7 +211,6 @@ class TargetPane$ extends React.Component {
         }
     }
     shareBlocks (blocks, targetId, optFromTargetId) {
-        debugger
         // Position the top-level block based on the scroll position.
         const topBlock = blocks.find(block => block.topLevel);
         if (topBlock) {
