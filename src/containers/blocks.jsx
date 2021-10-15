@@ -253,22 +253,23 @@ class Blocks extends React.Component {
         // console.log('this.props.toolboxXML:', prevProps.toolboxXML === this.props.toolboxXML);
 
         if (this.props.autoClose !== prevProps.autoClose) {
-            this.ScratchBlocks.mainWorkspace.getFlyout().autoClose = this.props.autoClose;
-
             var Blockly = this.ScratchBlocks;
             var mainWorkspace = this.ScratchBlocks.mainWorkspace;
+            const flyout_ = mainWorkspace.toolbox_?.flyout_;
 
-            Blockly.hideChaffOnResize(true);
-            const scale = Blockly.getFitScale();
-            mainWorkspace.options.zoomOptions.startScale = scale;
-            mainWorkspace.setScale(scale);
-            Blockly.svgResize(mainWorkspace);
-            // mainWorkspace.scrollCenter();
-            // const toolbox = mainWorkspace.toolbox_;
-            if (mainWorkspace.toolbox_ && mainWorkspace.toolbox_.flyout_){
-                const flyout = mainWorkspace.toolbox_.flyout_;
-                flyout.workspace_.scale = scale;
-                flyout.reflow();
+            // TODO FIXME 点【制作新的积木】后 toolbox_ 会变为空，但是页面还显示 flyout_
+            if (flyout_){
+                flyout_.autoClose = this.props.autoClose;
+
+                Blockly.hideChaffOnResize(true);
+                const scale = Blockly.getFitScale();
+                mainWorkspace.options.zoomOptions.startScale = scale;
+                mainWorkspace.setScale(scale);
+                Blockly.svgResize(mainWorkspace);
+                // mainWorkspace.scrollCenter();
+                // const toolbox = mainWorkspace.toolbox_;
+                flyout_.workspace_.scale = scale;
+                flyout_.reflow();
             }
 
         }
