@@ -28,7 +28,7 @@ class PromptArea extends React.Component{
                 cX: 0, // 鼠标的坐标
                 cY: 0
             },
-            title: '提示',
+            title: props.title,
             imageTextScale: 1,
             imageTextScaleRate: 0.25,
             transformOrigin: 'center center'
@@ -368,6 +368,7 @@ PromptArea.propTypes = {
     closePromptArea: PropTypes.func,
     type: PropTypes.string,
     imageSrc: PropTypes.string,
+    title: PropTypes.string
 };
 
 const mapStateToProps = state => ({

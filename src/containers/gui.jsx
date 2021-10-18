@@ -56,6 +56,7 @@ class GUI extends React.Component {
         this.state = {
             videoSrc: '',
             promptAreaShow: false,
+            promptTitle: '提示',
             errorText: '',
             showErrorTips: false
         };
@@ -184,6 +185,11 @@ class GUI extends React.Component {
 
     handleVideoSrc = () => {
         let videoSrc = getTipParam('introVideo');
+        if (videoSrc.includes('_task')) {
+            this.setState({
+                promptTitle: '介绍'
+            });
+        }
         if (videoSrc){ // 有初始引导
             addEventListener('loaderUnmount', () => { // 等待工程加载完毕
                 this.setState({promptAreaShow: true});
@@ -228,13 +234,14 @@ class GUI extends React.Component {
             loadingStateVisible,
             ...componentProps
         } = this.props;
-        const {videoSrc, promptAreaShow, errorText, showErrorTips} = this.state;
+        const {videoSrc, promptAreaShow, promptTitle, errorText, showErrorTips} = this.state;
         return (
             <GUIComponent
                 loading={fetchingProject || isLoading || loadingStateVisible}
                 {...componentProps}
                 videoSrc={videoSrc}
                 promptAreaShow={promptAreaShow}
+                promptTitle={promptTitle}
                 closePromptArea={this.closePromptArea}
                 errorText={errorText}
                 showErrorTips={showErrorTips}
