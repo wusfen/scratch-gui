@@ -4,7 +4,6 @@ import {param} from './param.js';
 // TODO: sb3 内文件名必须是文件的 md5 ，如果不一致加载会找不到
 // TODO: 选择本地文件
 import Dialog from './../components/dialog/index.jsx';
-import createSpriteResizer from '../components/sprite-resizer/index.jsx';
 
 let vm;
 
@@ -234,9 +233,6 @@ function injectVm (_vm) {
         var _editingTarget = vm.runtime.targets.find(e => e.sprite.name === project.originalJson._editingTargetName);
         vm.setEditingTarget(_editingTarget?.id);
     });
-
-    // SpriteResizer
-    createSpriteResizer();
 }
 
 export {

@@ -236,6 +236,7 @@ class Component extends React.Component{
     }
     render () {
         const {
+            projectRunning,
             children,
             ...props
         } = this.props;
@@ -247,7 +248,7 @@ class Component extends React.Component{
 
         return (
             <div
-                hidden={!(isShow)}
+                hidden={!(isShow && !projectRunning)}
                 className={classNames(c.container)}
                 style={{
                     left: state.x,
@@ -282,25 +283,14 @@ class Component extends React.Component{
 
 Component.propTypes = {
     children: PropTypes.node,
-};
-
-Component.create = function () {
-    const el = document.createElement('div');
-    document.body.appendChild(el);
-
-
-    ReactDOM.render((
-        <Component />
-    ), el);
-
+    projectRunning: PropTypes.bool.isRequired,
 };
 
 
 const mapStateToProps = state => ({
+    projectRunning: state.scratchGui.vmStatus.running,
 });
 const mapDispatchToProps = () => ({
 });
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Component);
-// single
-export default Component.create;
+export default connect(mapStateToProps, mapDispatchToProps)(Component);
