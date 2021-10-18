@@ -135,6 +135,7 @@ const GUIComponent = props => {
         vm,
         videoSrc,
         promptAreaShow,
+        promptTitle,
         closePromptArea,
         errorText,
         showErrorTips,
@@ -192,6 +193,7 @@ const GUIComponent = props => {
                     closePromptArea={closePromptArea}
                     videoSrc={videoSrc}
                     type={'视频'}
+                    title={promptTitle}
                 /> : null}
                 {telemetryModalVisible ? (
                     <TelemetryModal
@@ -524,6 +526,7 @@ GUIComponent.propTypes = {
     vm: PropTypes.instanceOf(VM).isRequired,
     videoSrc: PropTypes.string,
     promptAreaShow: PropTypes.bool,
+    promptTitle: PropTypes.string,
     closePromptArea: PropTypes.func,
     errorText: PropTypes.string,
     showErrorTips: PropTypes.bool,
@@ -547,7 +550,8 @@ GUIComponent.defaultProps = {
     isShared: false,
     loading: false,
     showComingSoon: false,
-    stageSizeMode: STAGE_SIZE_MODES.large
+    stageSizeMode: STAGE_SIZE_MODES.large,
+    promptTitle: '提示'
 };
 
 const mapStateToProps = state => ({
