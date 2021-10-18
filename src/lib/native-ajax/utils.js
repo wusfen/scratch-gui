@@ -44,6 +44,14 @@ export function onNative () {
     if (isIOS() || isAndroid() || isElectron()) return true;
 }
 
+/**
+ * 是否为豌豆编程的客户端
+ * @returns {boolean}  是否为豌豆编程的客户端
+ */
+export function isWdCode (){
+    return (/(wdcode)/i).test(navigator.userAgent);
+}
+
 
 /**
  * 对象转成key value 的数组
