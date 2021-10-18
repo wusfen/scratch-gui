@@ -130,6 +130,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
                 }
                 const buffer = await blob.arrayBuffer();
 
+                project.originalFileURL = url; // *** 非常重要 ***
                 this.props.onFetchedProjectData(buffer, loadingState);
                 return;
             }

@@ -14,7 +14,7 @@ let vm;
  * single
  */
 class Project {
-    originalFileURL = '' // ?file=url
+    originalFileURL = '' // ?file=url || id=>url
     originalJson = {} // 最初的文件json
     jsonAddon = { // project.json +
         // 保存当前角色
@@ -86,7 +86,7 @@ class Project {
 
         // original
         let originalZip = zip;
-        this.originalFileURL = json._originalFileURL || url || param('file');
+        this.originalFileURL = json._originalFileURL || this.originalFileURL;
         this.originalJson = json;
 
         // _originalFileURL
