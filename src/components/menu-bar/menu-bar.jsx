@@ -256,9 +256,6 @@ class MenuBar extends React.Component {
         // TODO 太耗资源
         addEventListener('projectLoadSucceed', e => {
             var timer = setInterval(() => {
-                console.log(`每${state._timeout}秒检查是否要自动保存`);
-                console.log('projectChanged:', this.props.projectChanged);
-                console.log('projectRunning:', this.props.projectRunning);
                 if (!(/^(course)$/.test(state.mode) && state.id && state.token)) {
                     console.warn('state.mode:', state.mode);
                     console.warn('state.id:', state.id);
@@ -270,7 +267,12 @@ class MenuBar extends React.Component {
                 if (this.props.projectRunning) {
                     return;
                 }
-                this.autoSaveToLocalIndexDB();
+                if (window?.autoSaveProjectState) {
+                    console.log(`每${state._timeout}秒,检测到代码变化，启动自动保存`);
+                    console.log('projectChanged:', this.props.projectChanged);
+                    console.log('projectRunning:', this.props.projectRunning);
+                    this.autoSaveToLocalIndexDB();
+                }
             }, state._timeout * 1000);
         });
 
@@ -650,7 +652,6 @@ class MenuBar extends React.Component {
     }
 
     async autoSaveToLocalIndexDB () {
-        if (!window?.autoSaveProjectState) return;
         console.log('开始保存文件');
         try {
             const projectId = this.state.id || 5;
