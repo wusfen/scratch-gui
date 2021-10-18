@@ -160,7 +160,7 @@ class Project {
         var file = param('file');
         const arrayBuffer = await this.getFullProjectArrayBuffer(file);
 
-        this.vm.loadProject(arrayBuffer);
+        vm.loadProject(arrayBuffer);
     }
 
     /**
