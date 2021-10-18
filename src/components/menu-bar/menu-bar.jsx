@@ -233,7 +233,7 @@ class MenuBar extends React.Component {
         }, state._timeout * 1000);
         // TODO 提交保存另存为逻辑单独文件
         addEventListener('submit-result-dialog:跳过退出', async e => {
-            await this.autoSaveToLocalIndexDB();
+            await this.autoSave();
             window.bridge.emit('exitEditor', {type: 'skip', interaction_passOrNot: window.subjectPassOrNot});
         });
 
@@ -650,7 +650,7 @@ class MenuBar extends React.Component {
     }
 
     async autoSaveToLocalIndexDB () {
-        if (!this.props.projectChanged) return;
+        if (!window?.autoSaveProjectState) return;
         console.log('开始保存文件');
         try {
             const projectId = this.state.id || 5;
@@ -696,6 +696,7 @@ class MenuBar extends React.Component {
                     );
                 }
             }
+            window.autoSaveProjectState = false;
         } catch (error) {
             console.log('indexDB---error---', error);
         }
@@ -740,7 +741,7 @@ class MenuBar extends React.Component {
                     window.bridge.emit(e, {type: exitType});
                 }
             });
-            await this.autoSaveToLocalIndexDB();
+            await this.autoSave();
         }
 
         this.handleExit.locked = false;
