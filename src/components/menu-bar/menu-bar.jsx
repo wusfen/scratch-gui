@@ -527,7 +527,7 @@ class MenuBar extends React.Component {
         var self = this;
         silence || self.props.setUploadingProgress(10);
 
-        var {data} = await ajax.get('file/getSign', {
+        var {data} = await ajax.get('/file/v2/getSign', {
             driver: driver,
             name,
             ext,
@@ -566,6 +566,7 @@ class MenuBar extends React.Component {
                 self.uploadToOssRetryCount++;
                 self.uploadToOss(blob, name, ext, silence, driver, true); // 失败切云，默认将上一次的driver带上
             },
+            retry: 1
         });
         // silence || self.props.setUploadingProgress(false);
 
