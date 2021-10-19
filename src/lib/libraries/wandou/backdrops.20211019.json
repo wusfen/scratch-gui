@@ -1,0 +1,122 @@
+[
+    {
+        "name": "中世纪城门",
+        "tags": [
+            "games"
+        ],
+        "assetId": "886c86103234ef6de1c288af5e893140",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "886c86103234ef6de1c288af5e893140.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "海盗船",
+        "tags": [
+            "games"
+        ],
+        "assetId": "8e3ae9d85796192fd515a767ff4d989d",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "8e3ae9d85796192fd515a767ff4d989d.jpg",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "魔法学院",
+        "tags": [
+            "games"
+        ],
+        "assetId": "054d609774e91954b284ec4630c7b56e",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "054d609774e91954b284ec4630c7b56e.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "足球场",
+        "tags": [
+            "life"
+        ],
+        "assetId": "81909c7f0d7a4edda7c35b55a669cb62",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "81909c7f0d7a4edda7c35b55a669cb62.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "山河上空",
+        "tags": [
+            "natural"
+        ],
+        "assetId": "8f6b90a2665efb809771ec757f62548b",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "8f6b90a2665efb809771ec757f62548b.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "星球宇宙",
+        "tags": [
+            "natural"
+        ],
+        "assetId": "f2dbaec12eb9149aba048918955c5956",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "f2dbaec12eb9149aba048918955c5956.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "校园外景",
+        "tags": [
+            "natural"
+        ],
+        "assetId": "4a384b9cba7b4f03bea67ad93b4d19e2",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "4a384b9cba7b4f03bea67ad93b4d19e2.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "椰林小岛",
+        "tags": [
+            "natural"
+        ],
+        "assetId": "845f164ee1012fb9d4a8992b3721cf29",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "845f164ee1012fb9d4a8992b3721cf29.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "海底世界",
+        "tags": [
+            "natural"
+        ],
+        "assetId": "9b871f69b07da217d81f825bd627a808",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "9b871f69b07da217d81f825bd627a808.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "郊外草原",
+        "tags": [
+            "natural"
+        ],
+        "assetId": "45b82e7233fb564bca9d74a056bdb0eb",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "45b82e7233fb564bca9d74a056bdb0eb.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    }
+]
