@@ -538,13 +538,11 @@ class MenuBar extends React.Component {
             name,
             ext,
             retry
-        }, {
-            retry: 5
         });
         var ossToken = JSON.parse(data.ossToken);
 
         const formData = new FormData();
-        // formData.append('OSSAccessKeyId', ossToken.accessid);
+        formData.append('OSSAccessKeyId', ossToken.accessid);
         formData.append('signature', ossToken.signature);
         formData.append('policy', ossToken.policy);
         formData.append('key', data.path);
@@ -567,7 +565,7 @@ class MenuBar extends React.Component {
                 self.uploadToOssRetryCount = 0;
             },
             onerror () {
-                if (self.uploadToOssRetryCount >= 5) {
+                if (self.uploadToOssRetryCount >= 3) {
                     alert('上传失败');
                     self.uploadToOssProgressValue = 0;
                     self.uploadToOssRetryCount = 0;
