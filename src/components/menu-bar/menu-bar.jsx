@@ -676,26 +676,26 @@ class MenuBar extends React.Component {
                     const longestProject = dataList.find(item => item.timestamp === Math.min(...dataList.map(it => it.timestamp)));
                     console.log('longestProject---', longestProject);
                     await this.indexDB.deleteData(longestProject.id, () => {
-                        console.log(`${projectId}---indexDB删除成功`);
+                        console.log(`${longestProject.id}---indexDB删除成功`);
                     });
-                } else {
-                    await this.indexDB.add(
-                        {
-                            id: projectId,
-                            zip: blob,
-                            timestamp: Date.now()
-                        },
-                        true,
-                        () => {
-                            // 添加成功
-                            console.log(`${projectId}---indexDB添加成功`);
-                        },
-                        () => {
-                            // 添加失败
-                            console.log(`${projectId}---indexDB添加失败`);
-                        }
-                    );
                 }
+                await this.indexDB.add(
+                    {
+                        id: projectId,
+                        zip: blob,
+                        timestamp: Date.now()
+                    },
+                    true,
+                    () => {
+                        // 添加成功
+                        console.log(`${projectId}---indexDB添加成功`);
+                    },
+                    () => {
+                        // 添加失败
+                        console.log(`${projectId}---indexDB添加失败`);
+                    }
+                );
+                
             }
             window.autoSaveProjectState = false;
         } catch (error) {
