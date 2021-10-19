@@ -13,18 +13,16 @@ export default class NativeRequestTrans{
 
     constructor (){
         this.id = httpid++;
-        this.off = bridge.on(BridgeAction.receivedData, this.onNativeReceived.bind(this));
-    }
-
-    onNativeReceived (result){
-        if (result.httpID === this.id){
-            if (result.returnObject){
-                this.successHandler(result.returnObject);
-            } else {
-                this.errorHandler();
+        this.off = bridge.on(BridgeAction.receivedData, result => {
+            if (result.httpID === this.id){
+                if (result.returnObject){
+                    this.successHandler(result.returnObject);
+                } else {
+                    this.errorHandler();
+                }
+                this.destroy();
             }
-            this.destroy();
-        }
+        });
     }
 
     promise (options){
