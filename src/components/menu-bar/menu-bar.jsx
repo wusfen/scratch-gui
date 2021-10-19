@@ -561,16 +561,16 @@ class MenuBar extends React.Component {
                 value = parseInt(value, 10);
                 self.uploadToOssProgressValue = (value > self.uploadToOssProgressValue) ? value : self.uploadToOssProgressValue; // 记录当前的进度，避免重试时进度条倒退
                 self.props.setUploadingProgress(self.uploadToOssProgressValue);
-                console.log(111, self.uploadToOssProgressValue);
-                self.props.setUploadingProgress(value);
             },
             onload () {
                 self.uploadToOssProgressValue = 0; // 重置
+                self.uploadToOssRetryCount = 0;
             },
             onerror () {
                 if (self.uploadToOssRetryCount >= 5) {
                     alert('上传失败');
                     self.uploadToOssProgressValue = 0;
+                    self.uploadToOssRetryCount = 0;
                     return;
                 }
                 self.uploadToOssRetryCount++;
