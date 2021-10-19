@@ -531,25 +531,27 @@ class MenuBar extends React.Component {
     }
     async uploadToOss (blob, name = 'test', ext = 'sb3', silence, driver = 'aly_oss', retry) {
         var self = this;
-        silence || self.props.setUploadingProgress(10);
+        silence || self.props.setUploadingProgress(self.uploadToOssProgressValue || 10);
 
         var {data} = await ajax.get('/file/v2/getSign', {
             driver: driver,
             name,
             ext,
             retry
+        }, {
+            retry: 5
         });
         var ossToken = JSON.parse(data.ossToken);
 
         const formData = new FormData();
-        formData.append('OSSAccessKeyId', ossToken.accessid);
+        // formData.append('OSSAccessKeyId', ossToken.accessid);
         formData.append('signature', ossToken.signature);
         formData.append('policy', ossToken.policy);
         formData.append('key', data.path);
         formData.append('success_action_status', 200);
         formData.append('file', blob, `${name}.${ext}`);
 
-        silence || self.props.setUploadingProgress(20);
+        silence || self.props.setUploadingProgress(self.uploadToOssProgressValue || 20);
         await ajax.post(`${data.uploadDomain}`, formData, {
             silence: true,
             onprogress (e) {
@@ -559,12 +561,14 @@ class MenuBar extends React.Component {
                 value = parseInt(value, 10);
                 self.uploadToOssProgressValue = (value > self.uploadToOssProgressValue) ? value : self.uploadToOssProgressValue; // 记录当前的进度，避免重试时进度条倒退
                 self.props.setUploadingProgress(self.uploadToOssProgressValue);
+                console.log(111, self.uploadToOssProgressValue);
+                self.props.setUploadingProgress(value);
             },
             onload () {
                 self.uploadToOssProgressValue = 0; // 重置
             },
             onerror () {
-                if (self.uploadToOssRetryCount >= 2) {
+                if (self.uploadToOssRetryCount >= 5) {
                     alert('上传失败');
                     self.uploadToOssProgressValue = 0;
                     return;
@@ -802,7 +806,7 @@ class MenuBar extends React.Component {
         silence || this.props.setUploadingProgress(true);
         const uploadCoverPromise = this.uploadCover();
         const uploadSb3DiffPromise = this.uploadSb3Diff(silence);
-
+        const {ossDomain: ossDomainCover, path: pathCover} = await uploadCoverPromise;
         const {ossDomain, path} = await uploadSb3DiffPromise;
         silence || this.props.setUploadingProgress(90, '正在保存...');
 
@@ -812,7 +816,7 @@ class MenuBar extends React.Component {
             workId: workInfo.analystStatus === -1 ? workInfo.workId : '',
             submitType: silence ? 1 : 3,
             userBlockNum: _userBlockNum,
-            workCoverPath: `${ossDomain}${path}`,
+            workCoverPath: `${ossDomainCover}${pathCover}`,
             workPath: `${ossDomain}${path}`,
             attachId: (await uploadSb3DiffPromise).id,
             workCoverAttachId: (await uploadCoverPromise).id,
