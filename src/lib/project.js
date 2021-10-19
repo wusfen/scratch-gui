@@ -15,6 +15,8 @@ let vm;
 class Project {
     originalFileURL = '' // ?file=url || id=>url
     originalJson = {} // 最初的文件json
+    finalJson = {}
+    finalZip = null
     jsonAddon = { // project.json +
         // 保存当前角色
         get _editingTargetName () {
@@ -143,6 +145,8 @@ class Project {
             ...zip.files,
         };
         this.finalZip = finalZip;
+        this.finalJson = json;
+
 
         console.log('finalZip:', finalZip);
         return finalZip.generateAsync({
@@ -227,10 +231,10 @@ function injectVm (_vm) {
 
 
     vm.runtime.on(vm.runtime.constructor.PROJECT_LOADED, e => {
-        console.log('PROJECT_LOADED', project.originalJson);
+        console.log('PROJECT_LOADED', project.originalJson, project.finalJson);
 
         // 默认选中保存时选中的角色
-        var _editingTarget = vm.runtime.targets.find(e => e.sprite.name === project.originalJson._editingTargetName);
+        var _editingTarget = vm.runtime.targets.find(e => e.sprite.name === project.finalJson._editingTargetName);
         vm.setEditingTarget(_editingTarget?.id);
     });
 }
