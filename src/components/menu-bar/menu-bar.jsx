@@ -226,6 +226,7 @@ class MenuBar extends React.Component {
         this.uploadToOssRetryCount = 0;
         this.uploadToOssProgressValue = 0;
         this.exiting = false;
+        this.skiping = false;
         // 30秒显示跳过按钮
         setTimeout(() => {
             this.setState({
@@ -234,7 +235,9 @@ class MenuBar extends React.Component {
         }, state._timeout * 1000);
         // TODO 提交保存另存为逻辑单独文件
         addEventListener('submit-result-dialog:跳过退出', async e => {
+            this.skiping = true;
             await this.autoSave();
+            this.skiping = false;
             window.bridge.emit('exitEditor', {type: 'skip', interaction_passOrNot: window.subjectPassOrNot});
         });
 
@@ -763,7 +766,7 @@ class MenuBar extends React.Component {
     }
 
     async handleSubmit (isNoCheckResult, silence) {
-        if (!silence && !this.exiting) { // 点击退出按钮时不需要判断是否运行过
+        if (!silence && !this.exiting && !this.skiping) { // 点击退出和跳过按钮时不需要判断是否运行过
             if (!this.judgeIsRunCode()) {
                 return;
             }
