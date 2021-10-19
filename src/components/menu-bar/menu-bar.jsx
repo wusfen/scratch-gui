@@ -574,7 +574,7 @@ class MenuBar extends React.Component {
                     return;
                 }
                 self.uploadToOssRetryCount++;
-                self.uploadToOss(blob, name, ext, silence, driver, true); // 失败切云，默认将上一次的driver带上
+                self.uploadToOss(blob, name, ext, silence, data.driver, true); // 失败切云，默认将上一次的driver带上
             },
             retry: 1
         });
