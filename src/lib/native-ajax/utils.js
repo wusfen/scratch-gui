@@ -1,5 +1,19 @@
-import bridge from '../../playground/bridge';
-import BridgeAction from './bridge_action';
+/**
+ * 获取链接参数值
+ * @param {string} variable 需要查询的参数
+ * @returns {string} 参数值
+ */
+export function getQueryVariable (variable) {
+    var query = window.location.search.substring(1);
+    var vars = query.split('&');
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split('=');
+        if (pair[0] === variable){
+            return pair[1];
+        }
+    }
+    return (false);
+}
 
 /**
  * 是否在iOS环境
@@ -35,13 +49,31 @@ export function isElectron () {
     return (/(Electron)/i).test(navigator.userAgent) && inIframe();
 }
 
+/**
+ * 是否符合httpdns条件
+ * @returns {boolean} 是否符合httpdns条件
+ */
+export function useHttpDns (){
+    const nativeVersion = getQueryVariable('nativeVersion');
+    const httpDns = getQueryVariable('httpDns');
+    return (nativeVersion && +nativeVersion > 160) || (httpDns && +httpDns === 1);
+}
+
+/**
+ * 是否为豌豆编程的客户端
+ * @returns {boolean}  是否为豌豆编程的客户端
+ */
+export function isVipthink (){
+    return (/(vipThinkStudent-ios|vipThinkStudent-android|vipthink)/i).test(navigator.userAgent);
+}
+
 
 /**
  * 是否在原生环境下
  * @returns {boolean} 是否在原生环境下
  */
 export function onNative () {
-    if (isIOS() || isAndroid() || isElectron()) return true;
+    if ((isIOS() || isAndroid() || isElectron()) && isVipthink() && useHttpDns()) return true;
 }
 
 
