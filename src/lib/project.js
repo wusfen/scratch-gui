@@ -1,9 +1,10 @@
 import JSZip from 'jszip';
 import {ajax} from './ajax.js';
 import {param} from './param.js';
+import Dialog from './../components/dialog/index.jsx';
+
 // TODO: sb3 内文件名必须是文件的 md5 ，如果不一致加载会找不到
 // TODO: 选择本地文件
-import Dialog from './../components/dialog/index.jsx';
 
 let vm;
 
@@ -20,7 +21,7 @@ class Project {
     jsonAddon = { // project.json +
         // 保存当前角色
         get _editingTargetName () {
-            return vm.editingTarget.getName();
+            return vm.editingTarget?.getName();
         }
     }
 
