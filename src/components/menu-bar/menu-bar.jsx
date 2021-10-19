@@ -225,6 +225,7 @@ class MenuBar extends React.Component {
         this.indexDbProjectTableMaxDataCount = 3;
         this.uploadToOssRetryCount = 0;
         this.uploadToOssProgressValue = 0;
+        this.exiting = false;
         // 30秒显示跳过按钮
         setTimeout(() => {
             this.setState({
@@ -731,7 +732,7 @@ class MenuBar extends React.Component {
     async handleExit (e = 'exitEditor') {
         if (this.handleExit.locked) return;
         this.handleExit.locked = true;
-
+        this.exiting = true;
         var exitType = 'exit';
         if (e === 'requireExitEditor') exitType = 'sidebar';
 
@@ -744,7 +745,7 @@ class MenuBar extends React.Component {
             });
             await this.autoSave();
         }
-
+        this.exiting = false;
         this.handleExit.locked = false;
         window.bridge.emit(e, {type: exitType});
     }
@@ -762,7 +763,7 @@ class MenuBar extends React.Component {
     }
 
     async handleSubmit (isNoCheckResult, silence) {
-        if (!silence) {
+        if (!silence && !this.exiting) { // 点击退出按钮时不需要判断是否运行过
             if (!this.judgeIsRunCode()) {
                 return;
             }
