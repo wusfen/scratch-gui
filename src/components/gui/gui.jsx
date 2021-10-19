@@ -50,6 +50,8 @@ import CopyCodeHideModal from '../copy-code-hide/index.jsx';
 import PromptArea from '../prompt-area/prompt-area.jsx';
 import TaskBar from '../taskBar/index.jsx';
 import ErrorTips from '../errorTips/index.jsx';
+import SpriteResizer from '../sprite-resizer/index.jsx';
+
 import {param} from '../../lib/param.js';
 
 const messages = defineMessages({
@@ -457,6 +459,7 @@ const GUIComponent = props => {
                     isPlayerOnly={isPlayerOnly}
                 />
                 <CopyCodeHideModal></CopyCodeHideModal>
+                <SpriteResizer vm={vm}></SpriteResizer>
             </Box>
         );
     }}</MediaQuery>);

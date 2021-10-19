@@ -4,7 +4,6 @@ import {param} from './param.js';
 // TODO: sb3 内文件名必须是文件的 md5 ，如果不一致加载会找不到
 // TODO: 选择本地文件
 import Dialog from './../components/dialog/index.jsx';
-import createSpriteResizer from '../components/sprite-resizer/index.jsx';
 
 let vm;
 
@@ -14,7 +13,7 @@ let vm;
  * single
  */
 class Project {
-    originalFileURL = '' // ?file=url
+    originalFileURL = '' // ?file=url || id=>url
     originalJson = {} // 最初的文件json
     jsonAddon = { // project.json +
         // 保存当前角色
@@ -86,7 +85,7 @@ class Project {
 
         // original
         let originalZip = zip;
-        this.originalFileURL = json._originalFileURL || url || param('file');
+        this.originalFileURL = json._originalFileURL || this.originalFileURL;
         this.originalJson = json;
 
         // _originalFileURL
@@ -234,9 +233,6 @@ function injectVm (_vm) {
         var _editingTarget = vm.runtime.targets.find(e => e.sprite.name === project.originalJson._editingTargetName);
         vm.setEditingTarget(_editingTarget?.id);
     });
-
-    // SpriteResizer
-    createSpriteResizer();
 }
 
 export {
