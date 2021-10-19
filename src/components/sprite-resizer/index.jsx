@@ -112,8 +112,6 @@ class Component extends React.Component{
         return Math.sqrt(Math.pow(A.x - B.x, 2) + Math.pow(A.y - B.y, 2));
     }
     update (target = this.state.target) {
-
-
         if (!target?.isSprite()) {
             this.setState({
                 isShow: false,
@@ -151,14 +149,14 @@ class Component extends React.Component{
         });
     }
     handleDown (e) {
-
         var state = this.state;
         if (!state.target) return;
         if (!state.isRotateDown && !state.isResizeDown) return;
 
+        var {x, y} = getEventXY(e);
         this.setState({
-            downX: e.clientX,
-            downY: e.clientY,
+            downX: x,
+            downY: y,
             downRotate: this.state.rotate,
             downSize: this.state.size,
         });
@@ -167,6 +165,7 @@ class Component extends React.Component{
         var state = this.state;
         if (!state.target) return;
         if (!state.isRotateDown) return;
+        var {x, y} = getEventXY(e);
 
         // 12点为0度
         var downAngle = this.getAngle(
@@ -182,9 +181,9 @@ class Component extends React.Component{
         var currentAngle = this.getAngle(
             {x: state.x, y: state.y},
             {x: state.x, y: state.y - 100},
-            {x: e.clientX, y: e.clientY},
+            {x: x, y: y},
         );
-        if (e.clientX < state.x) {
+        if (x < state.x) {
             currentAngle = 360 - currentAngle;
         }
 
@@ -203,6 +202,7 @@ class Component extends React.Component{
         var state = this.state;
         if (!state.target) return;
         if (!state.isResizeDown) return;
+        var {x, y} = getEventXY(e);
 
         var downDistance = this.getDistance(
             {x: state.x, y: state.y},
@@ -210,7 +210,7 @@ class Component extends React.Component{
         );
         var currentDistance = this.getDistance(
             {x: state.x, y: state.y},
-            {x: e.clientX, y: e.clientY},
+            {x: x, y: y},
         );
 
         const size = state.downSize * (currentDistance / downDistance);
