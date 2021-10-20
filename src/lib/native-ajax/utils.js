@@ -56,14 +56,19 @@ export function isElectron () {
 export function useHttpDns (){
     let use = true;
     const nativeVersion = getQueryVariable('nativeVersion');
-    const vArr = nativeVersion.split('.');
-    if (+vArr[0] < 1){
-        use = false;
-    } else if (+vArr[1] < 6){
-        use = false;
+    if (nativeVersion){
+        const vArr = nativeVersion.split('.');
+        if (+vArr[0] < 1){
+            use = false;
+        } else if (+vArr[1] < 6){
+            use = false;
+        }
+        const httpDns = getQueryVariable('httpDns');
+        return use || (httpDns && +httpDns === 1);
     }
-    const httpDns = getQueryVariable('httpDns');
-    return use || (httpDns && +httpDns === 1);
+    return false;
+
+
 }
 
 
