@@ -42,6 +42,13 @@
                         behavior: true,
                         enableConsole: true,
                         release: window.version,
+                        urlHelper: [
+                            {rule: /(^[\\/]c:[\\/]users[\\/])([^\\/]+)/, target: '$1**'},
+                            {rule: /(^[\\/]users[\\/])([^\\/]+)/, target: '$1**'},
+                            {rule: /(^[\\/]var.*?application[\\/])([^\\/]+)/, target: '$1****'}
+                        ],
+                        apiHelper: [
+                        ],
                         environment: env
                     }
                 };
