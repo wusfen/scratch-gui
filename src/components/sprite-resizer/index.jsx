@@ -6,6 +6,7 @@ import bindAll from 'lodash.bindall';
 import {connect} from 'react-redux';
 
 import {getEventXY} from '../../lib/touch-utils';
+import {param} from '../../lib/param';
 
 import styles from './styles.css';
 const c = styles;
@@ -33,7 +34,9 @@ class Component extends React.Component{
             downSize: 100,
 
             isShow: false,
-            target: null
+            target: null,
+
+            isTeacherMode: param('mode') === 'teacher',
         };
 
         bindAll(this, [
@@ -112,13 +115,17 @@ class Component extends React.Component{
         return Math.sqrt(Math.pow(A.x - B.x, 2) + Math.pow(A.y - B.y, 2));
     }
     update (target = this.state.target) {
-        if (!target?.isSprite()) {
+        var state = this.state;
+
+        var isSprite = target?.isSprite();
+        var isHidden = !state.isTeacherMode && target?.getName().match(/^#.*\*$/);
+
+        if (!isSprite || isHidden) {
             this.setState({
                 isShow: false,
             });
             return;
         }
-        var state = this.state;
 
         var targetDrawable = target.renderer._allDrawables[target.drawableID];
         var skin = targetDrawable._skin;
@@ -232,7 +239,10 @@ class Component extends React.Component{
             isRotateDown: false,
             isResizeDown: false,
         });
-        this.update();
+
+        setTimeout(() => {
+            this.update();
+        }, 100);
     }
     render () {
         const {
