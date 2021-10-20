@@ -546,6 +546,9 @@ export default function (vm) {
         }
         return function (e) {
             setTimeout(() => {
+                if (!window.duplicateXml) {
+                    return;
+                }
                 var newBlock = Blockly.Xml.domToBlock(window.duplicateXml, window.currWorkspace); // 用复制的xml to block，传入当前编辑器的workspace
                 Blockly.scratchBlocksUtils.changeObscuredShadowIds(newBlock);
                 var svgRootNew = newBlock.getSvgRoot();
