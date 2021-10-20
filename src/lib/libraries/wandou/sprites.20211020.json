@@ -127,61 +127,61 @@
                 "tags": [
                     "effects"
                 ],
-                "assetId": "3ef636c0d66fcdc1ddea8d0fa3f66c46",
+                "assetId": "82bc0f567f0cfa59f0cc51d52be1b4c3",
                 "name": "声波-01",
                 "bitmapResolution": 2,
-                "md5ext": "3ef636c0d66fcdc1ddea8d0fa3f66c46.png",
+                "md5ext": "82bc0f567f0cfa59f0cc51d52be1b4c3.png",
                 "dataFormat": "png",
-                "rotationCenterX": 146.5,
-                "rotationCenterY": 167.5
+                "rotationCenterX": 90,
+                "rotationCenterY": 103
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "e9ac068770731523d0d7f6f386b97dfb",
+                "assetId": "d7b372a3a62c29a6fd7e2f8c20fadd3e",
                 "name": "声波-02",
                 "bitmapResolution": 2,
-                "md5ext": "e9ac068770731523d0d7f6f386b97dfb.png",
+                "md5ext": "d7b372a3a62c29a6fd7e2f8c20fadd3e.png",
                 "dataFormat": "png",
-                "rotationCenterX": 146.5,
-                "rotationCenterY": 167.5
+                "rotationCenterX": 90,
+                "rotationCenterY": 103
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "d810f55eb4d3381fc11d4b6f532e3eea",
+                "assetId": "85703599bce780db628bd7beb41065bb",
                 "name": "声波-03",
                 "bitmapResolution": 2,
-                "md5ext": "d810f55eb4d3381fc11d4b6f532e3eea.png",
+                "md5ext": "85703599bce780db628bd7beb41065bb.png",
                 "dataFormat": "png",
-                "rotationCenterX": 146.5,
-                "rotationCenterY": 167.5
+                "rotationCenterX": 90,
+                "rotationCenterY": 103
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "e21c9a9275f4e59464f6108359decc52",
+                "assetId": "4e8ea183e39c12ea2c535c8daa2ffee7",
                 "name": "声波-04",
                 "bitmapResolution": 2,
-                "md5ext": "e21c9a9275f4e59464f6108359decc52.png",
+                "md5ext": "4e8ea183e39c12ea2c535c8daa2ffee7.png",
                 "dataFormat": "png",
-                "rotationCenterX": 146.5,
-                "rotationCenterY": 167.5
+                "rotationCenterX": 90,
+                "rotationCenterY": 103
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "7f93cde52a5b63c032d668068cf09e2c",
+                "assetId": "2f5d5a7889058f2c3726489134973252",
                 "name": "声波-05",
                 "bitmapResolution": 2,
-                "md5ext": "7f93cde52a5b63c032d668068cf09e2c.png",
+                "md5ext": "2f5d5a7889058f2c3726489134973252.png",
                 "dataFormat": "png",
-                "rotationCenterX": 146.5,
-                "rotationCenterY": 167.5
+                "rotationCenterX": 90,
+                "rotationCenterY": 103
             }
         ],
         "sounds": [
@@ -209,73 +209,73 @@
                 "tags": [
                     "effects"
                 ],
-                "assetId": "986784c0b4f1e90947dcf1d1a8c0e783",
+                "assetId": "4d459e61ff74969e265039df789db21f",
                 "name": "射线-01",
                 "bitmapResolution": 2,
-                "md5ext": "986784c0b4f1e90947dcf1d1a8c0e783.png",
+                "md5ext": "4d459e61ff74969e265039df789db21f.png",
                 "dataFormat": "png",
-                "rotationCenterX": 1521.5,
-                "rotationCenterY": 1518
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 182
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "9fdd0ea12c067b3c1cb076d772e14920",
+                "assetId": "044b86b9ec7bc902791c12c6a1d7e55d",
                 "name": "射线-02",
                 "bitmapResolution": 2,
-                "md5ext": "9fdd0ea12c067b3c1cb076d772e14920.png",
+                "md5ext": "044b86b9ec7bc902791c12c6a1d7e55d.png",
                 "dataFormat": "png",
-                "rotationCenterX": 1521.5,
-                "rotationCenterY": 1518
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 182
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "77a396bd94e29a03d2a47e9938c35c6b",
+                "assetId": "2cb404de4869537dcd754b99f5c0d21d",
                 "name": "射线-03",
                 "bitmapResolution": 2,
-                "md5ext": "77a396bd94e29a03d2a47e9938c35c6b.png",
+                "md5ext": "2cb404de4869537dcd754b99f5c0d21d.png",
                 "dataFormat": "png",
-                "rotationCenterX": 1521.5,
-                "rotationCenterY": 1518
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 182
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "34dee9e1952e49541cb58b225d3702ab",
+                "assetId": "f48d0cd8886702d10729ca7ef0641a26",
                 "name": "射线-04",
                 "bitmapResolution": 2,
-                "md5ext": "34dee9e1952e49541cb58b225d3702ab.png",
+                "md5ext": "f48d0cd8886702d10729ca7ef0641a26.png",
                 "dataFormat": "png",
-                "rotationCenterX": 1521.5,
-                "rotationCenterY": 1518
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 182
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "3125d8dae36430c4b3933909fd3339da",
+                "assetId": "7538070274bc6c5f4f4394294236342e",
                 "name": "射线-05",
                 "bitmapResolution": 2,
-                "md5ext": "3125d8dae36430c4b3933909fd3339da.png",
+                "md5ext": "7538070274bc6c5f4f4394294236342e.png",
                 "dataFormat": "png",
-                "rotationCenterX": 1521.5,
-                "rotationCenterY": 1518
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 182
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "fc8d80d73f2b9cce325fcff9089071ba",
+                "assetId": "52e7e90b7094403c61ade401c44766aa",
                 "name": "射线-06",
                 "bitmapResolution": 2,
-                "md5ext": "fc8d80d73f2b9cce325fcff9089071ba.png",
+                "md5ext": "52e7e90b7094403c61ade401c44766aa.png",
                 "dataFormat": "png",
-                "rotationCenterX": 1521.5,
-                "rotationCenterY": 1518
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 182
             }
         ],
         "sounds": [
@@ -373,109 +373,109 @@
                 "tags": [
                     "effects"
                 ],
-                "assetId": "f7f73dac8114c60ad51ce623222275e6",
+                "assetId": "cb25910977367373f7214cc8b9c7ad76",
                 "name": "旋涡-01",
                 "bitmapResolution": 2,
-                "md5ext": "f7f73dac8114c60ad51ce623222275e6.png",
+                "md5ext": "cb25910977367373f7214cc8b9c7ad76.png",
                 "dataFormat": "png",
-                "rotationCenterX": 351,
-                "rotationCenterY": 118
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 61.5
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "384cf033193e2b0a54483f43073ef928",
+                "assetId": "e88310ee10599a50e6ac8270169b988e",
                 "name": "旋涡-02",
                 "bitmapResolution": 2,
-                "md5ext": "384cf033193e2b0a54483f43073ef928.png",
+                "md5ext": "e88310ee10599a50e6ac8270169b988e.png",
                 "dataFormat": "png",
-                "rotationCenterX": 351,
-                "rotationCenterY": 118
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 61.5
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "bded830974634f35977a3afc93a27465",
+                "assetId": "575f35c51cbd2f1bb65ff12c131a3493",
                 "name": "旋涡-03",
                 "bitmapResolution": 2,
-                "md5ext": "bded830974634f35977a3afc93a27465.png",
+                "md5ext": "575f35c51cbd2f1bb65ff12c131a3493.png",
                 "dataFormat": "png",
-                "rotationCenterX": 351,
-                "rotationCenterY": 118
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 61.5
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "88422ae338dcbc11c368b8965f3a53f8",
+                "assetId": "0ab3f8b5b2ddfede09abdff810279183",
                 "name": "旋涡-04",
                 "bitmapResolution": 2,
-                "md5ext": "88422ae338dcbc11c368b8965f3a53f8.png",
+                "md5ext": "0ab3f8b5b2ddfede09abdff810279183.png",
                 "dataFormat": "png",
-                "rotationCenterX": 351,
-                "rotationCenterY": 118
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 61.5
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "950986645f1b7d8997286f0229c7d9f2",
+                "assetId": "bd172a8157ac92fa20f3811a5e52d68f",
                 "name": "旋涡-05",
                 "bitmapResolution": 2,
-                "md5ext": "950986645f1b7d8997286f0229c7d9f2.png",
+                "md5ext": "bd172a8157ac92fa20f3811a5e52d68f.png",
                 "dataFormat": "png",
-                "rotationCenterX": 351,
-                "rotationCenterY": 118
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 61.5
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "f41c2764dcf67746330aeb8f7a2da9d8",
+                "assetId": "eff34664c448f36c7b97d7f740f82501",
                 "name": "旋涡-06",
                 "bitmapResolution": 2,
-                "md5ext": "f41c2764dcf67746330aeb8f7a2da9d8.png",
+                "md5ext": "eff34664c448f36c7b97d7f740f82501.png",
                 "dataFormat": "png",
-                "rotationCenterX": 351,
-                "rotationCenterY": 118
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 61.5
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "896766f6a9dcc85d8136bd9a25ed5d17",
+                "assetId": "8b2a2b6d59ec1a7096b84d90187a90b6",
                 "name": "旋涡-07",
                 "bitmapResolution": 2,
-                "md5ext": "896766f6a9dcc85d8136bd9a25ed5d17.png",
+                "md5ext": "8b2a2b6d59ec1a7096b84d90187a90b6.png",
                 "dataFormat": "png",
-                "rotationCenterX": 351,
-                "rotationCenterY": 118
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 61.5
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "1cf8be6ceab99bd63c95aeaf594a546e",
+                "assetId": "d49a59a09ad87768c9990fdd33b52727",
                 "name": "旋涡-08",
                 "bitmapResolution": 2,
-                "md5ext": "1cf8be6ceab99bd63c95aeaf594a546e.png",
+                "md5ext": "d49a59a09ad87768c9990fdd33b52727.png",
                 "dataFormat": "png",
-                "rotationCenterX": 351,
-                "rotationCenterY": 118
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 61.5
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "9caf13f29f478f22ab33f5016fab0b11",
+                "assetId": "45530cf7a1c74ebfe4af5ee9f552411e",
                 "name": "旋涡-09",
                 "bitmapResolution": 2,
-                "md5ext": "9caf13f29f478f22ab33f5016fab0b11.png",
+                "md5ext": "45530cf7a1c74ebfe4af5ee9f552411e.png",
                 "dataFormat": "png",
-                "rotationCenterX": 351,
-                "rotationCenterY": 118
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 61.5
             }
         ],
         "sounds": [
@@ -503,61 +503,61 @@
                 "tags": [
                     "effects"
                 ],
-                "assetId": "cfdc562ee64b2f44c1145a536b29a0d9",
+                "assetId": "1f72b38ea59bc743cb0e5ff440c42c81",
                 "name": "海浪-01",
                 "bitmapResolution": 2,
-                "md5ext": "cfdc562ee64b2f44c1145a536b29a0d9.png",
+                "md5ext": "1f72b38ea59bc743cb0e5ff440c42c81.png",
                 "dataFormat": "png",
-                "rotationCenterX": 669.5,
-                "rotationCenterY": 317
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 86.5
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "d6e630cb961da4134a53f8e71b58cf7d",
+                "assetId": "698ae9bc9cc2271b3d31fab59ba25751",
                 "name": "海浪-02",
                 "bitmapResolution": 2,
-                "md5ext": "d6e630cb961da4134a53f8e71b58cf7d.png",
+                "md5ext": "698ae9bc9cc2271b3d31fab59ba25751.png",
                 "dataFormat": "png",
-                "rotationCenterX": 669.5,
-                "rotationCenterY": 317
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 86.5
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "10f4c04af2c9d96c0be33e9234cef256",
+                "assetId": "98936f2d3b918d2d983c666401cac11b",
                 "name": "海浪-03",
                 "bitmapResolution": 2,
-                "md5ext": "10f4c04af2c9d96c0be33e9234cef256.png",
+                "md5ext": "98936f2d3b918d2d983c666401cac11b.png",
                 "dataFormat": "png",
-                "rotationCenterX": 669.5,
-                "rotationCenterY": 317
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 86.5
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "f6e1f7dcc4a8832bce7342e9aa47a93a",
+                "assetId": "5bbea912de27af50371ca184259d13da",
                 "name": "海浪-04",
                 "bitmapResolution": 2,
-                "md5ext": "f6e1f7dcc4a8832bce7342e9aa47a93a.png",
+                "md5ext": "5bbea912de27af50371ca184259d13da.png",
                 "dataFormat": "png",
-                "rotationCenterX": 669.5,
-                "rotationCenterY": 317
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 86.5
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "2e835a2ec321fdba823fde320a7dce8f",
+                "assetId": "527ca2d9f139bb47e2588fe856849618",
                 "name": "海浪-05",
                 "bitmapResolution": 2,
-                "md5ext": "2e835a2ec321fdba823fde320a7dce8f.png",
+                "md5ext": "527ca2d9f139bb47e2588fe856849618.png",
                 "dataFormat": "png",
-                "rotationCenterX": 669.5,
-                "rotationCenterY": 317
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 86.5
             }
         ],
         "sounds": [
@@ -667,13 +667,13 @@
                 "tags": [
                     "effects"
                 ],
-                "assetId": "517c2c3069490127be5a08169353c113",
+                "assetId": "2fbf8c8e38650f2da1bdc34497d7aed6",
                 "name": "雪花",
                 "bitmapResolution": 2,
-                "md5ext": "517c2c3069490127be5a08169353c113.png",
+                "md5ext": "2fbf8c8e38650f2da1bdc34497d7aed6.png",
                 "dataFormat": "png",
-                "rotationCenterX": 200,
-                "rotationCenterY": 223.5
+                "rotationCenterX": 22.5,
+                "rotationCenterY": 25
             }
         ],
         "sounds": [
@@ -701,241 +701,241 @@
                 "tags": [
                     "effects"
                 ],
-                "assetId": "efe97c83069ebe0cbcb2a98097e65d96",
+                "assetId": "a2756698f97f1046cd7e663ad698d6bb",
                 "name": "雷云-01",
                 "bitmapResolution": 2,
-                "md5ext": "efe97c83069ebe0cbcb2a98097e65d96.png",
+                "md5ext": "a2756698f97f1046cd7e663ad698d6bb.png",
                 "dataFormat": "png",
-                "rotationCenterX": 486,
-                "rotationCenterY": 471.5
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "0d664964041ad36f8853d3c697fefb7d",
+                "assetId": "652ad3d18bfe827f98d2069005074557",
                 "name": "雷云-02",
                 "bitmapResolution": 2,
-                "md5ext": "0d664964041ad36f8853d3c697fefb7d.png",
+                "md5ext": "652ad3d18bfe827f98d2069005074557.png",
                 "dataFormat": "png",
-                "rotationCenterX": 486,
-                "rotationCenterY": 471.5
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "742a99d143235c1c18184fa0c1e6a8d9",
+                "assetId": "5b0de6bbc97a0b73f108edb236fa9319",
                 "name": "雷云-03",
                 "bitmapResolution": 2,
-                "md5ext": "742a99d143235c1c18184fa0c1e6a8d9.png",
+                "md5ext": "5b0de6bbc97a0b73f108edb236fa9319.png",
                 "dataFormat": "png",
-                "rotationCenterX": 486,
-                "rotationCenterY": 471.5
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "f7504b240e4566d4a827fa79739f1693",
+                "assetId": "38fb5fd28141474a35a413cf1b7f9439",
                 "name": "雷云-04",
                 "bitmapResolution": 2,
-                "md5ext": "f7504b240e4566d4a827fa79739f1693.png",
+                "md5ext": "38fb5fd28141474a35a413cf1b7f9439.png",
                 "dataFormat": "png",
-                "rotationCenterX": 486,
-                "rotationCenterY": 471.5
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "f9cb9648485ea509805cb2b5a1089840",
+                "assetId": "570043a9d508030176219cf81a20d5e3",
                 "name": "雷云-05",
                 "bitmapResolution": 2,
-                "md5ext": "f9cb9648485ea509805cb2b5a1089840.png",
+                "md5ext": "570043a9d508030176219cf81a20d5e3.png",
                 "dataFormat": "png",
-                "rotationCenterX": 486,
-                "rotationCenterY": 471.5
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "422194e492f1690e8b7493d0f09eda4d",
+                "assetId": "ac57d5566b0177a2b8a0200ac1929c1a",
                 "name": "雷云-06",
                 "bitmapResolution": 2,
-                "md5ext": "422194e492f1690e8b7493d0f09eda4d.png",
+                "md5ext": "ac57d5566b0177a2b8a0200ac1929c1a.png",
                 "dataFormat": "png",
-                "rotationCenterX": 486,
-                "rotationCenterY": 471.5
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "e3151750fcf5df180f3d526928be678b",
+                "assetId": "849853759e544e8414e48521cdfdeb15",
                 "name": "雷云-07",
                 "bitmapResolution": 2,
-                "md5ext": "e3151750fcf5df180f3d526928be678b.png",
+                "md5ext": "849853759e544e8414e48521cdfdeb15.png",
                 "dataFormat": "png",
-                "rotationCenterX": 486,
-                "rotationCenterY": 471.5
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "26bcb6a42049e5af2456c86efc0dc74c",
+                "assetId": "ec64fe7e4cf693186a1c2ba6799d3b38",
                 "name": "雷云-08",
                 "bitmapResolution": 2,
-                "md5ext": "26bcb6a42049e5af2456c86efc0dc74c.png",
+                "md5ext": "ec64fe7e4cf693186a1c2ba6799d3b38.png",
                 "dataFormat": "png",
-                "rotationCenterX": 486,
-                "rotationCenterY": 471.5
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "7e56d3edcef08f6334d8b399a3d7cba3",
+                "assetId": "f1e7d8f3d26934273dd4c9081872a24c",
                 "name": "雷云-09",
                 "bitmapResolution": 2,
-                "md5ext": "7e56d3edcef08f6334d8b399a3d7cba3.png",
+                "md5ext": "f1e7d8f3d26934273dd4c9081872a24c.png",
                 "dataFormat": "png",
-                "rotationCenterX": 486,
-                "rotationCenterY": 471.5
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "42f1249c53348d6fd028324841f79521",
+                "assetId": "16bb6f69468b1137eaad2ddc1b16d07f",
                 "name": "雷云-10",
                 "bitmapResolution": 2,
-                "md5ext": "42f1249c53348d6fd028324841f79521.png",
+                "md5ext": "16bb6f69468b1137eaad2ddc1b16d07f.png",
                 "dataFormat": "png",
-                "rotationCenterX": 486,
-                "rotationCenterY": 471.5
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "37c6ccac444b2af992f19b4992b735ca",
+                "assetId": "a3a5d6220dc0d5e91481724da4dbb5ce",
                 "name": "雷云-11",
                 "bitmapResolution": 2,
-                "md5ext": "37c6ccac444b2af992f19b4992b735ca.png",
+                "md5ext": "a3a5d6220dc0d5e91481724da4dbb5ce.png",
                 "dataFormat": "png",
-                "rotationCenterX": 486,
-                "rotationCenterY": 471.5
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "45c7e25c36d330e50bf81dfc97c6fd07",
+                "assetId": "6b098405022008690acc9d3cd273b166",
                 "name": "雷云-12",
                 "bitmapResolution": 2,
-                "md5ext": "45c7e25c36d330e50bf81dfc97c6fd07.png",
+                "md5ext": "6b098405022008690acc9d3cd273b166.png",
                 "dataFormat": "png",
-                "rotationCenterX": 486,
-                "rotationCenterY": 471.5
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "6b3d97ff2a1c033c6207e12af5d46aeb",
+                "assetId": "8f384699bee1ce022d98037f6d86d7c0",
                 "name": "雷云-13",
                 "bitmapResolution": 2,
-                "md5ext": "6b3d97ff2a1c033c6207e12af5d46aeb.png",
+                "md5ext": "8f384699bee1ce022d98037f6d86d7c0.png",
                 "dataFormat": "png",
-                "rotationCenterX": 486,
-                "rotationCenterY": 471.5
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "b99e5e62b0b99d4b7e656e9948092f0a",
+                "assetId": "8ba8e262c382c206be158761cdefa2bc",
                 "name": "雷云-14",
                 "bitmapResolution": 2,
-                "md5ext": "b99e5e62b0b99d4b7e656e9948092f0a.png",
+                "md5ext": "8ba8e262c382c206be158761cdefa2bc.png",
                 "dataFormat": "png",
-                "rotationCenterX": 486,
-                "rotationCenterY": 471.5
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "44b77300eac5dd5ef3018a304b54a14a",
+                "assetId": "86498d6995d0944cb1c7e20d00f6c8cf",
                 "name": "雷云-15",
                 "bitmapResolution": 2,
-                "md5ext": "44b77300eac5dd5ef3018a304b54a14a.png",
+                "md5ext": "86498d6995d0944cb1c7e20d00f6c8cf.png",
                 "dataFormat": "png",
-                "rotationCenterX": 486,
-                "rotationCenterY": 471.5
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "9ea66f442f34f5523611791b9e6b57d2",
+                "assetId": "2aa556a3c49fd4fb67af8f3a194782bc",
                 "name": "雷云-16",
                 "bitmapResolution": 2,
-                "md5ext": "9ea66f442f34f5523611791b9e6b57d2.png",
+                "md5ext": "2aa556a3c49fd4fb67af8f3a194782bc.png",
                 "dataFormat": "png",
-                "rotationCenterX": 486,
-                "rotationCenterY": 471.5
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "5a72dbc2d42a4fae481ec632c6682d39",
+                "assetId": "2c48a4092e66aff82005d8a77eb57002",
                 "name": "雷云-17",
                 "bitmapResolution": 2,
-                "md5ext": "5a72dbc2d42a4fae481ec632c6682d39.png",
+                "md5ext": "2c48a4092e66aff82005d8a77eb57002.png",
                 "dataFormat": "png",
-                "rotationCenterX": 486,
-                "rotationCenterY": 471.5
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "e143d64f8ef293df765757f4fcb666f0",
+                "assetId": "a824471545bd6b2bb71e40694a186c81",
                 "name": "雷云-18",
                 "bitmapResolution": 2,
-                "md5ext": "e143d64f8ef293df765757f4fcb666f0.png",
+                "md5ext": "a824471545bd6b2bb71e40694a186c81.png",
                 "dataFormat": "png",
-                "rotationCenterX": 486,
-                "rotationCenterY": 471.5
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "944a05be82dd525da0c9b84a2cc45930",
+                "assetId": "58403b325f13aa0b95bddbf49579fef0",
                 "name": "雷云-19",
                 "bitmapResolution": 2,
-                "md5ext": "944a05be82dd525da0c9b84a2cc45930.png",
+                "md5ext": "58403b325f13aa0b95bddbf49579fef0.png",
                 "dataFormat": "png",
-                "rotationCenterX": 486,
-                "rotationCenterY": 471.5
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "8ae6b840cd4d2d1c4c64efdb337055ca",
+                "assetId": "cddf4d940e7f6f52b1951dd09c019b10",
                 "name": "雷云-20",
                 "bitmapResolution": 2,
-                "md5ext": "8ae6b840cd4d2d1c4c64efdb337055ca.png",
+                "md5ext": "cddf4d940e7f6f52b1951dd09c019b10.png",
                 "dataFormat": "png",
-                "rotationCenterX": 486,
-                "rotationCenterY": 471.5
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
             }
         ],
         "sounds": [
@@ -1045,37 +1045,37 @@
                 "tags": [
                     "effects"
                 ],
-                "assetId": "24b24c23817f52e0796078c036f0347e",
+                "assetId": "be92c97344a4fbf7a740ba10766040c7",
                 "name": "龙卷风-01",
                 "bitmapResolution": 2,
-                "md5ext": "24b24c23817f52e0796078c036f0347e.png",
+                "md5ext": "be92c97344a4fbf7a740ba10766040c7.png",
                 "dataFormat": "png",
-                "rotationCenterX": 418,
-                "rotationCenterY": 366
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 160
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "0c1f46175ca59638da16c56facec2dab",
+                "assetId": "7c7cae3feb5c6dfa571c2dc3476a5a66",
                 "name": "龙卷风-02",
                 "bitmapResolution": 2,
-                "md5ext": "0c1f46175ca59638da16c56facec2dab.png",
+                "md5ext": "7c7cae3feb5c6dfa571c2dc3476a5a66.png",
                 "dataFormat": "png",
-                "rotationCenterX": 418,
-                "rotationCenterY": 366
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 160
             },
             {
                 "tags": [
                     "effects"
                 ],
-                "assetId": "7186bdd7e331ec81834de3a440b5a0c1",
+                "assetId": "a4909a30f8d66facb6bebbf5334aa03d",
                 "name": "龙卷风-03",
                 "bitmapResolution": 2,
-                "md5ext": "7186bdd7e331ec81834de3a440b5a0c1.png",
+                "md5ext": "a4909a30f8d66facb6bebbf5334aa03d.png",
                 "dataFormat": "png",
-                "rotationCenterX": 418,
-                "rotationCenterY": 366
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 160
             }
         ],
         "sounds": [
