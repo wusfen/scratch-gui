@@ -54,10 +54,18 @@ export function isElectron () {
  * @returns {boolean} 是否符合httpdns条件
  */
 export function useHttpDns (){
+    let use = true;
     const nativeVersion = getQueryVariable('nativeVersion');
+    const vArr = nativeVersion.split('.');
+    if (+vArr[0] < 1){
+        use = false;
+    } else if (+vArr[1] < 6){
+        use = false;
+    }
     const httpDns = getQueryVariable('httpDns');
-    return (nativeVersion && +nativeVersion > 160) || (httpDns && +httpDns === 1);
+    return use || (httpDns && +httpDns === 1);
 }
+
 
 /**
  * 是否为豌豆编程的客户端
@@ -74,6 +82,8 @@ export function isVipthink (){
  */
 export function onNative () {
     if ((isIOS() || isAndroid() || isElectron()) && isVipthink() && useHttpDns()) return true;
+    // if ((isIOS() || isAndroid() || isElectron()) && useHttpDns()) return true;
+    // if (useHttpDns()) return true;
 }
 
 
