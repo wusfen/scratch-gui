@@ -205,7 +205,7 @@ Ajax.settings = {
     },
     responseType: 'text',
     timeout: 0,
-    retry: 3,
+    retry: 2,
     onload (res, options) {},
     onerror (e, options) {},
     ontimeout (e, options) {},
