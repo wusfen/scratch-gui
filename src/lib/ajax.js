@@ -214,6 +214,11 @@ Ajax.settings = {
     onloadend (res, options) {},
 };
 
+// TODO 未测试
 /** 原生环境下 ajax会被代理，，使用 ./lib/native-ajax/native_ajax.js的Native */
-export const ajax = onNative() ? new NativeAjax() : new Ajax();
-// export const ajax = new Ajax();
+// export const ajax = onNative() ? new NativeAjax() : new Ajax();
+export const ajax = new Ajax();
+
+export {
+    ajax as default,
+};
