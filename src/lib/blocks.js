@@ -493,9 +493,9 @@ export default function (vm) {
         }
 
         // Allow the block to add or modify menuOptions.
-        // if (this.customContextMenu) {
-        //     this.customContextMenu(menuOptions);
-        // }
+        if (this.customContextMenu) {
+            this.customContextMenu(menuOptions);
+        }
         Blockly.ContextMenu.show(e, menuOptions, this.RTL);
         Blockly.ContextMenu.currentBlock = this;
     };
