@@ -26,6 +26,7 @@ import log from './log';
 import storage from './storage';
 
 import {ajax} from './ajax.js';
+import {param} from './param.js';
 import {project} from './project.js';
 
 /* Higher Order Component to provide behavior for loading projects by id. If
@@ -89,7 +90,11 @@ const ProjectFetcherHOC = function (WrappedComponent) {
 
                 // TODO 临时存值
                 window._workInfo = data;
+            } else {
+                // workName
+                this.props.setProjectTitle?.(param('workName') || '我的作品');
             }
+
 
             // ?file
             let file = searchParams.get('file');

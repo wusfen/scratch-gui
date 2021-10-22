@@ -762,6 +762,7 @@ class MenuBar extends React.Component {
             }
         }
         const workInfo = window._workInfo || {};
+        const workName = this.getWorkName();
 
         if (!workInfo.id) {
             await Dialog.alert({
@@ -821,7 +822,7 @@ class MenuBar extends React.Component {
 
         // 标记已保存
         this.props.onProjectSaved({
-            title: this.props.projectTitle || param('workName') || ''
+            title: workName,
         });
 
         if (isNoCheckResult) {
