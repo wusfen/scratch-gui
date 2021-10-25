@@ -2,6 +2,7 @@ import JSZip from 'jszip';
 import {ajax} from './ajax.js';
 import {param} from './param.js';
 import Dialog from './../components/dialog/index.jsx';
+const Zip = JSZip;
 
 // TODO: sb3 内文件名必须是文件的 md5 ，如果不一致加载会找不到
 // TODO: 选择本地文件
@@ -140,7 +141,7 @@ class Project {
         }
 
         // 合并
-        const finalZip = new JSZip();
+        let finalZip = new JSZip();
         finalZip.files = {
             ...originalZip.files,
             ...zip.files,
@@ -148,11 +149,83 @@ class Project {
         this.finalZip = finalZip;
         this.finalJson = json;
 
+        // _originalFileURL 指向容错
+        const isError = this.checkZipAssetsError(this.finalZip, this.finalJson.targets);
+        if (isError) {
+            console.warn('checkZipAssetsError:', isError);
+
+            if (json._originalFileURL) {
+                // 指向错误的修正
+                const fixedURL = this.fixOriginalFileURL(json._originalFileURL);
+                const fixedZip = await this.url2zip(fixedURL);
+
+                // 合并
+                this.finalZip.files = {
+                    ...this.finalZip.files,
+                    ...fixedZip.files,
+                    ...zip.files,
+                };
+
+                // 如果还是有 fixOriginalFileURL 没修正的，回退到原始文件
+                const isAfterFixedError = this.checkZipAssetsError(this.finalZip, this.finalJson.targets);
+                if (isAfterFixedError) {
+                    console.warn('isAfterFixedError:', isAfterFixedError);
+                    const _originalFileURLZip = await this.url2zip(this.localFileToOnlineURL(json._originalFileURL));
+                    this.finalZip.files = {
+                        ..._originalFileURLZip.files,
+                    };
+
+                }
+            }
+        }
+
+        const isFinalError = this.checkZipAssetsError(this.finalZip, this.finalJson.targets);
+        if (isFinalError) {
+            console.error('[back to default.sb3]');
+            const defaultSb3URL = require('!file-loader!../lib/default-project/sb3/default.sb3');
+
+            finalZip = await this.url2zip(defaultSb3URL);
+        }
 
         console.log('finalZip:', finalZip);
         return finalZip.generateAsync({
             type: 'arraybuffer',
         });
+    }
+
+    fixOriginalFileURL (url) {
+        /**
+        猫女侠继承重做
+        继承关系往下
+        7： https://oss.iandcode.com/s/platform/interactive/common/interactiveTemplate/wdProj/moduleRelease/L1-U01-3/scratch/cat-heroine-practice-2-04.sb3 | -01
+        8： https://oss.iandcode.com/s/platform/interactive/common/interactiveTemplate/wdProj/moduleRelease/L1-U01-3/scratch/cat-heroine-practice-3-03.sb3 | -01
+        9： https://oss.iandcode.com/s/platform/interactive/common/interactiveTemplate/wdProj/moduleRelease/L1-U01-3/scratch/cat-heroine-practice-4-03.sb3 | -1
+        */
+
+        url = url
+            .replace('L1-U01-3/scratch/cat-heroine-practice-2-04.sb3', 'L1-U01-3/scratch/cat-heroine-practice-2-01.sb3')
+            .replace('L1-U01-3/scratch/cat-heroine-practice-3-03.sb3', 'L1-U01-3/scratch/cat-heroine-practice-3-01.sb3')
+            .replace('L1-U01-3/scratch/cat-heroine-practice-4-03.sb3', 'L1-U01-3/scratch/cat-heroine-practice-4-1.sb3');
+        url = this.localFileToOnlineURL(url);
+        return url;
+    }
+
+    url2zip (url) {
+        return new Promise(rs => {
+            ajax.get(url, {}, {
+                responseType: 'blob',
+                base: '',
+                async onload (res) {
+                    const zip = await Zip.loadAsync(res);
+                    rs(zip);
+                },
+                onerror (){
+                    const zip = new Zip();
+                    rs(zip);
+                }
+            });
+        });
+
     }
 
     async resetProjectByFileParam () {
@@ -162,6 +235,7 @@ class Project {
         });
 
         var file = param('file');
+        this.originalFileURL = file;
         const arrayBuffer = await this.getFullProjectArrayBuffer(file);
 
         vm.loadProject(arrayBuffer);
@@ -193,6 +267,21 @@ class Project {
         }
 
         return url;
+    }
+
+
+    // 是否 targets 有丢失的 zip.file
+    checkZipAssetsError (zip, targets) {
+        const assets = [];
+        targets.forEach(t => assets.push(...t.costumes, ...t.sounds));
+
+        for (const asset of assets) {
+            if (!zip.file(asset.md5ext)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }
