@@ -557,6 +557,7 @@ class MenuBar extends React.Component {
             formData.append('x-cos-security-token', ossToken.credentials?.sessionToken);
             formData.append('Signature', ossToken.credentials?.authorization);
             formData.append('key', data.path);
+            formData.append('file', blob, `${name}.${ext}`);
             authorizationTencentOss = ossToken.credentials?.authorization;
             break;
         }
