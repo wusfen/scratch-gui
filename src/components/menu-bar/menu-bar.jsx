@@ -530,43 +530,70 @@ class MenuBar extends React.Component {
         return this.props.projectTitle || param('workName') || '我的作品';
     }
 
-    async uploadToOss (blob, name = 'test', ext = 'sb3', silence) {
+    async uploadToOss (blob, name = 'test', ext = 'sb3', silence, driver = 'aly_oss', retry) {
         var self = this;
-        silence || self.props.setUploadingProgress(10);
+        silence || self.props.setUploadingProgress(self.uploadToOssProgressValue || 10);
 
-        var {data} = await ajax.get('file/getSign', {
-            driver: 'aly_oss',
+        var {data} = await ajax.get('/file/v2/getSign', {
+            driver: driver,
             name,
             ext,
+            retry
         });
         var ossToken = JSON.parse(data.ossToken);
 
         const formData = new FormData();
-        formData.append('OSSAccessKeyId', ossToken.accessid);
-        formData.append('signature', ossToken.signature);
-        formData.append('policy', ossToken.policy);
-        formData.append('key', data.path);
-        formData.append('success_action_status', 200);
-        formData.append('file', blob, `${name}.${ext}`);
+        let authorizationTencentOss = null;
+        switch (data.driver) {
+        case 'aly_oss':
+            formData.append('OSSAccessKeyId', ossToken.accessid);
+            formData.append('signature', ossToken.signature);
+            formData.append('policy', ossToken.policy);
+            formData.append('key', data.path);
+            formData.append('success_action_status', 200);
+            formData.append('file', blob, `${name}.${ext}`);
+            break;
+        case 'tencent_oss':
+            formData.append('x-cos-security-token', ossToken.credentials?.sessionToken);
+            formData.append('Signature', ossToken.credentials?.authorization);
+            formData.append('key', data.path);
+            authorizationTencentOss = ossToken.credentials?.authorization;
+            break;
+        }
 
-        silence || self.props.setUploadingProgress(20);
-        await ajax.post(`https://${data.bucket}.${data.region}.aliyuncs.com`, formData, {
+        silence || self.props.setUploadingProgress(self.uploadToOssProgressValue || 20);
+        await ajax.post(`${data.uploadDomain}`, formData, {
             silence: true,
             onprogress (e) {
                 if (silence) return;
                 var value = e.loaded * 100 / e.total;
                 value = 20 + (value * .6);
                 value = parseInt(value, 10);
-                self.props.setUploadingProgress(value);
+                self.uploadToOssProgressValue = (value > self.uploadToOssProgressValue) ? value : self.uploadToOssProgressValue; // 记录当前的进度，避免重试时进度条倒退
+                self.props.setUploadingProgress(self.uploadToOssProgressValue);
             },
-            onload () {},
+            onload () {
+                self.uploadToOssProgressValue = 0; // 重置
+                self.uploadToOssRetryCount = 0;
+            },
             onerror () {
-                alert('上传失败');
+                if (self.uploadToOssRetryCount >= 3) {
+                    alert('上传失败');
+                    self.uploadToOssProgressValue = 0;
+                    self.uploadToOssRetryCount = 0;
+                    return;
+                }
+                self.uploadToOssRetryCount++;
+                self.uploadToOss(blob, name, ext, silence, data.driver, true); // 失败切云，默认将上一次的driver带上
             },
+            retry: 1,
+            headers: authorizationTencentOss ? {
+                Authorization: authorizationTencentOss
+            } : {}
         });
         // silence || self.props.setUploadingProgress(false);
 
-        console.info('uploadToOss:', `https://${data.bucket}.${data.region}.aliyuncs.com/${data.path}`);
+        console.info('uploadToOss:', `${data.uploadDomain}`);
         return data;
     }
     async uploadSb3 (silence) {
