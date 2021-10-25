@@ -4,9 +4,6 @@ import {param} from './param.js';
 import Dialog from './../components/dialog/index.jsx';
 const Zip = JSZip;
 
-// TODO: sb3 内文件名必须是文件的 md5 ，如果不一致加载会找不到
-// TODO: 选择本地文件
-
 let vm;
 
 // WARNING: sb3 内文件名必须是文件的 md5 ，如果不一致加载会找不到
@@ -15,10 +12,8 @@ let vm;
  * single
  */
 class Project {
-    originalFileURL = '' // ?file=url || id=>url
-    originalJson = {} // 最初的文件json
-    finalJson = {}
-    finalZip = null
+    url = ''
+
     jsonAddon = { // project.json +
         // 保存当前角色
         get _editingTargetName () {
@@ -26,39 +21,45 @@ class Project {
         }
     }
 
+    init (url) {
+        this.url = url;
+    }
+
     /**
      * 获取拆分包
      * @returns {Promise<Blob>} blob
      */
-    getSb3Diff () {
-        var zip = new JSZip();
-        this.zip = zip;
+    async getSb3Diff () {
+        // init url
+        if (!this._originalFileURL) {
+            this._originalFileURL = this.url;
+        }
+
+        // !diff
+        if (param('mode') !== 'course') this._originalFileURL = null;
+        if (!/\.sb3$/.test(this._originalFileURL)) this._originalFileURL = null;
+
+        if (!this._originalFileURL) {
+            return this.getSb3();
+        }
+
+        // diff
+        const _zip = await this.url2zip(this._originalFileURL);
+        const zip = await this.buffer2zip(await this.getSb3());
+        // - _zip.files
+        for (const file in zip.files) {
+            if (file in _zip.files) {
+                delete zip.files[file];
+            }
+        }
 
         // project.json + _originalFileURL
-        this.jsonAddon._originalFileURL = this.originalFileURL;
+        this.jsonAddon._originalFileURL = this._originalFileURL;
         var json = vm.toJSON();
         zip.file('project.json', json);
 
-        // originalAssets[]
-        const originalAssets = [];
-        this.originalJson.targets.forEach(t => originalAssets.push(...t.costumes, ...t.sounds));
-        console.info('[diff] originalAssets:', originalAssets);
+        console.log('[getSb3Diff]', JSON.parse(json), zip);
 
-        // currentAssets[] - originalAssets[]
-        vm.assets.forEach(asset => {
-            if (!originalAssets.find(e => e.assetId === asset.assetId)) {
-                // console.info('[diff] +:', name, asset.assetId);
-
-                zip.file(
-                    `${asset.assetId}.${asset.dataFormat}`,
-                    asset.data
-                );
-            }
-        });
-
-        console.log('[diff] zip:', zip, {get json (){
-            return JSON.parse(json);
-        }});
         return zip.generateAsync({
             type: 'blob',
             mimeType: 'application/x.scratch.sb3diff',
@@ -69,176 +70,154 @@ class Project {
         });
     }
 
+    getSb3 () {
+        var zip = new JSZip();
+        this.zip = zip;
+
+        var json = vm.toJSON();
+        zip.file('project.json', json);
+
+        vm.assets.forEach(asset => {
+            zip.file(`${asset.assetId}.${asset.dataFormat}`, asset.data);
+        });
+
+        return zip.generateAsync({
+            type: 'blob',
+            mimeType: 'application/x.scratch.sb3',
+            compression: 'DEFLATE',
+            compressionOptions: {
+                level: 6 // Tradeoff between best speed (1) and best compression (9)
+            }
+        });
+    }
+
     /**
-     * 加载解析 sb3
-     * @param {string|Blob|ArrayBuffer} file .sb3|.sb3diff
-     * @returns {Promise<ArrayBuffer>} arrayBuffer
+     * sb3diff => sb3
+     * @param {ArrayBuffer} buffer buffer
+     * @returns {ArrayBuffer} buffer
      */
-    async getFullProjectArrayBuffer (file) {
-        let blob = file;
-        let url = '';
-        if (typeof file === 'string') {
-            url = file;
-            blob = await ajax.get(url, {}, {responseType: 'blob', base: ''});
-        }
+    async mergeSb3diff (buffer) {
+        let zip = await this.buffer2zip(buffer);
+        const projectConfig = await this.getZipProjectConfig(zip);
+        this.projectConfig = projectConfig;
+        const _originalFileURL = projectConfig._originalFileURL;
+        let isError;
 
-        const zip = await JSZip.loadAsync(blob);
-        let json = await zip.file('project.json').async('string');
-        json = JSON.parse(json);
-        console.log('zip:', zip, json);
-
-        // original
-        let originalZip = zip;
-        this.originalFileURL = json._originalFileURL || this.originalFileURL;
-        this.originalJson = json;
-
-        // _originalFileURL
-        if (json._originalFileURL) {
-            let originalFile;
-
+        // {project.json}._originalFileURL
+        if (_originalFileURL) {
             // file:///
-            // 在不同设备上提交和访问本地的路径可能是不一样
-            if (/^file:\//.test(json._originalFileURL) && json._originalFileURL === param('file')) {
-                originalFile = await new Promise((rs, rj) => {
-                    ajax.get(json._originalFileURL, {}, {
-                        responseType: 'blob',
-                        base: '',
-                        onload (res) {
-                            rs(res);
-                        },
-                        onerror (){
-                            rs();
-                        }
-                    });
-                });
+            const _zip = await this.url2zip(_originalFileURL);
+            console.log('[mergeSb3diff] _originalFileURL:', _originalFileURL, _zip);
+            zip = this.mergeZip(_zip, zip);
+            isError = await this.hasAssetsError(zip);
+
+            // {.sb3diff project.json}._originalFileURL
+            if (!isError) {
+                this._originalFileURL = _originalFileURL;
+                // this._originalJSON = await this.getZipProjectConfig(_zip);
             }
 
-            // online
-            if (!originalFile) {
-                const onlineOriginalFileURL = this.localFileToOnlineURL(json._originalFileURL);
-                originalFile = await new Promise((rs, rj) => {
-                    ajax.get(onlineOriginalFileURL, {}, {
-                        responseType: 'blob',
-                        base: '',
-                        onload (res) {
-                            rs(res);
-                        },
-                        onerror (){
-                            console.error('[onlineOriginalFileURL]', onlineOriginalFileURL);
-                            rs();
-                        }
-                    });
-                });
-            }
-
-            if (originalFile) {
-                originalZip = await JSZip.loadAsync(originalFile);
-                let originalJson = await originalZip.file('project.json').async('string');
-                originalJson = JSON.parse(originalJson);
-
-                this.originalJson = originalJson;
-            }
-        }
-
-        // 合并
-        let finalZip = new JSZip();
-        finalZip.files = {
-            ...originalZip.files,
-            ...zip.files,
-        };
-        this.finalZip = finalZip;
-        this.finalJson = json;
-
-        // _originalFileURL 指向容错
-        const isError = this.checkZipAssetsError(this.finalZip, this.finalJson.targets);
-        if (isError) {
-            console.warn('checkZipAssetsError:', isError);
-
-            if (json._originalFileURL) {
-                // 指向错误的修正
-                const fixedURL = this.fixOriginalFileURL(json._originalFileURL);
+            // ._originalFileURL 指向错误
+            if (isError) {
+                const fixedURL = this.fixOriginalFileURL(_originalFileURL);
                 const fixedZip = await this.url2zip(fixedURL);
+                console.warn('[mergeSb3diff] fixedURL:', fixedURL, fixedZip);
+                zip = this.mergeZip(fixedZip, zip);
+            }
 
-                // 合并
-                this.finalZip.files = {
-                    ...this.finalZip.files,
-                    ...fixedZip.files,
-                    ...zip.files,
-                };
-
-                // 如果还是有 fixOriginalFileURL 没修正的，回退到原始文件
-                const isAfterFixedError = this.checkZipAssetsError(this.finalZip, this.finalJson.targets);
-                if (isAfterFixedError) {
-                    console.warn('isAfterFixedError:', isAfterFixedError);
-                    const _originalFileURLZip = await this.url2zip(this.localFileToOnlineURL(json._originalFileURL));
-                    this.finalZip.files = {
-                        ..._originalFileURLZip.files,
-                    };
-
-                }
+            // 回退 _originalFileURL
+            isError = await this.hasAssetsError(zip);
+            if (isError) {
+                console.error('[mergeSb3diff] back to _originalFileURL', zip);
+                zip = _zip;
             }
         }
 
-        const isFinalError = this.checkZipAssetsError(this.finalZip, this.finalJson.targets);
-        if (isFinalError) {
-            console.error('[back to default.sb3]');
+        // back to default.sb3
+        isError = await this.hasAssetsError(zip);
+        if (isError) {
+            console.error('[mergeSb3diff] back to default.sb3');
             const defaultSb3URL = require('!file-loader!../lib/default-project/sb3/default.sb3');
-
-            finalZip = await this.url2zip(defaultSb3URL);
+            zip = await this.url2zip(defaultSb3URL);
         }
 
-        console.log('finalZip:', finalZip);
-        return finalZip.generateAsync({
+        return zip.generateAsync({
             type: 'arraybuffer',
         });
     }
 
-    fixOriginalFileURL (url) {
-        /**
-        猫女侠继承重做
-        继承关系往下
-        7： https://oss.iandcode.com/s/platform/interactive/common/interactiveTemplate/wdProj/moduleRelease/L1-U01-3/scratch/cat-heroine-practice-2-04.sb3 | -01
-        8： https://oss.iandcode.com/s/platform/interactive/common/interactiveTemplate/wdProj/moduleRelease/L1-U01-3/scratch/cat-heroine-practice-3-03.sb3 | -01
-        9： https://oss.iandcode.com/s/platform/interactive/common/interactiveTemplate/wdProj/moduleRelease/L1-U01-3/scratch/cat-heroine-practice-4-03.sb3 | -1
-        */
-
-        url = url
-            .replace('L1-U01-3/scratch/cat-heroine-practice-2-04.sb3', 'L1-U01-3/scratch/cat-heroine-practice-2-01.sb3')
-            .replace('L1-U01-3/scratch/cat-heroine-practice-3-03.sb3', 'L1-U01-3/scratch/cat-heroine-practice-3-01.sb3')
-            .replace('L1-U01-3/scratch/cat-heroine-practice-4-03.sb3', 'L1-U01-3/scratch/cat-heroine-practice-4-1.sb3');
-        url = this.localFileToOnlineURL(url);
-        return url;
+    mergeZip (_zip, zip) {
+        const __zip = new Zip();
+        __zip.files = {
+            ..._zip?.files,
+            ...zip?.files,
+        };
+        return __zip;
     }
 
-    url2zip (url) {
+    url2buffer (url) {
         return new Promise(rs => {
             ajax.get(url, {}, {
+                retry: 1,
                 responseType: 'blob',
                 base: '',
                 async onload (res) {
-                    const zip = await Zip.loadAsync(res);
-                    rs(zip);
+                    const buffer = await res.arrayBuffer();
+                    rs(buffer);
                 },
                 onerror (){
-                    const zip = new Zip();
-                    rs(zip);
+                    rs(null);
                 }
             });
         });
-
     }
 
-    async resetProjectByFileParam () {
-        await Dialog.confirm({
-            title: '重做确认',
-            content: '将会清空当前作品记录，重新开始创作哦，是否确定重做？'
-        });
+    buffer2zip (buffer) {
+        if (!buffer) {
+            return null;
+        }
+        return Zip.loadAsync(buffer);
+    }
 
-        var file = param('file');
-        this.originalFileURL = file;
-        const arrayBuffer = await this.getFullProjectArrayBuffer(file);
+    async url2zip (url) {
+        let buffer = await this.url2buffer(url);
 
-        vm.loadProject(arrayBuffer);
+        // local2onlineURL
+        if (!/^http/.test(url) && !buffer) {
+            url = this.local2onlineURL(url);
+            console.log('local2onlineURL:', url);
+            buffer = await this.url2buffer(url);
+        }
+
+        const zip = await this.buffer2zip(buffer);
+        return zip;
+    }
+
+    async getZipProjectConfig (zip) {
+        const json = await zip.file('project.json').async('string');
+        const projectConfig = JSON.parse(json);
+        return projectConfig;
+    }
+
+    async hasAssetsError (zip) {
+        const projectConfig = await this.getZipProjectConfig(zip);
+        const targets = projectConfig.targets;
+        const assets = [];
+        targets.forEach(t => assets.push(...t.costumes, ...t.sounds));
+
+        let isError = false;
+        for (const asset of assets) {
+            if (!zip.file(asset.md5ext)) {
+                console.warn('[checkAssetsError] !asset', asset);
+                isError = true;
+                // return true;
+            }
+        }
+
+        if (!isError) {
+            console.info('[checkAssetsError] success');
+        }
+        return isError;
     }
 
     /**
@@ -250,7 +229,7 @@ class Project {
      * @param {string} file file:///
      * @returns {string} url
      */
-    localFileToOnlineURL (file) {
+    local2onlineURL (file) {
         var url = file;
         var path = file
             .replace(/[\\/]+/g, '/') // fuck //\\ => /
@@ -269,19 +248,33 @@ class Project {
         return url;
     }
 
+    fixOriginalFileURL (url) {
+        /**
+        猫女侠继承重做
+        继承关系往下
+        7： https://oss.iandcode.com/s/platform/interactive/common/interactiveTemplate/wdProj/moduleRelease/L1-U01-3/scratch/cat-heroine-practice-2-04.sb3 | -01
+        8： https://oss.iandcode.com/s/platform/interactive/common/interactiveTemplate/wdProj/moduleRelease/L1-U01-3/scratch/cat-heroine-practice-3-03.sb3 | -01
+        9： https://oss.iandcode.com/s/platform/interactive/common/interactiveTemplate/wdProj/moduleRelease/L1-U01-3/scratch/cat-heroine-practice-4-03.sb3 | -1
+        */
 
-    // 是否 targets 有丢失的 zip.file
-    checkZipAssetsError (zip, targets) {
-        const assets = [];
-        targets.forEach(t => assets.push(...t.costumes, ...t.sounds));
+        url = url
+            .replace('L1-U01-3/scratch/cat-heroine-practice-2-04.sb3', 'L1-U01-3/scratch/cat-heroine-practice-2-01.sb3')
+            .replace('L1-U01-3/scratch/cat-heroine-practice-3-03.sb3', 'L1-U01-3/scratch/cat-heroine-practice-3-01.sb3')
+            .replace('L1-U01-3/scratch/cat-heroine-practice-4-03.sb3', 'L1-U01-3/scratch/cat-heroine-practice-4-1.sb3');
+        url = this.local2onlineURL(url);
+        return url;
+    }
 
-        for (const asset of assets) {
-            if (!zip.file(asset.md5ext)) {
-                return true;
-            }
-        }
+    async resetProjectByFileParam () {
+        await Dialog.confirm({
+            title: '重做确认',
+            content: '将会清空当前作品记录，重新开始创作哦，是否确定重做？'
+        });
 
-        return false;
+        var file = param('file');
+        const buffer = await this.url2buffer(file);
+
+        vm.loadProject(buffer);
     }
 
 }
@@ -313,18 +306,21 @@ function injectVm (_vm) {
 
     // inject loadProject
     vm._loadProject = vm.loadProject;
-    vm.loadProject = async function (arrayBuffer) {
-        console.log('[injectVm] vm.loadProject');
-        const fullArrayBuffer = await project.getFullProjectArrayBuffer(arrayBuffer);
-        return vm._loadProject(fullArrayBuffer);
-    };
+    if (!/_loadProject/.test(vm.loadProject)) {
+        vm.loadProject = async function (_buffer) {
+            console.log('[injectVm] vm.loadProject');
+            const buffer = await project.mergeSb3diff(_buffer);
+            return vm._loadProject(buffer);
+        };
+    }
 
 
+    // TODO
     vm.runtime.on(vm.runtime.constructor.PROJECT_LOADED, e => {
-        console.log('PROJECT_LOADED', project.originalJson, project.finalJson);
+        console.log('PROJECT_LOADED', project.projectConfig);
 
         // 默认选中保存时选中的角色
-        var _editingTarget = vm.runtime.targets.find(e => e.sprite.name === project.finalJson._editingTargetName);
+        var _editingTarget = vm.runtime.targets.find(e => e.sprite.name === project.projectConfig._editingTargetName);
         vm.setEditingTarget(_editingTarget?.id);
     });
 }
