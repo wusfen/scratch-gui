@@ -135,7 +135,9 @@ const ProjectFetcherHOC = function (WrappedComponent) {
                 }
                 const buffer = await blob.arrayBuffer();
 
-                project.init(url);
+                buffer.url = url; // FOR url=>['assets.png', ...]
+                project.url = url; // FOR getSb3Diff
+
                 this.props.onFetchedProjectData(buffer, loadingState);
                 return;
             }
