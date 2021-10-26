@@ -61,7 +61,7 @@ export function useHttpDns (){
         } else if (+vArr[1] < 6){
             use = false;
         }
-        const httpDns = getQueryVariable('httpDns');
+        const httpDns = getQueryVariable('httpdns');
         return use || (httpDns && +httpDns === 1);
     }
     return false;
