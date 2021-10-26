@@ -21,15 +21,22 @@ class Project {
         }
     }
 
-    init (url) {
-        this.url = url;
+    cache = {
+        // key: 'value'
+        // 'url.sb3': ['asset.png', '...']
+    }
+
+    getZipAssetNames (zip) {
+        return Object.keys(zip.files);
     }
 
     /**
      * 获取拆分包
      * @returns {Promise<Blob>} blob
      */
-    async getSb3Diff () {
+    getSb3Diff () {
+        // console.time('getSb3Diff');
+
         // init url
         if (!this._originalFileURL) {
             this._originalFileURL = this.url;
@@ -37,18 +44,25 @@ class Project {
 
         // !diff
         if (param('mode') !== 'course') this._originalFileURL = null;
+        if (!/interactiveTemplate/.test(this._originalFileURL)) this._originalFileURL = null;
         if (!/\.sb3$/.test(this._originalFileURL)) this._originalFileURL = null;
 
+        // .sb3
         if (!this._originalFileURL) {
             return this.getSb3();
         }
 
         // diff
-        const _zip = await this.url2zip(this._originalFileURL);
-        const zip = await this.buffer2zip(await this.getSb3());
+        const _zipAssetNames = this.cache[this._originalFileURL];
+        const zip = this.getSb3Zip();
+
+        if (!_zipAssetNames) {
+            return this.getSb3();
+        }
+
         // - _zip.files
         for (const file in zip.files) {
-            if (file in _zip.files) {
+            if (_zipAssetNames.indexOf(file) !== -1) {
                 delete zip.files[file];
             }
         }
@@ -58,6 +72,7 @@ class Project {
         var json = vm.toJSON();
         zip.file('project.json', json);
 
+        // console.timeEnd('getSb3Diff');
         console.log('[getSb3Diff]', JSON.parse(json), zip);
 
         return zip.generateAsync({
@@ -70,7 +85,7 @@ class Project {
         });
     }
 
-    getSb3 () {
+    getSb3Zip () {
         var zip = new JSZip();
         this.zip = zip;
 
@@ -80,6 +95,13 @@ class Project {
         vm.assets.forEach(asset => {
             zip.file(`${asset.assetId}.${asset.dataFormat}`, asset.data);
         });
+
+        return zip;
+    }
+
+    // => blob
+    getSb3 () {
+        var zip = this.getSb3Zip();
 
         return zip.generateAsync({
             type: 'blob',
@@ -99,46 +121,62 @@ class Project {
     async mergeSb3diff (buffer) {
         let zip = await this.buffer2zip(buffer);
         const projectConfig = await this.getZipProjectConfig(zip);
+        console.info('projectConfig:', projectConfig);
         this.projectConfig = projectConfig;
         const _originalFileURL = projectConfig._originalFileURL;
         let isError;
 
-        // {project.json}._originalFileURL
+        // url => ['asset.png', ...]
+        if (buffer.url) {
+            this.cache[buffer.url] = this.getZipAssetNames(zip);
+        }
+
+        // {.sb3diff project.json}._originalFileURL
         if (_originalFileURL) {
             // file:///
             const _zip = await this.url2zip(_originalFileURL);
-            console.log('[mergeSb3diff] _originalFileURL:', _originalFileURL, _zip);
             zip = this.mergeZip(_zip, zip);
+            console.log('[mergeSb3diff] _originalFileURL:', _originalFileURL, _zip);
             isError = await this.hasAssetsError(zip);
 
             // {.sb3diff project.json}._originalFileURL
             if (!isError) {
                 this._originalFileURL = _originalFileURL;
-                // this._originalJSON = await this.getZipProjectConfig(_zip);
+                this.cache[_originalFileURL] = this.getZipAssetNames(_zip);
             }
 
             // ._originalFileURL 指向错误
             if (isError) {
                 const fixedURL = this.fixOriginalFileURL(_originalFileURL);
                 const fixedZip = await this.url2zip(fixedURL);
-                console.warn('[mergeSb3diff] fixedURL:', fixedURL, fixedZip);
                 zip = this.mergeZip(fixedZip, zip);
+                console.warn('[mergeSb3diff] fixedURL:', fixedURL, fixedZip);
+                isError = await this.hasAssetsError(zip);
             }
 
             // 回退 _originalFileURL
-            isError = await this.hasAssetsError(zip);
             if (isError) {
-                console.error('[mergeSb3diff] back to _originalFileURL', zip);
                 zip = _zip;
+                console.error('[mergeSb3diff] back to _originalFileURL', zip);
+                isError = await this.hasAssetsError(zip);
             }
         }
 
-        // back to default.sb3
-        isError = await this.hasAssetsError(zip);
+        // 回退 param('file')
         if (isError) {
-            console.error('[mergeSb3diff] back to default.sb3');
+            const url = param('file');
+            if (url) {
+                zip = await this.url2zip(url);
+                console.error('[mergeSb3diff] back to param("file")', zip);
+                isError = await this.hasAssetsError(zip);
+            }
+        }
+
+        // 回退 default.sb3
+        if (isError) {
             const defaultSb3URL = require('!file-loader!../lib/default-project/sb3/default.sb3');
             zip = await this.url2zip(defaultSb3URL);
+            console.error('[mergeSb3diff] back to default.sb3');
         }
 
         return zip.generateAsync({
@@ -156,6 +194,8 @@ class Project {
     }
 
     url2buffer (url) {
+        if (!url) return null;
+
         return new Promise(rs => {
             ajax.get(url, {}, {
                 retry: 1,
@@ -173,13 +213,14 @@ class Project {
     }
 
     buffer2zip (buffer) {
-        if (!buffer) {
-            return null;
-        }
+        if (!buffer) return null;
+
         return Zip.loadAsync(buffer);
     }
 
     async url2zip (url) {
+        if (!url) return null;
+
         let buffer = await this.url2buffer(url);
 
         // local2onlineURL
@@ -200,21 +241,26 @@ class Project {
     }
 
     async hasAssetsError (zip) {
+        if (!zip) return true;
+
         const projectConfig = await this.getZipProjectConfig(zip);
         const targets = projectConfig.targets;
         const assets = [];
         targets.forEach(t => assets.push(...t.costumes, ...t.sounds));
 
         let isError = false;
+        const errorAssets = [];
         for (const asset of assets) {
             if (!zip.file(asset.md5ext)) {
-                console.warn('[checkAssetsError] !asset', asset);
                 isError = true;
+                errorAssets.push(asset);
                 // return true;
             }
         }
 
-        if (!isError) {
+        if (isError) {
+            console.error('[checkAssetsError] !asset', zip, errorAssets);
+        } else {
             console.info('[checkAssetsError] success');
         }
         return isError;
@@ -305,8 +351,8 @@ function injectVm (_vm) {
     };
 
     // inject loadProject
-    vm._loadProject = vm.loadProject;
-    if (!/_loadProject/.test(vm.loadProject)) {
+    if (!vm._loadProject) {
+        vm._loadProject = vm.loadProject;
         vm.loadProject = async function (_buffer) {
             console.log('[injectVm] vm.loadProject');
             const buffer = await project.mergeSb3diff(_buffer);
