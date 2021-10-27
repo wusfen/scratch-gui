@@ -1,7 +1,8 @@
 import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
-import Renderer from 'scratch-render';
+//import Renderer from 'scratch-render';
+import Renderer from '../spine/ExRenderWebGL';
 import VM from 'scratch-vm';
 import {connect} from 'react-redux';
 

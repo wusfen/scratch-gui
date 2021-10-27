@@ -29,4 +29,70 @@ export default function (Blockly){
           });
         }
       };
+
+      Blockly.Blocks['looks_switchanimationto'] = {
+        /**
+         * 切换spine动画积木
+         * 
+         */
+        init: function() {
+          this.jsonInit({
+            "message0": "换成 %1 动效",
+            "args0": [
+              {
+                "type": "input_value",
+                "name": "ANIMATION",
+              }
+            ],
+            "category": Blockly.Categories.looks,
+            "extensions": ["colours_looks", "shape_statement"]
+          });
+        }
+      };
+
+      Blockly.Blocks['looks_animation'] = {
+        /**
+         * spine drop-down menu.
+         * 
+         */
+        init: function() {
+          this.jsonInit({
+              message0: '%1',
+              args0: [
+                  {
+                      type: 'field_dropdown',
+                      name: 'ANIMATION',
+                      options: animationMenu
+                  }
+              ],
+              inputsInline: true,
+              output: 'String',
+              colour: Blockly.Colours.looks.secondary,
+              colourSecondary: Blockly.Colours.looks.secondary,
+              colourTertiary: Blockly.Colours.looks.tertiary,
+              outputShape: Blockly.OUTPUT_SHAPE_ROUND
+          });
+        }
+      };
+
+    const animationMenu = function () {
+      if (vm.editingTarget && vm.editingTarget.getAnimations().length > 0) {
+          return vm.editingTarget.getAnimations().map(anim => [anim.name, anim.name]);
+      }
+      return [['', '']];
+    };
+
+    Blockly.Blocks['looks_nextanimation'] = {
+      /**
+       * spine 下一个动效
+       * 
+       */
+      init: function() {
+        this.jsonInit({
+          "message0": "下一个动效",
+          "category": Blockly.Categories.looks,
+          "extensions": ["colours_looks", "shape_statement"]
+        });
+      }
+    };
 }

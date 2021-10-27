@@ -250,7 +250,7 @@ const xmlEscape = function (unsafe) {
     });
 };
 
-const looks = function (isInitialSetup, isStage, targetId, costumeName, backdropName) {
+const looks = function (isInitialSetup, isStage, targetId, costumeName, backdropName, isSkelSprite, animationName) {
     const hello = ScratchBlocks.ScratchMsgs.translate('LOOKS_HELLO', 'Hello!');
     const hmm = ScratchBlocks.ScratchMsgs.translate('LOOKS_HMM', 'Hmm...');
     return `
@@ -329,6 +329,15 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
                 </value>
             </block>
             <block type="looks_nextbackdrop"/>
+            ${isSkelSprite ? `
+            <block id="${targetId}_switchanimationto" type="looks_switchanimationto">
+                <value name="ANIMATION">
+                    <shadow type="looks_animation">
+                        <field name="ANIMATION">${animationName}</field>
+                    </shadow>
+                </value>
+            </block>
+            <block type="looks_nextanimation"/>`:``}
             ${blockSeparator}
             <block type="looks_changesizeby">
                 <value name="CHANGE">
@@ -849,7 +858,7 @@ const xmlClose = '</xml>';
  * @returns {string} - a ScratchBlocks-style XML document for the contents of the toolbox.
  */
 const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categoriesXML = [],
-    costumeName = '', backdropName = '', soundName = '') {
+    costumeName = '', backdropName = '', soundName = '', isSkelSprite = false, animationName = '') {
     isStage = isInitialSetup || isStage;
     const gap = [categorySeparator];
 
@@ -868,7 +877,7 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
         // return `undefined`
     };
     const motionXML = moveCategory('motion') || motion(isInitialSetup, isStage, targetId);
-    const looksXML = moveCategory('looks') || looks(isInitialSetup, isStage, targetId, costumeName, backdropName);
+    const looksXML = moveCategory('looks') || looks(isInitialSetup, isStage, targetId, costumeName, backdropName, isSkelSprite, animationName);
     const soundXML = moveCategory('sound') || sound(isInitialSetup, isStage, targetId, soundName);
     const eventsXML = moveCategory('event') || events(isInitialSetup, isStage, targetId);
     const controlXML = moveCategory('control') || control(isInitialSetup, isStage, targetId);

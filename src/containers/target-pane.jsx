@@ -17,6 +17,7 @@ import TargetPaneComponent from '../components/target-pane/target-pane.jsx';
 import {BLOCKS_DEFAULT_SCALE} from '../lib/layout-constants';
 import spriteLibraryContent from '../lib/libraries/wandou/sprites.js';
 import {handleFileUpload, spriteUpload} from '../lib/file-uploader.js';
+import {skeletonUpload} from '../spine/skel-uploader';
 import sharedMessages from '../lib/shared-messages';
 import {emptySprite} from '../lib/empty-assets';
 import {highlightTarget} from '../reducers/targets';
@@ -138,19 +139,43 @@ class TargetPane extends React.Component {
     handleFileUploadClick () {
         this.fileInput.click();
     }
+
+    handleNewSkeleton(target){
+        this.props.vm.runtime.addTarget(target);
+        this.props.vm.emitTargetsUpdate();
+        this.props.vm.emitWorkspaceUpdate();
+        this.handleActivateBlocksTab();
+    }
+
+
     handleSpriteUpload (e) {
         const storage = this.props.vm.runtime.storage;
         this.props.onShowImporting();
+        const handleSpriteUploadCallback  = (newSprite) => {
+            this.handleNewSprite(newSprite)
+                .then(() => {
+                    if (fileIndex === fileCount - 1) {
+                        this.props.onCloseImporting();
+                    }
+                })
+                .catch(this.props.onCloseImporting);
+        }
         handleFileUpload(e.target, (buffer, fileType, fileName, fileIndex, fileCount) => {
-            spriteUpload(buffer, fileType, fileName, storage, newSprite => {
-                this.handleNewSprite(newSprite)
-                    .then(() => {
+            switch (fileType) {
+                case '':
+                case 'application/zip':
+                    skeletonUpload(buffer, fileType, fileName, vm.runtime, target => {
+                        this.handleNewSkeleton(target);
                         if (fileIndex === fileCount - 1) {
                             this.props.onCloseImporting();
                         }
-                    })
-                    .catch(this.props.onCloseImporting);
-            }, this.props.onCloseImporting);
+                    }, ()=>{
+                        spriteUpload(buffer, fileType, fileName, storage, handleSpriteUploadCallback, this.props.onCloseImporting);
+                    });
+                    break;
+                default:
+                    spriteUpload(buffer, fileType, fileName, storage, handleSpriteUploadCallback, this.props.onCloseImporting);
+            }
         }, this.props.onCloseImporting);
     }
     setFileInput (input) {
