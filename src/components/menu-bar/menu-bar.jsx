@@ -535,6 +535,7 @@ class MenuBar extends React.Component {
     }
 
     async uploadToOss (blob, name = 'test', ext = 'sb3', silence, driver = 'aly_oss', retry) {
+        this.props.vm.stopAll(); // 提交的时候停止运行代码，为了保证不会提交运行中的工程
         var self = this;
         silence || self.props.setUploadingProgress(self.uploadToOssProgressValue || 10);
 
