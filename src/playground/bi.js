@@ -109,22 +109,35 @@ addEventListener('submit:已提交错误', e => {
 
 // 保存成功
 if (mode === 'normal') {
-    let worksType, worksNameID;
-    let id = param('id');
-    if (window.isHandleSaveAs) {
-        window.isHandleSaveAs = false;
-        worksType = 'classroomWorks';
-    } else if (id) {
-        worksType = 'myWorks';
-    } else if (!workId && !file) {
-        worksType = 'startCreate';
-    }else if (!workId && file && file?.includes('samplefile')) {
-        worksType = 'examples';
-    }
+    
     addEventListener('saveSucceed', e => {
+        let worksType, worksNameID;
+        let id = param('id');
+        if (window.isHandleSaveAs) { // 课堂作品
+            window.isHandleSaveAs = false;
+            worksType = 'classroomWorks';
+        } else {
+            if (workId) { // 我的创作
+                worksType = 'myWorks';
+                worksNameID = workId;
+            }
+            
+            if (!workId && file && file?.includes('samplefile')) {
+                worksType = 'examples';
+            }
+
+            if (!workId && id) {
+                worksType = 'myWorks';
+                worksNameID = id;
+            }
+
+            if (!workId && !file) {
+                worksType = 'startCreate';
+            }
+        }
         bi('programming_creativeBase_click', {
             pageProperties: '保存作品',
-            worksNameID: id,
+            worksNameID: worksNameID,
             worksName: window.workName,
             worksType: worksType
         });
