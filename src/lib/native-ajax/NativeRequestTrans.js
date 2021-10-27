@@ -13,7 +13,8 @@ export default class NativeRequestTrans{
 
     constructor (){
         this.id = httpid++;
-        this.off = bridge.on(BridgeAction.receivedData, result => {
+        this.off = window.bridge.on(BridgeAction.receivedData, result => {
+
             if (result.httpID === this.id){
                 if (result.returnObject){
                     this.successHandler(result.returnObject);
@@ -24,9 +25,9 @@ export default class NativeRequestTrans{
             }
         });
     }
-
     promise (options){
         return new Promise((resolve, reject) => {
+
             let {method, data, url, base, headers, timeout, retry} = options;
             let search = '';
 
