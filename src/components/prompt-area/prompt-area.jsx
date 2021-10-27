@@ -301,7 +301,7 @@ class PromptArea extends React.Component{
                         className={c.video}
                         src={videoSrc}
                         controls={'controls'}
-                        autoPlay
+                        autoPlay={title?.includes('介绍') ? null : 'autoplay'}
                         controlsList="nodownload"
                         disablePictureInPicture
                     >

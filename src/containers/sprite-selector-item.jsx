@@ -49,6 +49,7 @@ class SpriteSelectorItem extends React.PureComponent {
         return getCostumeUrl(this.props.asset);
     }
     handleDragEnd () {
+        const isDragging = this.props.dragging;
         if (this.props.dragging) {
             this.props.onDrag({
                 img: null,
@@ -64,10 +65,12 @@ class SpriteSelectorItem extends React.PureComponent {
         const curr = this.props.vm.runtime.getTargetById(this.props.id);
         const targetSum = window.runtime.targets.length;
         const currIndex = window.runtime.targets.findIndex(t => t.id === this.props.id);
-        if (this.originIndex > currIndex) {
-            curr.goBackwardLayers(this.originIndex - currIndex);
-        } else if (this.originIndex < currIndex) {
-            curr.goForwardLayers(currIndex - this.originIndex);
+        if (isDragging) {
+            if (this.originIndex > currIndex) {
+                curr.goBackwardLayers(this.originIndex - currIndex);
+            } else if (this.originIndex < currIndex) {
+                curr.goForwardLayers(currIndex - this.originIndex);
+            }
         }
     }
     handleDrag (currentOffset) {

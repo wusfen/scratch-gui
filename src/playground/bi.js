@@ -3,6 +3,7 @@ import {param} from '../lib/param';
 
 var mode = param('mode');
 var workId = param('id');
+var file = param('file');
 
 function bi (eventId, eventData) {
     var info = {
@@ -58,6 +59,7 @@ addEventListener('clickSave', e => {
     clickSubmitTime = +new Date();
 });
 
+
 // 保存时长
 var submitEndTime = 0;
 addEventListener('submitEnd', e => {
@@ -104,3 +106,43 @@ addEventListener('submit:已提交错误', e => {
         subject_passOrNot: window.subjectPassOrNot
     });
 });
+
+// 保存成功
+if (mode === 'normal') {
+    
+    addEventListener('saveSucceed', e => {
+        let worksType, worksNameID;
+        let id = param('id');
+        if (window.isHandleSaveAs) { // 课堂作品
+            window.isHandleSaveAs = false;
+            worksType = 'classroomWorks';
+        } else {
+            if (workId) { // 我的创作
+                worksType = 'myWorks';
+                worksNameID = workId;
+            }
+            
+            if (!workId && file && file?.includes('samplefile')) {
+                worksType = 'examples';
+            }
+
+            if (!workId && id) {
+                worksType = 'myWorks';
+                worksNameID = id;
+            }
+
+            if (!workId && !file) {
+                worksType = 'startCreate';
+            }
+        }
+        bi('programming_creativeBase_click', {
+            pageProperties: '保存作品',
+            worksNameID: worksNameID,
+            worksName: window.workName,
+            worksType: worksType
+        });
+    })
+}
+
+
+export default bi;

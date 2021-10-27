@@ -69,6 +69,7 @@ import {
 import collectMetadata from '../../lib/collect-metadata';
 
 import styles from './menu-bar.css';
+import bi from '../../playground/bi'
 const c = styles;
 Object.assign(
     c,
@@ -227,6 +228,7 @@ class MenuBar extends React.Component {
         this.uploadToOssProgressValue = 0;
         this.exiting = false;
         this.skiping = false;
+        this.worksType = '';
         // 30秒显示跳过按钮
         setTimeout(() => {
             this.setState({
@@ -527,46 +529,77 @@ class MenuBar extends React.Component {
         });
     }
     getWorkName () {
-        return this.props.projectTitle || param('workName') || '我的作品';
+        let workName = this.props.projectTitle || param('workName') || '我的作品';
+        window.workName = workName;
+        return workName;
     }
 
-    async uploadToOss (blob, name = 'test', ext = 'sb3', silence) {
+    async uploadToOss (blob, name = 'test', ext = 'sb3', silence, driver = 'aly_oss', retry) {
+        this.props.vm.stopAll(); // 提交的时候停止运行代码，为了保证不会提交运行中的工程
         var self = this;
-        silence || self.props.setUploadingProgress(10);
+        silence || self.props.setUploadingProgress(self.uploadToOssProgressValue || 10);
 
-        var {data} = await ajax.get('file/getSign', {
-            driver: 'aly_oss',
+        var {data} = await ajax.get('/file/v2/getSign', {
+            driver: driver,
             name,
             ext,
+            retry
         });
         var ossToken = JSON.parse(data.ossToken);
 
         const formData = new FormData();
-        formData.append('OSSAccessKeyId', ossToken.accessid);
-        formData.append('signature', ossToken.signature);
-        formData.append('policy', ossToken.policy);
-        formData.append('key', data.path);
-        formData.append('success_action_status', 200);
-        formData.append('file', blob, `${name}.${ext}`);
+        let authorizationTencentOss = null;
+        switch (data.driver) {
+        case 'aly_oss':
+            formData.append('OSSAccessKeyId', ossToken.accessid);
+            formData.append('signature', ossToken.signature);
+            formData.append('policy', ossToken.policy);
+            formData.append('key', data.path);
+            formData.append('success_action_status', 200);
+            formData.append('file', blob, `${name}.${ext}`);
+            break;
+        case 'tencent_oss':
+            formData.append('x-cos-security-token', ossToken.credentials?.sessionToken);
+            formData.append('Signature', ossToken.credentials?.authorization);
+            formData.append('key', data.path);
+            formData.append('file', blob, `${name}.${ext}`);
+            authorizationTencentOss = ossToken.credentials?.authorization;
+            break;
+        }
 
-        silence || self.props.setUploadingProgress(20);
-        await ajax.post(`https://${data.bucket}.${data.region}.aliyuncs.com`, formData, {
+        silence || self.props.setUploadingProgress(self.uploadToOssProgressValue || 20);
+        await ajax.post(`${data.uploadDomain}`, formData, {
             silence: true,
             onprogress (e) {
                 if (silence) return;
                 var value = e.loaded * 100 / e.total;
                 value = 20 + (value * .6);
                 value = parseInt(value, 10);
-                self.props.setUploadingProgress(value);
+                self.uploadToOssProgressValue = (value > self.uploadToOssProgressValue) ? value : self.uploadToOssProgressValue; // 记录当前的进度，避免重试时进度条倒退
+                self.props.setUploadingProgress(self.uploadToOssProgressValue);
             },
-            onload () {},
+            onload () {
+                self.uploadToOssProgressValue = 0; // 重置
+                self.uploadToOssRetryCount = 0;
+            },
             onerror () {
-                alert('上传失败');
+                if (self.uploadToOssRetryCount >= 3) {
+                    alert('上传失败');
+                    self.uploadToOssProgressValue = 0;
+                    self.uploadToOssRetryCount = 0;
+                    return;
+                }
+                self.uploadToOssRetryCount++;
+                self.uploadToOss(blob, name, ext, silence, data.driver, true); // 失败切云，默认将上一次的driver带上
             },
+            retry: 1,
+            headers: authorizationTencentOss ? {
+                Authorization: authorizationTencentOss
+            } : {}
         });
         // silence || self.props.setUploadingProgress(false);
 
-        console.info('uploadToOss:', `https://${data.bucket}.${data.region}.aliyuncs.com/${data.path}`);
+        console.info('uploadToOss:', `${data.uploadDomain}`);
         return data;
     }
     async uploadSb3 (silence) {
@@ -594,7 +627,7 @@ class MenuBar extends React.Component {
         dispatchEvent(new Event('clickSave'));
         return this.handleSave(silence);
     }
-    async handleSave (silence) {
+    async handleSave (silence, type='') {
         const id = this.state.id;
         const workName = this.getWorkName();
 
@@ -632,12 +665,17 @@ class MenuBar extends React.Component {
         setTimeout(() => {
             silence || this.props.setUploadingProgress(false);
         }, 500);
+        dispatchEvent(new Event('saveSucceed'));
+        
         alert('保存成功');
     }
+
+
     async handleSaveAs () {
         await Dialog.confirm('是否将作品另存为自由创作？');
 
         this.state.id = null;
+        window.isHandleSaveAs = true;
         await this.handleSave();
         param('id', this.state.id);
         this.setState({
@@ -646,9 +684,13 @@ class MenuBar extends React.Component {
     }
 
     async autoSaveToLocalIndexDB () {
+        const projectId = this.state.id;
+        if (!projectId) {
+            return;
+        }
         console.log('开始保存文件');
         try {
-            const projectId = this.state.id || 5;
+            
             const blob = await project.getSb3Diff();
             if ((blob.size / 1024 / 1024) > 30) { // 30M大小限制
                 return;
