@@ -20,8 +20,7 @@ export function getQueryVariable (variable) {
  * @returns {boolean} 是否在iOS环境
  */
 export function isIOS () {
-    return (/(iPhone|iPad|iPod|iOS)/i).test(navigator.userAgent) &&
-    window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.webCall;
+    return (/(iPhone|iPad|iPod|iOS)/i).test(navigator.userAgent);
 }
 
 /**
@@ -29,8 +28,7 @@ export function isIOS () {
  * @returns {boolean} 是否在Android环境
  */
 export function isAndroid () {
-    return (/(Android)/i).test(navigator.userAgent) &&
-    window.native && window.native.call;
+    return (/(Android)/i).test(navigator.userAgent);
 }
 
 /**
@@ -63,7 +61,7 @@ export function useHttpDns (){
         } else if (+vArr[1] < 6){
             use = false;
         }
-        const httpDns = getQueryVariable('httpDns');
+        const httpDns = getQueryVariable('httpdns');
         return use || (httpDns && +httpDns === 1);
     }
     return false;
