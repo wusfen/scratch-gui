@@ -3,6 +3,7 @@ import {param} from '../lib/param';
 
 var mode = param('mode');
 var workId = param('id');
+var file = param('file');
 
 function bi (eventId, eventData) {
     var info = {
@@ -58,6 +59,7 @@ addEventListener('clickSave', e => {
     clickSubmitTime = +new Date();
 });
 
+
 // 保存时长
 var submitEndTime = 0;
 addEventListener('submitEnd', e => {
@@ -104,3 +106,27 @@ addEventListener('submit:已提交错误', e => {
         subject_passOrNot: window.subjectPassOrNot
     });
 });
+
+// 保存成功
+if (mode === 'normal') {
+    let worksType, worksNameID;
+    let id = param('id');
+    if (id) {
+        worksType = 'myWorks';
+    } else if (!workId && !file) {
+        worksType = 'startCreate';
+    }else if (!workId && file && file?.includes('samplefile')) {
+        worksType = 'examples';
+    }
+    addEventListener('saveSucceed', e => {
+        bi('programming_creativeBase_click', {
+            pageProperties: '保存作品',
+            worksNameID: id,
+            worksName: window.workName,
+            worksType: worksType
+        });
+    })
+}
+
+
+export default bi;

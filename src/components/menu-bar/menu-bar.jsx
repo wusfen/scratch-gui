@@ -69,6 +69,7 @@ import {
 import collectMetadata from '../../lib/collect-metadata';
 
 import styles from './menu-bar.css';
+import bi from '../../playground/bi'
 const c = styles;
 Object.assign(
     c,
@@ -227,6 +228,7 @@ class MenuBar extends React.Component {
         this.uploadToOssProgressValue = 0;
         this.exiting = false;
         this.skiping = false;
+        this.worksType = '';
         // 30秒显示跳过按钮
         setTimeout(() => {
             this.setState({
@@ -527,7 +529,9 @@ class MenuBar extends React.Component {
         });
     }
     getWorkName () {
-        return this.props.projectTitle || param('workName') || '我的作品';
+        let workName = this.props.projectTitle || param('workName') || '我的作品';
+        window.workName = workName;
+        return workName;
     }
 
     async uploadToOss (blob, name = 'test', ext = 'sb3', silence, driver = 'aly_oss', retry) {
@@ -622,7 +626,7 @@ class MenuBar extends React.Component {
         dispatchEvent(new Event('clickSave'));
         return this.handleSave(silence);
     }
-    async handleSave (silence) {
+    async handleSave (silence, type='') {
         const id = this.state.id;
         const workName = this.getWorkName();
 
@@ -660,8 +664,12 @@ class MenuBar extends React.Component {
         setTimeout(() => {
             silence || this.props.setUploadingProgress(false);
         }, 500);
+        dispatchEvent(new Event('saveSucceed'));
+        
         alert('保存成功');
     }
+
+
     async handleSaveAs () {
         await Dialog.confirm('是否将作品另存为自由创作？');
 
@@ -674,9 +682,13 @@ class MenuBar extends React.Component {
     }
 
     async autoSaveToLocalIndexDB () {
+        const projectId = this.state.id;
+        if (!projectId) {
+            return;
+        }
         console.log('开始保存文件');
         try {
-            const projectId = this.state.id || 5;
+            
             const blob = await project.getSb3Diff();
             if ((blob.size / 1024 / 1024) > 30) { // 30M大小限制
                 return;
