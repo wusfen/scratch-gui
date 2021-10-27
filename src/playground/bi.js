@@ -111,7 +111,10 @@ addEventListener('submit:已提交错误', e => {
 if (mode === 'normal') {
     let worksType, worksNameID;
     let id = param('id');
-    if (id) {
+    if (window.isHandleSaveAs) {
+        window.isHandleSaveAs = false;
+        worksType = 'classroomWorks';
+    } else if (id) {
         worksType = 'myWorks';
     } else if (!workId && !file) {
         worksType = 'startCreate';

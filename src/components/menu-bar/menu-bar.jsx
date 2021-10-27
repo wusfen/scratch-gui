@@ -675,6 +675,7 @@ class MenuBar extends React.Component {
         await Dialog.confirm('是否将作品另存为自由创作？');
 
         this.state.id = null;
+        window.isHandleSaveAs = true;
         await this.handleSave();
         param('id', this.state.id);
         this.setState({
