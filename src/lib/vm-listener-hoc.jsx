@@ -79,7 +79,7 @@ const vmListenerHOC = function (WrappedComponent) {
                 this.props.onProjectChanged();
             }
             if (!window.autoSaveProjectState) {
-                window.autoSaveProjectState = true;
+                window.autoSaveProjectState = this.props.projectChanged;
             }
         }
         handleTargetsUpdate (data) {
