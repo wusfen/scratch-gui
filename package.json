@@ -1,6 +1,6 @@
 {
     "name": "scratch-gui",
-    "version": "2.7.2",
+    "version": "2.7.3",
     "description": "GraphicaL User Interface for creating and running Scratch 3.0 projects",
     "main": "./dist/scratch-gui.js",
     "scripts": {
