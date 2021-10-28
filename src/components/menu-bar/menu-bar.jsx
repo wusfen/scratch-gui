@@ -69,7 +69,6 @@ import {
 import collectMetadata from '../../lib/collect-metadata';
 
 import styles from './menu-bar.css';
-import bi from '../../playground/bi'
 const c = styles;
 Object.assign(
     c,
@@ -529,7 +528,7 @@ class MenuBar extends React.Component {
         });
     }
     getWorkName () {
-        let workName = this.props.projectTitle || param('workName') || '我的作品';
+        const workName = this.props.projectTitle || param('workName') || '我的作品';
         window.workName = workName;
         return workName;
     }
@@ -627,7 +626,7 @@ class MenuBar extends React.Component {
         dispatchEvent(new Event('clickSave'));
         return this.handleSave(silence);
     }
-    async handleSave (silence, type='') {
+    async handleSave (silence) {
         const id = this.state.id;
         const workName = this.getWorkName();
 
