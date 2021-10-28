@@ -13,7 +13,7 @@ export default class NativeRequestTrans{
 
     constructor (){
         this.id = httpid++;
-        this.off = bridge.on(BridgeAction.receivedData, result => {
+        this.off = window.bridge.on(BridgeAction.receivedData, result => {
             if (result.httpID === this.id){
                 if (result.returnObject){
                     this.successHandler(result.returnObject);
