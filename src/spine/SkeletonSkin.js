@@ -11,4 +11,8 @@ export default class SkeletonSkin extends Skin {
         return this._skeletonData;
     }
 
+    get size () {
+        return [0, 0];
+    }
+
 }

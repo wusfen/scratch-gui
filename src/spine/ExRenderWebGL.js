@@ -3,46 +3,13 @@ const twgl = require('twgl.js');
 const SkeletonDrawable = require('./SkeletonDrawable');
 import * as spine from "@esotericsoftware/spine-webgl";
 import SkeletonSkin from './SkeletonSkin';
-
+import SceneRenderer from './SceneRenderer';
 
 class ExRenderWebGL extends Renderer {
 
     constructor (canvas, xLeft, xRight, yBottom, yTop) {
         super(canvas, xLeft, xRight, yBottom, yTop);
-    }
-
-    draw(){
-        if(this._lastFrameTime == undefined){
-            this._lastFrameTime = Date.now() / 1000;
-            this._delta = 0;
-        }else{
-            let now = Date.now() / 1000;
-			this._delta = now - this._lastFrameTime;
-			this._lastFrameTime = now;
-        }
-        super.draw();
-        
-        
-    }
-
-    resize (pixelsWide, pixelsTall) {
-        const {canvas} = this._gl;
-        const pixelRatio = window.devicePixelRatio || 1;
-        const newWidth = pixelsWide * pixelRatio;
-        const newHeight = pixelsTall * pixelRatio;
-        if(!this._skeletonRenderer){
-            this._skeletonRenderer = new spine.SceneRenderer(canvas, this._gl);
-        }
-        // Certain operations, such as moving the color picker, call `resize` once per frame, even though the canvas
-        // size doesn't change. To avoid unnecessary canvas updates, check that we *really* need to resize the canvas.
-        if (canvas.width !== newWidth || canvas.height !== newHeight) {
-            canvas.width = newWidth;
-            canvas.height = newHeight;
-            this._skeletonRenderer.camera.setViewport(newWidth, newHeight);
-            // Resizing the canvas causes it to be cleared, so redraw it.
-            this.draw();
-        }
-
+        this._skeletonRenderer = new SceneRenderer(canvas, this._gl);
     }
 
     _drawThese (drawables, drawMode, projection, opts = {}) {
@@ -56,14 +23,15 @@ class ExRenderWebGL extends Renderer {
             if (opts.filter && !opts.filter(drawableID)) continue;
 
             const drawable = this._allDrawables[drawableID];
-            
+
+            if (!drawable.getVisible() && !opts.ignoreVisibility) continue;
+            //spine 渲染
             if(drawable instanceof SkeletonDrawable){
-                drawable.update(this._delta);
+                drawable.update();
                 if(this._regionId !== "skeleton"){
                     this._regionId = "skeleton";
-                    this._skeletonRenderer.begin();
+                    this._skeletonRenderer.begin(projection);
                 }
-                //this._skeletonRenderer.resize(spine.ResizeMode.Expand);
                 this._skeletonRenderer.drawSkeleton(drawable.skeleton, true);
                 continue;
             }else if(this._regionId === "skeleton"){
@@ -71,12 +39,6 @@ class ExRenderWebGL extends Renderer {
                 gl.enable(gl.BLEND);
 
             }
-
-            /** @todo check if drawable is inside the viewport before anything else */
-
-            // Hidden drawables (e.g., by a "hide" block) are not drawn unless
-            // the ignoreVisibility flag is used (e.g. for stamping or touchingColor).
-            if (!drawable.getVisible() && !opts.ignoreVisibility) continue;
 
             // Combine drawable scale with the native vs. backing pixel ratio
             const drawableScale = this._getDrawableScreenSpaceScale(drawable);
@@ -165,6 +127,15 @@ class ExRenderWebGL extends Renderer {
         const drawable = this._allDrawables[drawableID];
         if (!drawable) return;
         drawable.setAnimation(animationName);
+    }
+
+
+    getCurrentSkinSize (drawableID) {
+        const drawable = this._allDrawables[drawableID];
+        if(drawable instanceof SkeletonDrawable){
+            return  drawable.getSkinSize();
+        }
+        return this.getSkinSize(drawable.skin.id);
     }
 
 

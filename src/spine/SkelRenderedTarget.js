@@ -75,4 +75,5 @@ export default class SkeletonRenderedTarget extends RenderedTarget {
         }
         return newClone;
     }
+
 }

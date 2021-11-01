@@ -123,8 +123,7 @@ class Component extends React.Component{
         var state = this.state;
 
         var targetDrawable = target.renderer._allDrawables[target.drawableID];
-        var skin = targetDrawable._skin;
-
+        var skinSize = targetDrawable.getSkinSize();
         this.setState({
             target
         });
@@ -135,8 +134,8 @@ class Component extends React.Component{
         var STAGE_CSS_WIDTH = window.STAGE_CSS_WIDTH;
         var stageScale = STAGE_CSS_WIDTH / STAGE_WIDTH;
         var rotationCenter = ({
-            x: (skin.rotationCenter[0] * stageScale),
-            y: (skin.rotationCenter[1] * stageScale),
+            x: (targetDrawable.rotationCenter[0] * stageScale),
+            y: (targetDrawable.rotationCenter[1] * stageScale),
         });
 
         this.setState({
@@ -146,8 +145,8 @@ class Component extends React.Component{
             rotationCenterX: rotationCenter.x,
             rotationCenterY: rotationCenter.y,
             size: target.size,
-            width: skin.size[0] * stageScale,
-            height: skin.size[1] * stageScale,
+            width: skinSize[0] * stageScale,
+            height: skinSize[1] * stageScale,
         });
     }
     handleDown (e) {

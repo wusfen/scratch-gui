@@ -81,7 +81,7 @@ const skeletonUpload = function (fileData, fileType, skelName, runtime, handleTa
             JSZip.loadAsync(fileData)
                 .then(function (zip) {
                     parseSkelData(skelName, zip, runtime.renderer.gl, (skelData) =>{
-                        const title = zip.file('title.png');
+                        const title = zip.file(skelName +'_title.png');
                         if(title){
                             title.async('uint8array').then(fileData => {
                                 const costumes = [];
@@ -95,7 +95,8 @@ const skeletonUpload = function (fileData, fileType, skelName, runtime, handleTa
                                 parseRendedTarget(skelData, costumes, runtime, skelName, handleTarget);
                             });
                         }else{
-                            parseRendedTarget(skelData, [], runtime, skelName, handleTarget);
+                            const costume = createVMAsset(runtime.storage, runtime.storage.AssetType.ImageBitmap, runtime.storage.DataFormat.PNG, "");
+                            parseRendedTarget(skelData, [costume], runtime, skelName, handleTarget);
                         }
                         
                     }, handleError)

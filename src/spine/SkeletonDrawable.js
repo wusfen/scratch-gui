@@ -135,8 +135,16 @@ class SkeletonDrawable extends Drawable {
         return this.getBounds(result);
     }
 
-    update(delta){
+    update(){
         if(this._skeleton){
+            let delta = 0;
+            if(this._lastFrameTime == undefined){
+                this._lastFrameTime = Date.now() / 1000;
+            }else{
+                let now = Date.now() / 1000;
+                delta = now - this._lastFrameTime;
+                this._lastFrameTime = now;
+            }
             this._animationState.update(delta);
             this._animationState.apply(this._skeleton);
             this._skeleton.updateWorldTransform();
@@ -157,7 +165,6 @@ class SkeletonDrawable extends Drawable {
                 // if(this._skeleton.data.skins.length > 0){
                 //     this._skeleton.setSkinByName(this._skeleton.data.skins[0].name);
                 // }
-                this._skeleton.setSkinByName("full-skins/girl-blue-cape");
                 const animationStateData = new spine.AnimationStateData(this._skeleton.data);
                 this._animationState = new spine.AnimationState(animationStateData);
                 if(this._skeleton.data.animations.length > 0){
@@ -198,6 +205,24 @@ class SkeletonDrawable extends Drawable {
             return false;
         }
         return true;
+    }
+
+    getSkinSize () {
+        if(this._skeleton){
+            let offset = new spine.Vector2(), size = new spine.Vector2();
+            this._skeleton.getBounds(offset, size);
+            return [Math.round(size.x / this._skeleton.scaleX), Math.round(size.y / this._skeleton.scaleY)];
+        }
+        return [0, 0];
+    }
+
+    get rotationCenter () {
+        if(this._skeleton){
+            let offset = new spine.Vector2(), size = new spine.Vector2();
+            this._skeleton.getBounds(offset, size);
+            return [Math.round(size.x / this._skeleton.scaleX / 2), Math.round(size.y / this._skeleton.scaleY)];
+        }
+        return [0, 0, 0];
     }
     
 }
