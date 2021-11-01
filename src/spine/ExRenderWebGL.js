@@ -36,8 +36,6 @@ class ExRenderWebGL extends Renderer {
                 continue;
             }else if(this._regionId === "skeleton"){
                 this._skeletonRenderer.end();
-                gl.enable(gl.BLEND);
-
             }
 
             // Combine drawable scale with the native vs. backing pixel ratio
@@ -88,8 +86,6 @@ class ExRenderWebGL extends Renderer {
         }
         if(this._regionId === "skeleton"){
             this._skeletonRenderer.end();
-            gl.enable(gl.BLEND);
-
         }
         this._regionId = null; 
     }

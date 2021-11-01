@@ -27,6 +27,7 @@ export default class SceneRenderer {
 
     end () {
 		this.batcher.end();
+		this.batcherShader.unbind();
 	}
 
     dispose(){
