@@ -47,7 +47,7 @@ class IDB {
     //  */
     createTable (primaryKey, keyList, success, error) {
         const req = this.openDB(success, error);
-        req.onupgradeneeded = function (e) {
+        req.onupgradeneeded = e => {
             const db = e.target.result;
             if (!db.objectStoreNames.contains(this.tableName)) {
                 // 创建一张数据表

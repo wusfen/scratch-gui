@@ -20,34 +20,45 @@ function emit (action, data) {
 
     var options = {action, data};
 
-    // ios
-    try {
-        window.webkit.messageHandlers.webCall.postMessage(
-            JSON.stringify(options),
-            '*'
-        );
-    } catch (e) {}
+    // setTimeout处理：软键盘不收起，点击退出button，编辑器会闪退
+    setTimeout(() => {
+        // ios
+        try {
+            window.webkit.messageHandlers.webCall.postMessage(
+                JSON.stringify(options),
+                '*'
+            );
+        } catch (e) {}
 
-    // android
-    try {
-        window.native.call(JSON.stringify(options));
-    } catch (e) {}
+        // android
+        try {
+            window.native.call(JSON.stringify(options));
+        } catch (e) {}
 
-    // pc(iframe)
-    try {
-        if (window !== parent) {
-            parent.postMessage(options, '*');
-        }
-    } catch (e) {}
+        // pc(iframe)
+        try {
+            if (window !== parent) {
+                parent.postMessage(options, '*');
+            }
+        } catch (e) {}
+    }, 1);
 }
 
 function on (action, cb) {
     // TODO add once
 
-    addEventListener(`bridge:${action}`, e => {
+    var eventName = `bridge:${action}`;
+    var handler = e => {
         cb(e.data);
-    });
+    };
+
+    addEventListener(eventName, handler);
+
+    return function off () {
+        removeEventListener(eventName, handler);
+    };
 }
+
 
 function trigger (action, data) {
     console.info('[bridge.trigger]', action, data);
@@ -69,6 +80,7 @@ addEventListener('message', e => {
         trigger(action, options.data);
     }
 });
+
 
 const bridge = {
     emit,

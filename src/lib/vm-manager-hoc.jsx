@@ -41,8 +41,10 @@ const vmManagerHOC = function (WrappedComponent) {
             if (!this.props.isPlayerOnly && !this.props.isStarted) {
                 console.log('vm.start()');
                 this.props.vm.start();
-                injectVm(this.props.vm);
             }
+
+            // 拦截 vm.loadProject 支持 .sb3diff
+            injectVm(this.props.vm);
         }
         componentDidUpdate (prevProps) {
             // if project is in loading state, AND fonts are loaded,

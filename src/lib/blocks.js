@@ -493,9 +493,9 @@ export default function (vm) {
         }
 
         // Allow the block to add or modify menuOptions.
-        // if (this.customContextMenu) {
-        //     this.customContextMenu(menuOptions);
-        // }
+        if (this.customContextMenu) {
+            this.customContextMenu(menuOptions);
+        }
         Blockly.ContextMenu.show(e, menuOptions, this.RTL);
         Blockly.ContextMenu.currentBlock = this;
     };
@@ -546,6 +546,9 @@ export default function (vm) {
         }
         return function (e) {
             setTimeout(() => {
+                if (!window.duplicateXml) {
+                    return;
+                }
                 var newBlock = Blockly.Xml.domToBlock(window.duplicateXml, window.currWorkspace); // 用复制的xml to block，传入当前编辑器的workspace
                 Blockly.scratchBlocksUtils.changeObscuredShadowIds(newBlock);
                 var svgRootNew = newBlock.getSvgRoot();

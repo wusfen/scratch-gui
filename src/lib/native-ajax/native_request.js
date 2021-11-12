@@ -1,14 +1,9 @@
-/* eslint-disable comma-dangle, require-jsdoc, func-style */
-
-import NativeAjax from './native-ajax/native_ajax';
-import {onNative} from './native-ajax/utils';
-
 /**
- * xhr
+ * 原生的请求
  * @param {object} options options
  * @returns {promise} res
  */
-export function request (options) {
+export function nativeRequest (options) {
     let {
         method,
         base,
@@ -114,7 +109,7 @@ export function request (options) {
         if (retry) {
             options.retry--;
             setTimeout(() => {
-                request(options).then(res => resolve(res))
+                nativeRequest(options).then(res => resolve(res))
                     .catch(error => reject(error));
             }, 1000);
             return;
@@ -135,90 +130,3 @@ export function request (options) {
     promise.xhr = xhr;
     return promise;
 }
-
-export class Ajax {
-    constructor (settings) {
-        this.list = [];
-        this.setSettings(settings);
-    }
-    setSettings (settings) {
-        this.settings = this.mergeOptions(Ajax.settings, settings);
-    }
-    mergeOptions (a = {}, b = {}) {
-        const c = Object.assign({}, a, b);
-        c.headers = Object.assign({}, a.headers, b.headers);
-        return c;
-    }
-    request (options) {
-        options = this.mergeOptions(this.settings, options);
-        var promise = request(options);
-        var xhr = promise.xhr;
-        this.list.push(xhr);
-        xhr.addEventListener('loadend', e => {
-            // wait ajax.abort
-            setTimeout(() => {
-                var index = this.list.indexOf(xhr);
-                if (index !== -1) {
-                    this.list.splice(index, 1);
-                }
-            }, 1);
-        });
-        return promise;
-    }
-    get (url, data, options = {}) {
-        options = Object.assign(options, {url, data, method: 'get'});
-        return this.request(options);
-    }
-    post (url, data, options = {}) {
-        options = Object.assign(options, {url, data, method: 'post'});
-        return this.request(options);
-    }
-    put (url, data, options = {}) {
-        options = Object.assign(options, {url, data, method: 'put'});
-        return this.request(options);
-    }
-    delete (url, data, options = {}) {
-        options = Object.assign(options, {url, data, method: 'delete'});
-        return this.request(options);
-    }
-    options (url, data, options = {}) {
-        options = Object.assign(options, {url, data, method: 'options'});
-        return this.request(options);
-    }
-    abort () {
-        this.list.forEach(xhr => {
-            xhr.abort();
-        });
-    }
-}
-
-Ajax.settings = {
-    method: 'GET',
-    base: '',
-    url: '',
-    data: {},
-    headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-        'Content-Type': 'application/json',
-        'Cache-Control': 'no-cache',
-        'If-Modified-Since': 0,
-    },
-    responseType: 'text',
-    timeout: 0,
-    retry: 2,
-    onload (res, options) {},
-    onerror (e, options) {},
-    ontimeout (e, options) {},
-    onloadstart (options) {},
-    onprogress (options) {},
-    onloadend (res, options) {},
-};
-
-// TODO 未测试
-/** 原生环境下 ajax会被代理，，使用 ./lib/native-ajax/native_ajax.js的Native */
-// export const ajax = onNative() ? new NativeAjax() : new Ajax();
-export const ajax = new Ajax();
-
-export {
-    ajax as default,
-};

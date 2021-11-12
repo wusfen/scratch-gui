@@ -74,9 +74,12 @@ const vmListenerHOC = function (WrappedComponent) {
             }
         }
         handleProjectChanged () {
+            window.codeRunningResult = 0; // 如果学生改动了代码，则编辑器批改正确状态重新变为0
             if (this.props.shouldUpdateProjectChanged && !this.props.projectChanged) {
-                window.codeRunningResult = 0; // 如果学生改动了代码，则编辑器批改正确状态重新变为0
                 this.props.onProjectChanged();
+            }
+            if (!window.autoSaveProjectState) {
+                window.autoSaveProjectState = this.props.projectChanged;
             }
         }
         handleTargetsUpdate (data) {

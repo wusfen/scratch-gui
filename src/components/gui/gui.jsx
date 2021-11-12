@@ -50,6 +50,8 @@ import CopyCodeHideModal from '../copy-code-hide/index.jsx';
 import PromptArea from '../prompt-area/prompt-area.jsx';
 import TaskBar from '../taskBar/index.jsx';
 import ErrorTips from '../errorTips/index.jsx';
+import SpriteResizer from '../sprite-resizer/index.jsx';
+
 import {param} from '../../lib/param.js';
 
 const messages = defineMessages({
@@ -135,6 +137,7 @@ const GUIComponent = props => {
         vm,
         videoSrc,
         promptAreaShow,
+        promptTitle,
         closePromptArea,
         errorText,
         showErrorTips,
@@ -192,6 +195,7 @@ const GUIComponent = props => {
                     closePromptArea={closePromptArea}
                     videoSrc={videoSrc}
                     type={'视频'}
+                    title={promptTitle}
                 /> : null}
                 {telemetryModalVisible ? (
                     <TelemetryModal
@@ -455,6 +459,7 @@ const GUIComponent = props => {
                     isPlayerOnly={isPlayerOnly}
                 />
                 <CopyCodeHideModal></CopyCodeHideModal>
+                <SpriteResizer vm={vm}></SpriteResizer>
             </Box>
         );
     }}</MediaQuery>);
@@ -524,6 +529,7 @@ GUIComponent.propTypes = {
     vm: PropTypes.instanceOf(VM).isRequired,
     videoSrc: PropTypes.string,
     promptAreaShow: PropTypes.bool,
+    promptTitle: PropTypes.string,
     closePromptArea: PropTypes.func,
     errorText: PropTypes.string,
     showErrorTips: PropTypes.bool,
@@ -547,7 +553,8 @@ GUIComponent.defaultProps = {
     isShared: false,
     loading: false,
     showComingSoon: false,
-    stageSizeMode: STAGE_SIZE_MODES.large
+    stageSizeMode: STAGE_SIZE_MODES.large,
+    promptTitle: '提示'
 };
 
 const mapStateToProps = state => ({

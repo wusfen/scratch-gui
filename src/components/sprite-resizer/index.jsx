@@ -6,6 +6,7 @@ import bindAll from 'lodash.bindall';
 import {connect} from 'react-redux';
 
 import {getEventXY} from '../../lib/touch-utils';
+import {param} from '../../lib/param';
 
 import styles from './styles.css';
 const c = styles;
@@ -32,8 +33,10 @@ class Component extends React.Component{
             downRotate: 90,
             downSize: 100,
 
-            isShow: !false,
-            target: null
+            isShow: false,
+            target: null,
+
+            isTeacherMode: param('mode') === 'teacher',
         };
 
         bindAll(this, [
@@ -112,15 +115,17 @@ class Component extends React.Component{
         return Math.sqrt(Math.pow(A.x - B.x, 2) + Math.pow(A.y - B.y, 2));
     }
     update (target = this.state.target) {
+        var state = this.state;
 
+        var isSprite = target?.isSprite();
+        var isHidden = !state.isTeacherMode && target?.getName().match(/^#.*\*$/);
 
-        if (!target?.isSprite()) {
+        if (!isSprite || isHidden) {
             this.setState({
                 isShow: false,
             });
             return;
         }
-        var state = this.state;
 
         var targetDrawable = target.renderer._allDrawables[target.drawableID];
         var skinSize = targetDrawable.getSkinSize();
@@ -150,14 +155,14 @@ class Component extends React.Component{
         });
     }
     handleDown (e) {
-
         var state = this.state;
         if (!state.target) return;
         if (!state.isRotateDown && !state.isResizeDown) return;
 
+        var {x, y} = getEventXY(e);
         this.setState({
-            downX: e.clientX,
-            downY: e.clientY,
+            downX: x,
+            downY: y,
             downRotate: this.state.rotate,
             downSize: this.state.size,
         });
@@ -166,6 +171,7 @@ class Component extends React.Component{
         var state = this.state;
         if (!state.target) return;
         if (!state.isRotateDown) return;
+        var {x, y} = getEventXY(e);
 
         // 12点为0度
         var downAngle = this.getAngle(
@@ -181,9 +187,9 @@ class Component extends React.Component{
         var currentAngle = this.getAngle(
             {x: state.x, y: state.y},
             {x: state.x, y: state.y - 100},
-            {x: e.clientX, y: e.clientY},
+            {x: x, y: y},
         );
-        if (e.clientX < state.x) {
+        if (x < state.x) {
             currentAngle = 360 - currentAngle;
         }
 
@@ -202,6 +208,7 @@ class Component extends React.Component{
         var state = this.state;
         if (!state.target) return;
         if (!state.isResizeDown) return;
+        var {x, y} = getEventXY(e);
 
         var downDistance = this.getDistance(
             {x: state.x, y: state.y},
@@ -209,7 +216,7 @@ class Component extends React.Component{
         );
         var currentDistance = this.getDistance(
             {x: state.x, y: state.y},
-            {x: e.clientX, y: e.clientY},
+            {x: x, y: y},
         );
 
         const size = state.downSize * (currentDistance / downDistance);
@@ -231,10 +238,14 @@ class Component extends React.Component{
             isRotateDown: false,
             isResizeDown: false,
         });
-        this.update();
+
+        setTimeout(() => {
+            this.update();
+        }, 100);
     }
     render () {
         const {
+            projectRunning,
             children,
             ...props
         } = this.props;
@@ -246,7 +257,7 @@ class Component extends React.Component{
 
         return (
             <div
-                hidden={!(isShow)}
+                hidden={!(isShow && !projectRunning)}
                 className={classNames(c.container)}
                 style={{
                     left: state.x,
@@ -281,25 +292,14 @@ class Component extends React.Component{
 
 Component.propTypes = {
     children: PropTypes.node,
-};
-
-Component.create = function () {
-    const el = document.createElement('div');
-    document.body.appendChild(el);
-
-
-    ReactDOM.render((
-        <Component />
-    ), el);
-
+    projectRunning: PropTypes.bool.isRequired,
 };
 
 
 const mapStateToProps = state => ({
+    projectRunning: state.scratchGui.vmStatus.running,
 });
 const mapDispatchToProps = () => ({
 });
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Component);
-// single
-export default Component.create;
+export default connect(mapStateToProps, mapDispatchToProps)(Component);

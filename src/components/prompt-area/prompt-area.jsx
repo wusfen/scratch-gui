@@ -29,7 +29,7 @@ class PromptArea extends React.Component{
                 cX: 0, // 鼠标的坐标
                 cY: 0
             },
-            title: getTipParam('tipVideo')?.includes('_explain') ? '讲解' : '提示',
+            title: props.title,
             imageTextScale: 1,
             imageTextScaleRate: 0.25,
             transformOrigin: 'center center'
@@ -301,7 +301,7 @@ class PromptArea extends React.Component{
                         className={c.video}
                         src={videoSrc}
                         controls={'controls'}
-                        autoPlay
+                        autoPlay={title?.includes('介绍') ? null : 'autoplay'}
                         controlsList="nodownload"
                         disablePictureInPicture
                     >
@@ -369,6 +369,7 @@ PromptArea.propTypes = {
     closePromptArea: PropTypes.func,
     type: PropTypes.string,
     imageSrc: PropTypes.string,
+    title: PropTypes.string
 };
 
 const mapStateToProps = state => ({

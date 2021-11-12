@@ -517,7 +517,7 @@ class TaskBar extends React.Component{
             diffY = mouseY - objY;
         };
         const handleMove = event => { // 拖动中
-            event.preventDefault();
+            // event.preventDefault();
             if (!judgeDomIsIn(operateTarget)) {
                 return;
             }
@@ -577,9 +577,9 @@ class TaskBar extends React.Component{
         };
         // 注册touch事件（移动端）
         dragObj.ontouchstart = handleStart;
-        document.addEventListener('touchmove', handleMove, {passive: false});
+        document.addEventListener('touchmove', handleMove);
         document.addEventListener('touchend', handleEnd);
-        
+        document.body.style.overflow = 'hidden'; // 拖动提示视频禁止页面滚动
         // 注册move事件（pc端）
         dragObj.onmousedown = handleStart;
         document.addEventListener('mousemove', handleMove);
@@ -592,10 +592,11 @@ class TaskBar extends React.Component{
         scaleRef.onmousedown = handleScaleStart;
 
         return () => {
-            document.removeEventListener('touchmove', handleMove, {passive: false});
+            document.removeEventListener('touchmove', handleMove);
             document.removeEventListener('touchend', handleEnd);
             document.removeEventListener('mousemove', handleMove);
             document.removeEventListener('mouseup', handleEnd);
+            document.body.style.overflow = 'auto';
         };
     }
 

@@ -59,7 +59,16 @@ ajax.setSettings({
     },
     async onerror (e, options) {
         if (options.silence) return;
+
         console.f12 = 2;
+
+        setTimeout(() => {
+            if (options.url.match(/\.(sb3)$/)) {
+                window.__bl?.sum('[sb3 error]');
+                window.__bl?.sum(`[sb3 error] ${options.url}`);
+            }
+        }, 1);
+
         await alert('哎呀，网络出点问题哦，请稍候重试');
         window.bridge.emit('exitEditor');
     },

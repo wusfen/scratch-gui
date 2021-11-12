@@ -225,6 +225,9 @@ class MenuBar extends React.Component {
         this.indexDbProjectTableMaxDataCount = 3;
         this.uploadToOssRetryCount = 0;
         this.uploadToOssProgressValue = 0;
+        this.exiting = false;
+        this.skiping = false;
+        this.worksType = '';
         // 30秒显示跳过按钮
         setTimeout(() => {
             this.setState({
@@ -233,7 +236,9 @@ class MenuBar extends React.Component {
         }, state._timeout * 1000);
         // TODO 提交保存另存为逻辑单独文件
         addEventListener('submit-result-dialog:跳过退出', async e => {
-            await this.autoSaveToLocalIndexDB();
+            this.skiping = true;
+            await this.autoSave();
+            this.skiping = false;
             window.bridge.emit('exitEditor', {type: 'skip', interaction_passOrNot: window.subjectPassOrNot});
         });
 
@@ -256,10 +261,6 @@ class MenuBar extends React.Component {
         // TODO 太耗资源
         addEventListener('projectLoadSucceed', e => {
             var timer = setInterval(() => {
-                console.log(`每${state._timeout}秒检查是否要自动保存`);
-                console.log('projectChanged:', this.props.projectChanged);
-                console.log('projectRunning:', this.props.projectRunning);
-
                 if (!(/^(course)$/.test(state.mode) && state.id && state.token)) {
                     console.warn('state.mode:', state.mode);
                     console.warn('state.id:', state.id);
@@ -271,8 +272,12 @@ class MenuBar extends React.Component {
                 if (this.props.projectRunning) {
                     return;
                 }
-                console.log(999);
-                this.autoSaveToLocalIndexDB();
+                if (window?.autoSaveProjectState) {
+                    console.log(`每${state._timeout}秒,检测到代码变化，启动自动保存`);
+                    console.log('projectChanged:', this.props.projectChanged);
+                    console.log('projectRunning:', this.props.projectRunning);
+                    this.autoSaveToLocalIndexDB();
+                }
             }, state._timeout * 1000);
         });
 
@@ -523,13 +528,17 @@ class MenuBar extends React.Component {
         });
     }
     getWorkName () {
-        return this.props.projectTitle || param('workName') || '我的作品';
+        const workName = this.props.projectTitle || param('workName') || '我的作品';
+        window.workName = workName;
+        return workName;
     }
-    async uploadToOss (blob, name = 'test', ext = 'sb3', silence, driver = 'aly_oss', retry) {
-        var self = this;
-        silence || self.props.setUploadingProgress(10);
 
-        var {data} = await ajax.get('file/getSign', {
+    async uploadToOss (blob, name = 'test', ext = 'sb3', silence, driver = 'aly_oss', retry) {
+        this.props.vm.stopAll(); // 提交的时候停止运行代码，为了保证不会提交运行中的工程
+        var self = this;
+        silence || self.props.setUploadingProgress(self.uploadToOssProgressValue || 10);
+
+        var {data} = await ajax.get('/file/v2/getSign', {
             driver: driver,
             name,
             ext,
@@ -538,14 +547,26 @@ class MenuBar extends React.Component {
         var ossToken = JSON.parse(data.ossToken);
 
         const formData = new FormData();
-        formData.append('OSSAccessKeyId', ossToken.accessid);
-        formData.append('signature', ossToken.signature);
-        formData.append('policy', ossToken.policy);
-        formData.append('key', data.path);
-        formData.append('success_action_status', 200);
-        formData.append('file', blob, `${name}.${ext}`);
+        let authorizationTencentOss = null;
+        switch (data.driver) {
+        case 'aly_oss':
+            formData.append('OSSAccessKeyId', ossToken.accessid);
+            formData.append('signature', ossToken.signature);
+            formData.append('policy', ossToken.policy);
+            formData.append('key', data.path);
+            formData.append('success_action_status', 200);
+            formData.append('file', blob, `${name}.${ext}`);
+            break;
+        case 'tencent_oss':
+            formData.append('x-cos-security-token', ossToken.credentials?.sessionToken);
+            formData.append('Signature', ossToken.credentials?.authorization);
+            formData.append('key', data.path);
+            formData.append('file', blob, `${name}.${ext}`);
+            authorizationTencentOss = ossToken.credentials?.authorization;
+            break;
+        }
 
-        silence || self.props.setUploadingProgress(20);
+        silence || self.props.setUploadingProgress(self.uploadToOssProgressValue || 20);
         await ajax.post(`${data.uploadDomain}`, formData, {
             silence: true,
             onprogress (e) {
@@ -558,16 +579,22 @@ class MenuBar extends React.Component {
             },
             onload () {
                 self.uploadToOssProgressValue = 0; // 重置
+                self.uploadToOssRetryCount = 0;
             },
             onerror () {
-                if (self.uploadToOssRetryCount >= 2) {
+                if (self.uploadToOssRetryCount >= 3) {
                     alert('上传失败');
                     self.uploadToOssProgressValue = 0;
+                    self.uploadToOssRetryCount = 0;
                     return;
                 }
                 self.uploadToOssRetryCount++;
-                self.uploadToOss(blob, name, ext, silence, driver, true); // 失败切云，默认将上一次的driver带上
+                self.uploadToOss(blob, name, ext, silence, data.driver, true); // 失败切云，默认将上一次的driver带上
             },
+            retry: 1,
+            headers: authorizationTencentOss ? {
+                Authorization: authorizationTencentOss
+            } : {}
         });
         // silence || self.props.setUploadingProgress(false);
 
@@ -637,12 +664,17 @@ class MenuBar extends React.Component {
         setTimeout(() => {
             silence || this.props.setUploadingProgress(false);
         }, 500);
+        dispatchEvent(new Event('saveSucceed'));
+        
         alert('保存成功');
     }
+
+
     async handleSaveAs () {
         await Dialog.confirm('是否将作品另存为自由创作？');
 
         this.state.id = null;
+        window.isHandleSaveAs = true;
         await this.handleSave();
         param('id', this.state.id);
         this.setState({
@@ -651,10 +683,13 @@ class MenuBar extends React.Component {
     }
 
     async autoSaveToLocalIndexDB () {
-        if (!this.props.projectChanged) return;
+        const projectId = this.state.id;
+        if (!projectId) {
+            return;
+        }
         console.log('开始保存文件');
         try {
-            const projectId = this.state.id || 5;
+            
             const blob = await project.getSb3Diff();
             if ((blob.size / 1024 / 1024) > 30) { // 30M大小限制
                 return;
@@ -676,27 +711,28 @@ class MenuBar extends React.Component {
                     const longestProject = dataList.find(item => item.timestamp === Math.min(...dataList.map(it => it.timestamp)));
                     console.log('longestProject---', longestProject);
                     await this.indexDB.deleteData(longestProject.id, () => {
-                        console.log(`${projectId}---indexDB删除成功`);
+                        console.log(`${longestProject.id}---indexDB删除成功`);
                     });
-                } else {
-                    await this.indexDB.add(
-                        {
-                            id: projectId,
-                            zip: blob,
-                            timestamp: Date.now()
-                        },
-                        true,
-                        () => {
-                            // 添加成功
-                            console.log(`${projectId}---indexDB添加成功`);
-                        },
-                        () => {
-                            // 添加失败
-                            console.log(`${projectId}---indexDB添加失败`);
-                        }
-                    );
                 }
+                await this.indexDB.add(
+                    {
+                        id: projectId,
+                        zip: blob,
+                        timestamp: Date.now()
+                    },
+                    true,
+                    () => {
+                        // 添加成功
+                        console.log(`${projectId}---indexDB添加成功`);
+                    },
+                    () => {
+                        // 添加失败
+                        console.log(`${projectId}---indexDB添加失败`);
+                    }
+                );
+                
             }
+            window.autoSaveProjectState = false;
         } catch (error) {
             console.log('indexDB---error---', error);
         }
@@ -730,7 +766,7 @@ class MenuBar extends React.Component {
     async handleExit (e = 'exitEditor') {
         if (this.handleExit.locked) return;
         this.handleExit.locked = true;
-
+        this.exiting = true;
         var exitType = 'exit';
         if (e === 'requireExitEditor') exitType = 'sidebar';
 
@@ -741,9 +777,9 @@ class MenuBar extends React.Component {
                     window.bridge.emit(e, {type: exitType});
                 }
             });
-            await this.autoSaveToLocalIndexDB();
+            await this.autoSave();
         }
-
+        this.exiting = false;
         this.handleExit.locked = false;
         window.bridge.emit(e, {type: exitType});
     }
@@ -761,12 +797,13 @@ class MenuBar extends React.Component {
     }
 
     async handleSubmit (isNoCheckResult, silence) {
-        if (!silence) {
+        if (!silence && !this.exiting && !this.skiping) { // 点击退出和跳过按钮时不需要判断是否运行过
             if (!this.judgeIsRunCode()) {
                 return;
             }
         }
         const workInfo = window._workInfo || {};
+        const workName = this.getWorkName();
 
         if (!workInfo.id) {
             await Dialog.alert({
@@ -797,7 +834,7 @@ class MenuBar extends React.Component {
         silence || this.props.setUploadingProgress(true);
         const uploadCoverPromise = this.uploadCover();
         const uploadSb3DiffPromise = this.uploadSb3Diff(silence);
-
+        const {ossDomain: ossDomainCover, path: pathCover} = await uploadCoverPromise;
         const {ossDomain, path} = await uploadSb3DiffPromise;
         silence || this.props.setUploadingProgress(90, '正在保存...');
 
@@ -807,7 +844,7 @@ class MenuBar extends React.Component {
             workId: workInfo.analystStatus === -1 ? workInfo.workId : '',
             submitType: silence ? 1 : 3,
             userBlockNum: _userBlockNum,
-            workCoverPath: `${ossDomain}${path}`,
+            workCoverPath: `${ossDomainCover}${pathCover}`,
             workPath: `${ossDomain}${path}`,
             attachId: (await uploadSb3DiffPromise).id,
             workCoverAttachId: (await uploadCoverPromise).id,
@@ -826,7 +863,7 @@ class MenuBar extends React.Component {
 
         // 标记已保存
         this.props.onProjectSaved({
-            title: this.props.projectTitle || param('workName') || ''
+            title: workName,
         });
 
         if (isNoCheckResult) {
