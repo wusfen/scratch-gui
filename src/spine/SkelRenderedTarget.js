@@ -29,7 +29,10 @@ export default class SkeletonRenderedTarget extends RenderedTarget {
     setAnimation(index){
         this.currentAnimation = index;
         if (this.renderer) {
-            this.renderer.updateSkelDrawableAnimation(this.drawableID, this.getAnimations()[index].name);
+            const anims = this.getAnimations();
+            if(anims.length > 0){
+                this.renderer.updateSkelDrawableAnimation(this.drawableID, anims[index].name);
+            }
             if (this.visible) {
                 this.emit(RenderedTarget.EVENT_TARGET_VISUAL_CHANGE, this);
                 this.runtime.requestRedraw();
@@ -60,7 +63,10 @@ export default class SkeletonRenderedTarget extends RenderedTarget {
     updateAllDrawableProperties () {
         super.updateAllDrawableProperties();
         if (this.renderer) {
-            this.renderer.updateSkelDrawableAnimation(this.drawableID, this.getAnimations()[this.currentAnimation].name);
+            const anims = this.getAnimations();
+            if(anims.length > 0){
+                this.renderer.updateSkelDrawableAnimation(this.drawableID, anims[this.currentAnimation].name);
+            }
         }
     }
 
@@ -71,9 +77,19 @@ export default class SkeletonRenderedTarget extends RenderedTarget {
         const newClone = super.makeClone();
         newClone.currentAnimation = this.currentAnimation;
         if (this.renderer) {
-            this.renderer.updateSkelDrawableAnimation(newClone.drawableID, newClone.getAnimations()[newClone.currentAnimation].name);
+            const anims = newClone.getAnimations();
+            if(anims.length > 0){
+                this.renderer.updateSkelDrawableAnimation(newClone.drawableID, anims[newClone.currentAnimation].name);
+            }
+           
         }
         return newClone;
+    }
+
+    toJSON () {
+        const jsonObj = super.toJSON();
+        jsonObj.isSkelSprite = this.isSkelSprite;
+        return jsonObj;
     }
 
 }

@@ -28,6 +28,9 @@ export default class SceneRenderer {
     end () {
 		this.batcher.end();
 		this.batcherShader.unbind();
+		let gl = this.context.gl;
+		gl.enable(gl.BLEND);
+		gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
 	}
 
     dispose(){

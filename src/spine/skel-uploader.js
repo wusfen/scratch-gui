@@ -2,6 +2,7 @@ import * as spine from "@esotericsoftware/spine-webgl";
 import SkelAssetManager, { readZipPng } from "./SkelAssetManager";
 import SkeletonSprite from './SkeletonSprite';
 import {Blocks} from 'scratch-vm'
+import { reject } from "core-js/fn/promise";
 
 const JSZip = require('jszip');
 
@@ -41,7 +42,7 @@ const parseSkelData = function(skelName, zip, gl, handleSucc, handleError){
                 const atlasLoader = new spine.AtlasAttachmentLoader(atlas);
                 const skeletonLoader = new spine.SkeletonBinary(atlasLoader);
                 skeletonLoader.scale = 0.2;
-                handleSucc(skeletonLoader.readSkeletonData(binary));
+                handleSucc(skeletonLoader.readSkeletonData(binary), assetManager.getCache());
             }, handleError);
         }, handleError);
     }
@@ -54,17 +55,19 @@ const parseSkelData = function(skelName, zip, gl, handleSucc, handleError){
                 const atlasLoader = new spine.AtlasAttachmentLoader(atlas);
                 const skeletonLoader = new spine.SkeletonJson(atlasLoader);
                 skeletonLoader.scale = 0.2;
-                handleSucc(skeletonLoader.readSkeletonData(text));
+                handleSucc(skeletonLoader.readSkeletonData(text), assetManager.getCache());
             }, handleError);
         }, handleError);
     }
 }
 
-const parseRendedTarget = function(skelData, costumes, runtime, name, handleTarget){
+const parseRendedTarget = function(skelData, costumes, runtime, name, handleTarget, cacheData){
     const blocks = new Blocks(runtime);
-    const sprite = new SkeletonSprite(blocks, runtime, skelData);
+    const sprite = new SkeletonSprite(blocks, runtime);
+    sprite.setSkeletonData(skelData);
     sprite.costumes = costumes;
     sprite.name = name;
+    sprite.cacheData = cacheData;
     const target = sprite.createClone('sprite');
     const skinId = runtime.renderer.createSkelSkin(skelData);
     for (let i = 0, l = costumes.length; i < l; i++) {
@@ -80,7 +83,7 @@ const skeletonUpload = function (fileData, fileType, skelName, runtime, handleTa
         case 'application/zip': {
             JSZip.loadAsync(fileData)
                 .then(function (zip) {
-                    parseSkelData(skelName, zip, runtime.renderer.gl, (skelData) =>{
+                    parseSkelData(skelName, zip, runtime.renderer.gl, (skelData, cacheData) =>{
                         const title = zip.file(skelName +'_title.png');
                         if(title){
                             title.async('uint8array').then(fileData => {
@@ -92,11 +95,11 @@ const skeletonUpload = function (fileData, fileType, skelName, runtime, handleTa
                                     costume.name = name;
                                     costumes.push(costume);
                                 }                
-                                parseRendedTarget(skelData, costumes, runtime, skelName, handleTarget);
+                                parseRendedTarget(skelData, costumes, runtime, skelName, handleTarget, cacheData);
                             });
                         }else{
                             const costume = createVMAsset(runtime.storage, runtime.storage.AssetType.ImageBitmap, runtime.storage.DataFormat.PNG, "");
-                            parseRendedTarget(skelData, [costume], runtime, skelName, handleTarget);
+                            parseRendedTarget(skelData, [costume], runtime, skelName, handleTarget, cacheData);
                         }
                         
                     }, handleError)
@@ -113,6 +116,41 @@ const skeletonUpload = function (fileData, fileType, skelName, runtime, handleTa
     }
 };
 
+
+const deserializeSkeletonAsset = function (target, zip){
+    return new Promise((resolve, reject) =>{
+        const sprite = target.sprite;
+        const renderer = sprite.runtime.renderer;
+        parseSkelData(sprite.name, zip, renderer.gl, (skelData, cacheData) =>{
+            sprite.setSkeletonData(skelData);
+            const orgCostume = sprite.costumes[0];
+            const newCostumes = [];
+            const skinId = renderer.createSkelSkin(skelData);
+            for (let i = 0, l = skelData.skins.length; i < l; i++) {
+                let name = skelData.skins[i].name;
+                let costume = {
+                    name: name,
+                    dataFormat: orgCostume.dataFormat,
+                    asset: orgCostume.asset,
+                    md5: orgCostume.md5,
+                    assetId: orgCostume.assetId,
+                    bitmapResolution:2,
+                    rotationCenterX:0,
+                    rotationCenterY:0,
+                    skinId:skinId
+                };
+                newCostumes.push(costume);
+            }
+            sprite.costumes = newCostumes;
+            sprite.cacheData = cacheData;
+            renderer.updateDrawableSkinId(target.drawableID, skinId);
+            resolve(target);
+        }, reject);
+
+    });
+}
+
 export {
-    skeletonUpload
+    skeletonUpload,
+    deserializeSkeletonAsset
 };

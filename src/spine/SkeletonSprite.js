@@ -3,12 +3,18 @@ import SkeletonRenderedTarget from './SkelRenderedTarget';
 
 export default class SkeletonSprite extends Sprite {
 
-    constructor (blocks, runtime, skeletonData) {
+    constructor (blocks, runtime) {
         super(blocks, runtime);
-        this._skeletonData = skeletonData;
+    }
+
+    setSkeletonData(data){
+        this._skeletonData = data;
     }
 
     getAnimations(){
+        if(!this._skeletonData){
+            return [];
+        }
         return this._skeletonData.animations || [];
     }
 

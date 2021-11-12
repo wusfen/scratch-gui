@@ -81,36 +81,47 @@ export default class SkelAssetManager extends spine.AssetManagerBase {
 
     loadTexture (path, success, error) {
 		path = this.start(path);
+        const cache = this.downloader._rawData.get(path);
+        if(cache){
+            readZipPng(cache, (image) =>{
+                this.success(success, path, this.textureLoader(image))
+            }, (e)=> this.error(error, path, `Couldn't load cache: ${path}`));
+            return;
+        }
         const file = this._zip.file(path);
 		if(!file){
 			this.error(error, path, `Couldn't load image: ${path}`);
 		}
-        file.async('uint8array').then(data => readZipPng(data, (image) =>{
-            this.success(success, path, this.textureLoader(image));
-        }, () => this.error(error, path, `Couldn't load image: ${path}`))
-        ).catch(e=>{
+        file.async('uint8array').then(data => {
+            readZipPng(data, (image) =>{
+               this.success(success, path, this.textureLoader(image));
+            }, () => this.error(error, path, `Couldn't load image: ${path}`));
+            this.downloader._rawData.set(path, data);
+        }).catch(e=>{
             this.error(error, path, `Couldn't load image: ${path}`);
         });
 	}
+
+    getCache(){
+        return this.downloader._rawData;
+    }
 }
 
 
 export class SkelZipReader extends spine.Downloader {
 
+
 	constructor (zip) {
         super();
+        this._rawData = new Map();
         this._zip = zip;
     }
 
 	downloadText (url, success, error) {
 		if (this.start(url, success, error)) return;
-		if (this.rawDataUris[url]) {
-			try {
-				let dataUri = this.rawDataUris[url];
-				this.finish(url, 200, this.dataUriToString(dataUri));
-			} catch (e) {
-				this.finish(url, 400, JSON.stringify(e));
-			}
+        const cache = this._rawData.get(url);
+		if (cache) {
+			this.finish(url, 200, cache);
 			return;
 		}
 		const file = this._zip.file(url);
@@ -118,6 +129,7 @@ export class SkelZipReader extends spine.Downloader {
 			this.finish(url, 400, "{msg:'no file'}");
 		}
 		file.async('string').then(text => {
+            this._rawData.set(url, text);
 			this.finish(url, 200, text);
 		}).catch(e =>{
 			this.finish(url, 400, JSON.stringify(e));
@@ -126,13 +138,9 @@ export class SkelZipReader extends spine.Downloader {
 
 	downloadBinary (url, success, error) {
 		if (this.start(url, success, error)) return;
-		if (this.rawDataUris[url]) {
-			try {
-				let dataUri = this.rawDataUris[url];
-				this.finish(url, 200, this.dataUriToUint8Array(dataUri));
-			} catch (e) {
-				this.finish(url, 400, JSON.stringify(e));
-			}
+        const cache = this._rawData.get(url);
+		if (cache) {
+			this.finish(url, 200, cache);
 			return;
 		}
 		const file = this._zip.file(url);
@@ -140,6 +148,7 @@ export class SkelZipReader extends spine.Downloader {
 			this.finish(url, 400, "{msg:'no file'}");
 		}
 		file.async('uint8array').then(data => {
+            this._rawData.set(url, data);
 			this.finish(url, 200, data);
 		}).catch(e =>{
 			this.finish(url, 400, JSON.stringify(e));

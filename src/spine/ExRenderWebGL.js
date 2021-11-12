@@ -27,6 +27,9 @@ class ExRenderWebGL extends Renderer {
             if (!drawable.getVisible() && !opts.ignoreVisibility) continue;
             //spine 渲染
             if(drawable instanceof SkeletonDrawable){
+                if(!drawable.skeleton){
+                    return;
+                }
                 drawable.update();
                 if(this._regionId !== "skeleton"){
                     this._regionId = "skeleton";
