@@ -1,18 +1,14 @@
-import * as spine from "@esotericsoftware/spine-webgl";
-import { Drawable, Rectangle } from 'scratch-render';
+import * as spine from '@esotericsoftware/spine-webgl';
+import {Drawable, Rectangle} from 'scratch-render';
 
 class SkeletonDrawable extends Drawable {
     
-    constructor(id) {
-        super(id);
-    }
-
     updatePosition (position) {
         if (this._position[0] !== position[0] ||
             this._position[1] !== position[1]) {
             this._position[0] = Math.round(position[0]);
             this._position[1] = Math.round(position[1]);
-            if(this._skeleton){
+            if (this._skeleton){
                 this._skeleton.x = this._position[0];
                 this._skeleton.y = this._position[1];
             }
@@ -27,7 +23,7 @@ class SkeletonDrawable extends Drawable {
     updateDirection (direction) {
         if (this._direction !== direction) {
             this._direction = direction;
-            if(this._skeleton){
+            if (this._skeleton){
                 this._skeleton.getRootBone().rotation = -(direction - 90);
             }
         }
@@ -42,7 +38,7 @@ class SkeletonDrawable extends Drawable {
             this._scale[1] !== scale[1]) {
             this._scale[0] = scale[0];
             this._scale[1] = scale[1];
-            if(this._skeleton){
+            if (this._skeleton){
                 this._skeleton.scaleX = scale[0] / 100;
                 this._skeleton.scaleY = scale[1] / 100;
             }
@@ -76,10 +72,10 @@ class SkeletonDrawable extends Drawable {
         // result = result || new Rectangle();
         // result.initFromPointsAABB(transformedHullPoints);
         // return result;
-        if(!this._skeleton){
+        if (!this._skeleton){
             return result;
         }
-        let offset = new spine.Vector2(), size = new spine.Vector2();
+        const offset = new spine.Vector2(); const size = new spine.Vector2();
         this._skeleton.getBounds(offset, size);
         result = result || new Rectangle();
         result.initFromBounds(offset.x, offset.x + size.x, offset.y, offset.y + size.y);
@@ -135,13 +131,13 @@ class SkeletonDrawable extends Drawable {
         return this.getBounds(result);
     }
 
-    update(){
-        if(this._skeleton){
+    update (){
+        if (this._skeleton){
             let delta = 0;
-            if(this._lastFrameTime == undefined){
+            if (this._lastFrameTime == undefined){
                 this._lastFrameTime = Date.now() / 1000;
-            }else{
-                let now = Date.now() / 1000;
+            } else {
+                const now = Date.now() / 1000;
                 delta = now - this._lastFrameTime;
                 this._lastFrameTime = now;
             }
@@ -153,44 +149,42 @@ class SkeletonDrawable extends Drawable {
         
     }
 
-    get skeleton(){
+    get skeleton (){
         return this._skeleton;
     }
 
     set skin (newSkin) {
         super.skin = newSkin;
         if (this._skin) {
-            if(!this._skeleton){
+            if (!this._skeleton){
                 this._skeleton = new spine.Skeleton(this._skin.skeletonData);
                 // if(this._skeleton.data.skins.length > 0){
                 //     this._skeleton.setSkinByName(this._skeleton.data.skins[0].name);
                 // }
                 const animationStateData = new spine.AnimationStateData(this._skeleton.data);
                 this._animationState = new spine.AnimationState(animationStateData);
-                if(this._skeleton.data.animations.length > 0){
+                if (this._skeleton.data.animations.length > 0){
                     this._animationState.setAnimation(0, this._skeleton.data.animations[0].name, true);
                 }
-                
-            }else{
                 
             }
             
         }
     }
     
-    get skin(){
+    get skin (){
         return this._skin;
     }
     
-    setSkinByName(name){
-        if(this._skeleton){
+    setSkinByName (name){
+        if (this._skeleton){
             this._skeleton.setSkinByName(name);
             this._skeleton.setSlotsToSetupPose();
         }
         
     }
-    setAnimation(animationName){
-        if(this._skeleton){
+    setAnimation (animationName){
+        if (this._skeleton){
             this._skeleton.setToSetupPose();
             this._animationState.setAnimation(0, animationName, true);
         }
@@ -199,17 +193,17 @@ class SkeletonDrawable extends Drawable {
 
     _isTouchingNearest (vec) {
         const bounds = this.getBounds();
-        let x = vec[0];
-        let y = vec[1];
-        if(x < bounds.left || x > bounds.right || y < bounds.bottom || y > bounds.top){
+        const x = vec[0];
+        const y = vec[1];
+        if (x < bounds.left || x > bounds.right || y < bounds.bottom || y > bounds.top){
             return false;
         }
         return true;
     }
 
     getSkinSize () {
-        if(this._skeleton){
-            let offset = new spine.Vector2(), size = new spine.Vector2();
+        if (this._skeleton){
+            const offset = new spine.Vector2(); const size = new spine.Vector2();
             this._skeleton.getBounds(offset, size);
             return [Math.round(size.x / this._skeleton.scaleX), Math.round(size.y / this._skeleton.scaleY)];
         }
@@ -217,8 +211,8 @@ class SkeletonDrawable extends Drawable {
     }
 
     get rotationCenter () {
-        if(this._skeleton){
-            let offset = new spine.Vector2(), size = new spine.Vector2();
+        if (this._skeleton){
+            const offset = new spine.Vector2(); const size = new spine.Vector2();
             this._skeleton.getBounds(offset, size);
             return [Math.round(size.x / this._skeleton.scaleX / 2), Math.round(size.y / this._skeleton.scaleY)];
         }

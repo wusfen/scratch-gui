@@ -1,11 +1,11 @@
 import Renderer from 'scratch-render';
 const twgl = require('twgl.js');
 const SkeletonDrawable = require('./SkeletonDrawable');
-import * as spine from "@esotericsoftware/spine-webgl";
+import * as spine from '@esotericsoftware/spine-webgl';
 import SkeletonSkin from './SkeletonSkin';
 import SceneRenderer from './SceneRenderer';
 
-class ExRenderWebGL extends Renderer {
+export default class ExRenderWebGL extends Renderer {
 
     constructor (canvas, xLeft, xRight, yBottom, yTop) {
         super(canvas, xLeft, xRight, yBottom, yTop);
@@ -25,19 +25,19 @@ class ExRenderWebGL extends Renderer {
             const drawable = this._allDrawables[drawableID];
 
             if (!drawable.getVisible() && !opts.ignoreVisibility) continue;
-            //spine 渲染
-            if(drawable instanceof SkeletonDrawable){
-                if(!drawable.skeleton){
+            // spine 渲染
+            if (drawable instanceof SkeletonDrawable){
+                if (!drawable.skeleton){
                     return;
                 }
                 drawable.update();
-                if(this._regionId !== "skeleton"){
-                    this._regionId = "skeleton";
+                if (this._regionId !== 'skeleton'){
+                    this._regionId = 'skeleton';
                     this._skeletonRenderer.begin(projection);
                 }
                 this._skeletonRenderer.drawSkeleton(drawable.skeleton, true);
                 continue;
-            }else if(this._regionId === "skeleton"){
+            } else if (this._regionId === 'skeleton'){
                 this._skeletonRenderer.end();
             }
 
@@ -87,7 +87,7 @@ class ExRenderWebGL extends Renderer {
             twgl.setUniforms(currentShader, uniforms);
             twgl.drawBufferInfo(gl, this._bufferInfo, gl.TRIANGLES);
         }
-        if(this._regionId === "skeleton"){
+        if (this._regionId === 'skeleton'){
             this._skeletonRenderer.end();
         }
         this._regionId = null; 
@@ -95,7 +95,7 @@ class ExRenderWebGL extends Renderer {
 
     createSkelDrawable (group) {
         if (!group || !Object.prototype.hasOwnProperty.call(this._layerGroups, group)) {
-            log.warn('Cannot create a drawable without a known layer group');
+            console.warn('Cannot create a drawable without a known layer group');
             return;
         }
         const drawableID = this._nextDrawableId++;
@@ -115,14 +115,14 @@ class ExRenderWebGL extends Renderer {
         return skinId;
     }
 
-    updateSkelDrawableSkin(drawableID, costume){
+    updateSkelDrawableSkin (drawableID, costume){
         const drawable = this._allDrawables[drawableID];
         if (!drawable) return;
         drawable.skin = this._allSkins[costume.skinId];
         drawable.setSkinByName(costume.name);
     }
 
-    updateSkelDrawableAnimation(drawableID, animationName){
+    updateSkelDrawableAnimation (drawableID, animationName){
         const drawable = this._allDrawables[drawableID];
         if (!drawable) return;
         drawable.setAnimation(animationName);
@@ -131,14 +131,11 @@ class ExRenderWebGL extends Renderer {
 
     getCurrentSkinSize (drawableID) {
         const drawable = this._allDrawables[drawableID];
-        if(drawable instanceof SkeletonDrawable){
-            return  drawable.getSkinSize();
+        if (drawable instanceof SkeletonDrawable){
+            return drawable.getSkinSize();
         }
         return this.getSkinSize(drawable.skin.id);
     }
 
 
 }
-
-
-module.exports = ExRenderWebGL;

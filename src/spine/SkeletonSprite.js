@@ -3,21 +3,16 @@ import SkeletonRenderedTarget from './SkelRenderedTarget';
 
 export default class SkeletonSprite extends Sprite {
 
-    constructor (blocks, runtime) {
-        super(blocks, runtime);
-    }
-
-    setSkeletonData(data){
+    setSkeletonData (data){
         this._skeletonData = data;
     }
 
-    getAnimations(){
-        if(!this._skeletonData){
+    getAnimations (){
+        if (!this._skeletonData){
             return [];
         }
         return this._skeletonData.animations || [];
     }
-
     
 
     createClone (optLayerGroup) {
@@ -35,8 +30,6 @@ export default class SkeletonSprite extends Sprite {
         }
         return newClone;
     }
-
-
 
 
 }

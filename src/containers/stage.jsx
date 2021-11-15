@@ -1,7 +1,7 @@
 import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
-//import Renderer from 'scratch-render';
+// import Renderer from 'scratch-render';
 import Renderer from '../spine/ExRenderWebGL';
 import VM from 'scratch-vm';
 import {connect} from 'react-redux';
@@ -211,7 +211,7 @@ class Stage extends React.Component {
                 Math.pow(mousePosition[1] - this.state.mouseDownPosition[1], 2)
             );
             if (distanceFromMouseDown > dragThreshold) {
-                //this.cancelMouseDownTimeout();
+                // this.cancelMouseDownTimeout();
                 this.onStartDrag(...this.state.mouseDownPosition);
                 this._isDown = false;
             }
@@ -242,7 +242,7 @@ class Stage extends React.Component {
     onMouseUp (e) {
         const {x, y} = getEventXY(e);
         const mousePosition = [x - this.rect.left, y - this.rect.top];
-        //this.cancelMouseDownTimeout();
+        // this.cancelMouseDownTimeout();
         if (this._isDown) {
             this.handleDoubleClick(e);
             this._isDown = false;
@@ -293,13 +293,13 @@ class Stage extends React.Component {
             // Immediately update the color picker info
             this.setState({colorInfo: this.getColorInfo(this.pickX, this.pickY)});
         } else {
-            if(!this.props.projectRunning){
+            if (!this.props.projectRunning){
                 const drawableId = this.renderer.pick(mousePosition[0], mousePosition[1]);
                 if (drawableId !== null){
                     const targetId = this.props.vm.getTargetIdForDrawableId(drawableId);
                     if (targetId !== null){
                         const target = this.props.vm.runtime.getTargetById(targetId);
-                        if(window.MODE !== 'teacher' && target.spriteHidden){
+                        if (window.MODE !== 'teacher' && target.spriteHidden){
                             if (e.preventDefault) {
                                 if (document.activeElement && document.activeElement.blur) {
                                     document.activeElement.blur();
@@ -314,7 +314,7 @@ class Stage extends React.Component {
             if (e.button === 0 || (window.TouchEvent && e instanceof TouchEvent)) {
                 this.setState({
                     mouseDown: true,
-                    mouseDownPosition: mousePosition//,
+                    mouseDownPosition: mousePosition// ,
                     // mouseDownTimeoutId: setTimeout(
                     //     this.onStartDrag.bind(this, mousePosition[0], mousePosition[1]),
                     //     400
@@ -467,7 +467,7 @@ class Stage extends React.Component {
                 colorInfo={this.state.colorInfo}
                 dragRef={this.setDragCanvas}
                 question={this.state.question}
-                //onDoubleClick={this.handleDoubleClick}
+                // onDoubleClick={this.handleDoubleClick}
                 onQuestionAnswered={this.handleQuestionAnswered}
                 {...props}
             />

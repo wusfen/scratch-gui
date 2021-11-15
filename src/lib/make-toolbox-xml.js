@@ -337,7 +337,7 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
                     </shadow>
                 </value>
             </block>
-            <block type="looks_nextanimation"/>`:``}
+            <block type="looks_nextanimation"/>` : ``}
             ${blockSeparator}
             <block type="looks_changesizeby">
                 <value name="CHANGE">
@@ -855,6 +855,8 @@ const xmlClose = '</xml>';
  * @param {?string} costumeName - The name of the default selected costume dropdown.
  * @param {?string} backdropName - The name of the default selected backdrop dropdown.
  * @param {?string} soundName -  The name of the default selected sound dropdown.
+ * @param {?string} isSkelSprite -  none.
+ * @param {?string} animationName -  none.
  * @returns {string} - a ScratchBlocks-style XML document for the contents of the toolbox.
  */
 const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categoriesXML = [],

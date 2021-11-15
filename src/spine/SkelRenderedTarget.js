@@ -6,8 +6,8 @@ export default class SkeletonRenderedTarget extends RenderedTarget {
 
     constructor (sprite, runtime) {
         super(sprite, runtime);
-        this.isSkelSprite = true;//是否是spine
-        this.currentAnimation = 0;//当前的动画
+        this.isSkelSprite = true;// 是否是spine
+        this.currentAnimation = 0;// 当前的动画
     }
 
     initDrawable (layerGroup) {
@@ -22,15 +22,15 @@ export default class SkeletonRenderedTarget extends RenderedTarget {
         }
     }
 
-    _updateDrawableSkin(drawableID, costume){
+    _updateDrawableSkin (drawableID, costume){
         this.renderer.updateSkelDrawableSkin(drawableID, costume);
     }
 
-    setAnimation(index){
+    setAnimation (index){
         this.currentAnimation = index;
         if (this.renderer) {
             const anims = this.getAnimations();
-            if(anims.length > 0){
+            if (anims.length > 0){
                 this.renderer.updateSkelDrawableAnimation(this.drawableID, anims[index].name);
             }
             if (this.visible) {
@@ -41,22 +41,22 @@ export default class SkeletonRenderedTarget extends RenderedTarget {
         this.runtime.requestTargetsUpdate(this);
     }
 
-    saveState(){//保存角色的状态
+    saveState (){ // 保存角色的状态
         super.saveState();
-        if(this._currentAnimation === undefined){
+        if (this._currentAnimation === undefined){
             this._currentAnimation = this.currentAnimation;
         }
     }
 
-    restoreState(){//恢复角色的状态 
-        if(this._currentAnimation !== undefined){
+    restoreState (){ // 恢复角色的状态 
+        if (this._currentAnimation !== undefined){
             this.currentAnimation = this._currentAnimation;
             this._currentAnimation = undefined;
         }
         super.restoreState();
     }
 
-    getAnimations(){
+    getAnimations (){
         return this.sprite.getAnimations();
     }
 
@@ -64,7 +64,7 @@ export default class SkeletonRenderedTarget extends RenderedTarget {
         super.updateAllDrawableProperties();
         if (this.renderer) {
             const anims = this.getAnimations();
-            if(anims.length > 0){
+            if (anims.length > 0){
                 this.renderer.updateSkelDrawableAnimation(this.drawableID, anims[this.currentAnimation].name);
             }
         }
@@ -78,7 +78,7 @@ export default class SkeletonRenderedTarget extends RenderedTarget {
         newClone.currentAnimation = this.currentAnimation;
         if (this.renderer) {
             const anims = newClone.getAnimations();
-            if(anims.length > 0){
+            if (anims.length > 0){
                 this.renderer.updateSkelDrawableAnimation(newClone.drawableID, anims[newClone.currentAnimation].name);
             }
            

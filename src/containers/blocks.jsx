@@ -559,9 +559,9 @@ class Blocks extends React.Component {
             const stageCostumes = stage.getCostumes();
             const targetCostumes = target.getCostumes();
             const targetSounds = target.getSounds();
-            const targetAnimations = target.getAnimations? target.getAnimations():[];
+            const targetAnimations = target.getAnimations ? target.getAnimations() : [];
             let animation = '';
-            if(targetAnimations.length > 0){
+            if (targetAnimations.length > 0){
                 animation = targetAnimations[targetAnimations.length - 1].name;
             }
             const dynamicBlocksXML = this.props.vm.runtime.getBlocksXML(target);
