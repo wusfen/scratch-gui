@@ -28,7 +28,7 @@ export default class ExRenderWebGL extends Renderer {
             // spine 渲染
             if (drawable instanceof SkeletonDrawable){
                 if (!drawable.skeleton){
-                    return;
+                    continue;
                 }
                 drawable.update();
                 if (this._regionId !== 'skeleton'){

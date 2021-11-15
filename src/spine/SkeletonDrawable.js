@@ -185,7 +185,7 @@ class SkeletonDrawable extends Drawable {
     }
     setAnimation (animationName){
         if (this._skeleton){
-            this._skeleton.setToSetupPose();
+            this._skeleton.setSlotsToSetupPose();
             this._animationState.setAnimation(0, animationName, true);
         }
         
