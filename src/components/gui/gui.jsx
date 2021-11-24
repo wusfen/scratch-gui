@@ -38,7 +38,7 @@ import layout, {STAGE_SIZE_MODES} from '../../lib/layout-constants';
 import {resolveStageSize} from '../../lib/screen-utils';
 
 import styles from './gui.css';
-import addExtensionIcon from './icon--extensions.svg';
+import addExtensionIcon from './add.svg';
 import codeIcon from './icon--code.svg';
 import costumesIcon from './icon--costumes.svg';
 import soundsIcon from './icon--sounds.svg';
@@ -48,10 +48,11 @@ import Uploading from '../uploading/index.jsx';
 import Keyboard from '../keyboard/index.jsx';
 import CopyCodeHideModal from '../copy-code-hide/index.jsx';
 import PromptArea from '../prompt-area/prompt-area.jsx';
-import AudioCourse from '../audio-course/index.jsx';
-import Tips from '../tips/index.jsx';
 import TaskBar from '../taskBar/index.jsx';
 import ErrorTips from '../errorTips/index.jsx';
+import SpriteResizer from '../sprite-resizer/index.jsx';
+
+import {param} from '../../lib/param.js';
 
 const messages = defineMessages({
     addExtension: {
@@ -64,6 +65,8 @@ const messages = defineMessages({
 // Cache this value to only retrieve it once the first time.
 // Assume that it doesn't change for a session.
 let isRendererSupported = null;
+
+const mode = param('mode');
 
 const GUIComponent = props => {
     const {
@@ -134,9 +137,11 @@ const GUIComponent = props => {
         vm,
         videoSrc,
         promptAreaShow,
+        promptTitle,
         closePromptArea,
         errorText,
         showErrorTips,
+        // eslint-disable-next-line no-unused-vars
         setProjectTitle,
         ...componentProps
     } = omit(props, 'dispatch');
@@ -190,6 +195,7 @@ const GUIComponent = props => {
                     closePromptArea={closePromptArea}
                     videoSrc={videoSrc}
                     type={'视频'}
+                    title={promptTitle}
                 /> : null}
                 {telemetryModalVisible ? (
                     <TelemetryModal
@@ -242,7 +248,11 @@ const GUIComponent = props => {
                     />
                 ) : null}
                 {/* 隐藏顶部菜单栏 */}
-                <div className={styles.menuBarContainer}>
+                <div
+                    className={classNames(styles.menuBarContainer, {
+                        [styles.menuBarContainerRight]: mode === 'normal'
+                    })}
+                >
                     <MenuBar
                         accountNavOpen={accountNavOpen}
                         authorId={authorId}
@@ -359,18 +369,16 @@ const GUIComponent = props => {
                                         <Tips /> */}
                                     </Box>
                                     <Box className={styles.extensionButtonContainer}>
-                                        <button
+                                        {mode === 'course' ? null : <button
                                             className={styles.extensionButton}
                                             title={intl.formatMessage(messages.addExtension)}
                                             onClick={onExtensionButtonClick}
                                         >
-                                            {/* <img
+                                            <img
                                                 className={styles.extensionButtonIcon}
                                                 draggable={false}
                                                 src={addExtensionIcon}
-                                            /> */}
-                                            <span>+</span>
-                                        </button>
+                                            /></button>}
                                     </Box>
                                     <Box className={styles.watermark}>
                                         <Watermark />
@@ -451,6 +459,7 @@ const GUIComponent = props => {
                     isPlayerOnly={isPlayerOnly}
                 />
                 <CopyCodeHideModal></CopyCodeHideModal>
+                <SpriteResizer vm={vm}></SpriteResizer>
             </Box>
         );
     }}</MediaQuery>);
@@ -520,6 +529,7 @@ GUIComponent.propTypes = {
     vm: PropTypes.instanceOf(VM).isRequired,
     videoSrc: PropTypes.string,
     promptAreaShow: PropTypes.bool,
+    promptTitle: PropTypes.string,
     closePromptArea: PropTypes.func,
     errorText: PropTypes.string,
     showErrorTips: PropTypes.bool,
@@ -543,7 +553,8 @@ GUIComponent.defaultProps = {
     isShared: false,
     loading: false,
     showComingSoon: false,
-    stageSizeMode: STAGE_SIZE_MODES.large
+    stageSizeMode: STAGE_SIZE_MODES.large,
+    promptTitle: '提示'
 };
 
 const mapStateToProps = state => ({

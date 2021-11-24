@@ -35,8 +35,21 @@ const Controls = function (props) {
         onStopAllClick,
         turbo,
         skipButtonShow,
+        isPlayerOnly,
         ...componentProps
     } = props;
+
+    const myRef = React.useRef();
+
+    const onStopAllClickHandle = e => {
+        myRef.current.blur();
+        props.onStopAllClick(e);
+    };
+
+    const onGreenFlagClickHandle = e => {
+        myRef.current.blur(); // 点击后失去焦点，解决键盘
+        props.onGreenFlagClick(e);
+    };
 
     return (
         <div
@@ -50,13 +63,13 @@ const Controls = function (props) {
                 hidden
                 active={active}
                 title={intl.formatMessage(messages.goTitle)}
-                onClick={onGreenFlagClick}
+                onClick={onGreenFlagClickHandle}
             />
             <StopAll
                 hidden
                 active={active}
                 title={intl.formatMessage(messages.stopTitle)}
-                onClick={onStopAllClick}
+                onClick={onStopAllClickHandle}
             />
 
             <button
@@ -66,7 +79,7 @@ const Controls = function (props) {
                     [styles.skipButton]: true,
                 })}
                 type="button"
-                onClick={e => window.bridge.emit('exitEditor', {type: 'skip'})}
+                onClick={e => window.bridge.emit('exitEditor', {type: 'skip', interaction_passOrNot: window.subjectPassOrNot})}
             >
                 {'跳过'}
             </button>
@@ -77,7 +90,8 @@ const Controls = function (props) {
                     [styles.blingBlingHigh]: guide,
                 })}
                 type="button"
-                onClick={active ? onStopAllClick : onGreenFlagClick}
+                ref={myRef}
+                onClick={active ? onStopAllClickHandle : onGreenFlagClickHandle}
             >
                 <img
                     src={!active ? require('../../assets/icons/star.svg') : require('../../assets/icons/red_stop.png')}

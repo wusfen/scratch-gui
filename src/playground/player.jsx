@@ -18,8 +18,13 @@ if (process.env.NODE_ENV === 'production' && typeof window === 'object') {
 }
 
 import './index.js';
-
 import styles from './player.css';
+
+// see also: src\components\menu-bar\menu-bar.jsx:274
+window.bridge.on('requireExitEditor', e => {
+    window.bridge.emit('requireExitEditor');
+});
+
 
 // 禁止触摸滚动
 addEventListener('touchmove', e => {
@@ -27,7 +32,14 @@ addEventListener('touchmove', e => {
 }, {passive: false});
 
 const Player = ({isPlayerOnly, onSeeInside, projectId}) => (
-    <Box className={classNames(isPlayerOnly ? styles.stageOnly : styles.editor)}>
+    <Box
+        className={
+            classNames(
+                isPlayerOnly ? styles.stageOnly : styles.editor,
+                window.MODE === 'coursePlayer' && styles.bntMrgRight
+            )
+        }
+    >
         {/* {isPlayerOnly && <button onClick={onSeeInside}>{'See inside'}</button>} */}
         <GUI
             canEditTitle

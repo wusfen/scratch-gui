@@ -7,6 +7,8 @@ import {connect} from 'react-redux';
 import styles from './prompt-area.css';
 import scaleIcon from './scale.svg';
 import {scale} from 'twgl.js';
+import * as bridge from '../../playground/bridge.js';
+import getTipParam from '../../lib/courseTip/getTipParam';
 const c = styles;
 
 class PromptArea extends React.Component{
@@ -27,7 +29,7 @@ class PromptArea extends React.Component{
                 cX: 0, // 鼠标的坐标
                 cY: 0
             },
-            title: '提示',
+            title: props.title,
             imageTextScale: 1,
             imageTextScaleRate: 0.25,
             transformOrigin: 'center center'
@@ -44,12 +46,21 @@ class PromptArea extends React.Component{
         this.initStyle();
         window.addEventListener('resize', this.initStyle);
         this.videoRef && this.videoRef.addEventListener('ended', this.videoPause);
+        // 监听暂停和播放事件
+        bridge.on('pause', e => {
+            this.videoRef?.pause();
+        });
+        bridge.on('resume', e => {
+            this.videoRef?.play();
+        });
         this.initTouchAndMove(); // 初始化缩放和拖拽事件
+        this.removeTouchAndMove = this.initTouchAndMove(); // 初始化缩放和拖拽事件
     }
 
     componentWillUnmount (){
         window.removeEventListener('resize', this.initStyle);
         this.videoRef && this.videoRef.removeEventListener('ended', this.videoPause);
+        this.removeTouchAndMove();
     }
 
     judgeTouchOrMoveReturnEvent = event => {
@@ -126,8 +137,24 @@ class PromptArea extends React.Component{
         let diffX;
         let diffY;
         let isScale = false;
+        let operateTarget;
+
+        const judgeDomIsIn = dom => { // 判断当前点击的是目标拖拽对象
+            if (dom === dragObj) {
+                return true;
+            }
+            while (dom) {
+                dom = dom.parentNode;
+                if (dom === dragObj) {
+                    return true;
+                }
+            }
+            return false;
+        };
+
         const handleStart = event => { // 拖动开始
             const e = this.judgeTouchOrMoveReturnEvent(event);
+            operateTarget = e.target;
             if (shieldList.includes(e.target)) {
                 return;
             }  
@@ -140,6 +167,10 @@ class PromptArea extends React.Component{
             diffY = mouseY - objY;
         };
         const handleMove = event => { // 拖动中
+            event.preventDefault();
+            if (!judgeDomIsIn(operateTarget)) {
+                return;
+            }
             const e = this.judgeTouchOrMoveReturnEvent(event);
             if (dragging) {
                 if (isScale) {
@@ -177,6 +208,7 @@ class PromptArea extends React.Component{
         const handleEnd = () => { // 拖动结束
             dragging = false;
             isScale = false;
+            operateTarget = undefined;
         };
         const handleScaleStart = event => { // 缩放开始
             const e = this.judgeTouchOrMoveReturnEvent(event);
@@ -190,19 +222,26 @@ class PromptArea extends React.Component{
         };
         // 注册touch事件（移动端）
         dragObj.ontouchstart = handleStart;
-        document.ontouchmove = handleMove;
-        document.ontouchend = handleEnd;
+        document.addEventListener('touchmove', handleMove, {passive: false});
+        document.addEventListener('touchend', handleEnd);
         
         // 注册move事件（pc端）
         dragObj.onmousedown = handleStart;
-        document.onmousemove = handleMove;
-        document.onmouseup = handleEnd;
+        document.addEventListener('mousemove', handleMove);
+        document.addEventListener('mouseup', handleEnd);
 
         // 注册缩放事件（移动端）
         scaleRef.ontouchstart = handleScaleStart;
 
         // 注册缩放事件（pc端）
         scaleRef.onmousedown = handleScaleStart;
+
+        return () => {
+            document.removeEventListener('touchmove', handleMove, {passive: false});
+            document.removeEventListener('touchend', handleEnd);
+            document.removeEventListener('mousemove', handleMove);
+            document.removeEventListener('mouseup', handleEnd);
+        };
     }
 
     render () {
@@ -240,7 +279,11 @@ class PromptArea extends React.Component{
                     className={c.title}
                 >{title}</div>
                 <img
-                    className={c.closeIcon}
+                    className={
+                        classNames('play_audio', {
+                            [c.closeIcon]: true
+                        })
+                    }
                     src={require('./close.svg')}
                     alt={''}
                     onClick={closePromptArea}
@@ -258,7 +301,7 @@ class PromptArea extends React.Component{
                         className={c.video}
                         src={videoSrc}
                         controls={'controls'}
-                        autoPlay
+                        autoPlay={title?.includes('介绍') ? null : 'autoplay'}
                         controlsList="nodownload"
                         disablePictureInPicture
                     >
@@ -326,6 +369,7 @@ PromptArea.propTypes = {
     closePromptArea: PropTypes.func,
     type: PropTypes.string,
     imageSrc: PropTypes.string,
+    title: PropTypes.string
 };
 
 const mapStateToProps = state => ({

@@ -32,6 +32,7 @@ const CloseButton = props => (
             /> :
             <img
                 className={classNames(
+                    'play_audio',
                     styles.closeIcon,
                     {
                         [styles[props.color]]: (props.color !== CloseButton.COLOR_NEUTRAL)

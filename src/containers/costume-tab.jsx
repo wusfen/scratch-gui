@@ -27,15 +27,15 @@ import {
 import {setRestore} from '../reducers/restore-deletion';
 import {showStandardAlert, closeAlertWithId} from '../reducers/alerts';
 
-import addLibraryBackdropIcon from '../components/asset-panel/icon--add-backdrop-lib.svg';
-import addLibraryCostumeIcon from '../components/asset-panel/icon--add-costume-lib.svg';
+import addLibraryBackdropIcon from '../components/action-menu/add.svg';
+// import addLibraryCostumeIcon from '../components/asset-panel/icon--add-costume-lib.svg';
 import fileUploadIcon from '../components/action-menu/icon--file-upload.svg';
 import paintIcon from '../components/action-menu/icon--paint.svg';
 import surpriseIcon from '../components/action-menu/icon--surprise.svg';
 import searchIcon from '../components/action-menu/icon--search.svg';
 
 import costumeLibraryContent from '../lib/libraries/costumes.json';
-import backdropLibraryContent from '../lib/libraries/backdrops.json';
+import backdropLibraryContent from '../lib/libraries/wandou/backdrops.js';
 
 let messages = defineMessages({
     addLibraryBackdropMsg: {
@@ -269,7 +269,9 @@ class CostumeTab extends React.Component {
         const addFileMessage = messages.addFileBackdropMsg;
         const addSurpriseFunc = isStage ? this.handleSurpriseBackdrop : this.handleSurpriseCostume;
         const addLibraryFunc = isStage ? onNewLibraryBackdropClick : onNewLibraryCostumeClick;
-        const addLibraryIcon = isStage ? addLibraryBackdropIcon : addLibraryCostumeIcon;
+        const addLibraryIcon = addLibraryBackdropIcon;
+        // const addLibraryIcon = isStage ? addLibraryBackdropIcon : addLibraryCostumeIcon;
+
 
         const costumeData = target.costumes ? target.costumes.map(costume => ({
             name: costume.name,

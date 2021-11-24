@@ -182,6 +182,7 @@ class Stage extends React.Component {
         };
     }
     handleDoubleClick (e) {
+        if (this.props.projectRunning) return;
         const {x, y} = getEventXY(e);
         // Set editing target from cursor position, if clicking on a sprite.
         const mousePosition = [x - this.rect.left, y - this.rect.top];
@@ -189,6 +190,8 @@ class Stage extends React.Component {
         if (drawableId === null) return;
         const targetId = this.props.vm.getTargetIdForDrawableId(drawableId);
         if (targetId === null) return;
+        const target = this.props.vm.runtime.getTargetById(targetId);
+        if (window.MODE !== 'teacher' && target.spriteHidden) return;
         this.props.vm.setEditingTarget(targetId);
     }
     onMouseMove (e) {
@@ -207,8 +210,9 @@ class Stage extends React.Component {
                 Math.pow(mousePosition[1] - this.state.mouseDownPosition[1], 2)
             );
             if (distanceFromMouseDown > dragThreshold) {
-                this.cancelMouseDownTimeout();
+                //this.cancelMouseDownTimeout();
                 this.onStartDrag(...this.state.mouseDownPosition);
+                this._isDown = false;
             }
         }
         if (this.state.mouseDown && this.state.isDragging) {
@@ -224,6 +228,7 @@ class Stage extends React.Component {
                     force: true
                 });
             }
+            this._isDown = false;
         }
         const coordinates = {
             x: mousePosition[0],
@@ -236,7 +241,11 @@ class Stage extends React.Component {
     onMouseUp (e) {
         const {x, y} = getEventXY(e);
         const mousePosition = [x - this.rect.left, y - this.rect.top];
-        this.cancelMouseDownTimeout();
+        //this.cancelMouseDownTimeout();
+        if (this._isDown) {
+            this.handleDoubleClick(e);
+            this._isDown = false;
+        }
         this.setState({
             mouseDown: false,
             mouseDownPosition: null
@@ -252,6 +261,7 @@ class Stage extends React.Component {
         if (this.state.isDragging) {
             this.onStopDrag(mousePosition[0], mousePosition[1]);
         }
+        
         this.props.vm.postIOData('mouse', data);
 
         if (this.props.isColorPicking &&
@@ -270,6 +280,7 @@ class Stage extends React.Component {
             this.pickY = null;
         }
     }
+
     onMouseDown (e) {
         this.updateRect();
         const {x, y} = getEventXY(e);
@@ -281,14 +292,32 @@ class Stage extends React.Component {
             // Immediately update the color picker info
             this.setState({colorInfo: this.getColorInfo(this.pickX, this.pickY)});
         } else {
+            if(!this.props.projectRunning){
+                const drawableId = this.renderer.pick(mousePosition[0], mousePosition[1]);
+                if (drawableId !== null){
+                    const targetId = this.props.vm.getTargetIdForDrawableId(drawableId);
+                    if (targetId !== null){
+                        const target = this.props.vm.runtime.getTargetById(targetId);
+                        if(window.MODE !== 'teacher' && target.spriteHidden){
+                            if (e.preventDefault) {
+                                if (document.activeElement && document.activeElement.blur) {
+                                    document.activeElement.blur();
+                                }
+                            }
+                            return;
+                        }
+                    }
+                }
+                this._isDown = true;
+            }
             if (e.button === 0 || (window.TouchEvent && e instanceof TouchEvent)) {
                 this.setState({
                     mouseDown: true,
-                    mouseDownPosition: mousePosition,
-                    mouseDownTimeoutId: setTimeout(
-                        this.onStartDrag.bind(this, mousePosition[0], mousePosition[1]),
-                        400
-                    )
+                    mouseDownPosition: mousePosition//,
+                    // mouseDownTimeoutId: setTimeout(
+                    //     this.onStartDrag.bind(this, mousePosition[0], mousePosition[1]),
+                    //     400
+                    // )
                 });
             }
             const data = {
@@ -338,7 +367,7 @@ class Stage extends React.Component {
         } = drawableData;
         this.dragCanvas.width = imageData.width;
         this.dragCanvas.height = imageData.height;
-        // On high-DPI devices, the canvas size in layout-pixels is not equal to the size of the extracted data.
+        // // On high-DPI devices, the canvas size in layout-pixels is not equal to the size of the extracted data.
         this.dragCanvas.style.width = `${boundsWidth}px`;
         this.dragCanvas.style.height = `${boundsHeight}px`;
 
@@ -359,8 +388,6 @@ class Stage extends React.Component {
         this.dragCanvas.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
     }
     onStartDrag (x, y) {
-        if (this.props.projectRunning) return;
-
         if (this.state.dragId) return;
         const drawableId = this.renderer.pick(x, y);
         if (drawableId === null) return;
@@ -373,7 +400,7 @@ class Stage extends React.Component {
         if (!(this.props.useEditorDragStyle || target.draggable)) return;
 
         // Dragging always brings the target to the front
-        target.goToFront();
+        // target.goToFront();
 
         const [scratchMouseX, scratchMouseY] = this.getScratchCoords(x, y);
         const offsetX = target.x - scratchMouseX;
@@ -439,7 +466,7 @@ class Stage extends React.Component {
                 colorInfo={this.state.colorInfo}
                 dragRef={this.setDragCanvas}
                 question={this.state.question}
-                onDoubleClick={this.handleDoubleClick}
+                //onDoubleClick={this.handleDoubleClick}
                 onQuestionAnswered={this.handleQuestionAnswered}
                 {...props}
             />
@@ -470,7 +497,11 @@ const mapStateToProps = state => ({
     isStarted: state.scratchGui.vmStatus.started,
     micIndicator: state.scratchGui.micIndicator,
     // Do not use editor drag style in fullscreen or player mode.
-    useEditorDragStyle: !(state.scratchGui.mode.isFullScreen || state.scratchGui.mode.isPlayerOnly),
+    useEditorDragStyle: !(
+        state.scratchGui.mode.isFullScreen ||
+        state.scratchGui.mode.isPlayerOnly ||
+        state.scratchGui.vmStatus.running
+    ),
     projectRunning: state.scratchGui.vmStatus.running,
 });
 

@@ -17,28 +17,41 @@
     user-select: none;
 }
 
+.container{
+    position: relative;
+}
+
+.close-icon{
+    position: absolute;
+    right: 0.25rem;
+    top: 0.25rem;
+    cursor: pointer;
+}
 .icon-button {
-    margin: 0.25rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0.31rem;
+    margin:0.25rem;
+    line-height: 0.5rem;
+    padding:0.1rem;
     border: none;
-    background: none;
+    background: transparent;
     outline: none;
     cursor: pointer;
     user-select: none;
 }
 
-.icon-button:active > img {
-    width: 20px;
-    height: 20px;
-    transform: scale(1.15);
+.active{
+    background: #fff;
 }
 
-.icon-button > img {
-    transition: transform 0.1s;
-    filter: grayscale(100%);
+.icon-button img {
+    width:1.13rem;
+    height:1.13rem;
 }
 
 .icon-button.active > img {
-    filter: none;
+    /* filter: none; */
 }
 
 .small-input {

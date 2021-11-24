@@ -35,7 +35,7 @@
     bottom: 1.5625rem;
     width: 23.9375rem;
     height: 16.4375rem;
-    background: center/contain no-repeat url("./img/提交中.png");
+    background: center/contain no-repeat url("./img/ti-jiao-zhong.png");
 }
 
 .close {
@@ -53,7 +53,13 @@
 .submit-x .bg-img {
     width: 23.9375rem;
     height: 16.4375rem;
-    background-image: url("./img/跳过.png");
+    background-image: url("./img/tiao-guo.png");
+}
+
+.no-run-code .bg-img {
+    width: 26.38rem;
+    height: 16.97rem;
+    background-image: url("./img/no-run-code.png");
 }
 
 .submit-ing .bg-img {
@@ -81,7 +87,7 @@
     bottom: 0.125rem;
     width: calc(61.0625rem / 2);
     height: calc(40.8125rem / 2);
-    background-image: url("./img/太棒了.png");
+    background-image: url("./img/tai-bang-le.png");
 }
 
 .submit-Fault .bg-img {
@@ -89,13 +95,14 @@
     bottom: 1.875rem;
     width: calc(50.75rem / 2);
     height: calc(31.9375rem / 2);
-    background-image: url("./img/再试试.png");
+    background-image: url("./img/zai-shi-shi.png");
 }
+
 
 .submit-ed .bg-img {
     width: 23.9375rem;
     height: 16.4375rem;
-    background-image: url("./img/已提交.png");
+    background-image: url("./img/yi-ti-jiao.png");
 }
 
 .text {
@@ -103,13 +110,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 11rem;
+    width: 12rem;
     height: 2.5rem;
     margin-bottom: 1rem;
     font-size: 1rem;
     font-family: SourceHanSansCN-Normal, SourceHanSansCN;
     font-weight: 400;
-    color: #0091FF;
+    color: #0091ff;
     line-height: 1.25rem;
     white-space: pre-wrap;
     text-align: center;

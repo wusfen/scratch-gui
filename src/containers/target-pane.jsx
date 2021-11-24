@@ -15,7 +15,7 @@ import {setRestore} from '../reducers/restore-deletion';
 import DragConstants from '../lib/drag-constants';
 import TargetPaneComponent from '../components/target-pane/target-pane.jsx';
 import {BLOCKS_DEFAULT_SCALE} from '../lib/layout-constants';
-import spriteLibraryContent from '../lib/libraries/sprites.json';
+import spriteLibraryContent from '../lib/libraries/wandou/sprites.js';
 import {handleFileUpload, spriteUpload} from '../lib/file-uploader.js';
 import sharedMessages from '../lib/shared-messages';
 import {emptySprite} from '../lib/empty-assets';
@@ -100,10 +100,10 @@ class TargetPane extends React.Component {
         });
     }
     handleSelectSprite (id) {
-        this.props.vm.setEditingTarget(id);
-        if (this.props.stage && id !== this.props.stage.id) {
-            this.props.onHighlightTarget(id);
-        }
+        // this.props.vm.setEditingTarget(id);
+        // if (this.props.stage && id !== this.props.stage.id) {
+        //     this.props.onHighlightTarget(id);
+        // }
     }
     handleSurpriseSpriteClick () {
         const surpriseSprites = spriteLibraryContent.filter(sprite =>
@@ -156,11 +156,12 @@ class TargetPane extends React.Component {
     setFileInput (input) {
         this.fileInput = input;
     }
-    handleBlockDragEnd (blocks) {
-        if (this.props.hoveredTarget.sprite && this.props.hoveredTarget.sprite !== this.props.editingTarget) {
-            this.shareBlocks(blocks, this.props.hoveredTarget.sprite, this.props.editingTarget);
-            this.props.onReceivedBlocks(true);
-        }
+    // $-sprite-list已经注册  因重复注册会造成多次复制，所以在此处注释
+    handleBlockDragEnd (blocks) { 
+        // if (this.props.hoveredTarget.sprite && this.props.hoveredTarget.sprite !== this.props.editingTarget) {
+        //     this.shareBlocks(blocks, this.props.hoveredTarget.sprite, this.props.editingTarget);
+        //     this.props.onReceivedBlocks(true);
+        // }
     }
     shareBlocks (blocks, targetId, optFromTargetId) {
         // Position the top-level block based on the scroll position.

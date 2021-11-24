@@ -1,13 +1,14 @@
 /* eslint-disable comma-dangle, require-jsdoc, func-style */
-// TODO responseType: blob
-// TODO catch
+
+import NativeAjax from './native-ajax/native_ajax';
+import {onNative} from './native-ajax/utils';
 
 /**
  * xhr
  * @param {object} options options
  * @returns {promise} res
  */
-function request (options) {
+export function request (options) {
     let {
         method,
         base,
@@ -21,7 +22,8 @@ function request (options) {
         ontimeout,
         onloadstart,
         onprogress,
-        onloadend
+        onloadend,
+        retry,
     } = options;
 
     // search
@@ -68,7 +70,11 @@ function request (options) {
 
     // promise
     let resolve;
-    const promise = new Promise(rs => (resolve = rs));
+    let reject;
+    const promise = new Promise((rs, rj) => {
+        resolve = rs;
+        reject = rj;
+    });
 
     xhr.onprogress = onprogress;
     if (xhr.upload) {
@@ -79,7 +85,7 @@ function request (options) {
 
     xhr.onload = function (e) {
         // success
-        if (/^(2..|304)$/.test(xhr.status)) {
+        if (/^(0|2..|304)$/.test(xhr.status)) {
             let result = null;
             try {
                 result = xhr.response || xhr.responseText;
@@ -105,6 +111,14 @@ function request (options) {
     };
 
     xhr.onerror = function (e) {
+        if (retry) {
+            options.retry--;
+            setTimeout(() => {
+                request(options).then(res => resolve(res))
+                    .catch(error => reject(error));
+            }, 1000);
+            return;
+        }
         onerror.call(this, e, options);
     };
 
@@ -122,7 +136,7 @@ function request (options) {
     return promise;
 }
 
-class Ajax {
+export class Ajax {
     constructor (settings) {
         this.list = [];
         this.setSettings(settings);
@@ -191,6 +205,7 @@ Ajax.settings = {
     },
     responseType: 'text',
     timeout: 0,
+    retry: 2,
     onload (res, options) {},
     onerror (e, options) {},
     ontimeout (e, options) {},
@@ -199,10 +214,11 @@ Ajax.settings = {
     onloadend (res, options) {},
 };
 
-const ajax = new Ajax();
+// TODO 未测试
+/** 原生环境下 ajax会被代理，，使用 ./lib/native-ajax/native_ajax.js的Native */
+// export const ajax = onNative() ? new NativeAjax() : new Ajax();
+export const ajax = new Ajax();
 
 export {
-    request,
-    Ajax,
-    ajax,
+    ajax as default,
 };

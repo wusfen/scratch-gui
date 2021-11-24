@@ -15,6 +15,7 @@ import {
 } from '../reducers/project-state';
 
 import {ajax} from '../lib/ajax.js';
+import {injectVm} from '../lib/project.js';
 
 /*
  * Higher Order Component to manage events emitted by the VM
@@ -38,9 +39,12 @@ const vmManagerHOC = function (WrappedComponent) {
                 this.props.vm.setLocale(this.props.locale, this.props.messages);
             }
             if (!this.props.isPlayerOnly && !this.props.isStarted) {
-                console.log('vm.start-Mount');
+                console.log('vm.start()');
                 this.props.vm.start();
             }
+
+            // 拦截 vm.loadProject 支持 .sb3diff
+            injectVm(this.props.vm);
         }
         componentDidUpdate (prevProps) {
             // if project is in loading state, AND fonts are loaded,

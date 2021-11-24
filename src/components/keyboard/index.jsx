@@ -15,6 +15,7 @@ class Component extends React.Component{
         this.state = {
             isShow: !false,
             keys: [],
+            sortKeys: []
         };
         this.arrowRef = React.createRef();
 
@@ -44,6 +45,47 @@ class Component extends React.Component{
         keys = [...new Set(keys)];
         return keys;
     }
+
+    getSortKeys () {
+        const vm = this.props.vm;
+        let keys = [];
+        const letterArr = [];
+        const numberArr = [];
+        const spaceArr = [];
+        const freeArr = [];
+
+        vm.runtime.targets.forEach(e => {
+            for (const id in e.blocks._blocks) {
+                const KEY_OPTION = e.blocks._blocks[id].fields.KEY_OPTION;
+                if (KEY_OPTION) {
+                    const key = KEY_OPTION.value;
+                    if (!key.includes('arrow')){
+                        if (key === 'any'){
+                            freeArr.push(key);
+                        }
+                        if (key === 'space'){
+                            spaceArr.push(key);
+                        }
+                        if ((typeof key === 'string') &&
+                         (key !== 'space' && key !== 'any') &&
+                         (Number(key) !== parseFloat(key))){
+                            letterArr.push(key);
+                        }
+                        if (Number(key) === parseFloat(key)){
+                            numberArr.push(Number(key));
+                        }
+                    }
+                }
+            }
+        });
+        letterArr.sort();
+        numberArr.sort();
+        keys = [...freeArr, ...spaceArr, ...letterArr, ...numberArr];
+        keys = [...new Set(keys)];
+        keys = keys.splice(0, 8);
+        return keys;
+    }
+
     toShowKey (key) {
         return {
             'any': '任意',
@@ -71,11 +113,13 @@ class Component extends React.Component{
         }[name] || name;
     }
     handleArrowStart () {
+        // eslint-disable-next-line no-warning-comments
         // TODO
     }
     handleArrowMove (){}
     handleArrowEnd (){}
     handleMouseDown (e) {
+        e.target.blur();
         // e.preventDefault();
 
         const name = e.target.innerHTML.trim();
@@ -90,6 +134,7 @@ class Component extends React.Component{
         }, 0);
     }
     handleMouseUp (e) {
+        e.target.blur();
         // e.preventDefault();
 
         const name = e.target.innerHTML.trim();
@@ -119,17 +164,23 @@ class Component extends React.Component{
     render () {
         const {
             projectRunning,
+            // eslint-disable-next-line no-unused-vars
             children,
             isPlayerOnly,
+            // eslint-disable-next-line no-unused-vars
             ...props
         } = this.props;
 
         let {
+            // eslint-disable-next-line no-unused-vars
             isShow,
             keys,
+            sortKeys,
+            // eslint-disable-next-line no-unused-vars
             ...state
         } = this.state;
         keys = this.getKeys();
+        sortKeys = this.getSortKeys();
         var hasArrow = keys.join().match(/arrow/i);
 
         return (
@@ -193,9 +244,9 @@ class Component extends React.Component{
                 </div>
 
                 <div className={`${c.keys}`} >
-                    {keys.map((e, i) => (
+                    {sortKeys.map((e, i) => (
                         <button
-                            hidden={/arrow/.test(e)}
+                            // hidden={/arrow/.test(e)}
                             key={i}
                             type="button"
                             className={`${c.key}`}

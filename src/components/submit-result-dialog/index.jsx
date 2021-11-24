@@ -10,8 +10,12 @@ import styles from './styles.css';
 
 const statusMap = {
     跳过: {
-        text: `即将跳过本次挑战`,
+        text: `跳过成功，即将返回课程哦~`,
         style: styles.submitX
+    },
+    从未运行: {
+        text: `我们先运行一下代码吧。\n点击确定则开始运行代码哦`,
+        style: styles.noRunCode
     },
     提交中: {
         text1: '正在提交作业···',
@@ -24,11 +28,11 @@ const statusMap = {
         style: styles.submitIng
     },
     已提交正确: {
-        text: `恭喜你答对了！\n马上继续上课了哦`,
+        text: `作品任务完成，\n你太棒啦！`,
         style: styles.submitCorrect
     },
     已提交错误: {
-        text: `答案还差一点点\n再改一下试试吧！`,
+        text: `作品差一点就完成啦，\n再去试试吧！`,
         style: styles.submitFault
     },
     已提交人工: {
@@ -38,7 +42,7 @@ const statusMap = {
     已提交未知: {
         text: `作品已提交！\n老师正在批改，请稍候！`,
         style: styles.submitEd
-    }
+    },
 };
 
 
@@ -60,17 +64,17 @@ class Component extends React.Component{
                     status: status
                 });
 
-                if (!/提交中|错误/.test(status)) {
+                if (!/从未运行|提交中|错误/.test(status)) {
                     this.startBackTimer();
                 }
 
                 if (/已提交/.test(status)) {
-                    if (/正确/.test(status)) { 
-                        new Audio(require('./audio/批改正确.mp3')).play();
+                    if (/正确/.test(status)) {
+                        new Audio(require('./audio/success.mp3')).play();
                     } else if (/错误/.test(status)) {
-                        new Audio(require('./audio/批改错误.mp3')).play();
+                        new Audio(require('./audio/error.mp3')).play();
                     } else {
-                        new Audio(require('./audio/没有批改结果.mp3')).play();
+                        new Audio(require('./audio/has-not-result.mp3')).play();
                     }
                 }
 
@@ -91,7 +95,14 @@ class Component extends React.Component{
             backTimeRemain: 10
         };
     }
-    handleClose () {
+    handleClose (isHandle = true) {
+        if (/从未运行/.test(this.state.status) && isHandle) { // 未运行代码的错误弹窗：点击确定，则自动开始运行代码
+            window.dispatchEvent(new Event('runCode'));
+            this.setState(this.getInitState());
+            clearInterval(this.timer);
+            return;
+        }
+
         // TODO 这里已有 `submit:已提交错误` 事件
         if (/错误/.test(this.state.status)) {
             window.dispatchEvent(new Event('提交错误:关闭弹窗'));
@@ -117,7 +128,7 @@ class Component extends React.Component{
         }
         if (/正确/.test(status)) {
             // dispatchEvent(new Event('submit-result-dialog:正确退出'));
-            window.bridge.emit('exitEditor', {type: 'submit'});
+            window.bridge.emit('exitEditor', {type: 'submit', interaction_passOrNot: window.subjectPassOrNot});
             return;
         }
 
@@ -174,10 +185,10 @@ class Component extends React.Component{
                         className={classNames(styles.button)}
                         onClick={this.handleExit}
                     >
-                        {`返回课程 (${backTimeRemain}s)`}
+                        {`好的 (${backTimeRemain}s)后自动跳转`}
                     </button>
                     <button
-                        hidden={!(/错误/.test(status))}
+                        hidden={!(/从未运行|错误/.test(status))}
                         type="button"
                         className={classNames(styles.button)}
                         onClick={this.handleClose}
@@ -186,10 +197,10 @@ class Component extends React.Component{
                     </button>
 
                     <button
-                        hidden={!(/跳过|超时|已提交/.test(status))}
+                        hidden={!(/从未运行|跳过|超时|已提交/.test(status))}
                         type="button"
                         className={classNames(styles.close)}
-                        onClick={this.handleClose}
+                        onClick={() => this.handleClose(false)}
                     >
                         {'x'}
                     </button>

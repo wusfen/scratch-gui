@@ -49,23 +49,28 @@ class ActionMenu extends React.Component {
     }
     handleClosePopover () {
         this.closeTimeoutId = setTimeout(() => {
-            this.setState({isOpen: false});
+            this.setState({isOpen: false, forceHide: true});
             this.closeTimeoutId = null;
         }, CLOSE_DELAY);
-        this.iconRef.style.transform = `rotate(0deg)`;
     }
     handleToggleOpenState () {
         // Mouse enter back in after timeout was started prevents it from closing.
-        if (this.closeTimeoutId) {
-            clearTimeout(this.closeTimeoutId);
-            this.closeTimeoutId = null;
-        } else if (!this.state.isOpen) {
+        // eslint-disable-next-line no-negated-condition
+        if (!this.state.isOpen) {
             this.setState({
                 isOpen: true,
                 forceHide: false
             });
+            this.iconRef.style.transform = `rotate(45deg)`;
+            this.iconRef.style.transition = `all 0.2s ease-in`;
+        } else {
+            this.setState({
+                isOpen: false,
+                forceHide: true
+            });
+            this.iconRef.style.transform = `rotate(0deg)`;
+            this.iconRef.style.transition = `all 0.2s ease-in`;
         }
-        this.iconRef.style.transform = `rotate(45deg)`;
     }
     handleTouchOutside (e) {
         if (this.state.isOpen && !this.containerRef.contains(e.target)) {
@@ -73,7 +78,7 @@ class ActionMenu extends React.Component {
             ReactTooltip.hide();
         }
     }
-    clickDelayer (fn) {
+    clickDelayer (fn, title) {
         // Return a wrapped action that manages the menu closing.
         // @todo we may be able to use react-transition for this in the future
         // for now all this work is to ensure the menu closes BEFORE the
@@ -84,9 +89,13 @@ class ActionMenu extends React.Component {
             // Blur the button so it does not keep focus after being clicked
             // This prevents keyboard events from triggering the button
             this.buttonRef.blur();
-            this.setState({forceHide: true, isOpen: false}, () => {
-                setTimeout(() => this.setState({forceHide: false}));
-            });
+            if (title !== '随机'){
+                this.setState({forceHide: true, isOpen: false}, () => {
+                    setTimeout(() => this.setState({forceHide: false}));
+                    this.iconRef.style.transform = `rotate(0deg)`;
+                    this.iconRef.style.transition = `all 0.2s ease-in`;
+                });
+            }
         };
     }
     handleTouchStart (e) {
@@ -122,26 +131,26 @@ class ActionMenu extends React.Component {
                     [styles.forceHidden]: this.state.forceHide
                 })}
                 ref={this.setContainerRef}
-                onMouseEnter={this.handleToggleOpenState}
-                onMouseLeave={this.handleClosePopover}
+                // onMouseEnter={this.handleToggleOpenState}
+                // onMouseLeave={this.handleClosePopover}
             >
                 <button
                     aria-label={mainTitle}
                     className={classNames(styles.button, styles.mainButton)}
                     data-for={this.mainTooltipId}
-                    data-tip={mainTitle}
+                    // data-tip={mainTitle}
                     ref={this.setButtonRef}
-                    onClick={this.clickDelayer(onClick)}
+                    onClick={this.handleToggleOpenState}
                 >
-                    <span
-                        ref={this.setIconRef}
+                    {/* <span
                         className={styles.addIcon}
-                    >+</span>
-                    {/* <img
+                    >+</span> */}
+                    <img
+                        ref={this.setIconRef}
                         className={styles.mainIcon}
                         draggable={false}
                         src={mainImg}
-                    /> */}
+                    />
                 </button>
                 <ReactTooltip
                     className={styles.tooltip}
@@ -165,7 +174,7 @@ class ActionMenu extends React.Component {
                                         })}
                                         data-for={tooltipId}
                                         data-tip={title}
-                                        onClick={hasFileInput ? handleClick : this.clickDelayer(handleClick)}
+                                        onClick={this.clickDelayer(handleClick, title)}
                                     >
                                         <img
                                             className={styles.moreIcon}

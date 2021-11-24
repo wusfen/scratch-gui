@@ -251,6 +251,7 @@
 .more-content .item {
     border-radius: 0.63rem;
     padding: 0.16rem 0.24rem;
+    margin: 0.3rem 0.2rem;
 }
 /* .more-content .item:hover {
     background-color: #21B5EB;
@@ -287,6 +288,45 @@
     left: -16rem;
     top: -1rem;
     z-index: 200;
+}
+
+.language-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.lan-item {
+    width: 1.75rem;
+    height: 1.75rem;
+    background: #FFFFFF;
+    border-radius: 0.63rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lan-func-item {
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    background: none;
+    color: $ui-white;
+    user-select: none;
+    align-self: center;
+    position: relative;
+    align-items: center;
+    white-space: nowrap;
+    height: $menu-bar-height;
+    font-size: 1rem;
+    color: #2F9CEF;
+}
+
+.red {
+    color: #FF457F;
+}
+.blue {
+    color: #2F9CEF;
 }
 
 

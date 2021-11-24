@@ -41,4 +41,21 @@ button.align {
 
 button.disable {
     opacity: 0.5;
+    pointer-events: none;
+    cursor: default;
 }
+
+.tooltip{
+   background-color: #76CBFF88 !important;
+
+}
+.tooltip:after{
+   border-bottom-color: #76CBFF88 !important;
+}
+
+
+@media (pointer: coarse) {
+    .tooltip {
+      display: none;
+    }
+  }

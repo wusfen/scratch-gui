@@ -10,7 +10,6 @@ import VM from 'scratch-vm';
 import getCostumeUrl from '../lib/get-costume-url';
 import DragRecognizer from '../lib/drag-recognizer';
 import {getEventXY} from '../lib/touch-utils';
-
 import SpriteSelectorItemComponent from '../components/sprite-selector-item/sprite-selector-item.jsx';
 
 class SpriteSelectorItem extends React.PureComponent {
@@ -50,6 +49,7 @@ class SpriteSelectorItem extends React.PureComponent {
         return getCostumeUrl(this.props.asset);
     }
     handleDragEnd () {
+        const isDragging = this.props.dragging;
         if (this.props.dragging) {
             this.props.onDrag({
                 img: null,
@@ -62,6 +62,16 @@ class SpriteSelectorItem extends React.PureComponent {
         setTimeout(() => {
             this.noClick = false;
         });
+        const curr = this.props.vm.runtime.getTargetById(this.props.id);
+        const targetSum = window.runtime.targets.length;
+        const currIndex = window.runtime.targets.findIndex(t => t.id === this.props.id);
+        if (isDragging) {
+            if (this.originIndex > currIndex) {
+                curr.goBackwardLayers(this.originIndex - currIndex);
+            } else if (this.originIndex < currIndex) {
+                curr.goForwardLayers(currIndex - this.originIndex);
+            }
+        }
     }
     handleDrag (currentOffset) {
         this.props.onDrag({
@@ -73,6 +83,7 @@ class SpriteSelectorItem extends React.PureComponent {
             payload: this.props.dragPayload
         });
         this.noClick = true;
+        this.originIndex = window.runtime.targets.findIndex(t => t.id === this.props.id);
     }
     handleTouchEnd (e) {
         const {x, y} = getEventXY(e);

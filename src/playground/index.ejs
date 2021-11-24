@@ -10,10 +10,27 @@
         <link rel="shortcut icon" href="static/favicon.ico" />
         <title>豌豆编程</title>
 
+        <script>
+            var version = <%= htmlWebpackPlugin.options.version %>
+        </script>
         <!-- arms -->
         <script>
             // prettier-ignore
             !(function (isOpen) {
+                var getEnv = function () {
+                    if (/\b(base=uat)\b/.test(location)) return "pre"
+                    if (/\/uat\/|\/uat-/.test(location)) return "pre";
+
+                    if (/^https?:\/\/(1|localhost)/.test(location)) return "local"
+
+                    return "prod";
+                }
+                var env = getEnv()
+
+                if (/^(local)$/.test(env)) {
+                    isOpen = false
+                }
+
                 if (!isOpen) return;
                 window.__bl = {
                     config: {
@@ -23,14 +40,16 @@
                         sendResource: true,
                         enableLinkTrace: true,
                         behavior: true,
-                        release: "v2.3.2",
-                        environment: (function () {
-                            if (/\/uat\/|\/uat-/.test(location)) return "daily";
-                            if (/\/prod\//.test(location)) return "prod";
-                            if (/\/scratch\.app/.test(location)) return "prod";
-                            if (/\/ide-code\./.test(location)) return "prod";
-                            return "local";
-                        })()
+                        enableConsole: true,
+                        release: window.version,
+                        urlHelper: [
+                            {rule: /(^[\\/]c:[\\/]users[\\/])([^\\/]+)/, target: '$1**'},
+                            {rule: /(^[\\/]users[\\/])([^\\/]+)/, target: '$1**'},
+                            {rule: /(^[\\/]var.*?application[\\/])([^\\/]+)/, target: '$1****'}
+                        ],
+                        apiHelper: [
+                        ],
+                        environment: env
                     }
                 };
                 var script = document.createElement("script");
@@ -38,6 +57,22 @@
                 script.crossOrigin = true;
                 document.getElementsByTagName("head")[0].appendChild(script);
             })(true);
+        </script>
+
+        <!-- detect -->
+        <script>
+            // prettier-ignore
+            setTimeout(function(){
+                try {
+                    try {
+                        var indexedDB = window.indexedDB || window.webkitIndexedDB
+                        indexedDB.open('test')
+                        __bl.sum('indexDB.yes')
+                    } catch (e) {
+                        __bl.sum('indexDB.no')
+                    }
+                } catch (e) {}
+            }, 10 * 1000);
         </script>
 
         <!-- console.js -->
@@ -71,16 +106,17 @@
                     loadConsole();
                     console.f12 = 1;
                 }
-                if (localStorage.f12) {
+                if (localStorage.f12 || sessionStorage.f12) {
                     loadConsole();
                     console.f12 = 1;
                 }
             }
 
             addEventListener("touchstart", function (e) {
-                if (e.touches && e.touches.length >= 6) {
+                if (e.touches && e.touches.length === 9) {
                     loadConsole();
-                    console.f12 = 2;
+                    console.f12 = 1;
+                    sessionStorage.f12 = 1;
                 }
             });
         </script>

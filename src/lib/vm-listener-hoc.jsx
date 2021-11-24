@@ -50,8 +50,8 @@ const vmListenerHOC = function (WrappedComponent) {
         }
         componentDidMount () {
             if (this.props.attachKeyboardEvents) {
-                document.addEventListener('keydown', this.handleKeyDown);
-                document.addEventListener('keyup', this.handleKeyUp);
+                document.addEventListener('keydown', this.handleKeyDown, true);
+                document.addEventListener('keyup', this.handleKeyUp, true);
             }
             this.props.vm.postIOData('userData', {username: this.props.username});
         }
@@ -69,13 +69,17 @@ const vmListenerHOC = function (WrappedComponent) {
         componentWillUnmount () {
             this.props.vm.removeListener('PERIPHERAL_CONNECTION_LOST_ERROR', this.props.onShowExtensionAlert);
             if (this.props.attachKeyboardEvents) {
-                document.removeEventListener('keydown', this.handleKeyDown);
-                document.removeEventListener('keyup', this.handleKeyUp);
+                document.removeEventListener('keydown', this.handleKeyDown, true);
+                document.removeEventListener('keyup', this.handleKeyUp, true);
             }
         }
         handleProjectChanged () {
+            window.codeRunningResult = 0; // 如果学生改动了代码，则编辑器批改正确状态重新变为0
             if (this.props.shouldUpdateProjectChanged && !this.props.projectChanged) {
                 this.props.onProjectChanged();
+            }
+            if (!window.autoSaveProjectState) {
+                window.autoSaveProjectState = this.props.projectChanged;
             }
         }
         handleTargetsUpdate (data) {

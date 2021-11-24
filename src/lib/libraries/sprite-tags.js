@@ -1,7 +1,10 @@
 import messages from './tag-messages.js';
 export default [
+    {tag: 'people', intlLabel: messages.people},
+    {tag: 'boundary', intlLabel: messages.boundary},
+    {tag: 'property', intlLabel: messages.property},
+    {tag: 'effects', intlLabel: messages.effects},
     // {tag: 'animals', intlLabel: messages.animals},
-    // {tag: 'people', intlLabel: messages.people},
     // {tag: 'fantasy', intlLabel: messages.fantasy},
     // {tag: 'dance', intlLabel: messages.dance},
     // {tag: 'music', intlLabel: messages.music},

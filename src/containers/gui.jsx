@@ -47,6 +47,8 @@ import Counter from '../components/counter/index';
 import {counterType} from '../components/counter/data';
 
 import {param} from '../lib/param.js';
+import {playTipAudio} from '../lib/courseTip/TipAudio.js';
+import soundBtnClickMp3 from '../assets/sounds/sound_btnClick.mp3';
 
 class GUI extends React.Component {
     constructor (props) {
@@ -54,6 +56,7 @@ class GUI extends React.Component {
         this.state = {
             videoSrc: '',
             promptAreaShow: false,
+            promptTitle: '提示',
             errorText: '',
             showErrorTips: false
         };
@@ -75,6 +78,10 @@ class GUI extends React.Component {
         }
         window.addEventListener('openErrorTips', this.initErrorTipsListener); // 初始化错误提示的监听
         window.addEventListener('运行时判断不正确', this.tipsStartError); // 当学生点击开始的时候，会提交json进行判断（已有功能），如果收到的结果是错误的，则出现错误提示效果
+        this.editorWrapperDom = document.querySelector('[class*="editor-wrapper"]');
+        this.editorWrapperDom?.addEventListener('mousemove', this.handleMove.bind(this));
+        this.editorWrapperDom?.addEventListener('touchmove', this.handleMove.bind(this));
+        document.body.addEventListener('click', this.handleBtnClick.bind(this));
     }
 
     componentDidUpdate (prevProps) {
@@ -89,14 +96,57 @@ class GUI extends React.Component {
     }
 
     componentWillUnmount () {
-        window.operateTimer.removeListener();
-        window.codeTimer.removeListener();
-        window.rightAnswerTimer.removeListener();
-        window.jsonErrorCounter.removeListener();
-        window.submitErrorCounter.removeListener();
+        window.operateTimer?.removeListener();
+        window.codeTimer?.removeListener();
+        window.rightAnswerTimer?.removeListener();
+        window.jsonErrorCounter?.removeListener();
+        window.submitErrorCounter?.removeListener();
         window.removeEventListener('openErrorTips', this.initErrorTipsListener);
         window.removeEventListener('运行时判断不正确', this.tipsStartError);
+        this.editorWrapperDom?.removeEventListener('mousemove', this.handleMove.bind(this));
+        this.editorWrapperDom?.removeEventListener('touchmove', this.handleMove.bind(this));
 
+    }
+
+    judgeTouchOrMoveReturnEvent = event => { // 兼容touch和move事件target的获取
+        let touchObj;
+        if (event.touches) {
+            touchObj = event.touches[0];
+        } else {
+            touchObj = event;
+        }
+        return touchObj;
+    }
+
+    judgeIsNeedPlayAudio (dom) {
+        let count = 4; // 性能考虑，一般向上寻找4级父节点就可以
+        if (!dom) {
+            return;
+        }
+        while (dom && count > 0) {
+            if (dom.nodeName === 'BUTTON' ||
+            (dom.className && (typeof dom.className === 'string' && dom.className?.indexOf('play_audio') !== -1))) {
+                window.btnPlayAudioIng = true;
+                this.btnPlayAudioIngTimer = setTimeout(() => {
+                    window.btnPlayAudioIng = false;
+                }, 1000);
+                // playTipAudio(soundBtnClickMp3); 暂时隐藏掉按钮音效
+                return;
+            }
+            dom = dom.parentNode;
+            count--;
+        }
+        
+    }
+
+    handleBtnClick (event) { // 给所有的按钮、和需要有音效的dom，设置点击音效
+        this.judgeIsNeedPlayAudio(event.target);
+    }
+
+    handleMove (event) {
+        const e = this.judgeTouchOrMoveReturnEvent(event);
+        window.dragBlockClientX = e.clientX;
+        window.dragBlockClientY = e.clientY;
     }
 
     tipsStartError = () => {
@@ -134,14 +184,34 @@ class GUI extends React.Component {
     }
 
     handleVideoSrc = () => {
-        let videoSrc = getTipParam('introVideo');
+        const isExplain = getTipParam('tipVideo')?.includes('_explain');
+        let videoSrc;
+        if (isExplain) { // 讲解视频就取第一个讲解视频作为入口
+            let tipVideos = getTipParam('tipVideo') || [];
+            if (typeof tipVideos === 'string') {
+                tipVideos = tipVideos.split('|');
+            }
+            videoSrc = tipVideos[0];
+            this.setState({
+                promptTitle: '讲解'
+            });
+        } else {
+            videoSrc = getTipParam('introVideo');
+            if (videoSrc?.includes('_task')) {
+                this.setState({
+                    promptTitle: '介绍'
+                });
+            }
+        }
         if (videoSrc){ // 有初始引导
-            addEventListener('projectLoadSucceedLoaderUnmount', () => { // 等待工程加载完毕
+            addEventListener('loaderUnmount', () => { // 等待工程加载完毕
                 this.setState({promptAreaShow: true});
             });
         } else {
             videoSrc = '';
-            window.dispatchEvent(new Event('noVideoGuide'));
+            addEventListener('projectLoadSucceedLoaderUnmount', () => { // 等待工程加载完毕
+                window.dispatchEvent(new Event('noVideoGuide'));
+            });
         }
         this.setState({videoSrc: videoSrc});
     }
@@ -177,13 +247,14 @@ class GUI extends React.Component {
             loadingStateVisible,
             ...componentProps
         } = this.props;
-        const {videoSrc, promptAreaShow, errorText, showErrorTips} = this.state;
+        const {videoSrc, promptAreaShow, promptTitle, errorText, showErrorTips} = this.state;
         return (
             <GUIComponent
                 loading={fetchingProject || isLoading || loadingStateVisible}
                 {...componentProps}
                 videoSrc={videoSrc}
                 promptAreaShow={promptAreaShow}
+                promptTitle={promptTitle}
                 closePromptArea={this.closePromptArea}
                 errorText={errorText}
                 showErrorTips={showErrorTips}

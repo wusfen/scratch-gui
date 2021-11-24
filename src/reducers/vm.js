@@ -5,7 +5,6 @@ const SET_VM = 'scratch-gui/vm/SET_VM';
 const defaultVM = new VM();
 defaultVM.attachStorage(storage);
 const initialState = defaultVM;
-console.log('🚀 ~ file: vm.js ~ line 8 ~ defaultVM', defaultVM);
 window.vm = defaultVM;
 
 const reducer = function (state, action) {

@@ -93,7 +93,7 @@
 .blocks :global(.scratchCategoryMenuItemLabel) {
     font-size: 1rem;
     line-height: 1.13rem;
-    color: #2671D0;
+    color: #2671d0;
 }
 
 .blocks :global(.blocklyMinimalBody) {
@@ -172,9 +172,8 @@
 
 .blocks :global(.blocklyFlyout) {
     /* overflow: visible; */
-    max-width: 17.5rem;
     /* max-width: 320px; */
-    min-width: 15rem;
+    width: 15.5rem;
     z-index: 41;
     /* transform: translate(calc(4.375rem - 1px), 0rem) !important; */
     transform: translate(calc(4.59rem - 1px), 0rem) !important;
@@ -183,20 +182,11 @@
     box-shadow: 0.11rem 0rem 0.31rem 0rem rgba(0, 0, 0, 0.13);
     border-radius: 0rem 0.56rem 0.56rem 0rem;
     backdrop-filter: blur(5px);
-    animation: flyout 0.5s;
 }
 @supports (backdrop-filter: blur(5px)) {
     .blocks :global(.blocklyFlyout) {
         background: rgba(255, 255, 255, 0.5);
         backdrop-filter: blur(5px);
-    }
-}
-@keyframes flyout {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
     }
 }
 
@@ -258,8 +248,8 @@
     background: none;
 }
 
-.blocks :global(.blocklySvg) g * {
-    /* transition: 0.5s; */
+.blocks :global(.blocklySvg) :global(.blocklyBlockCanvas) {
+    /* transition: 0.3s; */
 }
 
 .blocks :global(.blocklyZoom) {
@@ -278,7 +268,6 @@
     background-size: 100% 100%;
 }
 
-
 .trashcan-init-style {
     display: none;
     width: 4.56rem;
@@ -291,7 +280,24 @@
     z-index: 800;
 }
 
+/* .trashcan-init-style:hover .trashcan-img {
+   display: block;
+}
+.trashcan-init-style:hover .trash-img {
+   display: none;
+ } */
+
 .trashcan-img {
+    display: none;
+    position: absolute;
+    width: 2.09rem;
+    height: 2.25rem;
+    left: 1.13rem;
+    bottom: 1.63rem;
+    z-index: 810;
+}
+
+.trash-img {
     position: absolute;
     width: 2.09rem;
     height: 2.25rem;

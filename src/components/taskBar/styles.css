@@ -4,6 +4,18 @@
     color: #ffffff;
     margin-bottom: 0.31rem;
     z-index: 200;
+    position: fixed;
+    top: 1.13rem;
+    left: 1.31rem;
+    /* min-height: 20rem; */
+}
+
+.pull-svg {
+    position: absolute;
+    bottom: -0.35rem;
+    width: 2.13rem;
+    height: 2.09rem;
+    right: -0.35rem;
 }
 
 .production-name {
@@ -126,7 +138,7 @@
 
 .course-mode {
     position: relative;
-    width: 22.38rem;
+    min-width: 22.3rem;
     height: 1.75rem;
     background: #FF457F;
     border-radius: 0.5rem;
@@ -136,6 +148,8 @@
     align-items: center;
     padding: 0 0.5rem;
     z-index: 200;
+    margin-left: 0.05rem;
+    margin-right: 0.05rem;
 }
 .course-mode.video-content-is-open {
     background-color: #32C5FF;
@@ -174,9 +188,8 @@
 }
 
 .video-content {
-    position: absolute;
-    top: 0.3rem;
-    width: 22.4rem;
+    position: relative;
+    min-width: 22.4rem;
     min-height: 18.81rem;
     background: rgba(255, 254, 250, 0.8);
     border-radius: 0.5rem;
@@ -185,15 +198,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: -1.8rem;
 }
 
 .video {
-    width: 22.13rem;
-    height: 12.44rem;
+    min-height: 12.44rem;
+    width: 98%;
     object-fit: fill;
 }
 .video::-webkit-media-controls-fullscreen-button { /* 去掉全屏按钮 */
-    display: none;
+    /* display: none; */
 }
 
 .video-options {
@@ -201,6 +215,7 @@
     display: flex;
     align-items: center;
     margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
     padding: 0 0.5rem;
 }
 

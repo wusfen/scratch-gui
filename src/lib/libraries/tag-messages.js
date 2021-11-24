@@ -125,5 +125,25 @@ export default defineMessages({
         defaultMessage: 'Letters',
         description: 'Tag for filtering a library for letters',
         id: 'gui.libraryTags.letters'
-    }
+    },
+    property: {
+        defaultMessage: 'Property',
+        description: 'Tag for filtering a library for property',
+        id: 'gui.libraryTags.property'
+    },
+    boundary: {
+        defaultMessage: 'Boundary',
+        description: 'Tag for filtering a library for boundary',
+        id: 'gui.libraryTags.boundary'
+    },
+    natural: {
+        defaultMessage: 'Natural',
+        description: 'Tag for filtering a library for natural',
+        id: 'gui.libraryTags.natural'
+    },
+    life: {
+        defaultMessage: 'Life',
+        description: 'Tag for filtering a library for life',
+        id: 'gui.libraryTags.life'
+    },
 });

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -11,10 +12,14 @@ import Dial from './dial.jsx';
 
 import styles from './direction-picker.css';
 
-import allAroundIcon from './icon--all-around.svg';
-import leftRightIcon from './icon--left-right.svg';
-import dontRotateIcon from './icon--dont-rotate.svg';
-import rotateIcon from './rotate.svg';
+import allAroundIcon from './around.svg';
+import leftRightIcon from './left-right.svg';
+import dontRotateIcon from './dont-rotate.svg';
+import selectedAround from './selected-around.svg';
+import selectedLeftRight from './selected-left-right.svg';
+import selectedDontRotate from './selected-dont-rotate.svg';
+
+import closeIcon from './icon--close.svg';
 
 const BufferedInput = BufferedInputHOC(Input);
 
@@ -62,7 +67,13 @@ const DirectionPicker = props => (
         /> */}
         <Popover
             body={
-                <div>
+                <div className={styles.container}>
+                    <img
+                        draggable={false}
+                        src={closeIcon}
+                        className={classNames(styles.closeIcon)}
+                        onClick={props.onClosePopover}
+                    />
                     <Dial
                         direction={props.direction}
                         onChange={props.onChangeDirection}
@@ -77,7 +88,7 @@ const DirectionPicker = props => (
                         >
                             <img
                                 draggable={false}
-                                src={allAroundIcon}
+                                src={props.rotationStyle === RotationStyles.ALL_AROUND ? selectedAround : allAroundIcon}
                             />
                         </button>
                         <button
@@ -89,7 +100,7 @@ const DirectionPicker = props => (
                         >
                             <img
                                 draggable={false}
-                                src={leftRightIcon}
+                                src={props.rotationStyle === RotationStyles.LEFT_RIGHT ? selectedLeftRight : leftRightIcon}
                             />
                         </button>
                         <button
@@ -101,7 +112,7 @@ const DirectionPicker = props => (
                         >
                             <img
                                 draggable={false}
-                                src={dontRotateIcon}
+                                src={props.rotationStyle === RotationStyles.DONT_ROTATE ? selectedDontRotate : dontRotateIcon}
                             />
                         </button>
                     </div>
@@ -111,7 +122,7 @@ const DirectionPicker = props => (
             preferPlace="above"
             onOuterAction={props.onClosePopover}
         >
-          
+
             <BufferedInput
                 className={classNames(
                     styles.smallInput,

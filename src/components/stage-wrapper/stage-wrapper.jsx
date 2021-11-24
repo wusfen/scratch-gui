@@ -25,7 +25,7 @@ const StageWrapperComponent = function (props) {
     return (
         <Box
             className={classNames(
-                styles.stageWrapper,
+                {[styles.stageWrapper]: !isPlayerOnly},
                 {[styles.fullScreen]: isFullScreen}
             )}
             dir={isRtl ? 'rtl' : 'ltr'}

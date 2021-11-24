@@ -275,13 +275,14 @@ $fade-out-distance: 0.9375rem;
     box-shadow: 0 0 0.9375rem 0.625rem #fff;
 }
 
-.extension-button:hover span {
+.extension-button:hover img {
     transform: rotate(45deg);
+    transition: all 0.2s ease-in;
 }
 
 .extension-button-icon {
-    width: 1.75rem;
-    height: 1.75rem;
+    width: 0.75rem;
+    height: 0.75rem;
 }
 
 [dir="rtl"] .extension-button-icon {
@@ -373,4 +374,7 @@ $fade-out-distance: 0.9375rem;
     z-index: 200;
     top: 1.4rem;
     right: 4rem;
+}
+.menu-bar-container-right {
+    right: 1.4rem;
 }

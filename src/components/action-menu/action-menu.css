@@ -53,16 +53,17 @@ button::-moz-focus-inner {
     font-family: SourceHanSansCN-Medium, SourceHanSansCN;
     font-weight: bold;
     color: #ffffff;
-    line-height: 1.125rem;
+    line-height: 1.75rem;
 }
 
-.main-button:hover {
-    /* background: #ff457f; */
-}
+/* .main-button:hover img {
+    transform: rotate(45deg);
+    transition: all 0.2s ease-in;
+} */
 
 .main-icon {
-    width: calc($main-button-size - 1rem);
-    height: calc($main-button-size - 1rem);
+    width: 0.75rem;
+    height:  0.75rem;
 }
 
 [dir="rtl"] .main-icon {

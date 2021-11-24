@@ -17,7 +17,8 @@ import {
     manualUpdateProject
 } from '../../reducers/project-state';
 import {
-    closeFileMenu
+    closeFileMenu,
+    closeLanguageMenu
 } from '../../reducers/menus';
 import styles from './sprite-info.css';
 import Icon from '../../assets/icons/icon.jsx';
@@ -36,11 +37,14 @@ import Dialog from '../dialog/index.jsx';
 import VM from 'scratch-vm';
 import resetIcon from '../../assets/icons/redo.svg';
 import {param} from '../../lib/param.js';
+import {ajax} from '../../lib/ajax.js';
+import {project} from '../../lib/project.js';
 import folderIcon from '../../assets/icons/folder.svg';
 import fileUp from '../../assets/icons/fileUp.svg';
 import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
 import collectMetadata from '../../lib/collect-metadata';
 import getParam from '../../lib/param';
+import {selectLocale} from '../../reducers/locales';
 const BufferedInput = BufferedInputHOC(Input);
 
 
@@ -62,12 +66,14 @@ class SpriteInfo extends React.Component {
             'showMoreFunc',
             'hideMoreFunc',
             'handleTouchStart',
-            'handleTouchOutside'
+            'handleTouchOutside',
+            'handleLanguageChange'
         ]);
         this.state = {
             file: param('file'),
             moreFuncShow: false,
-            mode: getParam('mode') || ''
+            mode: getParam('mode') || '',
+            isUat: getParam('base') === 'uat' || window.location.pathname.includes('/uat/') || window.location.origin.includes('//uat-')
         };
     }
 
@@ -91,7 +97,7 @@ class SpriteInfo extends React.Component {
             Math.round(this.props.direction) !== Math.round(nextProps.direction) ||
             Math.round(this.props.size) !== Math.round(nextProps.size) ||
             Math.round(this.props.x) !== Math.round(nextProps.x) ||
-            Math.round(this.props.y) !== Math.round(nextProps.y) || 
+            Math.round(this.props.y) !== Math.round(nextProps.y) ||
             this.state.moreFuncShow !== nextState.moreFuncShow
         );
     }
@@ -120,24 +126,8 @@ class SpriteInfo extends React.Component {
         }
     }
 
-    async handleClickResetFile () {
-        const fileUrl = this.state.file;
-
-        if (fileUrl) {
-            const bufferPromise = new Promise(async r => {
-                const res = await fetch(fileUrl);
-                const blob = await res.blob();
-                const buffer = await blob.arrayBuffer();
-                r(buffer);
-            });
-
-            await Dialog.confirm({
-                title: '重做确认',
-                content: '将会清空当前作品记录，重新开始创作哦，是否确定重做？'
-            });
-
-            this.props.vm.loadProject(await bufferPromise);
-        }
+    handleClickResetFile () {
+        project.resetProjectByFileParam();
     }
 
     handleClickSave () {
@@ -177,13 +167,22 @@ class SpriteInfo extends React.Component {
         }, 200);
     }
 
+    handleLanguageChange (e) {
+        const newLocale = e.target.name;
+        if (this.props.messagesByLocale[newLocale]) {
+            this.props.onChangeLanguage(newLocale);
+            document.documentElement.lang = newLocale;
+        }
+    }
+
     render () {
         const {
             stageSize,
-            onStartSelectingFileUpload
+            onStartSelectingFileUpload,
+            locale
         } = this.props;
 
-        const {moreFuncShow, mode} = this.state; 
+        const {moreFuncShow, mode, isUat} = this.state;
 
         const sprite = (
             <FormattedMessage
@@ -211,7 +210,7 @@ class SpriteInfo extends React.Component {
 
         return (
             <Box className={styles.spriteInfo}>
-                <div 
+                <div
                     className={classNames(
                         styles.row
                     )}
@@ -225,7 +224,7 @@ class SpriteInfo extends React.Component {
                             text={''}
                         >
                             <BufferedInput
-                                
+
                                 className={classNames(
                                     styles.spriteInput,
                                     {
@@ -255,7 +254,7 @@ class SpriteInfo extends React.Component {
                                     <Icon name="show" />
                                 </b> :
                                 <b
-                                    className={classNames(styles.iconWrap)}
+                                    className={classNames('play_audio', {[styles.iconWrap]: true})}
                                     name="hide"
                                     onClick={this.props.onClickVisible}
                                 >
@@ -263,7 +262,7 @@ class SpriteInfo extends React.Component {
                                 </b>
                         }
                     </div>
-                    
+
 
                     <div
                         hidden
@@ -381,7 +380,7 @@ class SpriteInfo extends React.Component {
                             />
                         </Label>
                     </div>
-                    
+
                     <div className={classNames(styles.group)}>
                         <div className={styles.title}>方向</div>
                         <DirectionPicker
@@ -394,22 +393,63 @@ class SpriteInfo extends React.Component {
                         />
                     </div>
 
-                    {(mode === 'normal' || this.state.file !== undefined) && <div
+                    <div
                         className={classNames(
                             styles.group,
                             styles.moreFunc)}
                         ref={r => {
                             this.containerRef = r;
                         }}
-                        
-                        
-                    >   
+                    >
                         {moreFuncShow && <div
                             className={classNames(styles.moreContent)}
                             onMouseLeave={this.hideMoreFunc}
                             onMouseEnter={this.showMoreFunc}
                         >
-                            {mode === 'normal' && <div className={classNames(styles.item)}>
+                            <div className={classNames(styles.item)}>
+                                <div className={classNames(styles.languageContent)}>
+                                    <div className={styles.lanItem}>
+                                        <button
+                                            type="button"
+                                            className={classNames(styles.lanFuncItem, {
+                                                [styles.red]: locale === 'zh-cn'
+                                            })}
+                                            onClick={this.handleLanguageChange}
+                                            name={'zh-cn'}
+                                        >
+                                            简
+                                        </button>
+                                    </div>
+                                    <div className={styles.lanItem}>
+                                        <button
+                                            type="button"
+                                            className={classNames(styles.lanFuncItem, {
+                                                [styles.red]: locale === 'zh-tw'
+                                            })}
+                                            onClick={this.handleLanguageChange}
+                                            name={'zh-tw'}
+                                        >
+                                            繁
+                                        </button>
+                                    </div>
+                                    <div className={styles.lanItem}>
+                                        <button
+                                            type="button"
+                                            className={classNames(styles.lanFuncItem, {
+                                                [styles.red]: locale === 'en'
+                                            })}
+                                            onClick={this.handleLanguageChange}
+                                            name={'en'}
+                                        >
+                                            En
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                hidden={!(mode === 'teacher' || mode === 'normal' || isUat)}
+                                className={classNames(styles.item)}
+                            >
                                 <button
                                     type="button"
                                     className={`${styles.funcItem}`}
@@ -428,8 +468,11 @@ class SpriteInfo extends React.Component {
                                         </div>
                                     )}</SB3Downloader>
                                 </button>
-                            </div>}
-                            {mode === 'normal' && <div className={classNames(styles.item)}>
+                            </div>
+                            <div
+                                hidden={!(mode === 'teacher' || mode === 'normal' || isUat)}
+                                className={classNames(styles.item)}
+                            >
                                 <button
                                     type="button"
                                     className={`${styles.funcItem}`}
@@ -442,10 +485,12 @@ class SpriteInfo extends React.Component {
                                     />
                                     加载本地文件
                                 </button>
-                            </div>}
-                            <div className={classNames(styles.item)}>
+                            </div>
+                            {mode === 'course' && <div
+                                hidden={!(this.state.file)}
+                                className={classNames(styles.item)}
+                            >
                                 <button
-                                    hidden={!(this.state.file)}
                                     type="button"
                                     className={`${styles.funcItem}`}
                                     onClick={this.handleClickResetFile}
@@ -457,7 +502,7 @@ class SpriteInfo extends React.Component {
                                     />
                                     重做
                                 </button>
-                            </div>
+                            </div>}
                         </div>}
                         <div
                             className={classNames(styles.more)}
@@ -469,8 +514,8 @@ class SpriteInfo extends React.Component {
                         >
                             <img src={omit} />
                         </div>
-                        
-                    </div>}
+
+                    </div>
                 </div>
             </Box>
         );
@@ -517,6 +562,8 @@ SpriteInfo.propTypes = {
     locale: PropTypes.string.isRequired,
     onProjectTelemetryEvent: PropTypes.func,
     onStartSelectingFileUpload: PropTypes.func,
+    messagesByLocale: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+    onChangeLanguage: PropTypes.func.isRequired
 };
 
 
@@ -524,13 +571,19 @@ const mapStateToProps = state => {
     const test = null;
     return {
         locale: state.locales.locale,
-        projectTitle: state.scratchGui.projectTitle
+        projectTitle: state.scratchGui.projectTitle,
+        currentLocale: state.locales.locale,
+        messagesByLocale: state.locales.messagesByLocale
     };
 };
 
 const mapDispatchToProps = dispatch => ({
     onClickSave: () => dispatch(manualUpdateProject()),
     onRequestCloseFile: () => dispatch(closeFileMenu()),
+    onChangeLanguage: locale => {
+        dispatch(selectLocale(locale));
+        dispatch(closeLanguageMenu());
+    }
 });
 
 export default compose(

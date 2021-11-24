@@ -10,6 +10,9 @@ const autoprefixer = require('autoprefixer');
 const postcssVars = require('postcss-simple-vars');
 const postcssImport = require('postcss-import');
 
+// version
+const packageJson = require('./package.json');
+const version = packageJson.version;
 const buildTime = [
     new Date().getFullYear(),
     new Date().getMonth() + 1,
@@ -17,6 +20,9 @@ const buildTime = [
     new Date().getHours(),
     new Date().getMinutes()
 ].map(e => ''.padStart.call(e, 2, 0)).join('');
+const commit = require('child_process').execSync('git log --oneline -n 1')
+    .toString()
+    .split(' ')[0];
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -33,7 +39,7 @@ const config = {
         {
             publicPath: process.env.PUBLIC_PATH || './',
             path: path.resolve(__dirname, 'dist'),
-            filename: `[name].js____${buildTime}.js`,
+            filename: `[name].js____v${version}.${buildTime}.${commit}.js`,
             chunkFilename: 'chunks/[name].js____[contenthash:5].js'
         } :
         {},
@@ -103,16 +109,33 @@ const config = {
             },
             {
                 test: /\.(svg|png|wav|gif|jpg|mp3|mp4)$/,
-                use: [
+                oneOf: [
+                    process.env.zip && {
+                        test: /steps|thumbnails/,
+                        use: [
+                            {
+                                loader: 'file-loader',
+                                options: {
+                                    name: '[name].[ext]____[hash:5].[ext]',
+                                    publicPath: 'https://prod-xnpt-oss-2.vipthink.net/vipthinkcode-base/scratch/prod/static/assets/',
+                                    emitFile: false,
+                                }
+                            }
+                        ]
+                    },
                     {
-                        loader: 'file-loader',
-                        options: {
-                            name: '[name].[ext]____[hash:5].[ext]',
-                            outputPath: 'static/assets/'
-                        }
+                        use: [
+                            {
+                                loader: 'file-loader',
+                                options: {
+                                    name: '[name].[ext]____[hash:5].[ext]',
+                                    outputPath: 'static/assets/',
+                                }
+                            }
+                        ]
                     }
-                ]
-            }
+                ].filter(e => e),
+            },
         ]
     },
     resolve: {
@@ -146,16 +169,39 @@ const config = {
         new HtmlWebpackPlugin({
             chunks: ['lib', 'gui'],
             template: 'src/playground/index.ejs',
-            title: '',
-            PUBLIC_PATH: process.env.PUBLIC_PATH || '',
             sentryConfig: process.env.SENTRY_CONFIG ?
                 `"${process.env.SENTRY_CONFIG}"` :
-                null
+                null,
+            title: '',
+            PUBLIC_PATH: process.env.PUBLIC_PATH || '',
+            version: `"${version}"`,
+        }),
+        new HtmlWebpackPlugin({
+            chunks: ['lib', 'gui'],
+            template: 'src/playground/index.ejs',
+            sentryConfig: process.env.SENTRY_CONFIG ?
+                `"${process.env.SENTRY_CONFIG}"` :
+                null,
+            title: '',
+            PUBLIC_PATH: process.env.PUBLIC_PATH || '',
+            version: `"${version}"`,
+            filename: `index.${version}.html`,
         }),
         new HtmlWebpackPlugin({
             chunks: ['lib', 'player'],
             template: 'src/playground/index.ejs',
             filename: 'player.html',
+            title: '',
+            PUBLIC_PATH: process.env.PUBLIC_PATH || '',
+            version: `"${version}"`,
+        }),
+        new HtmlWebpackPlugin({
+            chunks: ['lib', 'player'],
+            template: 'src/playground/index.ejs',
+            filename: `player.${version}.html`,
+            title: '',
+            PUBLIC_PATH: process.env.PUBLIC_PATH || '',
+            version: `"${version}"`,
         }),
         new CopyWebpackPlugin([
             {

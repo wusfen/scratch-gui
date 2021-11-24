@@ -1,0 +1,2358 @@
+[
+    {
+        "name": "破损飞机",
+        "tags": [
+            "people"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "5ea2ec3d95099fcc186d2e6a4b5fdc6b",
+                "name": "破损飞机-01",
+                "bitmapResolution": 2,
+                "md5ext": "5ea2ec3d95099fcc186d2e6a4b5fdc6b.png",
+                "dataFormat": "png",
+                "rotationCenterX": 76,
+                "rotationCenterY": 85
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "7cc48efbcc61f12708ef344fe1754c60",
+                "name": "破损飞机-02",
+                "bitmapResolution": 2,
+                "md5ext": "7cc48efbcc61f12708ef344fe1754c60.png",
+                "dataFormat": "png",
+                "rotationCenterX": 76,
+                "rotationCenterY": 85
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "d2bb4f9420d5ed3159b4288b6ada8c3c",
+                "name": "破损飞机-03",
+                "bitmapResolution": 2,
+                "md5ext": "d2bb4f9420d5ed3159b4288b6ada8c3c.png",
+                "dataFormat": "png",
+                "rotationCenterX": 76,
+                "rotationCenterY": 85
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "d932f2a78e27be6d7ea86a3a7ac2face",
+                "name": "破损飞机-04",
+                "bitmapResolution": 2,
+                "md5ext": "d932f2a78e27be6d7ea86a3a7ac2face.png",
+                "dataFormat": "png",
+                "rotationCenterX": 76,
+                "rotationCenterY": 85
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "9606532bf759adfb337aa187cdea8887",
+                "name": "破损飞机-05",
+                "bitmapResolution": 2,
+                "md5ext": "9606532bf759adfb337aa187cdea8887.png",
+                "dataFormat": "png",
+                "rotationCenterX": 76,
+                "rotationCenterY": 85
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "飞机3",
+        "tags": [
+            "people"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "2960c73bfe1c20d22f36a19d4a7ce69d",
+                "name": "飞机",
+                "bitmapResolution": 2,
+                "md5ext": "2960c73bfe1c20d22f36a19d4a7ce69d.png",
+                "dataFormat": "png",
+                "rotationCenterX": 76,
+                "rotationCenterY": 57.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "声波",
+        "tags": [
+            "effects"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "82bc0f567f0cfa59f0cc51d52be1b4c3",
+                "name": "声波-01",
+                "bitmapResolution": 2,
+                "md5ext": "82bc0f567f0cfa59f0cc51d52be1b4c3.png",
+                "dataFormat": "png",
+                "rotationCenterX": 90,
+                "rotationCenterY": 103
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "d7b372a3a62c29a6fd7e2f8c20fadd3e",
+                "name": "声波-02",
+                "bitmapResolution": 2,
+                "md5ext": "d7b372a3a62c29a6fd7e2f8c20fadd3e.png",
+                "dataFormat": "png",
+                "rotationCenterX": 90,
+                "rotationCenterY": 103
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "85703599bce780db628bd7beb41065bb",
+                "name": "声波-03",
+                "bitmapResolution": 2,
+                "md5ext": "85703599bce780db628bd7beb41065bb.png",
+                "dataFormat": "png",
+                "rotationCenterX": 90,
+                "rotationCenterY": 103
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "4e8ea183e39c12ea2c535c8daa2ffee7",
+                "name": "声波-04",
+                "bitmapResolution": 2,
+                "md5ext": "4e8ea183e39c12ea2c535c8daa2ffee7.png",
+                "dataFormat": "png",
+                "rotationCenterX": 90,
+                "rotationCenterY": 103
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "2f5d5a7889058f2c3726489134973252",
+                "name": "声波-05",
+                "bitmapResolution": 2,
+                "md5ext": "2f5d5a7889058f2c3726489134973252.png",
+                "dataFormat": "png",
+                "rotationCenterX": 90,
+                "rotationCenterY": 103
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "射线",
+        "tags": [
+            "effects"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "4d459e61ff74969e265039df789db21f",
+                "name": "射线-01",
+                "bitmapResolution": 2,
+                "md5ext": "4d459e61ff74969e265039df789db21f.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 182
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "044b86b9ec7bc902791c12c6a1d7e55d",
+                "name": "射线-02",
+                "bitmapResolution": 2,
+                "md5ext": "044b86b9ec7bc902791c12c6a1d7e55d.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 182
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "2cb404de4869537dcd754b99f5c0d21d",
+                "name": "射线-03",
+                "bitmapResolution": 2,
+                "md5ext": "2cb404de4869537dcd754b99f5c0d21d.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 182
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "f48d0cd8886702d10729ca7ef0641a26",
+                "name": "射线-04",
+                "bitmapResolution": 2,
+                "md5ext": "f48d0cd8886702d10729ca7ef0641a26.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 182
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "7538070274bc6c5f4f4394294236342e",
+                "name": "射线-05",
+                "bitmapResolution": 2,
+                "md5ext": "7538070274bc6c5f4f4394294236342e.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 182
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "52e7e90b7094403c61ade401c44766aa",
+                "name": "射线-06",
+                "bitmapResolution": 2,
+                "md5ext": "52e7e90b7094403c61ade401c44766aa.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 182
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "敲打",
+        "tags": [
+            "effects"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "49266fbbc884d27e9217655ea15ec2ad",
+                "name": "敲打-01",
+                "bitmapResolution": 2,
+                "md5ext": "49266fbbc884d27e9217655ea15ec2ad.png",
+                "dataFormat": "png",
+                "rotationCenterX": 184.5,
+                "rotationCenterY": 205.5
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "e95cc62ddc6e17fbc8ff92df3371e2fd",
+                "name": "敲打-02",
+                "bitmapResolution": 2,
+                "md5ext": "e95cc62ddc6e17fbc8ff92df3371e2fd.png",
+                "dataFormat": "png",
+                "rotationCenterX": 184.5,
+                "rotationCenterY": 205.5
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "1b9f95b31a04b947564b64a9b7549eda",
+                "name": "敲打-03",
+                "bitmapResolution": 2,
+                "md5ext": "1b9f95b31a04b947564b64a9b7549eda.png",
+                "dataFormat": "png",
+                "rotationCenterX": 184.5,
+                "rotationCenterY": 205.5
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "1a457d42a02cd014c862a993f2164775",
+                "name": "敲打-04",
+                "bitmapResolution": 2,
+                "md5ext": "1a457d42a02cd014c862a993f2164775.png",
+                "dataFormat": "png",
+                "rotationCenterX": 184.5,
+                "rotationCenterY": 205.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "旋涡",
+        "tags": [
+            "effects"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "cb25910977367373f7214cc8b9c7ad76",
+                "name": "旋涡-01",
+                "bitmapResolution": 2,
+                "md5ext": "cb25910977367373f7214cc8b9c7ad76.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 61.5
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "e88310ee10599a50e6ac8270169b988e",
+                "name": "旋涡-02",
+                "bitmapResolution": 2,
+                "md5ext": "e88310ee10599a50e6ac8270169b988e.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 61.5
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "575f35c51cbd2f1bb65ff12c131a3493",
+                "name": "旋涡-03",
+                "bitmapResolution": 2,
+                "md5ext": "575f35c51cbd2f1bb65ff12c131a3493.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 61.5
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "0ab3f8b5b2ddfede09abdff810279183",
+                "name": "旋涡-04",
+                "bitmapResolution": 2,
+                "md5ext": "0ab3f8b5b2ddfede09abdff810279183.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 61.5
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "bd172a8157ac92fa20f3811a5e52d68f",
+                "name": "旋涡-05",
+                "bitmapResolution": 2,
+                "md5ext": "bd172a8157ac92fa20f3811a5e52d68f.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 61.5
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "eff34664c448f36c7b97d7f740f82501",
+                "name": "旋涡-06",
+                "bitmapResolution": 2,
+                "md5ext": "eff34664c448f36c7b97d7f740f82501.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 61.5
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "8b2a2b6d59ec1a7096b84d90187a90b6",
+                "name": "旋涡-07",
+                "bitmapResolution": 2,
+                "md5ext": "8b2a2b6d59ec1a7096b84d90187a90b6.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 61.5
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "d49a59a09ad87768c9990fdd33b52727",
+                "name": "旋涡-08",
+                "bitmapResolution": 2,
+                "md5ext": "d49a59a09ad87768c9990fdd33b52727.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 61.5
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "45530cf7a1c74ebfe4af5ee9f552411e",
+                "name": "旋涡-09",
+                "bitmapResolution": 2,
+                "md5ext": "45530cf7a1c74ebfe4af5ee9f552411e.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 61.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "海浪",
+        "tags": [
+            "effects"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "1f72b38ea59bc743cb0e5ff440c42c81",
+                "name": "海浪-01",
+                "bitmapResolution": 2,
+                "md5ext": "1f72b38ea59bc743cb0e5ff440c42c81.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 86.5
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "698ae9bc9cc2271b3d31fab59ba25751",
+                "name": "海浪-02",
+                "bitmapResolution": 2,
+                "md5ext": "698ae9bc9cc2271b3d31fab59ba25751.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 86.5
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "98936f2d3b918d2d983c666401cac11b",
+                "name": "海浪-03",
+                "bitmapResolution": 2,
+                "md5ext": "98936f2d3b918d2d983c666401cac11b.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 86.5
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "5bbea912de27af50371ca184259d13da",
+                "name": "海浪-04",
+                "bitmapResolution": 2,
+                "md5ext": "5bbea912de27af50371ca184259d13da.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 86.5
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "527ca2d9f139bb47e2588fe856849618",
+                "name": "海浪-05",
+                "bitmapResolution": 2,
+                "md5ext": "527ca2d9f139bb47e2588fe856849618.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 86.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "爆炸",
+        "tags": [
+            "effects"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "c621a2c7ae94390d4c02ecc2633efc17",
+                "name": "爆炸-01",
+                "bitmapResolution": 2,
+                "md5ext": "c621a2c7ae94390d4c02ecc2633efc17.png",
+                "dataFormat": "png",
+                "rotationCenterX": 106,
+                "rotationCenterY": 91
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "0201c8f09de6303f919f21b47466cf6f",
+                "name": "爆炸-02",
+                "bitmapResolution": 2,
+                "md5ext": "0201c8f09de6303f919f21b47466cf6f.png",
+                "dataFormat": "png",
+                "rotationCenterX": 106,
+                "rotationCenterY": 91
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "37b6c26ea01a25e60cb887245af93d89",
+                "name": "爆炸-03",
+                "bitmapResolution": 2,
+                "md5ext": "37b6c26ea01a25e60cb887245af93d89.png",
+                "dataFormat": "png",
+                "rotationCenterX": 106,
+                "rotationCenterY": 91
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "6ea568dac47eab30d7273c36b7ad5957",
+                "name": "爆炸-04",
+                "bitmapResolution": 2,
+                "md5ext": "6ea568dac47eab30d7273c36b7ad5957.png",
+                "dataFormat": "png",
+                "rotationCenterX": 106,
+                "rotationCenterY": 91
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "4a51713c9ad1bfeec70d2e7bcd7d7be9",
+                "name": "爆炸-05",
+                "bitmapResolution": 2,
+                "md5ext": "4a51713c9ad1bfeec70d2e7bcd7d7be9.png",
+                "dataFormat": "png",
+                "rotationCenterX": 106,
+                "rotationCenterY": 91
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "雪花",
+        "tags": [
+            "effects"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "2fbf8c8e38650f2da1bdc34497d7aed6",
+                "name": "雪花",
+                "bitmapResolution": 2,
+                "md5ext": "2fbf8c8e38650f2da1bdc34497d7aed6.png",
+                "dataFormat": "png",
+                "rotationCenterX": 22.5,
+                "rotationCenterY": 25
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "雷云",
+        "tags": [
+            "effects"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "a2756698f97f1046cd7e663ad698d6bb",
+                "name": "雷云-01",
+                "bitmapResolution": 2,
+                "md5ext": "a2756698f97f1046cd7e663ad698d6bb.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "652ad3d18bfe827f98d2069005074557",
+                "name": "雷云-02",
+                "bitmapResolution": 2,
+                "md5ext": "652ad3d18bfe827f98d2069005074557.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "5b0de6bbc97a0b73f108edb236fa9319",
+                "name": "雷云-03",
+                "bitmapResolution": 2,
+                "md5ext": "5b0de6bbc97a0b73f108edb236fa9319.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "38fb5fd28141474a35a413cf1b7f9439",
+                "name": "雷云-04",
+                "bitmapResolution": 2,
+                "md5ext": "38fb5fd28141474a35a413cf1b7f9439.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "570043a9d508030176219cf81a20d5e3",
+                "name": "雷云-05",
+                "bitmapResolution": 2,
+                "md5ext": "570043a9d508030176219cf81a20d5e3.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "ac57d5566b0177a2b8a0200ac1929c1a",
+                "name": "雷云-06",
+                "bitmapResolution": 2,
+                "md5ext": "ac57d5566b0177a2b8a0200ac1929c1a.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "849853759e544e8414e48521cdfdeb15",
+                "name": "雷云-07",
+                "bitmapResolution": 2,
+                "md5ext": "849853759e544e8414e48521cdfdeb15.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "ec64fe7e4cf693186a1c2ba6799d3b38",
+                "name": "雷云-08",
+                "bitmapResolution": 2,
+                "md5ext": "ec64fe7e4cf693186a1c2ba6799d3b38.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "f1e7d8f3d26934273dd4c9081872a24c",
+                "name": "雷云-09",
+                "bitmapResolution": 2,
+                "md5ext": "f1e7d8f3d26934273dd4c9081872a24c.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "16bb6f69468b1137eaad2ddc1b16d07f",
+                "name": "雷云-10",
+                "bitmapResolution": 2,
+                "md5ext": "16bb6f69468b1137eaad2ddc1b16d07f.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "a3a5d6220dc0d5e91481724da4dbb5ce",
+                "name": "雷云-11",
+                "bitmapResolution": 2,
+                "md5ext": "a3a5d6220dc0d5e91481724da4dbb5ce.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "6b098405022008690acc9d3cd273b166",
+                "name": "雷云-12",
+                "bitmapResolution": 2,
+                "md5ext": "6b098405022008690acc9d3cd273b166.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "8f384699bee1ce022d98037f6d86d7c0",
+                "name": "雷云-13",
+                "bitmapResolution": 2,
+                "md5ext": "8f384699bee1ce022d98037f6d86d7c0.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "8ba8e262c382c206be158761cdefa2bc",
+                "name": "雷云-14",
+                "bitmapResolution": 2,
+                "md5ext": "8ba8e262c382c206be158761cdefa2bc.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "86498d6995d0944cb1c7e20d00f6c8cf",
+                "name": "雷云-15",
+                "bitmapResolution": 2,
+                "md5ext": "86498d6995d0944cb1c7e20d00f6c8cf.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "2aa556a3c49fd4fb67af8f3a194782bc",
+                "name": "雷云-16",
+                "bitmapResolution": 2,
+                "md5ext": "2aa556a3c49fd4fb67af8f3a194782bc.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "2c48a4092e66aff82005d8a77eb57002",
+                "name": "雷云-17",
+                "bitmapResolution": 2,
+                "md5ext": "2c48a4092e66aff82005d8a77eb57002.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "a824471545bd6b2bb71e40694a186c81",
+                "name": "雷云-18",
+                "bitmapResolution": 2,
+                "md5ext": "a824471545bd6b2bb71e40694a186c81.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "58403b325f13aa0b95bddbf49579fef0",
+                "name": "雷云-19",
+                "bitmapResolution": 2,
+                "md5ext": "58403b325f13aa0b95bddbf49579fef0.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "cddf4d940e7f6f52b1951dd09c019b10",
+                "name": "雷云-20",
+                "bitmapResolution": 2,
+                "md5ext": "cddf4d940e7f6f52b1951dd09c019b10.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 177
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "音符",
+        "tags": [
+            "effects"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "bbab8f5c42f4d4d7eb361eb61c311dd9",
+                "name": "音符-01",
+                "bitmapResolution": 2,
+                "md5ext": "bbab8f5c42f4d4d7eb361eb61c311dd9.png",
+                "dataFormat": "png",
+                "rotationCenterX": 170.5,
+                "rotationCenterY": 82.5
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "2ef56faec9cdb6e457ca5399cc7eaadf",
+                "name": "音符-02",
+                "bitmapResolution": 2,
+                "md5ext": "2ef56faec9cdb6e457ca5399cc7eaadf.png",
+                "dataFormat": "png",
+                "rotationCenterX": 170.5,
+                "rotationCenterY": 82.5
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "4b546bd547641af0092c560d71507cae",
+                "name": "音符-03",
+                "bitmapResolution": 2,
+                "md5ext": "4b546bd547641af0092c560d71507cae.png",
+                "dataFormat": "png",
+                "rotationCenterX": 170.5,
+                "rotationCenterY": 82.5
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "0d5a621b20b19fd346150dc64ad392d6",
+                "name": "音符-04",
+                "bitmapResolution": 2,
+                "md5ext": "0d5a621b20b19fd346150dc64ad392d6.png",
+                "dataFormat": "png",
+                "rotationCenterX": 170.5,
+                "rotationCenterY": 82.5
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "25cb40c3fe8b6029c7e9a092e69fa6ae",
+                "name": "音符-05",
+                "bitmapResolution": 2,
+                "md5ext": "25cb40c3fe8b6029c7e9a092e69fa6ae.png",
+                "dataFormat": "png",
+                "rotationCenterX": 170.5,
+                "rotationCenterY": 82.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "龙卷风",
+        "tags": [
+            "effects"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "be92c97344a4fbf7a740ba10766040c7",
+                "name": "龙卷风-01",
+                "bitmapResolution": 2,
+                "md5ext": "be92c97344a4fbf7a740ba10766040c7.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 160
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "7c7cae3feb5c6dfa571c2dc3476a5a66",
+                "name": "龙卷风-02",
+                "bitmapResolution": 2,
+                "md5ext": "7c7cae3feb5c6dfa571c2dc3476a5a66.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 160
+            },
+            {
+                "tags": [
+                    "effects"
+                ],
+                "assetId": "a4909a30f8d66facb6bebbf5334aa03d",
+                "name": "龙卷风-03",
+                "bitmapResolution": 2,
+                "md5ext": "a4909a30f8d66facb6bebbf5334aa03d.png",
+                "dataFormat": "png",
+                "rotationCenterX": 182.5,
+                "rotationCenterY": 160
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "关闭",
+        "tags": [
+            "boundary"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "boundary"
+                ],
+                "assetId": "5fa2ba47e02ab144bda27ce49e23b744",
+                "name": "关闭",
+                "bitmapResolution": 2,
+                "md5ext": "5fa2ba47e02ab144bda27ce49e23b744.png",
+                "dataFormat": "png",
+                "rotationCenterX": 59.5,
+                "rotationCenterY": 62.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "喜欢",
+        "tags": [
+            "boundary"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "boundary"
+                ],
+                "assetId": "12c18986c9a9b2c2c4db9fb90af79ce1",
+                "name": "喜欢-点亮",
+                "bitmapResolution": 2,
+                "md5ext": "12c18986c9a9b2c2c4db9fb90af79ce1.png",
+                "dataFormat": "png",
+                "rotationCenterX": 62,
+                "rotationCenterY": 65.5
+            },
+            {
+                "tags": [
+                    "boundary"
+                ],
+                "assetId": "ab2e76e62aebfee3818eceddf7453820",
+                "name": "喜欢",
+                "bitmapResolution": 2,
+                "md5ext": "ab2e76e62aebfee3818eceddf7453820.png",
+                "dataFormat": "png",
+                "rotationCenterX": 62,
+                "rotationCenterY": 65.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "声音",
+        "tags": [
+            "boundary"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "boundary"
+                ],
+                "assetId": "9657fd488a8af64cd6da574753fce3a5",
+                "name": "声音",
+                "bitmapResolution": 2,
+                "md5ext": "9657fd488a8af64cd6da574753fce3a5.png",
+                "dataFormat": "png",
+                "rotationCenterX": 62,
+                "rotationCenterY": 65.5
+            },
+            {
+                "tags": [
+                    "boundary"
+                ],
+                "assetId": "437d21335ac11ad28f0aace195f69c2d",
+                "name": "静音",
+                "bitmapResolution": 2,
+                "md5ext": "437d21335ac11ad28f0aace195f69c2d.png",
+                "dataFormat": "png",
+                "rotationCenterX": 62,
+                "rotationCenterY": 65.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "对话框",
+        "tags": [
+            "boundary"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "boundary"
+                ],
+                "assetId": "6eb89e791b24e0950543b7e4248958f5",
+                "name": "对话框",
+                "bitmapResolution": 2,
+                "md5ext": "6eb89e791b24e0950543b7e4248958f5.png",
+                "dataFormat": "png",
+                "rotationCenterX": 124,
+                "rotationCenterY": 74
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "排行榜",
+        "tags": [
+            "boundary"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "boundary"
+                ],
+                "assetId": "0a7c7e2a705066d760cd1998bb2d6fc5",
+                "name": "排行榜",
+                "bitmapResolution": 2,
+                "md5ext": "0a7c7e2a705066d760cd1998bb2d6fc5.png",
+                "dataFormat": "png",
+                "rotationCenterX": 280,
+                "rotationCenterY": 160.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "石头剪刀布",
+        "tags": [
+            "boundary"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "boundary"
+                ],
+                "assetId": "08e8072c1bb131e7c0867ff6b283c330",
+                "name": "剪刀",
+                "bitmapResolution": 2,
+                "md5ext": "08e8072c1bb131e7c0867ff6b283c330.png",
+                "dataFormat": "png",
+                "rotationCenterX": 59.5,
+                "rotationCenterY": 62.5
+            },
+            {
+                "tags": [
+                    "boundary"
+                ],
+                "assetId": "3df8d4bcf8eec95cd0b3e40cfc5eeb2d",
+                "name": "布",
+                "bitmapResolution": 2,
+                "md5ext": "3df8d4bcf8eec95cd0b3e40cfc5eeb2d.png",
+                "dataFormat": "png",
+                "rotationCenterX": 59.5,
+                "rotationCenterY": 62.5
+            },
+            {
+                "tags": [
+                    "boundary"
+                ],
+                "assetId": "83a91dbafcb5916868ec0d4dfbe835dd",
+                "name": "石头",
+                "bitmapResolution": 2,
+                "md5ext": "83a91dbafcb5916868ec0d4dfbe835dd.png",
+                "dataFormat": "png",
+                "rotationCenterX": 59.5,
+                "rotationCenterY": 62.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "骰子",
+        "tags": [
+            "boundary"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "boundary"
+                ],
+                "assetId": "3980d681a823f5aad72299e7be941169",
+                "name": "骰子-1",
+                "bitmapResolution": 2,
+                "md5ext": "3980d681a823f5aad72299e7be941169.png",
+                "dataFormat": "png",
+                "rotationCenterX": 28.5,
+                "rotationCenterY": 31.5
+            },
+            {
+                "tags": [
+                    "boundary"
+                ],
+                "assetId": "a6e7d8b87dbc8c1b199170d5b91553ef",
+                "name": "骰子-2",
+                "bitmapResolution": 2,
+                "md5ext": "a6e7d8b87dbc8c1b199170d5b91553ef.png",
+                "dataFormat": "png",
+                "rotationCenterX": 28.5,
+                "rotationCenterY": 31.5
+            },
+            {
+                "tags": [
+                    "boundary"
+                ],
+                "assetId": "b18dd110d9a0395041549e8e642c71a5",
+                "name": "骰子-3",
+                "bitmapResolution": 2,
+                "md5ext": "b18dd110d9a0395041549e8e642c71a5.png",
+                "dataFormat": "png",
+                "rotationCenterX": 28.5,
+                "rotationCenterY": 31.5
+            },
+            {
+                "tags": [
+                    "boundary"
+                ],
+                "assetId": "5d570d35c8f67504f3de2306b87d332e",
+                "name": "骰子-4",
+                "bitmapResolution": 2,
+                "md5ext": "5d570d35c8f67504f3de2306b87d332e.png",
+                "dataFormat": "png",
+                "rotationCenterX": 28.5,
+                "rotationCenterY": 31.5
+            },
+            {
+                "tags": [
+                    "boundary"
+                ],
+                "assetId": "272758aef88f0f7bb0f08b0420e11907",
+                "name": "骰子-5",
+                "bitmapResolution": 2,
+                "md5ext": "272758aef88f0f7bb0f08b0420e11907.png",
+                "dataFormat": "png",
+                "rotationCenterX": 28.5,
+                "rotationCenterY": 31.5
+            },
+            {
+                "tags": [
+                    "boundary"
+                ],
+                "assetId": "4e986c6357daf7d85004a956dcc55912",
+                "name": "骰子-6",
+                "bitmapResolution": 2,
+                "md5ext": "4e986c6357daf7d85004a956dcc55912.png",
+                "dataFormat": "png",
+                "rotationCenterX": 28.5,
+                "rotationCenterY": 31.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "包裹",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "9a8a12b43865cedf0b4c0cb2c8a72dd9",
+                "name": "包裹",
+                "bitmapResolution": 2,
+                "md5ext": "9a8a12b43865cedf0b4c0cb2c8a72dd9.png",
+                "dataFormat": "png",
+                "rotationCenterX": 62,
+                "rotationCenterY": 46
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "奖杯",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "7e0c0a5fe0859762b92bd753f29365d5",
+                "name": "奖杯",
+                "bitmapResolution": 2,
+                "md5ext": "7e0c0a5fe0859762b92bd753f29365d5.png",
+                "dataFormat": "png",
+                "rotationCenterX": 62,
+                "rotationCenterY": 51.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "数字炸弹",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "fd013e16eeacde46d1b82da172c933b7",
+                "name": "数字炸弹",
+                "bitmapResolution": 2,
+                "md5ext": "fd013e16eeacde46d1b82da172c933b7.png",
+                "dataFormat": "png",
+                "rotationCenterX": 32,
+                "rotationCenterY": 47
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "篮球",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "b833a68d72bfaf571fdf5804f47e5f56",
+                "name": "篮球",
+                "bitmapResolution": 2,
+                "md5ext": "b833a68d72bfaf571fdf5804f47e5f56.png",
+                "dataFormat": "png",
+                "rotationCenterX": 56.5,
+                "rotationCenterY": 56.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "苹果",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "4f47422525307793349ff84dc9a32f8a",
+                "name": "苹果",
+                "bitmapResolution": 2,
+                "md5ext": "4f47422525307793349ff84dc9a32f8a.png",
+                "dataFormat": "png",
+                "rotationCenterX": 30,
+                "rotationCenterY": 36.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "药水",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "716b5cbc6ec0e4fb8339d7203792e445",
+                "name": "药水",
+                "bitmapResolution": 2,
+                "md5ext": "716b5cbc6ec0e4fb8339d7203792e445.png",
+                "dataFormat": "png",
+                "rotationCenterX": 51,
+                "rotationCenterY": 56.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "西瓜",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "bc9b74c5810394e82e29955001e3ac2c",
+                "name": "西瓜",
+                "bitmapResolution": 2,
+                "md5ext": "bc9b74c5810394e82e29955001e3ac2c.png",
+                "dataFormat": "png",
+                "rotationCenterX": 53.5,
+                "rotationCenterY": 60.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "计时器",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "6e1a6cc06462f6a672c8bffcd29b4545",
+                "name": "按下计时器",
+                "bitmapResolution": 2,
+                "md5ext": "6e1a6cc06462f6a672c8bffcd29b4545.png",
+                "dataFormat": "png",
+                "rotationCenterX": 112.5,
+                "rotationCenterY": 134.5
+            },
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "ecb098a9569a72c505fdbd188bde452b",
+                "name": "正常计时器",
+                "bitmapResolution": 2,
+                "md5ext": "ecb098a9569a72c505fdbd188bde452b.png",
+                "dataFormat": "png",
+                "rotationCenterX": 112.5,
+                "rotationCenterY": 134.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "计时器指针",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "5c483e23242aca0b198671717c665266",
+                "name": "计时器指针",
+                "bitmapResolution": 2,
+                "md5ext": "5c483e23242aca0b198671717c665266.png",
+                "dataFormat": "png",
+                "rotationCenterX": 22.5,
+                "rotationCenterY": 49
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "财宝",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "8bdf5e963aafe1d10b36bc12dea6bcff",
+                "name": "财宝",
+                "bitmapResolution": 2,
+                "md5ext": "8bdf5e963aafe1d10b36bc12dea6bcff.png",
+                "dataFormat": "png",
+                "rotationCenterX": 153,
+                "rotationCenterY": 80.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "足球",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "63d180eb12dd248cf10b633b86928db2",
+                "name": "足球",
+                "bitmapResolution": 2,
+                "md5ext": "63d180eb12dd248cf10b633b86928db2.png",
+                "dataFormat": "png",
+                "rotationCenterX": 58.5,
+                "rotationCenterY": 64
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "转盘",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "8982dca5b6b4cf2f458924915d004852",
+                "name": "转盘",
+                "bitmapResolution": 2,
+                "md5ext": "8982dca5b6b4cf2f458924915d004852.png",
+                "dataFormat": "png",
+                "rotationCenterX": 102.5,
+                "rotationCenterY": 123.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "转盘指针",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "7a9e367ca74b63295686bd2fd6d1a945",
+                "name": "转盘指针",
+                "bitmapResolution": 2,
+                "md5ext": "7a9e367ca74b63295686bd2fd6d1a945.png",
+                "dataFormat": "png",
+                "rotationCenterX": 24.5,
+                "rotationCenterY": 38.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "钥匙",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "703bcdaf6fcce19452bd4e0848143b40",
+                "name": "钥匙",
+                "bitmapResolution": 2,
+                "md5ext": "703bcdaf6fcce19452bd4e0848143b40.png",
+                "dataFormat": "png",
+                "rotationCenterX": 31.5,
+                "rotationCenterY": 58
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "钻石",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "96ec33485564f8f35760f3f6c4184c5a",
+                "name": "钻石",
+                "bitmapResolution": 2,
+                "md5ext": "96ec33485564f8f35760f3f6c4184c5a.png",
+                "dataFormat": "png",
+                "rotationCenterX": 40,
+                "rotationCenterY": 30.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "锤子",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "dcd65137ab83116a9eda1db4b956f06d",
+                "name": "锤子",
+                "bitmapResolution": 2,
+                "md5ext": "dcd65137ab83116a9eda1db4b956f06d.png",
+                "dataFormat": "png",
+                "rotationCenterX": 109,
+                "rotationCenterY": 100.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "闹钟",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "c7e4e90cc7fe713cbbaa1259dc9ecae9",
+                "name": "闹钟",
+                "bitmapResolution": 2,
+                "md5ext": "c7e4e90cc7fe713cbbaa1259dc9ecae9.png",
+                "dataFormat": "png",
+                "rotationCenterX": 54.5,
+                "rotationCenterY": 37.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "闹钟数字",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "e891a163ef2371e20b0bc2b9d47cfc6e",
+                "name": "0",
+                "bitmapResolution": 2,
+                "md5ext": "e891a163ef2371e20b0bc2b9d47cfc6e.png",
+                "dataFormat": "png",
+                "rotationCenterX": 7,
+                "rotationCenterY": 13.5
+            },
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "831ab248424e85da9633198051ef3c01",
+                "name": "1",
+                "bitmapResolution": 2,
+                "md5ext": "831ab248424e85da9633198051ef3c01.png",
+                "dataFormat": "png",
+                "rotationCenterX": 7,
+                "rotationCenterY": 13.5
+            },
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "c8a3967a5ada25ea86380f3de9b75aa9",
+                "name": "2",
+                "bitmapResolution": 2,
+                "md5ext": "c8a3967a5ada25ea86380f3de9b75aa9.png",
+                "dataFormat": "png",
+                "rotationCenterX": 7,
+                "rotationCenterY": 13.5
+            },
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "924216dfd3e61968faaa4aad1fbcaaad",
+                "name": "3",
+                "bitmapResolution": 2,
+                "md5ext": "924216dfd3e61968faaa4aad1fbcaaad.png",
+                "dataFormat": "png",
+                "rotationCenterX": 7,
+                "rotationCenterY": 13.5
+            },
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "797131693a5bac36dc616c1dfaeff872",
+                "name": "4",
+                "bitmapResolution": 2,
+                "md5ext": "797131693a5bac36dc616c1dfaeff872.png",
+                "dataFormat": "png",
+                "rotationCenterX": 7,
+                "rotationCenterY": 13.5
+            },
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "40de5212d0fb1582c3e4a00d8e781aa5",
+                "name": "5",
+                "bitmapResolution": 2,
+                "md5ext": "40de5212d0fb1582c3e4a00d8e781aa5.png",
+                "dataFormat": "png",
+                "rotationCenterX": 7,
+                "rotationCenterY": 13.5
+            },
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "925cb24135a15a2e678cedf3b77301a7",
+                "name": "6",
+                "bitmapResolution": 2,
+                "md5ext": "925cb24135a15a2e678cedf3b77301a7.png",
+                "dataFormat": "png",
+                "rotationCenterX": 7,
+                "rotationCenterY": 13.5
+            },
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "e67bb6fb15b3c17c14eee45c6174d190",
+                "name": "7",
+                "bitmapResolution": 2,
+                "md5ext": "e67bb6fb15b3c17c14eee45c6174d190.png",
+                "dataFormat": "png",
+                "rotationCenterX": 7,
+                "rotationCenterY": 13.5
+            },
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "710fa250d19ad91c206deda8461b28cd",
+                "name": "8",
+                "bitmapResolution": 2,
+                "md5ext": "710fa250d19ad91c206deda8461b28cd.png",
+                "dataFormat": "png",
+                "rotationCenterX": 7,
+                "rotationCenterY": 13.5
+            },
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "fd3f91e21cfee70e6ddd3440c0378e9f",
+                "name": "9",
+                "bitmapResolution": 2,
+                "md5ext": "fd3f91e21cfee70e6ddd3440c0378e9f.png",
+                "dataFormat": "png",
+                "rotationCenterX": 7,
+                "rotationCenterY": 13.5
+            },
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "e69d6e7858e165cfe3158a2abbb34fa5",
+                "name": "冒号",
+                "bitmapResolution": 2,
+                "md5ext": "e69d6e7858e165cfe3158a2abbb34fa5.png",
+                "dataFormat": "png",
+                "rotationCenterX": 7,
+                "rotationCenterY": 13.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "陨石",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "8ea697592841873bee0728a2e3eaf160",
+                "name": "陨石1",
+                "bitmapResolution": 2,
+                "md5ext": "8ea697592841873bee0728a2e3eaf160.png",
+                "dataFormat": "png",
+                "rotationCenterX": 68,
+                "rotationCenterY": 51
+            },
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "cd224e36338013219c63d03d3d525ac5",
+                "name": "陨石2",
+                "bitmapResolution": 2,
+                "md5ext": "cd224e36338013219c63d03d3d525ac5.png",
+                "dataFormat": "png",
+                "rotationCenterX": 72,
+                "rotationCenterY": 64.5
+            },
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "c0d579d0b8701341a0f92bca3b170a3a",
+                "name": "陨石3",
+                "bitmapResolution": 2,
+                "md5ext": "c0d579d0b8701341a0f92bca3b170a3a.png",
+                "dataFormat": "png",
+                "rotationCenterX": 64.5,
+                "rotationCenterY": 58.5
+            },
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "e0b92a7412e55b290e7558cdc885531e",
+                "name": "陨石4",
+                "bitmapResolution": 2,
+                "md5ext": "e0b92a7412e55b290e7558cdc885531e.png",
+                "dataFormat": "png",
+                "rotationCenterX": 73,
+                "rotationCenterY": 47
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "飞行器",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "00db139440d10d856a44180c8701e194",
+                "name": "飞行器-01",
+                "bitmapResolution": 2,
+                "md5ext": "00db139440d10d856a44180c8701e194.png",
+                "dataFormat": "png",
+                "rotationCenterX": 50,
+                "rotationCenterY": 75
+            },
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "6e64b164a06e8b2b3e2fc90dcb563731",
+                "name": "飞行器-02",
+                "bitmapResolution": 2,
+                "md5ext": "6e64b164a06e8b2b3e2fc90dcb563731.png",
+                "dataFormat": "png",
+                "rotationCenterX": 50,
+                "rotationCenterY": 75
+            },
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "dc0a4b99903715bc4b1b881ea6b5fb74",
+                "name": "飞行器-03",
+                "bitmapResolution": 2,
+                "md5ext": "dc0a4b99903715bc4b1b881ea6b5fb74.png",
+                "dataFormat": "png",
+                "rotationCenterX": 50,
+                "rotationCenterY": 75
+            },
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "2a8e2edc7d468db4ea1252cf633f8304",
+                "name": "飞行器-04",
+                "bitmapResolution": 2,
+                "md5ext": "2a8e2edc7d468db4ea1252cf633f8304.png",
+                "dataFormat": "png",
+                "rotationCenterX": 50,
+                "rotationCenterY": 75
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "魔法书",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "78e32f49940bc6d1ed7c3429a156c252",
+                "name": "魔法书",
+                "bitmapResolution": 2,
+                "md5ext": "78e32f49940bc6d1ed7c3429a156c252.png",
+                "dataFormat": "png",
+                "rotationCenterX": 63.5,
+                "rotationCenterY": 69.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    }
+]

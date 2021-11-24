@@ -73,12 +73,12 @@ button:not(:active) {
     z-index: 20;
 }
 :global(.Popover-body) {
-    background: #fff;
-    border-radius: 5px;
+    background: #0091FF;
+    border-radius: 0.55rem;
     box-shadow: 0 3px 8px 0 #888;
 }
 :global(.Popover-tipShape) {
-    fill: #fff;
+    fill: #0091FF;
 }
 
 /* TODO 临时隐藏绿旗 */
@@ -138,7 +138,7 @@ textarea[class*="scratchCommentTextarea"] {
 }
 
 rect[class*="scratchCommentRect"] {
-    fill: rgb(0 182 255);
+    fill: #00b6ff;
     stroke: #FFFFFF;
     stroke-width: 0.09rem;
     rx: 15;

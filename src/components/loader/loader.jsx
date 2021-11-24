@@ -124,20 +124,32 @@ class LoaderComponent extends React.Component {
         super(props);
         this.state = {
             messageNumber: this.chooseRandomMessage(),
-            isPlayerOnly: this.props.isPlayerOnly
+            isPlayerOnly: this.props.isPlayerOnly,
+            retryBtnShow: false,
+            backBtnShow: false
         };
-        console.log('LoaderComponent===>>>');
-        console.log(props);
     }
     componentDidMount () {
         // Start an interval to choose a new message every 5 seconds
         this.intervalId = setInterval(() => {
             this.setState({messageNumber: this.chooseRandomMessage()});
         }, 5000);
+        this.retryBtnShowTimer = setTimeout(() => { // 加载时间太久，超过20秒，允许点击重试
+            this.setState({
+                retryBtnShow: true
+            });
+        }, 20000);
+        this.backBtnShowTimer = setTimeout(() => { // 在hello world界面停留超过20秒，则出现按钮：退出
+            this.setState({
+                backBtnShow: true
+            });
+        }, 40000);
     }
     componentWillUnmount () {
-        dispatchEvent(new Event('projectLoadSucceedLoaderUnmount'));
+        dispatchEvent(new Event('loaderUnmount'));
         clearInterval(this.intervalId);
+        clearTimeout(this.retryBtnShowTimer);
+        clearTimeout(this.backBtnShowTimer);
     }
     chooseRandomMessage () {
         let messageNumber;
@@ -174,6 +186,30 @@ class LoaderComponent extends React.Component {
                     {/* <div className={classNames(styles.loadingTxt)}>
                         Hello World<span className={styles.shadowDot}></span></div> */}
                 </div>}
+                <div className={styles.retryContent}>
+                    <span
+                        hidden={!this.state.retryBtnShow}
+                        className={styles.retryItem}
+                    >
+                        <span>加载时间太久，您可以</span>
+                        <a
+                            className={classNames(styles.commonA, styles.retry)}
+                            onClick={() => window.location.reload()}
+                        >
+                            {'重试'}
+                        </a>
+                    </span>
+                    <span hidden={!this.state.backBtnShow}>
+                        或者
+                        <a
+                            className={classNames(styles.commonA, styles.back)}
+                            onClick={() => window.bridge.emit('exitEditor', {type: 'submit', interaction_passOrNot: window.subjectPassOrNot})}
+                        >
+                            {'跳过'}
+                        </a>
+                    </span>
+                </div>
+                
 
                 {/* <div className={styles.container}>
                     <div className={styles.blockAnimation}>

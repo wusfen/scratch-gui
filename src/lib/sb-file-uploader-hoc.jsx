@@ -76,7 +76,7 @@ const SBFileUploaderHOC = function (WrappedComponent) {
             this.fileReader.onload = this.onload;
             // create <input> element and add it to DOM
             this.inputElement = document.createElement('input');
-            this.inputElement.accept = '.sb,.sb2,.sb3';
+            this.inputElement.accept = '.zip,.sb,.sb2,.sb3,.sb3diff';
             this.inputElement.style = 'display: none;';
             this.inputElement.type = 'file';
             this.inputElement.addEventListener('change', e => {
@@ -90,7 +90,6 @@ const SBFileUploaderHOC = function (WrappedComponent) {
         // step 3: user has picked a file using the file chooser dialog.
         // We don't actually load the file here, we only decide whether to do so.
         handleChange (e) {
-            console.log(e);
             const {
                 intl,
                 isShowingWithoutId,

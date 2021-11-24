@@ -18,6 +18,7 @@ import {BLOCKS_DEFAULT_SCALE, STAGE_DISPLAY_SIZES} from '../lib/layout-constants
 import DropAreaHOC from '../lib/drop-area-hoc.jsx';
 import DragConstants from '../lib/drag-constants';
 import defineDynamicBlock from '../lib/define-dynamic-block';
+import AutoClose from '../components/auto-close/auto-close.jsx';
 
 import {connect} from 'react-redux';
 import {updateToolbox} from '../reducers/toolbox';
@@ -26,8 +27,15 @@ import {closeExtensionLibrary, openSoundRecorder, openConnectionModal} from '../
 import {activateCustomProcedures, deactivateCustomProcedures} from '../reducers/custom-procedures';
 import {setConnectionModalExtensionId} from '../reducers/connection-modal';
 import {updateMetrics} from '../reducers/workspace-metrics';
+import {setAutoClose, setVisible} from '../reducers/auto-close';
 import classNames from 'classnames';
 import styles from './blocks.css';
+import disappearGif from '../assets/icons/disappear.gif';
+import {playTipAudio} from '../lib/courseTip/TipAudio.js';
+import disappearMp3 from '../assets/sounds/disappear.mp3';
+import dragBlockFromFlyoutMp3 from '../assets/sounds/dragBlockFromFlyout.mp3';
+import jointBlockMp3 from '../assets/sounds/jointBlock.mp3';
+import separateBlockMp3 from '../assets/sounds/separateBlock.mp3';
 
 import {
     activateTab,
@@ -75,7 +83,8 @@ class Blocks extends React.Component {
             'onWorkspaceUpdate',
             'onWorkspaceMetricsChange',
             'setBlocks',
-            'setLocale'
+            'setLocale',
+            'workSpaceChangeHandle'
         ]);
         this.ScratchBlocks.prompt = this.handlePromptStart;
         this.ScratchBlocks.statusButtonCallback = this.handleConnectionModalStart;
@@ -89,6 +98,7 @@ class Blocks extends React.Component {
     }
 
     componentDidMount () {
+        var props = this.props;
         this.ScratchBlocks.FieldColourSlider.activateEyedropper_ = this.props.onActivateColorPicker;
         this.ScratchBlocks.Procedures.externalProcedureDefCallback = this.props.onActivateCustomProcedures;
         this.ScratchBlocks.ScratchMsgs.setLocale(this.props.locale);
@@ -124,21 +134,39 @@ class Blocks extends React.Component {
         const startScale = workspaceConfig.zoom.startScale * (1 / this.ScratchBlocks.getFitScale());
         toolbox_.flyout_.DEFAULT_WIDTH = 250 * startScale;
         toolbox_.width = toolbox_.flyout_.DEFAULT_WIDTH + (73 * startScale);
-        toolbox_.flyout_.autoClose = true;
+        toolbox_.flyout_.autoClose = this.props.autoClose;
         // // autoClose 时会执行它
         toolbox_.clearSelection = function () {
-            // console.log('clearSelection:', 'clearSelection');
             // null 后，更新 toolbox xml 时，不能走依赖 selectedItem 的逻辑
             // this.setSelectedItem(null);
-
-            // 只改变样式，以免影响到 toolbox xml
+            // 只改变样式，以免影响到 toolbox xml;
             toolbox_.flyout_.setVisible(false);
-            const categorySelected = document.querySelector('.scratchCategoryMenuItem.categorySelected');
-            if (categorySelected) {
-                categorySelected.classList.remove('categorySelected');
-            }
         };
-        // toolbox_.clearSelection(); // 初始关闭
+        toolbox_.clearSelection(); // 初始关闭
+        var _setVisible = this.ScratchBlocks.mainWorkspace.toolbox_.flyout_.setVisible;
+        this.ScratchBlocks.mainWorkspace.toolbox_.flyout_.setVisible = function (bool) {
+            const blocklyFlyout = this.svgGroup_;
+            const categorySelected = document.querySelector('.scratchCategoryMenuItem.categorySelected');
+            const isSelectedAndVisible = !!categorySelected && bool;
+            // console.warn('bool:', bool, isSelectedAndVisible);
+
+            if (isSelectedAndVisible) {
+                blocklyFlyout.classList.add(`${styles['flyout-open']}`);
+                blocklyFlyout.classList.remove(`${styles['flyout-close']}`);
+            } else {
+                blocklyFlyout.classList.add(`${styles['flyout-close']}`);
+                blocklyFlyout.classList.remove(`${styles['flyout-open']}`);
+            }
+
+            if (!bool) {
+                if (categorySelected) {
+                    categorySelected.classList.remove('categorySelected');
+                }
+            }
+
+            props.setVisible(isSelectedAndVisible);
+            return _setVisible.apply(this, arguments);
+        };
 
         // 修正 toolbox 边界，以前是往左延伸，影响到代码拖动到另一角色
         const rect = toolbox_.getClientRect();
@@ -184,6 +212,7 @@ class Blocks extends React.Component {
             this.setToolboxRefreshEnabled(false);
         };
 
+        // eslint-disable-next-line no-warning-comments
         // @todo change this when blockly supports UI events
         addFunctionListener(this.workspace, 'translate', this.onWorkspaceMetricsChange);
         addFunctionListener(this.workspace, 'zoom', this.onWorkspaceMetricsChange);
@@ -195,11 +224,11 @@ class Blocks extends React.Component {
             this.setLocale();
         }
 
-        addEventListener('updateToolBox', e => {
+        addEventListener('updateToolBox', () => {
             this.requestToolboxUpdate();
         });
 
-        addEventListener('updateWorkspace_', e => {
+        addEventListener('updateWorkspace_', () => {
             this.props.vm.refreshWorkspace();
             this.requestToolboxUpdate();
         });
@@ -213,7 +242,8 @@ class Blocks extends React.Component {
             this.props.customProceduresVisible !== nextProps.customProceduresVisible ||
             this.props.locale !== nextProps.locale ||
             this.props.anyModalVisible !== nextProps.anyModalVisible ||
-            this.props.stageSize !== nextProps.stageSize
+            this.props.stageSize !== nextProps.stageSize ||
+            this.props.autoClose !== nextProps.autoClose
         );
     }
     componentDidUpdate (prevProps) {
@@ -221,6 +251,28 @@ class Blocks extends React.Component {
         // 切换角色 Category 也会变化
 
         // console.log('this.props.toolboxXML:', prevProps.toolboxXML === this.props.toolboxXML);
+
+        if (this.props.autoClose !== prevProps.autoClose) {
+            var Blockly = this.ScratchBlocks;
+            var mainWorkspace = this.ScratchBlocks.mainWorkspace;
+            const flyout_ = mainWorkspace.toolbox_?.flyout_;
+
+            // TODO FIXME 点【制作新的积木】后 toolbox_ 会变为空，但是页面还显示 flyout_
+            if (flyout_){
+                flyout_.autoClose = this.props.autoClose;
+
+                Blockly.hideChaffOnResize(true);
+                const scale = Blockly.getFitScale();
+                mainWorkspace.options.zoomOptions.startScale = scale;
+                mainWorkspace.setScale(scale);
+                Blockly.svgResize(mainWorkspace);
+                // mainWorkspace.scrollCenter();
+                // const toolbox = mainWorkspace.toolbox_;
+                flyout_.workspace_.scale = scale;
+                flyout_.reflow();
+            }
+
+        }
 
         // If any modals are open, call hideChaff to close z-indexed field editors
         if (this.props.anyModalVisible && !prevProps.anyModalVisible) {
@@ -241,7 +293,9 @@ class Blocks extends React.Component {
             }
             return;
         }
+        // eslint-disable-next-line no-warning-comments
         // @todo hack to resize blockly manually in case resize happened while hidden
+        // eslint-disable-next-line no-warning-comments
         // @todo hack to reload the workspace due to gui bug #413
         if (this.props.isVisible) { // Scripts tab
             this.workspace.setVisible(true);
@@ -285,11 +339,13 @@ class Blocks extends React.Component {
 
     updateToolbox () {
         this.toolboxUpdateTimeout = false;
+        const isVisible_ = this.workspace.toolbox_?.flyout_.isVisible_;
 
         // FIXED: autoClose 时 toolbox 关闭时，从舞台切换到角色，有些块（如当开始被点击）变成无法拖动
-        //        切换前没有的块可以，广播消息也可以
-        this.workspace.toolbox_.flyout_.setVisible(true);
+        //        切换前没有的块可以，广播消息也可以。必须 setVisible(true)
+        this.workspace.toolbox_?.flyout_.setVisible(true);
 
+        // eslint-disable-next-line no-warning-comments
         // TODO 有问题，暂不设置 selectedItem_ = null
         // 只更新 xml ，不能走依赖 selectedItem_ 的逻辑
         // eslint-disable-next-line no-negated-condition
@@ -317,6 +373,18 @@ class Blocks extends React.Component {
             }
         }
 
+        this.workspace.toolbox_?.flyout_.setVisible(isVisible_);
+
+        // 定位第一块积木
+        if (this.props.vm.editingTarget) {
+            if (!this.props.vm.editingTarget.__hasCenterOnBlock) {
+                this.props.vm.editingTarget.__hasCenterOnBlock = true;
+
+                this.workspace.topOnBlock(this.workspace.topBlocks_.filter(e => e.rendered).sort((a, b) => {
+                    return a.getRelativeToSurfaceXY().y - b.getRelativeToSurfaceXY().y;
+                })[0]?.id);
+            }
+        }
 
         const queue = this.toolboxUpdateQueue;
         this.toolboxUpdateQueue = [];
@@ -333,8 +401,69 @@ class Blocks extends React.Component {
         }
     }
 
+    createDeleteEffectInXY () { // 创建消失gif特效
+        const imgDom = document.createElement('img');
+        imgDom.src = disappearGif;
+        imgDom.style.position = 'absolute';
+        imgDom.style.zIndex = 999999999;
+        imgDom.style.width = '3rem';
+        imgDom.style.height = '3rem';
+        imgDom.style.left = `${window.dragBlockClientX}px`;
+        imgDom.style.top = `${window.dragBlockClientY}px`;
+        imgDom.style.pointerEvents = 'none';
+        document.body.appendChild(imgDom);
+        // playTipAudio(disappearMp3); 2.5需求去掉删除音效
+        this.deleteEffectTimer = setTimeout(() => {
+            document.body.removeChild(imgDom);
+            clearTimeout(this.deleteEffectTimer);
+        }, 500);
+    }
+
+    getClientRectInWindow (dom) { // 记录所操作块的坐标
+        if (!dom) {
+            return;
+        }
+        window.dragBlockClientX = dom.left + 24;
+        window.dragBlockClientY = dom.top + 24;
+    }
+
+    workSpaceChangeHandle (event) {
+        if (event.type === 'delete' || (event.type === 'move' &&
+        ((!event.oldParentId && event.newParentId) || (event.oldParentId && !event.newParentId)))) { // 对删除、拼接、分开事件做节流处理
+            if (window.throttlrTimer) {
+                return;
+            }
+            window.throttlrTimer = setTimeout(() => {
+                clearTimeout(this.throttlrTimer);
+                window.throttlrTimer = null;
+            }, 200);
+        }
+
+        if (window.btnPlayAudioIng) { // 当点击代码块后退、前进操作时，也会触发事件，所以要丢弃后退、前进按钮被点击内1000ms触发的该事件。
+            return;
+        }
+        const dom = document.getElementsByClassName('blocklySelected');
+        this.getClientRectInWindow(dom[0]?.getBoundingClientRect());
+        if (event.type === 'delete') { // 处理块删除事件
+            if (!event.recordUndo) return; // 切换角色触发的delete不触发动效，这时event对象recordUndo为false
+            this.createDeleteEffectInXY();
+        } else if (event.type === 'ui') {
+            const regex = new RegExp('^([a-zA-Z0-9_]){1,}$');
+            if (event.newValue && regex.test(event.oldValue)) { // 从flyout拖出来
+                playTipAudio(jointBlockMp3); // 2.5需求改为和拼接音效相同
+            }
+        } else if (event.type === 'move') {
+            if (!event.oldParentId && event.newParentId) { // 拼接
+                playTipAudio(jointBlockMp3);
+            } else if (event.oldParentId && !event.newParentId) { // 分开
+                playTipAudio(separateBlockMp3);
+            }
+        }
+    }
+
     attachVM () {
         this.workspace.addChangeListener(this.props.vm.blockListener);
+        this.workspace.addChangeListener(this.workSpaceChangeHandle); // 自定义workspace监听事件
         this.flyoutWorkspace = this.workspace
             .getFlyout()
             .getWorkspace();
@@ -391,6 +520,7 @@ class Blocks extends React.Component {
         if (target && target.id) {
             // Dispatch updateMetrics later, since onWorkspaceMetricsChange may be (very indirectly)
             // called from a reducer, i.e. when you create a custom procedure.
+            // eslint-disable-next-line no-warning-comments
             // TODO: Is this a vehement hack?
             setTimeout(() => {
                 this.props.updateMetrics({
@@ -527,6 +657,7 @@ class Blocks extends React.Component {
         }
     }
     handleBlocksInfoUpdate (categoryInfo) {
+        // eslint-disable-next-line no-warning-comments
         // @todo Later we should replace this to avoid all the warnings from redefining blocks.
         this.handleExtensionAdded(categoryInfo);
     }
@@ -627,11 +758,15 @@ class Blocks extends React.Component {
             toolboxXML,
             updateMetrics: updateMetricsProp,
             workspaceMetrics,
+            autoClose,
+            setAutoClose,
+            setVisible,
             ...props
         } = this.props;
         /* eslint-enable no-unused-vars */
         return (
             <React.Fragment>
+                <AutoClose></AutoClose>
                 <img
                     hidden
                     className={
@@ -731,7 +866,10 @@ Blocks.propTypes = {
     vm: PropTypes.instanceOf(VM).isRequired,
     workspaceMetrics: PropTypes.shape({
         targets: PropTypes.objectOf(PropTypes.object)
-    })
+    }),
+    autoClose: PropTypes.bool,
+    setAutoClose: PropTypes.func,
+    setVisible: PropTypes.func,
 };
 
 Blocks.defaultOptions = {
@@ -778,7 +916,8 @@ const mapStateToProps = state => ({
     messages: state.locales.messages,
     toolboxXML: state.scratchGui.toolbox.toolboxXML,
     customProceduresVisible: state.scratchGui.customProcedures.active,
-    workspaceMetrics: state.scratchGui.workspaceMetrics
+    workspaceMetrics: state.scratchGui.workspaceMetrics,
+    autoClose: state.scratchGui.autoClose.autoClose,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -803,7 +942,9 @@ const mapDispatchToProps = dispatch => ({
     },
     updateMetrics: metrics => {
         dispatch(updateMetrics(metrics));
-    }
+    },
+    setAutoClose: autoClose => dispatch(setAutoClose(autoClose)),
+    setVisible: isVisible => dispatch(setVisible(isVisible)),
 });
 
 export default errorBoundaryHOC('Blocks')(

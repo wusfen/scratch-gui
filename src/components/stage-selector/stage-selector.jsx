@@ -85,6 +85,7 @@ const StageSelector = props => {
                 <img
                     className={styles.costumeCanvas}
                     src={url}
+                    draggable={false}
                 />
             ) : null}
             <div className={styles.label}>
@@ -103,7 +104,11 @@ const StageSelector = props => {
             {selected ?
                 <div className={styles.editSprite}>
                     <img
-                        className={styles.editImg}
+                        className={
+                            classNames('play_audio', {
+                                [styles.editImg]: true
+                            })
+                        }
                         src={require('../../assets/icons/triangle.svg')}
                         alt="*"
                         onClick={function (e) {

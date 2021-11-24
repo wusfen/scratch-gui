@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import {intlShape, injectIntl} from 'react-intl';
 import bindAll from 'lodash.bindall';
 import {connect} from 'react-redux';
-
+import VM from 'scratch-vm';
+import {indexDB} from './indexDB';
 import {setProjectUnchanged} from '../reducers/project-changed';
-
 import {
     LoadingState,
     LoadingStates,
@@ -26,6 +26,8 @@ import log from './log';
 import storage from './storage';
 
 import {ajax} from './ajax.js';
+import {param} from './param.js';
+import {project} from './project.js';
 
 /* Higher Order Component to provide behavior for loading projects by id. If
  * there's no id, the default project is loaded.
@@ -72,38 +74,71 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             }
         }
         async fetchProject (projectId, loadingState) {
+            dispatchEvent(new Event('fetchProject'));
+
+            const vm = this.props.vm;
+            const runtime = vm.runtime;
+
             // ?id 用户作业id
             const searchParams = new URL(location).searchParams;
             const id = searchParams.get('id');
-            let fileUrl = '';
+            let idFile;
             if (id) {
                 const {data} = await ajax.get(`/hwUserWork/getWorkInfo/${id}`);
-                fileUrl = data.workPath;
+                idFile = data.workPath;
                 this.props.setProjectTitle?.(data.workName);
 
                 // TODO 临时存值
                 window._workInfo = data;
+            } else {
+                // workName
+                this.props.setProjectTitle?.(param('workName') || '我的作品');
             }
 
-            // ?file
-            fileUrl = fileUrl || searchParams.get('file');
 
-            // sb3
+            // ?file
+            let file = searchParams.get('file');
+
+            // sb3Map
             const sb3Map = {
                 default: require('!file-loader!../lib/default-project/sb3/default.sb3'),
                 keyboard: require('!file-loader!../lib/default-project/sb3/keyboard.sb3'),
             };
-            fileUrl = sb3Map[fileUrl] || fileUrl || sb3Map.default;
 
-            console.info('[load sb3]', fileUrl);
+            // name
+            file = sb3Map[file] || file;
+
+            // fileUrl
+            const url = idFile || file || sb3Map.default;
+            console.info('[load sb3]', url);
+
+            // PROJECT_LOADED
+            runtime.once(runtime.constructor.PROJECT_LOADED, e => {
+                dispatchEvent(new Event('projectLoadSucceed'));
+            });
 
             // fetch
-            if (/^http|.sb3$/.test(fileUrl)) {
-                const blob = await ajax.get(fileUrl, {}, {responseType: 'blob', base: ''});
+            if (url) {
+                let blob;
+                let projectData = null;
+                if (id) {
+                    try {
+                        projectData = await indexDB.getData(id); // 先查找本地是否有该工程数据
+                    } catch (error) {
+                        console.log('查找本地是否有该工程数据---error', error);
+                    }
+                }
+                if (projectData) {
+                    blob = projectData.zip;
+                } else {
+                    blob = await ajax.get(url, {}, {responseType: 'blob', base: ''});
+                }
                 const buffer = await blob.arrayBuffer();
-                // loadProject
+
+                buffer.url = url; // FOR url=>['assets.png', ...]
+                project.url = url; // FOR getSb3Diff
+
                 this.props.onFetchedProjectData(buffer, loadingState);
-                dispatchEvent(new Event('projectLoadSucceed'));
                 return;
             }
 
@@ -171,6 +206,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
         reduxProjectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         setProjectId: PropTypes.func,
         setProjectTitle: PropTypes.func,
+        vm: PropTypes.instanceOf(VM).isRequired,
     };
     ProjectFetcherComponent.defaultProps = {
         // TODO
@@ -185,7 +221,8 @@ const ProjectFetcherHOC = function (WrappedComponent) {
         isLoadingProject: getIsLoading(state.scratchGui.projectState.loadingState),
         isShowingProject: getIsShowingProject(state.scratchGui.projectState.loadingState),
         loadingState: state.scratchGui.projectState.loadingState,
-        reduxProjectId: state.scratchGui.projectState.projectId
+        reduxProjectId: state.scratchGui.projectState.projectId,
+        vm: state.scratchGui.vm,
     });
     const mapDispatchToProps = dispatch => ({
         onActivateTab: tab => dispatch(activateTab(tab)),

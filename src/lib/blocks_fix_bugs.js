@@ -420,7 +420,7 @@ export default function (Blockly){
               //toolbox.flyout_.DEFAULT_WIDTH = (250+70) * scale;
               // toolbox.width = toolbox_.flyout_.DEFAULT_WIDTH + (50 * scale);
               //flyoutWS.setScale(scale);
-            });
+          });
         mainWorkspace.setResizeHandlerWrapper(workspaceResizeHandler);
       
         Blockly.inject.bindDocumentEvents_();
@@ -507,10 +507,14 @@ export default function (Blockly){
 
       Blockly.WorkspaceSvg.getTopLevelWorkspaceMetrics_ = function() {
         var toolboxDimensions;
-        if(this.toolbox_){
-          toolboxDimensions = this.toolbox_.getClientRect();
-        }
-        if(!toolboxDimensions){
+        if (this?.getFlyout()?.autoClose) {
+          if(this.toolbox_){
+            toolboxDimensions = this.toolbox_.getClientRect();
+          }
+          if(!toolboxDimensions){
+            toolboxDimensions = Blockly.WorkspaceSvg.getDimensionsPx_(this.toolbox_);
+          }
+        } else {
           toolboxDimensions = Blockly.WorkspaceSvg.getDimensionsPx_(this.toolbox_);
         }
             
