@@ -83,6 +83,8 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
                 initialState,
                 enhancer
             );
+            //全面引用
+            window.store = this.store;
         }
         componentDidUpdate (prevProps) {
             if (localesOnly) return;

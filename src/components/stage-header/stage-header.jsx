@@ -12,10 +12,10 @@ import {getStageDimensions} from '../../lib/screen-utils';
 import {STAGE_SIZE_MODES} from '../../lib/layout-constants';
 
 import fullScreenIcon from './icon--fullscreen.svg';
-import largeStageIcon from './icon--large-stage.svg';
-import smallStageIcon from './icon--small-stage.svg';
+//import largeStageIcon from './icon--large-stage.svg';
+//import smallStageIcon from './icon--small-stage.svg';
 import unFullScreenIcon from './icon--unfullscreen.svg';
-
+import downUpIcon from './icon--pull-down-up.svg';
 import scratchLogo from '../menu-bar/scratch-logo.svg';
 import styles from './stage-header.css';
 
@@ -52,17 +52,18 @@ const StageHeaderComponent = function (props) {
         isFullScreen,
         isPlayerOnly,
         onKeyPress,
-        onSetStageLarge,
-        onSetStageSmall,
+        //onSetStageLarge,
+        //onSetStageSmall,
         onSetStageFull,
         onSetStageUnFull,
         showBranding,
-        stageSizeMode,
+        stageMode,
+        onSetStageMode,
         vm
     } = props;
 
     let header = null;
-
+    let stageModeContent = null;
     if (isFullScreen) {
         const stageDimensions = getStageDimensions(null, true);
         const stageButton = showBranding ? (
@@ -105,44 +106,37 @@ const StageHeaderComponent = function (props) {
             </Box>
         );
     } else {
+        const stageModeItem = []; 
+        if(!isPlayerOnly){
+           for (const key in STAGE_SIZE_MODES) {
+               //if(stageMode !== key){
+                stageModeItem.push(<div key={key}>
+                    <Button
+                        type="button"
+                        className={classNames(styles.stageModeItem)}
+                        name={key}
+                        onClick={()=> {onSetStageMode(key); stageModeContent?stageModeContent.style = 'display:none':null}}
+                    >
+                        {STAGE_SIZE_MODES[key]}
+                    </Button>
+                </div>)
+               //}
+           }
+        }
         const stageControls =
             isPlayerOnly ? (
                 []
             ) : (
-                <div className={styles.stageSizeToggleGroup}>
-                    <div>
-                        <Button
-                            className={classNames(
-                                styles.stageButton,
-                                styles.stageButtonFirst,
-                                (stageSizeMode === STAGE_SIZE_MODES.small) ? null : styles.stageButtonToggledOff
-                            )}
-                            onClick={onSetStageSmall}
-                        >
-                            <img
-                                alt={props.intl.formatMessage(messages.smallStageSizeMessage)}
-                                className={styles.stageButtonIcon}
-                                draggable={false}
-                                src={smallStageIcon}
-                            />
-                        </Button>
+                <div className={classNames(styles.stageSizeModeGroup)}>
+                    <div className={classNames(styles.stageModeContent)} ref={ref=>stageModeContent = ref}>
+                        {stageModeItem}
                     </div>
-                    <div>
-                        <Button
-                            className={classNames(
-                                styles.stageButton,
-                                styles.stageButtonLast,
-                                (stageSizeMode === STAGE_SIZE_MODES.large) ? null : styles.stageButtonToggledOff
-                            )}
-                            onClick={onSetStageLarge}
-                        >
-                            <img
-                                alt={props.intl.formatMessage(messages.largeStageSizeMessage)}
-                                className={styles.stageButtonIcon}
-                                draggable={false}
-                                src={largeStageIcon}
-                            />
-                        </Button>
+                    <div
+                        className={classNames(styles.stageMode)}
+                        onMouseEnter={()=>stageModeContent?stageModeContent.style = null:null}
+                    >
+                        {STAGE_SIZE_MODES[stageMode]}
+                        <img src={downUpIcon} />
                     </div>
                 </div>
             );
@@ -150,7 +144,7 @@ const StageHeaderComponent = function (props) {
             <Box className={styles.stageHeaderWrapper}>
                 <Box className={styles.stageMenuWrapper}>
                     <div className={styles.stageSizeRow}>
-                        {/* {stageControls} */}
+                        {stageControls}
                         <div hidden>
                             <Button
                                 className={styles.stageButton}
@@ -180,7 +174,7 @@ const StageHeaderComponent = function (props) {
 
 const mapStateToProps = state => ({
     // This is the button's mode, as opposed to the actual current state
-    stageSizeMode: state.scratchGui.stageSize.stageSize
+    //stageSizeMode: state.scratchGui.stageSize.stageSize
 });
 
 StageHeaderComponent.propTypes = {
@@ -189,16 +183,16 @@ StageHeaderComponent.propTypes = {
     isPlayerOnly: PropTypes.bool.isRequired,
     onKeyPress: PropTypes.func.isRequired,
     onSetStageFull: PropTypes.func.isRequired,
-    onSetStageLarge: PropTypes.func.isRequired,
-    onSetStageSmall: PropTypes.func.isRequired,
+    // onSetStageLarge: PropTypes.func.isRequired,
+    // onSetStageSmall: PropTypes.func.isRequired,
     onSetStageUnFull: PropTypes.func.isRequired,
     showBranding: PropTypes.bool.isRequired,
-    stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)),
+    stageMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)),
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
 StageHeaderComponent.defaultProps = {
-    stageSizeMode: STAGE_SIZE_MODES.large
+    stageMode: 'portrait_9_16'
 };
 
 export default injectIntl(connect(

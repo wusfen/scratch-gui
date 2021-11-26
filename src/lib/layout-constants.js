@@ -4,17 +4,26 @@ import keyMirror from 'keymirror';
  * Names for each state of the stage size toggle
  * @enum {string}
  */
-const STAGE_SIZE_MODES = keyMirror({
+const STAGE_SIZE_MODES = {
     /**
-     * The "large stage" button is pressed; the user would like a large stage.
-     */
-    large: null,
+    *竖屏3:4
+    */
+    portrait_3_4:'竖屏3:4',
 
     /**
-     * The "small stage" button is pressed; the user would like a small stage.
-     */
-    small: null
-});
+    *竖屏9:16
+    */
+    portrait_9_16:'竖屏9:16',
+
+    /**
+    *横屏4:3
+    */
+    landscape_4_3:'横屏4:3',
+    /**
+    *横屏16:9
+    */
+    landscape_16_9:'横屏16:9',
+};
 
 /**
  * Names for each stage render size
@@ -55,19 +64,18 @@ window.UI_WIDTH = 1024;
 window.UI_HEIGHT = 768;
 window.STAGE_UI_WIDTH = 357;// 舞台显示大小
 window.STAGE_CSS_WIDTH = window.STAGE_UI_WIDTH;
-
-const searchParams = (new URL(location)).searchParams;
-if (searchParams.get('STAGE_WIDTH')) {
-    window.STAGE_WIDTH = +searchParams.get('STAGE_WIDTH');
-    window.STAGE_HEIGHT = +searchParams.get('STAGE_HEIGHT');
-    if (!window.STAGE_HEIGHT) {
-        window.STAGE_HEIGHT = window.STAGE_WIDTH * (16 / 9);
-    }
-}
+// const searchParams = (new URL(location)).searchParams;
+// if (searchParams.get('STAGE_WIDTH')) {
+//     window.STAGE_WIDTH = +searchParams.get('STAGE_WIDTH');
+//     window.STAGE_HEIGHT = +searchParams.get('STAGE_HEIGHT');
+//     if (!window.STAGE_HEIGHT) {
+//         window.STAGE_HEIGHT = window.STAGE_WIDTH * (16 / 9);
+//     }
+// }
 
 const htmlEl = document.documentElement;
-htmlEl.style.setProperty('--STAGE_WIDTH', window.STAGE_WIDTH);
-htmlEl.style.setProperty('--STAGE_HEIGHT', window.STAGE_HEIGHT);
+// htmlEl.style.setProperty('--STAGE_WIDTH', window.STAGE_WIDTH);
+// htmlEl.style.setProperty('--STAGE_HEIGHT', window.STAGE_HEIGHT);
 
 
 // eslint-disable-next-line require-jsdoc, func-style
@@ -86,14 +94,35 @@ function resize () {
 
     }
 
-    document.documentElement.style.setProperty(
-        '--STAGE_CSS_WIDTH',
-        window.STAGE_CSS_WIDTH
-    );
+    // document.documentElement.style.setProperty(
+    //     '--STAGE_CSS_WIDTH',
+    //     window.STAGE_CSS_WIDTH
+    // );
 }
 resize();
 addEventListener('resize', resize);
 
+
+const doneConstants = function(mode){
+    switch(mode){
+        case  'portrait_3_4':
+            window.STAGE_WIDTH = 500;
+            window.STAGE_HEIGHT = 667;
+            break;
+        case 'landscape_4_3':
+            window.STAGE_WIDTH = 889;
+            window.STAGE_HEIGHT = 667;
+            break;
+        case 'landscape_16_9':
+            window.STAGE_WIDTH = 1186;
+            window.STAGE_HEIGHT = 667;
+            break;
+        default:
+            window.STAGE_WIDTH = 375;
+            window.STAGE_HEIGHT = 667;
+            break;
+    }
+}
 
 export default {
     standardStageWidth: window.STAGE_WIDTH,
@@ -106,5 +135,6 @@ export {
     BLOCKS_DEFAULT_SCALE,
     STAGE_DISPLAY_SCALES,
     STAGE_DISPLAY_SIZES,
-    STAGE_SIZE_MODES
+    STAGE_SIZE_MODES,
+    doneConstants,
 };

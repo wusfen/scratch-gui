@@ -34,7 +34,7 @@ import TelemetryModal from '../telemetry-modal/telemetry-modal.jsx';
 import WDSpriteList from '../../containers/$-sprite-list.jsx';
 import Running from '../../containers/running.jsx';
 
-import layout, {STAGE_SIZE_MODES} from '../../lib/layout-constants';
+import layout, {STAGE_DISPLAY_SIZES, STAGE_SIZE_MODES} from '../../lib/layout-constants';
 import {resolveStageSize} from '../../lib/screen-utils';
 
 import styles from './gui.css';
@@ -131,6 +131,7 @@ const GUIComponent = props => {
         showComingSoon,
         soundsTabVisible,
         stageSizeMode,
+        stageMode,
         targetIsStage,
         telemetryModalVisible,
         tipsLibraryVisible,
@@ -173,7 +174,8 @@ const GUIComponent = props => {
                     isRendererSupported={isRendererSupported}
                     isRtl={isRtl}
                     loading={loading}
-                    stageSize={STAGE_SIZE_MODES.large}
+                    stageSize={STAGE_DISPLAY_SIZES.large}
+                    stageMode={stageMode}
                     vm={vm}
                 >
                     {alertsVisible ? (
@@ -435,6 +437,7 @@ const GUIComponent = props => {
                                 isRendererSupported={isRendererSupported}
                                 isRtl={isRtl}
                                 stageSize={stageSize}
+                                stageMode={stageMode}
                                 vm={vm}
                             />
                             {showErrorTips && <div className={styles.warningBorder}></div>}
@@ -522,7 +525,8 @@ GUIComponent.propTypes = {
     renderLogin: PropTypes.func,
     showComingSoon: PropTypes.bool,
     soundsTabVisible: PropTypes.bool,
-    stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)),
+    stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)),
+    stageMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)),
     targetIsStage: PropTypes.bool,
     telemetryModalVisible: PropTypes.bool,
     tipsLibraryVisible: PropTypes.bool,
@@ -553,13 +557,15 @@ GUIComponent.defaultProps = {
     isShared: false,
     loading: false,
     showComingSoon: false,
-    stageSizeMode: STAGE_SIZE_MODES.large,
+    stageSizeMode: STAGE_DISPLAY_SIZES.large,
+    stageMode:'portrait_9_16',
     promptTitle: '提示'
 };
 
 const mapStateToProps = state => ({
     // This is the button's mode, as opposed to the actual current state
-    stageSizeMode: state.scratchGui.stageSize.stageSize
+    stageSizeMode: state.scratchGui.stageSize.stageSize,
+    stageMode: state.scratchGui.stageSize.stageMode,
 });
 
 export default injectIntl(connect(

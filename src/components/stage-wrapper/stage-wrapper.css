@@ -15,6 +15,7 @@
 
     display: flex;
     justify-content: center;
+    align-items: center;
     width: 22.31rem;
     height: 39.69rem;
 }

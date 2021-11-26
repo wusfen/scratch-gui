@@ -35,10 +35,6 @@
     display: flex;
 }
 
-.stage-size-toggle-group {
-    display: flex;
-}
-
 [dir="ltr"] .stage-size-toggle-group {
     margin-right: 0.2rem;
 }
@@ -90,6 +86,60 @@
     border-bottom-right-radius: 0;
 }
 
-.stage-button-toggled-off {
-    filter: saturate(0);
+
+.stage-mode {
+    display: flex;
+    flex-direction: row;
+    width: 5rem;
+    height: 1.75rem;
+    background: #00A7FF;
+    border-radius: 0.63rem;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: #FFFFFF;
+    line-height: 1.13rem;
+    align-items: center;
+    padding-left: 0.64rem;
+    justify-content: space-between;
+}
+
+.stage-mode img {
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-right: 0.59rem;
+    margin-left: 0.29rem;
+}
+
+.stage-mode-content {
+    box-sizing: border-box;
+    display: none;
+    width: 5rem;
+    height: 8rem;
+}
+
+.stage-mode-item{
+    color: #FFFFFF;
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.13rem;
+    margin-top: 0.69rem;
+    padding-left: 0.64rem;
+}
+
+/* .stage-mode-item-selected{
+    background: #0091FF;
+    border-radius: 0.63rem;
+} */
+
+.stage-size-mode-group {
+    display: flex;
+    position: absolute;
+    bottom: 0.34rem;
+    background: rgba(0, 143, 253, 0.9);
+    flex-direction: column;
+    border-radius: 0.63rem;
+}
+
+.stage-size-mode-group:hover .stage-mode-content{
+    display: block;
 }

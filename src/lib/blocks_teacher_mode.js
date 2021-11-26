@@ -1,5 +1,6 @@
 /* eslint-disable */
 window.MODE = (new URL(location)).searchParams.get('mode');
+import {setStageSizeMode} from '../reducers/stage-size';
 
 export default function (Blockly, vm){
 
@@ -307,8 +308,11 @@ export default function (Blockly, vm){
     // 保存toolbox配置
     vm.toJSON = function (){
         let prj = orgToJSON();
+        const stageMode = window.store.getState().scratchGui.stageSize.stageMode;
         if (window.vcode_toolbox){
-            prj = `${prj.substr(0, prj.length - 1)}, "toolbox":${JSON.stringify(window.vcode_toolbox)}}`;
+            prj = `${prj.substr(0, prj.length - 1)}, "toolbox":${JSON.stringify(window.vcode_toolbox)}, "stageMode":"${stageMode}"}`;
+        }else{
+            prj = `${prj.substr(0, prj.length - 1)}, "stageMode":"${stageMode}"}`;
         }
         return prj;
     };
@@ -318,6 +322,7 @@ export default function (Blockly, vm){
     vm.deserializeProject = function (projectJSON, zip) {
         window.vcode_toolbox = projectJSON.toolbox;
         // window.vcode_toolbox = {"%{BKY_CATEGORY_MOTION}":{},"%{BKY_CATEGORY_LOOKS}":{"looks_switchbackdropto":true, "looks_switchbackdroptoandwait":true, "looks_nextbackdrop":true,"looks_changeeffectby":true}};
+        window.store.dispatch(setStageSizeMode(projectJSON.stageMode));
         return orgDeserializeProject(projectJSON, zip);
     };
 

@@ -26,7 +26,7 @@ const STAGE_DIMENSION_DEFAULTS = {
  * @return {STAGE_DISPLAY_SIZES} - the stage size enum value we should use in this situation.
  */
 const resolveStageSize = (stageSizeMode, isFullSize) => {
-    if (stageSizeMode === STAGE_SIZE_MODES.small) {
+    if (stageSizeMode === STAGE_DISPLAY_SIZES.small) {
         return STAGE_DISPLAY_SIZES.small;
     }
     if (isFullSize) {
@@ -38,19 +38,18 @@ const resolveStageSize = (stageSizeMode, isFullSize) => {
 /**
  * 动态改变需要调整这里
  * Retrieve info used to determine the actual stage size based on the current GUI and browser state.
- * @param {STAGE_DISPLAY_SIZES} stageSize - the current fully-resolved stage size.
+ * @param {STAGE_SIZE_MODES} stageSize - the current fully-resolved stage size.
  * @param {boolean} isFullScreen - true if full-screen mode is enabled.
  * @return {StageDimensions} - an object describing the dimensions of the stage.
  */
 const getStageDimensions = (stageSize, isFullScreen) => {
     const stageDimensions = {
-        heightDefault: layout.standardStageHeight,
-        widthDefault: layout.standardStageWidth,
+        heightDefault: window.STAGE_HEIGHT,
+        widthDefault: window.STAGE_WIDTH,
         height: 0,
         width: 0,
         scale: 0
     };
-
     if (isFullScreen) {
         stageDimensions.height = window.innerHeight -
             STAGE_DIMENSION_DEFAULTS.menuHeightAdjustment -

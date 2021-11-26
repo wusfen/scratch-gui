@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import VM from 'scratch-vm';
 
 import Box from '../box/box.jsx';
-import {STAGE_DISPLAY_SIZES} from '../../lib/layout-constants.js';
+import {STAGE_DISPLAY_SIZES, STAGE_SIZE_MODES} from '../../lib/layout-constants.js';
 import StageHeader from '../../containers/stage-header.jsx';
 import Stage from '../../containers/stage.jsx';
 import Loader from '../loader/loader.jsx';
@@ -19,6 +19,7 @@ const StageWrapperComponent = function (props) {
         isRendererSupported,
         loading,
         stageSize,
+        stageMode,
         vm
     } = props;
 
@@ -36,6 +37,7 @@ const StageWrapperComponent = function (props) {
                         <Stage
                             isPlayerOnly={isPlayerOnly}
                             stageSize={stageSize}
+                            stageMode={stageMode}
                             vm={vm}
                         /> :
                         null
@@ -44,6 +46,7 @@ const StageWrapperComponent = function (props) {
             <Box className={styles.stageMenuWrapper}>
                 <StageHeader
                     stageSize={stageSize}
+                    stageMode={stageMode}
                     vm={vm}
                 />
             </Box>
@@ -64,6 +67,7 @@ StageWrapperComponent.propTypes = {
     isRtl: PropTypes.bool.isRequired,
     loading: PropTypes.bool,
     stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired,
+    stageMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)).isRequired,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
