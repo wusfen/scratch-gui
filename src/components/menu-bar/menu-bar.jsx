@@ -201,7 +201,7 @@ class MenuBar extends React.Component {
             'handleRestoreOption',
             'getSaveToComputerHandler',
             'restoreOptionMessage',
-            'judgeIsRunCode'
+            'judgeIsRunCode',
         ]);
         this.audio = null;
 
@@ -283,6 +283,13 @@ class MenuBar extends React.Component {
 
         window.bridge.on('requireExitEditor', e => {
             this.handleExit('requireExitEditor');
+        });
+
+        window.bridge.on('requireProjectMsg', async e => {
+            const projectData = await this.handleSubmit(true, true);
+            window.bridge.emit('requireProjectMsg', {
+                url: `${projectData.ossDomain}${projectData.path}`
+            });
         });
     }
     componentDidMount () {
@@ -665,8 +672,8 @@ class MenuBar extends React.Component {
             silence || this.props.setUploadingProgress(false);
         }, 500);
         dispatchEvent(new Event('saveSucceed'));
-        
         alert('保存成功');
+        return uploadSb3Promise;
     }
 
 
@@ -867,7 +874,7 @@ class MenuBar extends React.Component {
         });
 
         if (isNoCheckResult) {
-            return;
+            return {ossDomain, path};
         }
 
         // silence || this.props.setUploadingProgress(95, '正在批改中...');
