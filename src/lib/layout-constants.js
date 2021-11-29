@@ -1,4 +1,5 @@
 import keyMirror from 'keymirror';
+import { string } from 'to-style';
 
 /**
  * Names for each state of the stage size toggle
@@ -79,11 +80,31 @@ const htmlEl = document.documentElement;
 
 
 // eslint-disable-next-line require-jsdoc, func-style
-function resize () {
+function resize (mode) {
     if (/\b(player\.html|mode=player)\b/.test(location)){
+        mode = (typeof mode == 'string')?mode:(window.store?window.store.getState().scratchGui.stageSize.stageMode:'portrait_9_16');
         window.STAGE_CSS_WIDTH = window.innerWidth;
-        if (window.STAGE_CSS_WIDTH * (16 / 9) > window.innerHeight){
-            window.STAGE_CSS_WIDTH = window.innerHeight * 9 / 16;
+        switch(mode){
+            case  'portrait_3_4':
+                if (window.STAGE_CSS_WIDTH * (4 / 3) > window.innerHeight){
+                    window.STAGE_CSS_WIDTH = window.innerHeight * 3 / 4;
+                }
+                break;
+            case 'landscape_4_3':
+                if (window.STAGE_CSS_WIDTH * (3 / 4) > window.innerHeight){
+                    window.STAGE_CSS_WIDTH = window.innerHeight * 4 / 3;
+                }
+                break;
+            case 'landscape_16_9':
+                if (window.STAGE_CSS_WIDTH * (9 / 16) > window.innerHeight){
+                    window.STAGE_CSS_WIDTH = window.innerHeight * 16 / 9;
+                }
+                break;
+            default:
+                if (window.STAGE_CSS_WIDTH * (16 / 9) > window.innerHeight){
+                    window.STAGE_CSS_WIDTH = window.innerHeight * 9 / 16;
+                }
+                break;
         }
     } else {
         window.STAGE_CSS_WIDTH = Math.min(
@@ -104,6 +125,7 @@ addEventListener('resize', resize);
 
 
 const doneConstants = function(mode){
+    resize(mode);
     switch(mode){
         case  'portrait_3_4':
             window.STAGE_WIDTH = 500;

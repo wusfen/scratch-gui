@@ -1,6 +1,5 @@
 /* eslint-disable */
 window.MODE = (new URL(location)).searchParams.get('mode');
-import {setStageSizeMode} from '../reducers/stage-size';
 
 export default function (Blockly, vm){
 
@@ -322,7 +321,6 @@ export default function (Blockly, vm){
     vm.deserializeProject = function (projectJSON, zip) {
         window.vcode_toolbox = projectJSON.toolbox;
         // window.vcode_toolbox = {"%{BKY_CATEGORY_MOTION}":{},"%{BKY_CATEGORY_LOOKS}":{"looks_switchbackdropto":true, "looks_switchbackdroptoandwait":true, "looks_nextbackdrop":true,"looks_changeeffectby":true}};
-        window.store.dispatch(setStageSizeMode(projectJSON.stageMode));
         return orgDeserializeProject(projectJSON, zip);
     };
 
