@@ -89,7 +89,7 @@ const mapStateToProps = (state, {selectedCostumeIndex}) => {
         selectedCostumeIndex: index,
         vm: state.scratchGui.vm,
         zoomLevelId: targetId,
-        stageMode:state.scratchGui.stageSize.stageMode
+        stageMode: state.scratchGui.stageSize.stageMode
     };
 };
 

@@ -9,7 +9,7 @@ const initialState = defaultVM;
 window.vm = defaultVM;
 const orgDeserializeProject = defaultVM.deserializeProject;
 defaultVM.deserializeProject = function (projectJSON, zip) {
-    if(projectJSON.stageMode && window.store){
+    if (projectJSON.stageMode && window.store){
         window.store.dispatch(setStageSizeMode(projectJSON.stageMode));
     }
     return orgDeserializeProject.apply(this, arguments);

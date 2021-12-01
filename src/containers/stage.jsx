@@ -40,7 +40,8 @@ class Stage extends React.Component {
             'setDragCanvas',
             'clearDragCanvas',
             'drawDragCanvas',
-            'positionDragCanvas'
+            'positionDragCanvas',
+            'stageSizeReSet',
         ]);
         this.state = {
             mouseDownTimeoutId: null,
@@ -96,7 +97,8 @@ class Stage extends React.Component {
             this.props.isFullScreen !== nextProps.isFullScreen ||
             this.state.question !== nextState.question ||
             this.props.micIndicator !== nextProps.micIndicator ||
-            this.props.isStarted !== nextProps.isStarted;
+            this.props.isStarted !== nextProps.isStarted ||
+            this.props.stageCssWidth !== nextProps.stageCssWidth;
     }
     componentDidUpdate (prevProps) {
         if (this.props.isColorPicking && !prevProps.isColorPicking) {
@@ -108,13 +110,8 @@ class Stage extends React.Component {
         this.stageSizeReSet();
         this.renderer.resize(this.rect.width, this.rect.height);
     }
-
-    stageSizeReSet(){
-        const w = window.STAGE_WIDTH / 2;
-        const h = window.STAGE_HEIGHT / 2;
-        this.props.vm.renderer.setStageSize(-w, w, -h, h);
-    }
-
+    
+    
     componentWillUnmount () {
         this.detachMouseEvents(this.canvas);
         this.detachRectEvents();
@@ -124,6 +121,13 @@ class Stage extends React.Component {
     questionListener (question) {
         this.setState({question: question});
     }
+    
+    stageSizeReSet (){
+        const w = window.STAGE_WIDTH / 2;
+        const h = window.STAGE_HEIGHT / 2;
+        this.props.vm.renderer.setStageSize(-w, w, -h, h);
+    }
+
     handleQuestionAnswered (answer) {
         this.setState({question: null}, () => {
             this.props.vm.runtime.emit('ANSWER', answer);
@@ -172,7 +176,7 @@ class Stage extends React.Component {
 
     stageReSize = () => {
         /* eslint-disable no-invalid-this */
-        //this.updateRect();
+        // this.updateRect();
         this.forceUpdate();
     }
 
@@ -219,7 +223,7 @@ class Stage extends React.Component {
                 Math.pow(mousePosition[1] - this.state.mouseDownPosition[1], 2)
             );
             if (distanceFromMouseDown > dragThreshold) {
-                //this.cancelMouseDownTimeout();
+                // this.cancelMouseDownTimeout();
                 this.onStartDrag(...this.state.mouseDownPosition);
                 this._isDown = false;
             }
@@ -250,7 +254,7 @@ class Stage extends React.Component {
     onMouseUp (e) {
         const {x, y} = getEventXY(e);
         const mousePosition = [x - this.rect.left, y - this.rect.top];
-        //this.cancelMouseDownTimeout();
+        // this.cancelMouseDownTimeout();
         if (this._isDown) {
             this.handleDoubleClick(e);
             this._isDown = false;
@@ -301,13 +305,13 @@ class Stage extends React.Component {
             // Immediately update the color picker info
             this.setState({colorInfo: this.getColorInfo(this.pickX, this.pickY)});
         } else {
-            if(!this.props.projectRunning){
+            if (!this.props.projectRunning){
                 const drawableId = this.renderer.pick(mousePosition[0], mousePosition[1]);
                 if (drawableId !== null){
                     const targetId = this.props.vm.getTargetIdForDrawableId(drawableId);
                     if (targetId !== null){
                         const target = this.props.vm.runtime.getTargetById(targetId);
-                        if(window.MODE !== 'teacher' && target.spriteHidden){
+                        if (window.MODE !== 'teacher' && target.spriteHidden){
                             if (e.preventDefault) {
                                 if (document.activeElement && document.activeElement.blur) {
                                     document.activeElement.blur();
@@ -322,7 +326,7 @@ class Stage extends React.Component {
             if (e.button === 0 || (window.TouchEvent && e instanceof TouchEvent)) {
                 this.setState({
                     mouseDown: true,
-                    mouseDownPosition: mousePosition//,
+                    mouseDownPosition: mousePosition// ,
                     // mouseDownTimeoutId: setTimeout(
                     //     this.onStartDrag.bind(this, mousePosition[0], mousePosition[1]),
                     //     400
@@ -475,7 +479,7 @@ class Stage extends React.Component {
                 colorInfo={this.state.colorInfo}
                 dragRef={this.setDragCanvas}
                 question={this.state.question}
-                //onDoubleClick={this.handleDoubleClick}
+                // onDoubleClick={this.handleDoubleClick}
                 onQuestionAnswered={this.handleQuestionAnswered}
                 {...props}
             />
@@ -492,6 +496,7 @@ Stage.propTypes = {
     onDeactivateColorPicker: PropTypes.func,
     stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired,
     stageMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)).isRequired,
+    stageCssWidth: PropTypes.number.isRequired,
     useEditorDragStyle: PropTypes.bool,
     vm: PropTypes.instanceOf(VM).isRequired,
     projectRunning: PropTypes.bool,
@@ -506,6 +511,7 @@ const mapStateToProps = state => ({
     isFullScreen: state.scratchGui.mode.isFullScreen,
     isStarted: state.scratchGui.vmStatus.started,
     micIndicator: state.scratchGui.micIndicator,
+    stageCssWidth: state.scratchGui.stageSize.stageCssWidth,
     // Do not use editor drag style in fullscreen or player mode.
     useEditorDragStyle: !(
         state.scratchGui.mode.isFullScreen ||

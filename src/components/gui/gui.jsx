@@ -42,7 +42,7 @@ import addExtensionIcon from './add.svg';
 import codeIcon from './icon--code.svg';
 import costumesIcon from './icon--costumes.svg';
 import soundsIcon from './icon--sounds.svg';
-
+import resizeBarIcon from './icon--resize-bar.svg';
 import SubmitResultDialog from '../submit-result-dialog/index.jsx';
 import Uploading from '../uploading/index.jsx';
 import Keyboard from '../keyboard/index.jsx';
@@ -53,6 +53,7 @@ import ErrorTips from '../errorTips/index.jsx';
 import SpriteResizer from '../sprite-resizer/index.jsx';
 
 import {param} from '../../lib/param.js';
+import {getEventXY} from '../../lib/touch-utils';
 
 const messages = defineMessages({
     addExtension: {
@@ -65,6 +66,21 @@ const messages = defineMessages({
 // Cache this value to only retrieve it once the first time.
 // Assume that it doesn't change for a session.
 let isRendererSupported = null;
+let _isDown = false;
+let _orgX = 0;
+const _onmousedown = function (e) {
+    _isDown = true;
+    _orgX = getEventXY(e).x;
+    e.preventDefault();
+};
+
+const _onmouseup = function (e) {
+    if(_isDown){
+        _isDown = false;
+        e.preventDefault();
+    }
+   
+};
 
 const mode = param('mode');
 
@@ -144,6 +160,7 @@ const GUIComponent = props => {
         showErrorTips,
         // eslint-disable-next-line no-unused-vars
         setProjectTitle,
+        onResizeStage,
         ...componentProps
     } = omit(props, 'dispatch');
     if (children) {
@@ -162,6 +179,15 @@ const GUIComponent = props => {
     if (isRendererSupported === null) {
         isRendererSupported = Renderer.isSupported();
     }
+
+    const _onmousemove = e => {
+        if (_isDown && onResizeStage){
+            const x = getEventXY(e).x;
+            onResizeStage(x - _orgX);
+            _orgX = x;
+            e.preventDefault();
+        }
+    };
 
     return (<MediaQuery minWidth={layout.fullSizeMinWidth}>{isFullSize => {
         const stageSize = resolveStageSize(stageSizeMode, isFullSize);
@@ -289,7 +315,63 @@ const GUIComponent = props => {
                 </div>
 
                 <Box className={styles.bodyWrapper}>
-                    <Box className={styles.flexWrapper}>
+                    <Box
+                        className={styles.flexWrapper} 
+                        onMouseMove={_onmousemove}
+                        onMouseUp={_onmouseup}
+                        onTouchEnd={_onmouseup}
+                        onTouchMove={_onmousemove}
+                    >
+                        <Box
+                            className={
+                                classNames(
+                                    styles.stageAndTargetWrapper,
+                                    styles[stageSize]
+                                )
+                            }
+                        >
+                            {/* 任务栏 */}
+                            <TaskBar
+                                onProjectTelemetryEvent={onProjectTelemetryEvent}
+                                onStartSelectingFileUpload={onStartSelectingFileUpload}
+                            ></TaskBar>
+                            {showErrorTips && <div
+                                className={styles.errorTips}
+                            >
+                                <ErrorTips
+                                    text={errorText}
+                                ></ErrorTips>
+                            </div>}
+
+                            <StageWrapper
+                                isFullScreen={isFullScreen}
+                                isRendererSupported={isRendererSupported}
+                                isRtl={isRtl}
+                                stageSize={stageSize}
+                                stageMode={stageMode}
+                                vm={vm}
+                            />
+                            {showErrorTips && <div className={styles.warningBorder}></div>}
+                            {/* 移到右边 */}
+                            {/* <Box className={styles.targetWrapper}>
+                                <TargetPane
+                                    stageSize={stageSize}
+                                    vm={vm}
+                                />
+                            </Box> */}
+
+                        </Box>
+                        <img
+                            className={styles.resizeBar}
+                            onMouseDown={_onmousedown}
+                            onTouchStart={_onmousedown}
+                            src={resizeBarIcon} draggable={false}
+                        />
+                        
+                        <WDSpriteList
+                            vm={vm}
+                            stageSize={stageSize}
+                        />
                         <Box className={styles.editorWrapper}>
                             <Tabs
                                 forceRenderTabPanel
@@ -405,52 +487,6 @@ const GUIComponent = props => {
                                 <Backpack host={backpackHost} />
                             ) : null}
                         </Box>
-
-                        <WDSpriteList
-                            vm={vm}
-                            stageSize={stageSize}
-                        />
-
-                        <Box
-                            className={
-                                classNames(
-                                    styles.stageAndTargetWrapper,
-                                    styles[stageSize]
-                                )
-                            }
-                        >
-                            {/* 任务栏 */}
-                            <TaskBar
-                                onProjectTelemetryEvent={onProjectTelemetryEvent}
-                                onStartSelectingFileUpload={onStartSelectingFileUpload}
-                            ></TaskBar>
-                            {showErrorTips && <div
-                                className={styles.errorTips}
-                            >
-                                <ErrorTips
-                                    text={errorText}
-                                ></ErrorTips>
-                            </div>}
-
-                            <StageWrapper
-                                isFullScreen={isFullScreen}
-                                isRendererSupported={isRendererSupported}
-                                isRtl={isRtl}
-                                stageSize={stageSize}
-                                stageMode={stageMode}
-                                vm={vm}
-                            />
-                            {showErrorTips && <div className={styles.warningBorder}></div>}
-                            {/* 移到右边 */}
-                            {/* <Box className={styles.targetWrapper}>
-                                <TargetPane
-                                    stageSize={stageSize}
-                                    vm={vm}
-                                />
-                            </Box> */}
-
-                        </Box>
-
                     </Box>
                 </Box>
                 <DragLayer />
@@ -558,7 +594,7 @@ GUIComponent.defaultProps = {
     loading: false,
     showComingSoon: false,
     stageSizeMode: STAGE_DISPLAY_SIZES.large,
-    stageMode:'portrait_9_16',
+    stageMode: 'portrait_9_16',
     promptTitle: '提示'
 };
 

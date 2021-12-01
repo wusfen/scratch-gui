@@ -48,7 +48,7 @@ StageHeader.propTypes = {
     isPlayerOnly: PropTypes.bool,
     onSetStageUnFull: PropTypes.func.isRequired,
     showBranding: PropTypes.bool,
-    //stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)),
+    // stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)),
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
@@ -60,9 +60,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    //onSetStageLarge: () => dispatch(setStageSize(STAGE_SIZE_MODES.large)),
-    //onSetStageSmall: () => dispatch(setStageSize(STAGE_SIZE_MODES.small)),
-    onSetStageMode:  (mode) => dispatch(setStageSizeMode(mode)),
+    // onSetStageLarge: () => dispatch(setStageSize(STAGE_SIZE_MODES.large)),
+    // onSetStageSmall: () => dispatch(setStageSize(STAGE_SIZE_MODES.small)),
+    onSetStageMode: mode => dispatch(setStageSizeMode(mode)),
     onSetStageFull: () => dispatch(setFullScreen(true)),
     onSetStageUnFull: () => dispatch(setFullScreen(false))
 });

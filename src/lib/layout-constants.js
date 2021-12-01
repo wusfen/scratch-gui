@@ -1,5 +1,5 @@
 import keyMirror from 'keymirror';
-import { string } from 'to-style';
+import {string} from 'to-style';
 
 /**
  * Names for each state of the stage size toggle
@@ -9,21 +9,21 @@ const STAGE_SIZE_MODES = {
     /**
     *竖屏3:4
     */
-    portrait_3_4:'竖屏3:4',
+    portrait_3_4: '竖屏3:4',
 
     /**
     *竖屏9:16
     */
-    portrait_9_16:'竖屏9:16',
+    portrait_9_16: '竖屏9:16',
 
     /**
     *横屏4:3
     */
-    landscape_4_3:'横屏4:3',
+    landscape_4_3: '横屏4:3',
     /**
     *横屏16:9
     */
-    landscape_16_9:'横屏16:9',
+    landscape_16_9: '横屏16:9',
 };
 
 /**
@@ -74,77 +74,10 @@ window.STAGE_CSS_WIDTH = window.STAGE_UI_WIDTH;
 //     }
 // }
 
-const htmlEl = document.documentElement;
+// const htmlEl = document.documentElement;
 // htmlEl.style.setProperty('--STAGE_WIDTH', window.STAGE_WIDTH);
 // htmlEl.style.setProperty('--STAGE_HEIGHT', window.STAGE_HEIGHT);
 
-
-// eslint-disable-next-line require-jsdoc, func-style
-function resize (mode) {
-    if (/\b(player\.html|mode=player)\b/.test(location)){
-        mode = (typeof mode == 'string')?mode:(window.store?window.store.getState().scratchGui.stageSize.stageMode:'portrait_9_16');
-        window.STAGE_CSS_WIDTH = window.innerWidth;
-        switch(mode){
-            case  'portrait_3_4':
-                if (window.STAGE_CSS_WIDTH * (4 / 3) > window.innerHeight){
-                    window.STAGE_CSS_WIDTH = window.innerHeight * 3 / 4;
-                }
-                break;
-            case 'landscape_4_3':
-                if (window.STAGE_CSS_WIDTH * (3 / 4) > window.innerHeight){
-                    window.STAGE_CSS_WIDTH = window.innerHeight * 4 / 3;
-                }
-                break;
-            case 'landscape_16_9':
-                if (window.STAGE_CSS_WIDTH * (9 / 16) > window.innerHeight){
-                    window.STAGE_CSS_WIDTH = window.innerHeight * 16 / 9;
-                }
-                break;
-            default:
-                if (window.STAGE_CSS_WIDTH * (16 / 9) > window.innerHeight){
-                    window.STAGE_CSS_WIDTH = window.innerHeight * 9 / 16;
-                }
-                break;
-        }
-    } else {
-        window.STAGE_CSS_WIDTH = Math.min(
-            // window.STAGE_WIDTH,
-            window.STAGE_UI_WIDTH / (window.UI_WIDTH / htmlEl.clientWidth),
-            window.STAGE_UI_WIDTH / (window.UI_HEIGHT / htmlEl.clientHeight)
-        );
-
-    }
-
-    // document.documentElement.style.setProperty(
-    //     '--STAGE_CSS_WIDTH',
-    //     window.STAGE_CSS_WIDTH
-    // );
-}
-resize();
-addEventListener('resize', resize);
-
-
-const doneConstants = function(mode){
-    resize(mode);
-    switch(mode){
-        case  'portrait_3_4':
-            window.STAGE_WIDTH = 500;
-            window.STAGE_HEIGHT = 667;
-            break;
-        case 'landscape_4_3':
-            window.STAGE_WIDTH = 889;
-            window.STAGE_HEIGHT = 667;
-            break;
-        case 'landscape_16_9':
-            window.STAGE_WIDTH = 1186;
-            window.STAGE_HEIGHT = 667;
-            break;
-        default:
-            window.STAGE_WIDTH = 375;
-            window.STAGE_HEIGHT = 667;
-            break;
-    }
-}
 
 export default {
     standardStageWidth: window.STAGE_WIDTH,
@@ -158,5 +91,4 @@ export {
     STAGE_DISPLAY_SCALES,
     STAGE_DISPLAY_SIZES,
     STAGE_SIZE_MODES,
-    doneConstants,
 };

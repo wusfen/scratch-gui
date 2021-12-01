@@ -83,7 +83,7 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
                 initialState,
                 enhancer
             );
-            //全面引用
+            // 全局引用
             window.store = this.store;
         }
         componentDidUpdate (prevProps) {

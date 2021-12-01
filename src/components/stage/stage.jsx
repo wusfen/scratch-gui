@@ -148,6 +148,7 @@ StageComponent.propTypes = {
     question: PropTypes.string,
     stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired,
     stageMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)).isRequired,
+    stageCssWidth: PropTypes.number.isRequired,
     useEditorDragStyle: PropTypes.bool
 };
 StageComponent.defaultProps = {

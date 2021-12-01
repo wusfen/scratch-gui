@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 import classNames from 'classnames';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
 import PropTypes from 'prop-types';
@@ -12,8 +13,8 @@ import {getStageDimensions} from '../../lib/screen-utils';
 import {STAGE_SIZE_MODES} from '../../lib/layout-constants';
 
 import fullScreenIcon from './icon--fullscreen.svg';
-//import largeStageIcon from './icon--large-stage.svg';
-//import smallStageIcon from './icon--small-stage.svg';
+// import largeStageIcon from './icon--large-stage.svg';
+// import smallStageIcon from './icon--small-stage.svg';
 import unFullScreenIcon from './icon--unfullscreen.svg';
 import downUpIcon from './icon--pull-down-up.svg';
 import scratchLogo from '../menu-bar/scratch-logo.svg';
@@ -52,8 +53,8 @@ const StageHeaderComponent = function (props) {
         isFullScreen,
         isPlayerOnly,
         onKeyPress,
-        //onSetStageLarge,
-        //onSetStageSmall,
+        // onSetStageLarge,
+        // onSetStageSmall,
         onSetStageFull,
         onSetStageUnFull,
         showBranding,
@@ -107,33 +108,41 @@ const StageHeaderComponent = function (props) {
         );
     } else {
         const stageModeItem = []; 
-        if(!isPlayerOnly){
-           for (const key in STAGE_SIZE_MODES) {
-               //if(stageMode !== key){
+        if (!isPlayerOnly){
+       
+            for (const key in STAGE_SIZE_MODES) {
                 stageModeItem.push(<div key={key}>
                     <Button
                         type="button"
                         className={classNames(styles.stageModeItem)}
                         name={key}
-                        onClick={()=> {onSetStageMode(key); stageModeContent?stageModeContent.style = 'display:none':null}}
+                        onClick={() => {
+                            onSetStageMode(key); stageModeContent ? stageModeContent.style = 'display:none' : null;
+                        }}
                     >
                         {STAGE_SIZE_MODES[key]}
                     </Button>
-                </div>)
-               //}
-           }
+                </div>);
+            }
         }
         const stageControls =
             isPlayerOnly ? (
                 []
             ) : (
                 <div className={classNames(styles.stageSizeModeGroup)}>
-                    <div className={classNames(styles.stageModeContent)} ref={ref=>stageModeContent = ref}>
+                    <div
+                        className={classNames(styles.stageModeContent)}
+                        ref={ref => {
+                            stageModeContent = ref; 
+                        }}
+                    >
                         {stageModeItem}
                     </div>
                     <div
                         className={classNames(styles.stageMode)}
-                        onMouseEnter={()=>stageModeContent?stageModeContent.style = null:null}
+                        onMouseEnter={() => {
+                            stageModeContent ? stageModeContent.style = null : null; 
+                        }}
                     >
                         {STAGE_SIZE_MODES[stageMode]}
                         <img src={downUpIcon} />
@@ -174,7 +183,7 @@ const StageHeaderComponent = function (props) {
 
 const mapStateToProps = state => ({
     // This is the button's mode, as opposed to the actual current state
-    //stageSizeMode: state.scratchGui.stageSize.stageSize
+    // stageSizeMode: state.scratchGui.stageSize.stageSize
 });
 
 StageHeaderComponent.propTypes = {

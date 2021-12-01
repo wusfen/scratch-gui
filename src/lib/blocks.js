@@ -145,7 +145,7 @@ export default function (vm) {
                     if (target === vm.editingTarget) {
                         continue;
                     }
-                    if(window.MODE !== 'teacher' && target.spriteHidden){
+                    if (window.MODE !== 'teacher' && target.spriteHidden){
                         continue;
                     }
                     sprites.push([target.sprite.name, target.sprite.name]);

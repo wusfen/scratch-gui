@@ -31,7 +31,10 @@ const StageWrapperComponent = function (props) {
             )}
             dir={isRtl ? 'rtl' : 'ltr'}
         >
-            <Box className={styles.stageCanvasWrapper}>
+            <Box
+                className={styles.stageCanvasWrapper}
+                id="stageCanvasWrapper"
+            >
                 {
                     isRendererSupported ?
                         <Stage
