@@ -2,20 +2,20 @@
 @import "../../css/colors.css";
 @import "../../css/z-index.css";
 
-$stage-js-width: var(--STAGE_WIDTH, 375);
+/* $stage-js-width: var(--STAGE_WIDTH, 375);
 $stage-js-height: var(--STAGE_HEIGHT, 667);
 $stage-css-width: var(--STAGE_CSS_WIDTH, 357);
 $stage-css-height: calc(
     $stage-css-width / ($stage-js-width / $stage-js-height)
 );
 $stage-width: calc($stage-css-width * 1px);
-$stage-height: calc($stage-css-height * 1px);
+$stage-height: calc($stage-css-height * 1px); */
 
 .stage-wrapper {
     position: relative;
 
-    width: $stage-width;
-    height: $stage-height;
+    /* width: $stage-width;
+    height: $stage-height; */
 }
 
 .stage {

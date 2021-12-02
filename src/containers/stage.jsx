@@ -6,7 +6,7 @@ import Renderer from '../spine/ExRenderWebGL';
 import VM from 'scratch-vm';
 import {connect} from 'react-redux';
 
-import layout, {STAGE_DISPLAY_SIZES} from '../lib/layout-constants';
+import layout, {STAGE_DISPLAY_SIZES, STAGE_SIZE_MODES} from '../lib/layout-constants';
 import {getEventXY} from '../lib/touch-utils';
 import VideoProvider from '../lib/video/video-provider';
 import {BitmapAdapter as V2BitmapAdapter} from 'scratch-svg-renderer';
@@ -41,7 +41,8 @@ class Stage extends React.Component {
             'setDragCanvas',
             'clearDragCanvas',
             'drawDragCanvas',
-            'positionDragCanvas'
+            'positionDragCanvas',
+            'stageSizeReSet',
         ]);
         this.state = {
             mouseDownTimeoutId: null,
@@ -91,12 +92,14 @@ class Stage extends React.Component {
     }
     shouldComponentUpdate (nextProps, nextState) {
         return this.props.stageSize !== nextProps.stageSize ||
+            this.props.stageMode !== nextProps.stageMode ||
             this.props.isColorPicking !== nextProps.isColorPicking ||
             this.state.colorInfo !== nextState.colorInfo ||
             this.props.isFullScreen !== nextProps.isFullScreen ||
             this.state.question !== nextState.question ||
             this.props.micIndicator !== nextProps.micIndicator ||
-            this.props.isStarted !== nextProps.isStarted;
+            this.props.isStarted !== nextProps.isStarted ||
+            this.props.stageCssWidth !== nextProps.stageCssWidth;
     }
     componentDidUpdate (prevProps) {
         if (this.props.isColorPicking && !prevProps.isColorPicking) {
@@ -105,8 +108,11 @@ class Stage extends React.Component {
             this.stopColorPickingLoop();
         }
         this.updateRect();
+        this.stageSizeReSet();
         this.renderer.resize(this.rect.width, this.rect.height);
     }
+    
+    
     componentWillUnmount () {
         this.detachMouseEvents(this.canvas);
         this.detachRectEvents();
@@ -116,6 +122,13 @@ class Stage extends React.Component {
     questionListener (question) {
         this.setState({question: question});
     }
+    
+    stageSizeReSet (){
+        const w = window.STAGE_WIDTH / 2;
+        const h = window.STAGE_HEIGHT / 2;
+        this.props.vm.renderer.setStageSize(-w, w, -h, h);
+    }
+
     handleQuestionAnswered (answer) {
         this.setState({question: null}, () => {
             this.props.vm.runtime.emit('ANSWER', answer);
@@ -164,7 +177,7 @@ class Stage extends React.Component {
 
     stageReSize = () => {
         /* eslint-disable no-invalid-this */
-        this.updateRect();
+        // this.updateRect();
         this.forceUpdate();
     }
 
@@ -483,6 +496,8 @@ Stage.propTypes = {
     onActivateColorPicker: PropTypes.func,
     onDeactivateColorPicker: PropTypes.func,
     stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired,
+    stageMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)).isRequired,
+    stageCssWidth: PropTypes.number.isRequired,
     useEditorDragStyle: PropTypes.bool,
     vm: PropTypes.instanceOf(VM).isRequired,
     projectRunning: PropTypes.bool,
@@ -497,6 +512,7 @@ const mapStateToProps = state => ({
     isFullScreen: state.scratchGui.mode.isFullScreen,
     isStarted: state.scratchGui.vmStatus.started,
     micIndicator: state.scratchGui.micIndicator,
+    stageCssWidth: state.scratchGui.stageSize.stageCssWidth,
     // Do not use editor drag style in fullscreen or player mode.
     useEditorDragStyle: !(
         state.scratchGui.mode.isFullScreen ||

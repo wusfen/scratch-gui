@@ -3,7 +3,7 @@ import React from 'react';
 import bindAll from 'lodash.bindall';
 import VM from 'scratch-vm';
 import {STAGE_SIZE_MODES} from '../lib/layout-constants';
-import {setStageSize} from '../reducers/stage-size';
+import {setStageSizeMode} from '../reducers/stage-size';
 import {setFullScreen} from '../reducers/mode';
 
 import {connect} from 'react-redux';
@@ -15,7 +15,7 @@ class StageHeader extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
-            'handleKeyPress'
+            'handleKeyPress',
         ]);
     }
     componentDidMount () {
@@ -29,6 +29,7 @@ class StageHeader extends React.Component {
             this.props.onSetStageUnFull(false);
         }
     }
+
     render () {
         const {
             ...props
@@ -47,20 +48,21 @@ StageHeader.propTypes = {
     isPlayerOnly: PropTypes.bool,
     onSetStageUnFull: PropTypes.func.isRequired,
     showBranding: PropTypes.bool,
-    stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)),
+    // stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)),
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
 const mapStateToProps = state => ({
-    stageSizeMode: state.scratchGui.stageSize.stageSize,
+    // stageSizeMode: state.scratchGui.stageSize.stageSize,
     showBranding: state.scratchGui.mode.showBranding,
     isFullScreen: state.scratchGui.mode.isFullScreen,
     isPlayerOnly: state.scratchGui.mode.isPlayerOnly
 });
 
 const mapDispatchToProps = dispatch => ({
-    onSetStageLarge: () => dispatch(setStageSize(STAGE_SIZE_MODES.large)),
-    onSetStageSmall: () => dispatch(setStageSize(STAGE_SIZE_MODES.small)),
+    // onSetStageLarge: () => dispatch(setStageSize(STAGE_SIZE_MODES.large)),
+    // onSetStageSmall: () => dispatch(setStageSize(STAGE_SIZE_MODES.small)),
+    onSetStageMode: mode => dispatch(setStageSizeMode(mode)),
     onSetStageFull: () => dispatch(setFullScreen(true)),
     onSetStageUnFull: () => dispatch(setFullScreen(false))
 });

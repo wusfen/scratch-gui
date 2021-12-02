@@ -1,8 +1,7 @@
 .list {
     flex: none;
-    order: 1;
     width: 5.25rem;
-    margin-left: 0.75rem;
+    margin-left: 0.1rem;
     background: #B9EBFF;
     box-shadow: 0rem 0.03rem 0.66rem 0rem rgba(0, 145, 255, 0.29);
     border-radius: 0.63rem 0rem 0rem 0.63rem;
