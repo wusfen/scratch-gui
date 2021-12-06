@@ -11,29 +11,36 @@
         <title>豌豆编程</title>
 
         <script>
-            var version = <%= htmlWebpackPlugin.options.version %>
+            var version = "<%= htmlWebpackPlugin.options.version %>";
+            var env = "prod";
+            if (/\b(base=uat)\b/.test(location)) env = "uat";
+            if (/\buat\b/.test(location.origin + location.pathname)) {
+                env = "uat";
+            }
+            if (/[01]|localhost/.test(location.origin)) {
+                env = "dev";
+            }
+            console.info("version", version);
+            console.info("env", env);
         </script>
         <!-- arms -->
         <script>
             // prettier-ignore
             !(function (isOpen) {
-                var getEnv = function () {
-                    if (/\b(base=uat)\b/.test(location)) return "pre"
-                    if (/\/uat\/|\/uat-/.test(location)) return "pre";
+                var environment = {
+                    prod: 'prod',
+                    uat: 'pre',
+                    dev: 'local'
+                }[env]
 
-                    if (/^https?:\/\/(1|localhost)/.test(location)) return "local"
-
-                    return "prod";
-                }
-                var env = getEnv()
-
-                if (/^(local)$/.test(env)) {
+                if (/^(local)$/.test(environment)) {
                     isOpen = false
                 }
 
                 if (!isOpen) return;
                 window.__bl = {
                     config: {
+                        uid: location.href.match(/userId=([^?=&#]+)|$/)[1],
                         pid: "gkyqs22ip2@a43327012ba9615",
                         appType: "web",
                         imgUrl: "https://arms-retcode.aliyuncs.com/r.png?",
@@ -49,7 +56,7 @@
                         ],
                         apiHelper: [
                         ],
-                        environment: env
+                        environment: environment
                     }
                 };
                 var script = document.createElement("script");
@@ -102,7 +109,7 @@
             }
 
             if ("ontouchstart" in window) {
-                if (/\/(dev|uat)\/|[?&#]f12\b/.test(location)) {
+                if (/dev|uat/.test(env)) {
                     loadConsole();
                     console.f12 = 1;
                 }

@@ -174,7 +174,7 @@ const config = {
                 null,
             title: '',
             PUBLIC_PATH: process.env.PUBLIC_PATH || '',
-            version: `"${version}"`,
+            version: `${version}`,
         }),
         new HtmlWebpackPlugin({
             chunks: ['lib', 'gui'],
@@ -184,7 +184,7 @@ const config = {
                 null,
             title: '',
             PUBLIC_PATH: process.env.PUBLIC_PATH || '',
-            version: `"${version}"`,
+            version: `${version}`,
             filename: `index.${version}.html`,
         }),
         new HtmlWebpackPlugin({
@@ -193,7 +193,7 @@ const config = {
             filename: 'player.html',
             title: '',
             PUBLIC_PATH: process.env.PUBLIC_PATH || '',
-            version: `"${version}"`,
+            version: `${version}`,
         }),
         new HtmlWebpackPlugin({
             chunks: ['lib', 'player'],
@@ -201,7 +201,7 @@ const config = {
             filename: `player.${version}.html`,
             title: '',
             PUBLIC_PATH: process.env.PUBLIC_PATH || '',
-            version: `"${version}"`,
+            version: `${version}`,
         }),
         new CopyWebpackPlugin([
             {
