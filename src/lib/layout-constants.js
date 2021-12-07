@@ -68,6 +68,11 @@ htmlEl.style.setProperty('--STAGE_HEIGHT', window.STAGE_HEIGHT);
 
 // eslint-disable-next-line require-jsdoc, func-style
 function resize () {
+    // fix: android input focus
+    if (/input/i.test(document.activeElement.tagName)) {
+        return;
+    }
+
     if (/\b(player\.html|mode=player)\b/.test(location)){
         window.STAGE_CSS_WIDTH = window.innerWidth;
         if (window.STAGE_CSS_WIDTH * (16 / 9) > window.innerHeight){
@@ -82,10 +87,9 @@ function resize () {
 
     }
 
-    document.documentElement.style.setProperty(
-        '--STAGE_CSS_WIDTH',
-        window.STAGE_CSS_WIDTH
-    );
+    htmlEl.style.setProperty('--STAGE_CSS_WIDTH', window.STAGE_CSS_WIDTH);
+    htmlEl.style.setProperty('--window-width', window.innerWidth);
+    htmlEl.style.setProperty('--window-height', window.innerHeight);
 }
 resize();
 addEventListener('resize', resize);

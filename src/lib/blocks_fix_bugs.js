@@ -403,12 +403,19 @@ export default function (Blockly){
         var workspaceResizeHandler = Blockly.bindEventWithChecks_(window, 'resize',
             null,
             function() {
+              // fix: 积木调起软键盘后马上被收起，无法进行输入
+              if (/input/i.test(document.activeElement?.tagName)) {
+                document.activeElement.dispatchEvent(new Event('input'))
+                document.activeElement.scrollIntoView({block:"center", behavior:'smooth'})
+                return
+              }
+
               Blockly.hideChaffOnResize(true);
               const scale = Blockly.getFitScale();
               mainWorkspace.options.zoomOptions.startScale = scale;
               mainWorkspace.setScale(scale);
               Blockly.svgResize(mainWorkspace);
-              mainWorkspace.scrollCenter();
+              // mainWorkspace.scrollCenter();
              //const toolbox = mainWorkspace.toolbox_;
              if(mainWorkspace.toolbox_ && mainWorkspace.toolbox_.flyout_){
                 const flyout = mainWorkspace.toolbox_.flyout_;
