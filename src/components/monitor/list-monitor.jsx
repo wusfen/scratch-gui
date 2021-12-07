@@ -45,6 +45,7 @@ const ListMonitor = ({draggable, label, width, height, value, onResizeMouseDown,
             <div
                 className={classNames(draggable ? styles.resizeHandle : null, 'no-drag')}
                 onMouseDown={draggable ? onResizeMouseDown : null}
+                onTouchStart={draggable ? onResizeMouseDown : null}
             >
                 {'=' /* TODO waiting on asset */}
             </div>

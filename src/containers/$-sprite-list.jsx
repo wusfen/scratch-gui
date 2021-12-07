@@ -152,7 +152,10 @@ class TargetPane$ extends React.Component {
             // }, 1);
         }
         window.dispatchEvent(new Event('selectSprite'));
-        document.querySelector('[role="tablist"]').children[0].click();
+        const timer = setTimeout(() => {
+            document.querySelector('[role="tablist"]').children[0].click();
+            clearTimeout(timer);
+        }, 10);
     }
     handleSurpriseSpriteClick () {
         const surpriseSprites = spriteLibraryContent.filter(sprite =>
