@@ -192,6 +192,7 @@ class Component extends React.Component{
                         styles.isPlayerOnly : styles.commonContainer
                 )}
                 onTouchEnd={e => e.preventDefault()}
+                onContextMenu={e => e.preventDefault()}
             >
                 <div
                     hidden={!(hasArrow)}
