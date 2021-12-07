@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import bindAll from 'lodash.bindall';
 import {connect} from 'react-redux';
+import VM from 'scratch-vm';
 
 import {getEventXY} from '../../lib/touch-utils';
 import {param} from '../../lib/param';
@@ -33,7 +34,7 @@ class Component extends React.Component{
             downRotate: 90,
             downSize: 100,
 
-            isShow: false,
+            canvas: props.vm.renderer.canvas,
             target: null,
 
             isTeacherMode: param('mode') === 'teacher',
@@ -41,7 +42,7 @@ class Component extends React.Component{
 
         bindAll(this, [
             'pick',
-            'update',
+            'show',
             'handleDown',
             'handleRotate',
             'handleResize',
@@ -50,43 +51,67 @@ class Component extends React.Component{
         ]);
 
         // setTarget
-        addEventListener('mousedown', e => setTimeout(_ => this.pick(e), 1), true);
-        addEventListener('touchstart', e => setTimeout(_ => this.pick(e), 1), true);
+        const canvas = this.state.canvas;
+        canvas.addEventListener('mousedown', this.pick, true);
+        canvas.addEventListener('touchstart', this.pick, true);
+        addEventListener('mouseup', this.show);
+        addEventListener('touchend', this.show);
 
-        // TODO to canvas
+        // down info
         addEventListener('mousedown', this.handleDown);
         addEventListener('touchstart', this.handleDown);
+
+        // update
         addEventListener('mousemove', this.handleMove);
         addEventListener('touchmove', this.handleMove);
+
+        // unset
         addEventListener('mouseup', this.handleUp);
         addEventListener('touchend', this.handleUp);
 
     }
+    componentWillUnmount () {
+        const canvas = this.state.canvas;
+        canvas.removeEventListener('mousedown', this.pick, true);
+        canvas.removeEventListener('touchstart', this.pick, true);
+        removeEventListener('mouseup', this.show);
+        removeEventListener('touchend', this.show);
+
+        removeEventListener('mousedown', this.handleDown);
+        removeEventListener('touchstart', this.handleDown);
+
+        removeEventListener('mousemove', this.handleMove);
+        removeEventListener('touchmove', this.handleMove);
+
+        removeEventListener('mouseup', this.handleUp);
+        removeEventListener('touchend', this.handleUp);
+    }
     pick (e) {
-        var state = this.state;
+        const state = this.state;
         if (state.isRotateDown) return;
         if (state.isResizeDown) return;
 
-        this.setState({
-            isShow: false,
-            target: null,
-        });
-
-        // TODO window
-        var vm = window.vm;
+        const vm = this.props.vm;
         this.renderer = vm.renderer;
         this.rect = vm.renderer.canvas.getBoundingClientRect();
 
         const {x, y} = getEventXY(e);
         const mousePosition = [x - this.rect.left, y - this.rect.top];
         const drawableId = this.renderer.pick(mousePosition[0], mousePosition[1]);
-        if (drawableId === null) return;
         const targetId = vm.getTargetIdForDrawableId(drawableId);
-        const target = vm.runtime.getTargetById(targetId);
+        let target = vm.runtime.getTargetById(targetId);
 
+        var isSprite = target?.isSprite();
+        var isHidden = !state.isTeacherMode && target?.getName().match(/^#.*\*$/);
+        if (!isSprite || isHidden) {
+            target = null;
+        }
+
+        // console.log('pick target:', target);
         this.setState({
             target,
         });
+        this.show();
     }
     // 舞台坐标转页面坐标
     getPos ({x, y}) {
@@ -114,25 +139,16 @@ class Component extends React.Component{
     getDistance (A, B) {
         return Math.sqrt(Math.pow(A.x - B.x, 2) + Math.pow(A.y - B.y, 2));
     }
-    update (target = this.state.target) {
-        var state = this.state;
-
-        var isSprite = target?.isSprite();
-        var isHidden = !state.isTeacherMode && target?.getName().match(/^#.*\*$/);
-
-        if (!isSprite || isHidden) {
-            this.setState({
-                isShow: false,
-            });
+    show () {
+        const state = this.state;
+        const target = this.state.target;
+        if (!target) {
             return;
         }
 
         var targetDrawable = target.renderer._allDrawables[target.drawableID];
         var skin = targetDrawable._skin;
 
-        this.setState({
-            target
-        });
         var xy = this.getPos(target);
 
         this.canvasRect = target.renderer.canvas.getBoundingClientRect();
@@ -145,7 +161,6 @@ class Component extends React.Component{
         });
 
         this.setState({
-            isShow: true,
             ...xy,
             rotate: target.direction,
             rotationCenterX: rotationCenter.x,
@@ -200,7 +215,6 @@ class Component extends React.Component{
         // render
         this.state.target.setDirection(rotate);
         this.setState({
-            isShow: true,
             rotate,
         });
 
@@ -225,7 +239,6 @@ class Component extends React.Component{
         // render
         this.state.target.setSize(size);
         this.setState({
-            isShow: true,
             size,
         });
     }
@@ -233,16 +246,19 @@ class Component extends React.Component{
         this.handleRotate(e);
         this.handleResize(e);
     }
-    handleUp () {
+    handleUp (e) {
+        const state = this.state;
+
+        if (e.target !== state.canvas && !(state.isResizeDown || state.isRotateDown)) {
+            this.setState({
+                target: null
+            });
+        }
 
         this.setState({
             isRotateDown: false,
             isResizeDown: false,
         });
-
-        setTimeout(() => {
-            this.update();
-        }, 100);
     }
     render () {
         const {
@@ -252,13 +268,13 @@ class Component extends React.Component{
         } = this.props;
 
         const {
-            isShow,
+            target,
             ...state
         } = this.state;
 
         return (
             <div
-                hidden={!(isShow && !projectRunning)}
+                hidden={!(target && !projectRunning)}
                 className={classNames(c.container)}
                 style={{
                     left: state.x,
@@ -294,11 +310,13 @@ class Component extends React.Component{
 Component.propTypes = {
     children: PropTypes.node,
     projectRunning: PropTypes.bool.isRequired,
+    vm: PropTypes.instanceOf(VM).isRequired,
 };
 
 
 const mapStateToProps = state => ({
     projectRunning: state.scratchGui.vmStatus.running,
+    vm: state.scratchGui.vm,
 });
 const mapDispatchToProps = () => ({
 });
