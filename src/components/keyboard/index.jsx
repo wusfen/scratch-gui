@@ -14,6 +14,7 @@ class Component extends React.Component{
 
         this.state = {
             isShow: !false,
+            currentKey: null,
             keys: [],
             sortKeys: []
         };
@@ -27,6 +28,15 @@ class Component extends React.Component{
             'handleArrowMove',
             'handleArrowEnd',
         ]);
+
+        // fix: 鼠标按下后停止全部脚本后，虚拟键盘隐藏监听不到弹起
+        addEventListener('mouseup', e => {
+            if (this.state.currentKey) {
+                setTimeout(() => {
+                    this.upKey(this.state.currentKey);
+                }, 4 + 11);
+            }
+        });
     }
     getKeys () {
         const vm = this.props.vm;
@@ -124,13 +134,10 @@ class Component extends React.Component{
 
         const name = e.target.innerHTML.trim();
         const key = this.toEventKey(name);
-        // console.log('handleMouseDown:', name, key, e);
 
         // down
-        const keydownEvent = new Event('keydown');
-        keydownEvent.key = key;
         setTimeout(() => {
-            document.dispatchEvent(keydownEvent);
+            this.downKey(key);
         }, 0);
     }
     handleMouseUp (e) {
@@ -139,14 +146,23 @@ class Component extends React.Component{
 
         const name = e.target.innerHTML.trim();
         const key = this.toEventKey(name);
-        // console.log('handleMouseUp:', name, key, e);
 
         // up
+        setTimeout(() => {
+            this.upKey(key);
+        }, 4 + 11);
+    }
+    downKey (key) {
+        this.setState({currentKey: key});
+        const keydownEvent = new Event('keydown');
+        keydownEvent.key = key;
+        document.dispatchEvent(keydownEvent);
+    }
+    upKey (key) {
+        this.setState({currentKey: null});
         const keyupEvent = new Event('keyup');
         keyupEvent.key = key;
-        setTimeout(() => {
-            document.dispatchEvent(keyupEvent);
-        }, 4 + 11);
+        document.dispatchEvent(keyupEvent);
     }
     handleClick (e) {
         const target = e.target; // keep
