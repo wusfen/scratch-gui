@@ -1,0 +1,878 @@
+[
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "77307143b4a8df05f5eeb8c0977d177b",
+        "name": "数学",
+        "bitmapResolution": 2,
+        "md5ext": "77307143b4a8df05f5eeb8c0977d177b.png",
+        "dataFormat": "png",
+        "rotationCenterX": 79.5,
+        "rotationCenterY": 86
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "8b779f49877a00619a8ac1563ad3e28f",
+        "name": "英语",
+        "bitmapResolution": 2,
+        "md5ext": "8b779f49877a00619a8ac1563ad3e28f.png",
+        "dataFormat": "png",
+        "rotationCenterX": 79.5,
+        "rotationCenterY": 86
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "fa616f5339657eb7e89a5dae2555f094",
+        "name": "语文",
+        "bitmapResolution": 2,
+        "md5ext": "fa616f5339657eb7e89a5dae2555f094.png",
+        "dataFormat": "png",
+        "rotationCenterX": 79.5,
+        "rotationCenterY": 86
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "90fe02ca9993f6061bd50a18fb4703c8",
+        "name": "大象喷水01",
+        "bitmapResolution": 2,
+        "md5ext": "90fe02ca9993f6061bd50a18fb4703c8.png",
+        "dataFormat": "png",
+        "rotationCenterX": 139,
+        "rotationCenterY": 158
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "80f27bfa963f5c8bf6656db3e8b8d7e5",
+        "name": "大象喷水02",
+        "bitmapResolution": 2,
+        "md5ext": "80f27bfa963f5c8bf6656db3e8b8d7e5.png",
+        "dataFormat": "png",
+        "rotationCenterX": 139,
+        "rotationCenterY": 158
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "717ffe0eff33091821e3818e02993663",
+        "name": "大象喷水03",
+        "bitmapResolution": 2,
+        "md5ext": "717ffe0eff33091821e3818e02993663.png",
+        "dataFormat": "png",
+        "rotationCenterX": 139,
+        "rotationCenterY": 158
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "05f10e8a5e370b75ce44fb6b2475b5e2",
+        "name": "大象喷水04",
+        "bitmapResolution": 2,
+        "md5ext": "05f10e8a5e370b75ce44fb6b2475b5e2.png",
+        "dataFormat": "png",
+        "rotationCenterX": 139,
+        "rotationCenterY": 158
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "e1b9e7f8b234b14f424e73d998208a9e",
+        "name": "大象喷水05",
+        "bitmapResolution": 2,
+        "md5ext": "e1b9e7f8b234b14f424e73d998208a9e.png",
+        "dataFormat": "png",
+        "rotationCenterX": 139,
+        "rotationCenterY": 158
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "ae227869e940bede5a7b35a75acfbfb9",
+        "name": "大象喷水06",
+        "bitmapResolution": 2,
+        "md5ext": "ae227869e940bede5a7b35a75acfbfb9.png",
+        "dataFormat": "png",
+        "rotationCenterX": 139,
+        "rotationCenterY": 158
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "b359f218dce2fca9bd06c7be6c95c8bc",
+        "name": "大象喷水07",
+        "bitmapResolution": 2,
+        "md5ext": "b359f218dce2fca9bd06c7be6c95c8bc.png",
+        "dataFormat": "png",
+        "rotationCenterX": 139,
+        "rotationCenterY": 158
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "6272530bd665cf57e2992a5660c8e6c5",
+        "name": "大象喷水08",
+        "bitmapResolution": 2,
+        "md5ext": "6272530bd665cf57e2992a5660c8e6c5.png",
+        "dataFormat": "png",
+        "rotationCenterX": 139,
+        "rotationCenterY": 158
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "27bc6e804e47e8e085f5c93f09640e9b",
+        "name": "大象喷水09",
+        "bitmapResolution": 2,
+        "md5ext": "27bc6e804e47e8e085f5c93f09640e9b.png",
+        "dataFormat": "png",
+        "rotationCenterX": 139,
+        "rotationCenterY": 158
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "6f344050d98acdde83d604ce98b31808",
+        "name": "小熊跳绳01",
+        "bitmapResolution": 2,
+        "md5ext": "6f344050d98acdde83d604ce98b31808.png",
+        "dataFormat": "png",
+        "rotationCenterX": 117,
+        "rotationCenterY": 140
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "82c537df3bc60773ce8b0490c2108504",
+        "name": "小熊跳绳02",
+        "bitmapResolution": 2,
+        "md5ext": "82c537df3bc60773ce8b0490c2108504.png",
+        "dataFormat": "png",
+        "rotationCenterX": 117,
+        "rotationCenterY": 140
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "2bf8a3ec229c75143afffd690d7305f6",
+        "name": "小熊跳绳03",
+        "bitmapResolution": 2,
+        "md5ext": "2bf8a3ec229c75143afffd690d7305f6.png",
+        "dataFormat": "png",
+        "rotationCenterX": 117,
+        "rotationCenterY": 140
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "6f344050d98acdde83d604ce98b31808",
+        "name": "小熊跳绳04",
+        "bitmapResolution": 2,
+        "md5ext": "6f344050d98acdde83d604ce98b31808.png",
+        "dataFormat": "png",
+        "rotationCenterX": 117,
+        "rotationCenterY": 140
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "82c537df3bc60773ce8b0490c2108504",
+        "name": "小熊跳绳05",
+        "bitmapResolution": 2,
+        "md5ext": "82c537df3bc60773ce8b0490c2108504.png",
+        "dataFormat": "png",
+        "rotationCenterX": 117,
+        "rotationCenterY": 140
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "2bf8a3ec229c75143afffd690d7305f6",
+        "name": "小熊跳绳06",
+        "bitmapResolution": 2,
+        "md5ext": "2bf8a3ec229c75143afffd690d7305f6.png",
+        "dataFormat": "png",
+        "rotationCenterX": 117,
+        "rotationCenterY": 140
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "d2bf48a07c002cdc8cf14591cd77d5ba",
+        "name": "小熊跳绳07",
+        "bitmapResolution": 2,
+        "md5ext": "d2bf48a07c002cdc8cf14591cd77d5ba.png",
+        "dataFormat": "png",
+        "rotationCenterX": 117,
+        "rotationCenterY": 140
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "6800219e5aee594e9593ce68a5a5bedd",
+        "name": "小熊跳绳08",
+        "bitmapResolution": 2,
+        "md5ext": "6800219e5aee594e9593ce68a5a5bedd.png",
+        "dataFormat": "png",
+        "rotationCenterX": 117,
+        "rotationCenterY": 140
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "58611ff5f36f8ce63a194949efb21dd7",
+        "name": "小熊跳绳09",
+        "bitmapResolution": 2,
+        "md5ext": "58611ff5f36f8ce63a194949efb21dd7.png",
+        "dataFormat": "png",
+        "rotationCenterX": 117,
+        "rotationCenterY": 140
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "7bc169fc8b330499db3f96188fba6d04",
+        "name": "小熊跳绳10",
+        "bitmapResolution": 2,
+        "md5ext": "7bc169fc8b330499db3f96188fba6d04.png",
+        "dataFormat": "png",
+        "rotationCenterX": 117,
+        "rotationCenterY": 140
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "3b3e05afdf99b7da78748d2ebf208d4d",
+        "name": "小熊跳绳11",
+        "bitmapResolution": 2,
+        "md5ext": "3b3e05afdf99b7da78748d2ebf208d4d.png",
+        "dataFormat": "png",
+        "rotationCenterX": 117,
+        "rotationCenterY": 140
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "257336660e00b39a87f5328bb9ee0d5d",
+        "name": "小熊跳绳12",
+        "bitmapResolution": 2,
+        "md5ext": "257336660e00b39a87f5328bb9ee0d5d.png",
+        "dataFormat": "png",
+        "rotationCenterX": 117,
+        "rotationCenterY": 140
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "504b7009e0371afad5acad9b3ebaf061",
+        "name": "小花序01",
+        "bitmapResolution": 2,
+        "md5ext": "504b7009e0371afad5acad9b3ebaf061.png",
+        "dataFormat": "png",
+        "rotationCenterX": 53.5,
+        "rotationCenterY": 41
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "2ed874872de1e3aaa92fe7a935402506",
+        "name": "小花序02",
+        "bitmapResolution": 2,
+        "md5ext": "2ed874872de1e3aaa92fe7a935402506.png",
+        "dataFormat": "png",
+        "rotationCenterX": 47.5,
+        "rotationCenterY": 43
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "fcb29011b41e91f0465b647c1998aa00",
+        "name": "小花序03",
+        "bitmapResolution": 2,
+        "md5ext": "fcb29011b41e91f0465b647c1998aa00.png",
+        "dataFormat": "png",
+        "rotationCenterX": 44,
+        "rotationCenterY": 33.5
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "c04da9bfbb76eef2b4a2de60f30bd7d3",
+        "name": "小鸟01",
+        "bitmapResolution": 2,
+        "md5ext": "c04da9bfbb76eef2b4a2de60f30bd7d3.png",
+        "dataFormat": "png",
+        "rotationCenterX": 89,
+        "rotationCenterY": 74
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "d702456a9ac4afda11deefcd45580aca",
+        "name": "小鸟02",
+        "bitmapResolution": 2,
+        "md5ext": "d702456a9ac4afda11deefcd45580aca.png",
+        "dataFormat": "png",
+        "rotationCenterX": 89,
+        "rotationCenterY": 74
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "5cb0407cf3c459ad1090a6240d217ac9",
+        "name": "小鸟03",
+        "bitmapResolution": 2,
+        "md5ext": "5cb0407cf3c459ad1090a6240d217ac9.png",
+        "dataFormat": "png",
+        "rotationCenterX": 89,
+        "rotationCenterY": 74
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "e9ceaf8a568aec51991e0fe45f3a9d5b",
+        "name": "小鸟04",
+        "bitmapResolution": 2,
+        "md5ext": "e9ceaf8a568aec51991e0fe45f3a9d5b.png",
+        "dataFormat": "png",
+        "rotationCenterX": 89,
+        "rotationCenterY": 74
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "bd328bb6d88ab23b4d765d984b845e64",
+        "name": "恐龙跳舞01",
+        "bitmapResolution": 2,
+        "md5ext": "bd328bb6d88ab23b4d765d984b845e64.png",
+        "dataFormat": "png",
+        "rotationCenterX": 173,
+        "rotationCenterY": 123
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "19ec7c340bb88942a2b2ea2e87acce03",
+        "name": "恐龙跳舞02",
+        "bitmapResolution": 2,
+        "md5ext": "19ec7c340bb88942a2b2ea2e87acce03.png",
+        "dataFormat": "png",
+        "rotationCenterX": 173,
+        "rotationCenterY": 123
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "eacc5d3707ec3f5bf371c4a27af5bde2",
+        "name": "恐龙跳舞03",
+        "bitmapResolution": 2,
+        "md5ext": "eacc5d3707ec3f5bf371c4a27af5bde2.png",
+        "dataFormat": "png",
+        "rotationCenterX": 173,
+        "rotationCenterY": 123
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "e0ce05e2f20904ac4384054658110155",
+        "name": "恐龙跳舞04",
+        "bitmapResolution": 2,
+        "md5ext": "e0ce05e2f20904ac4384054658110155.png",
+        "dataFormat": "png",
+        "rotationCenterX": 173,
+        "rotationCenterY": 123
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "c85acef32b957728cc9460dd8c3cd1c2",
+        "name": "恐龙跳舞05",
+        "bitmapResolution": 2,
+        "md5ext": "c85acef32b957728cc9460dd8c3cd1c2.png",
+        "dataFormat": "png",
+        "rotationCenterX": 173,
+        "rotationCenterY": 123
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "700c40c8fb7936ace0e6c6d594788cba",
+        "name": "恐龙跳舞06",
+        "bitmapResolution": 2,
+        "md5ext": "700c40c8fb7936ace0e6c6d594788cba.png",
+        "dataFormat": "png",
+        "rotationCenterX": 173,
+        "rotationCenterY": 123
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "c235a1c3535be7f0abf46caae9990c31",
+        "name": "恐龙跳舞07",
+        "bitmapResolution": 2,
+        "md5ext": "c235a1c3535be7f0abf46caae9990c31.png",
+        "dataFormat": "png",
+        "rotationCenterX": 173,
+        "rotationCenterY": 123
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "cf0e74f9f448c15434eacf18e032959c",
+        "name": "恐龙跳舞08",
+        "bitmapResolution": 2,
+        "md5ext": "cf0e74f9f448c15434eacf18e032959c.png",
+        "dataFormat": "png",
+        "rotationCenterX": 173,
+        "rotationCenterY": 123
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "8e289f9ca45372c07e11fd270e4e44b9",
+        "name": "无人机",
+        "bitmapResolution": 2,
+        "md5ext": "8e289f9ca45372c07e11fd270e4e44b9.png",
+        "dataFormat": "png",
+        "rotationCenterX": 265.5,
+        "rotationCenterY": 94
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "59a2106d8533df1e11df737720cc0321",
+        "name": "机器人1号01",
+        "bitmapResolution": 2,
+        "md5ext": "59a2106d8533df1e11df737720cc0321.png",
+        "dataFormat": "png",
+        "rotationCenterX": 91.5,
+        "rotationCenterY": 74
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "68cfb7dd271245e1fccaab8940466605",
+        "name": "机器人1号02",
+        "bitmapResolution": 2,
+        "md5ext": "68cfb7dd271245e1fccaab8940466605.png",
+        "dataFormat": "png",
+        "rotationCenterX": 91.5,
+        "rotationCenterY": 74
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "46f8c9df4c815407709f0e249ed393da",
+        "name": "机器人1号03",
+        "bitmapResolution": 2,
+        "md5ext": "46f8c9df4c815407709f0e249ed393da.png",
+        "dataFormat": "png",
+        "rotationCenterX": 91.5,
+        "rotationCenterY": 74
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "63d067028d678336b96ce371c9cdc3b1",
+        "name": "机器人1号04",
+        "bitmapResolution": 2,
+        "md5ext": "63d067028d678336b96ce371c9cdc3b1.png",
+        "dataFormat": "png",
+        "rotationCenterX": 91.5,
+        "rotationCenterY": 74
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "b47dc101fd03184b17905ffd581f084b",
+        "name": "机器人1号05",
+        "bitmapResolution": 2,
+        "md5ext": "b47dc101fd03184b17905ffd581f084b.png",
+        "dataFormat": "png",
+        "rotationCenterX": 91.5,
+        "rotationCenterY": 74
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "1332a8c873d3a44b0de9f7af1062b9d1",
+        "name": "机器人2号01",
+        "bitmapResolution": 2,
+        "md5ext": "1332a8c873d3a44b0de9f7af1062b9d1.png",
+        "dataFormat": "png",
+        "rotationCenterX": 83.5,
+        "rotationCenterY": 85.5
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "e32acdb920e6aaaf03ea98534057eb1d",
+        "name": "机器人2号02",
+        "bitmapResolution": 2,
+        "md5ext": "e32acdb920e6aaaf03ea98534057eb1d.png",
+        "dataFormat": "png",
+        "rotationCenterX": 83.5,
+        "rotationCenterY": 85.5
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "8ba7114f62b71e8f6ba82b54289f1657",
+        "name": "机器人2号03",
+        "bitmapResolution": 2,
+        "md5ext": "8ba7114f62b71e8f6ba82b54289f1657.png",
+        "dataFormat": "png",
+        "rotationCenterX": 83.5,
+        "rotationCenterY": 85.5
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "270efd92b9683229e2835384a801f559",
+        "name": "机器人2号04",
+        "bitmapResolution": 2,
+        "md5ext": "270efd92b9683229e2835384a801f559.png",
+        "dataFormat": "png",
+        "rotationCenterX": 83.5,
+        "rotationCenterY": 85.5
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "2a3c185388ba79e54dc2bf87ee2508ec",
+        "name": "机器人2号05",
+        "bitmapResolution": 2,
+        "md5ext": "2a3c185388ba79e54dc2bf87ee2508ec.png",
+        "dataFormat": "png",
+        "rotationCenterX": 83.5,
+        "rotationCenterY": 85.5
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "62e0db600759f2249171555ada7bc188",
+        "name": "机器人3号01",
+        "bitmapResolution": 2,
+        "md5ext": "62e0db600759f2249171555ada7bc188.png",
+        "dataFormat": "png",
+        "rotationCenterX": 113.5,
+        "rotationCenterY": 81
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "cca8e19bc1070834b87a09d7cda68f15",
+        "name": "机器人3号02",
+        "bitmapResolution": 2,
+        "md5ext": "cca8e19bc1070834b87a09d7cda68f15.png",
+        "dataFormat": "png",
+        "rotationCenterX": 113.5,
+        "rotationCenterY": 81
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "1d58a799ebd50519909fcd1a88a95118",
+        "name": "机器人3号03",
+        "bitmapResolution": 2,
+        "md5ext": "1d58a799ebd50519909fcd1a88a95118.png",
+        "dataFormat": "png",
+        "rotationCenterX": 113.5,
+        "rotationCenterY": 81
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "4a0b80e3f6fcc6451363081c9d0baec8",
+        "name": "机器人3号04",
+        "bitmapResolution": 2,
+        "md5ext": "4a0b80e3f6fcc6451363081c9d0baec8.png",
+        "dataFormat": "png",
+        "rotationCenterX": 113.5,
+        "rotationCenterY": 81
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "bd850c960ecc2f99231d99ee5ef51a5a",
+        "name": "机器人3号05",
+        "bitmapResolution": 2,
+        "md5ext": "bd850c960ecc2f99231d99ee5ef51a5a.png",
+        "dataFormat": "png",
+        "rotationCenterX": 113.5,
+        "rotationCenterY": 81
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "0b2befbdb3e20fd692559cda56b7247d",
+        "name": "白棋",
+        "bitmapResolution": 2,
+        "md5ext": "0b2befbdb3e20fd692559cda56b7247d.png",
+        "dataFormat": "png",
+        "rotationCenterX": 35.5,
+        "rotationCenterY": 36.5
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "cd12f5d118cef8368f9692b1508e2e1c",
+        "name": "黑棋",
+        "bitmapResolution": 2,
+        "md5ext": "cd12f5d118cef8368f9692b1508e2e1c.png",
+        "dataFormat": "png",
+        "rotationCenterX": 35.5,
+        "rotationCenterY": 36.5
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "617e98997d2df413695e36ba8ff8e88a",
+        "name": "海豚唱歌01",
+        "bitmapResolution": 2,
+        "md5ext": "617e98997d2df413695e36ba8ff8e88a.png",
+        "dataFormat": "png",
+        "rotationCenterX": 106,
+        "rotationCenterY": 110
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "cdae0a62da2365174ffaf17c02cf26ee",
+        "name": "海豚唱歌02",
+        "bitmapResolution": 2,
+        "md5ext": "cdae0a62da2365174ffaf17c02cf26ee.png",
+        "dataFormat": "png",
+        "rotationCenterX": 106,
+        "rotationCenterY": 110
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "434330d4c6042d197cf4570efe3d9461",
+        "name": "海豚唱歌03",
+        "bitmapResolution": 2,
+        "md5ext": "434330d4c6042d197cf4570efe3d9461.png",
+        "dataFormat": "png",
+        "rotationCenterX": 106,
+        "rotationCenterY": 110
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "bbeaccae06c68cdd5c92083719dd4da5",
+        "name": "海豚唱歌04",
+        "bitmapResolution": 2,
+        "md5ext": "bbeaccae06c68cdd5c92083719dd4da5.png",
+        "dataFormat": "png",
+        "rotationCenterX": 106,
+        "rotationCenterY": 110
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "24788acfa7ce5e05bf4340347333b4c5",
+        "name": "热气球",
+        "bitmapResolution": 2,
+        "md5ext": "24788acfa7ce5e05bf4340347333b4c5.png",
+        "dataFormat": "png",
+        "rotationCenterX": 81.5,
+        "rotationCenterY": 166
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "eaaacaaffa663ff3de477ccd4dd13904",
+        "name": "蜜蜂",
+        "bitmapResolution": 2,
+        "md5ext": "eaaacaaffa663ff3de477ccd4dd13904.png",
+        "dataFormat": "png",
+        "rotationCenterX": 140.5,
+        "rotationCenterY": 139.5
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "d3a57695d0b10066f25cde495ba5b53f",
+        "name": "调皮兵01",
+        "bitmapResolution": 2,
+        "md5ext": "d3a57695d0b10066f25cde495ba5b53f.png",
+        "dataFormat": "png",
+        "rotationCenterX": 66.5,
+        "rotationCenterY": 95.5
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "98d840afcfcbe4c8c4570e975a512db5",
+        "name": "调皮兵02",
+        "bitmapResolution": 2,
+        "md5ext": "98d840afcfcbe4c8c4570e975a512db5.png",
+        "dataFormat": "png",
+        "rotationCenterX": 67.5,
+        "rotationCenterY": 96
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "1e90c16bb86b8ce1ce1ecba18b4c4d82",
+        "name": "调皮兵03",
+        "bitmapResolution": 2,
+        "md5ext": "1e90c16bb86b8ce1ce1ecba18b4c4d82.png",
+        "dataFormat": "png",
+        "rotationCenterX": 65,
+        "rotationCenterY": 95
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "e00c7fecc13407b99e07427cf1b818cc",
+        "name": "调皮兵04",
+        "bitmapResolution": 2,
+        "md5ext": "e00c7fecc13407b99e07427cf1b818cc.png",
+        "dataFormat": "png",
+        "rotationCenterX": 68,
+        "rotationCenterY": 96.5
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "fa1a3acdcadaf6bf2c7ece265610b7d6",
+        "name": "调皮兵05",
+        "bitmapResolution": 2,
+        "md5ext": "fa1a3acdcadaf6bf2c7ece265610b7d6.png",
+        "dataFormat": "png",
+        "rotationCenterX": 65.5,
+        "rotationCenterY": 93
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "d9942f3068851c71636c84afa0c83116",
+        "name": "调皮兵06",
+        "bitmapResolution": 2,
+        "md5ext": "d9942f3068851c71636c84afa0c83116.png",
+        "dataFormat": "png",
+        "rotationCenterX": 68.5,
+        "rotationCenterY": 93
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "2c57e50c100128e9f24ad2919baf9e43",
+        "name": "调皮兵07",
+        "bitmapResolution": 2,
+        "md5ext": "2c57e50c100128e9f24ad2919baf9e43.png",
+        "dataFormat": "png",
+        "rotationCenterX": 65,
+        "rotationCenterY": 94.5
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "2a060feca6ab2aa532f22f902e801eb2",
+        "name": "调皮兵08",
+        "bitmapResolution": 2,
+        "md5ext": "2a060feca6ab2aa532f22f902e801eb2.png",
+        "dataFormat": "png",
+        "rotationCenterX": 67,
+        "rotationCenterY": 94
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "bde3f82ea2a2933202b474a3ff029306",
+        "name": "调皮兵09",
+        "bitmapResolution": 2,
+        "md5ext": "bde3f82ea2a2933202b474a3ff029306.png",
+        "dataFormat": "png",
+        "rotationCenterX": 66,
+        "rotationCenterY": 96.5
+    },
+    {
+        "tags": [
+            "people"
+        ],
+        "assetId": "3d3a7bfdec375471bed18c76828d6441",
+        "name": "调皮兵10",
+        "bitmapResolution": 2,
+        "md5ext": "3d3a7bfdec375471bed18c76828d6441.png",
+        "dataFormat": "png",
+        "rotationCenterX": 65,
+        "rotationCenterY": 94.5
+    }
+]
