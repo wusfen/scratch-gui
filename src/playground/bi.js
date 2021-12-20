@@ -111,29 +111,23 @@ addEventListener('submit:已提交错误', e => {
 if (mode === 'normal') {
     let examplesFirstClicked = false;
     addEventListener('saveSucceed', e => {
-        let worksType, worksNameID;
-        let id = param('id');
+        let worksType; let worksNameID;
+        const id = param('id');
         if (window.isHandleSaveAs) { // 课堂作品
             window.isHandleSaveAs = false;
             worksType = 'classroomWorks';
-        } else {
-            if (workId) { // 我的创作
+        } else if (workId) { // 我的创作
+            worksType = 'myWorks';
+            worksNameID = workId;
+        } else if (!file) {
+            worksType = 'startCreate';
+        } else if (file?.includes('samplefile') && !workId && id) {
+            if (examplesFirstClicked) {
                 worksType = 'myWorks';
-                worksNameID = workId;
+                worksNameID = id;
             } else {
-                if (!file) {
-                    worksType = 'startCreate';
-                } else {
-                    if (file?.includes('samplefile') && !workId && id) {
-                        if (examplesFirstClicked) {
-                            worksType = 'myWorks';
-                            worksNameID = id;
-                        } else {
-                            worksType = 'examples';
-                            examplesFirstClicked = true; // 实例作品第二次保存后worksType都变成'myWorks'
-                        }
-                    }
-                }
+                worksType = 'examples';
+                examplesFirstClicked = true; // 实例作品第二次保存后worksType都变成'myWorks'
             }
         }
         bi('programming_creativeBase_click', {
@@ -142,7 +136,7 @@ if (mode === 'normal') {
             worksName: window.workName,
             worksType: worksType
         });
-    })
+    });
 }
 
 

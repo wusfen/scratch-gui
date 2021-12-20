@@ -4,7 +4,7 @@ import bindAll from 'lodash.bindall';
 import VM from 'scratch-vm';
 import PaintEditor from 'scratch-paint';
 import {inlineSvgFonts} from 'scratch-svg-renderer';
-
+import {STAGE_SIZE_MODES} from '../lib/layout-constants';
 import {connect} from 'react-redux';
 
 class PaintEditorWrapper extends React.Component {
@@ -18,7 +18,8 @@ class PaintEditorWrapper extends React.Component {
     shouldComponentUpdate (nextProps) {
         return this.props.imageId !== nextProps.imageId ||
             this.props.rtl !== nextProps.rtl ||
-            this.props.name !== nextProps.name;
+            this.props.name !== nextProps.name || 
+            this.props.stageMode !== nextProps.stageMode;
     }
     handleUpdateName (name) {
         this.props.vm.renameCostume(this.props.selectedCostumeIndex, name);
@@ -67,7 +68,8 @@ PaintEditorWrapper.propTypes = {
     rotationCenterY: PropTypes.number,
     rtl: PropTypes.bool,
     selectedCostumeIndex: PropTypes.number.isRequired,
-    vm: PropTypes.instanceOf(VM)
+    vm: PropTypes.instanceOf(VM),
+    stageMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES))
 };
 
 const mapStateToProps = (state, {selectedCostumeIndex}) => {
@@ -86,7 +88,8 @@ const mapStateToProps = (state, {selectedCostumeIndex}) => {
         rtl: state.locales.isRtl,
         selectedCostumeIndex: index,
         vm: state.scratchGui.vm,
-        zoomLevelId: targetId
+        zoomLevelId: targetId,
+        stageMode: state.scratchGui.stageSize.stageMode
     };
 };
 

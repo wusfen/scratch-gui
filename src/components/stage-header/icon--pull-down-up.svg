@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60.1 (88133) - https://sketch.com -->
+    <title>Slice</title>
+    <desc>Created with Sketch.</desc>
+    <g id="改蓝色" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="02-main-page" transform="translate(-283.000000, -1158.000000)" fill="#FFFFFF">
+            <g id="bg">
+                <g id="pull-down-up" transform="translate(279.000000, 1157.000000)">
+                    <path d="M15.1234752,3.90434405 L18.8009758,8.50121981 C20.181014,10.2262676 19.9013285,12.743437 18.1762808,14.1234752 C17.4670286,14.690877 16.5857866,15 15.6775006,15 L8.32249939,15 C6.11336039,15 4.32249939,13.209139 4.32249939,11 C4.32249939,10.091714 4.6316224,9.210472 5.19902415,8.50121981 L8.87652476,3.90434405 C10.256563,2.17929631 12.7737324,1.89961081 14.4987802,3.279649 C14.729439,3.46417605 14.9389482,3.67368524 15.1234752,3.90434405 Z" id="Triangle" transform="translate(12.000000, 7.500000) scale(-1, 1) translate(-12.000000, -7.500000) "></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

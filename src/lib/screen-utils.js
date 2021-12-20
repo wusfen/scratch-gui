@@ -1,4 +1,75 @@
 import layout, {STAGE_DISPLAY_SCALES, STAGE_SIZE_MODES, STAGE_DISPLAY_SIZES} from '../lib/layout-constants';
+import {setStageCSSWidth} from '../reducers/stage-size';
+
+// eslint-disable-next-line require-jsdoc, func-style
+function resize (mode) {
+    // fix: android input focus
+    if (/input/i.test(document.activeElement.tagName)) {
+        return;
+    }
+    if (/\b(player\.html|mode=player)\b/.test(location)){
+        mode = (typeof mode == 'string') ? mode : (window.store ? window.store.getState().scratchGui.stageSize.stageMode : 'portrait_9_16');
+        window.STAGE_CSS_WIDTH = window.innerWidth;
+        switch (mode){
+        case 'portrait_3_4':
+            if (window.STAGE_CSS_WIDTH * (4 / 3) > window.innerHeight){
+                window.STAGE_CSS_WIDTH = window.innerHeight * 3 / 4;
+            }
+            break;
+        case 'landscape_4_3':
+            if (window.STAGE_CSS_WIDTH * (3 / 4) > window.innerHeight){
+                window.STAGE_CSS_WIDTH = window.innerHeight * 4 / 3;
+            }
+            break;
+        case 'landscape_16_9':
+            if (window.STAGE_CSS_WIDTH * (9 / 16) > window.innerHeight){
+                window.STAGE_CSS_WIDTH = window.innerHeight * 16 / 9;
+            }
+            break;
+        default:
+            if (window.STAGE_CSS_WIDTH * (16 / 9) > window.innerHeight){
+                window.STAGE_CSS_WIDTH = window.innerHeight * 9 / 16;
+            }
+            break;
+        }
+    } else {
+        const htmlEl = document.documentElement;
+        window.STAGE_CSS_WIDTH = Math.min(
+            // window.STAGE_WIDTH,
+            window.STAGE_UI_WIDTH / (window.UI_WIDTH / htmlEl.clientWidth),
+            window.STAGE_UI_WIDTH / (window.UI_HEIGHT / htmlEl.clientHeight)
+        );
+    }
+}
+function resize2 (){
+    resize();
+    window.store && window.store.dispatch(setStageCSSWidth(window.STAGE_CSS_WIDTH));
+}
+resize();
+addEventListener('resize', resize2);
+
+
+const doneConstants = function (mode){
+    resize(mode);
+    switch (mode){
+    case 'portrait_3_4':
+        window.STAGE_WIDTH = 500;
+        window.STAGE_HEIGHT = 667;
+        break;
+    case 'landscape_4_3':
+        window.STAGE_WIDTH = 889;
+        window.STAGE_HEIGHT = 667;
+        break;
+    case 'landscape_16_9':
+        window.STAGE_WIDTH = 1186;
+        window.STAGE_HEIGHT = 667;
+        break;
+    default:
+        window.STAGE_WIDTH = 375;
+        window.STAGE_HEIGHT = 667;
+        break;
+    }
+};
 
 /**
  * @typedef {object} StageDimensions
@@ -26,7 +97,7 @@ const STAGE_DIMENSION_DEFAULTS = {
  * @return {STAGE_DISPLAY_SIZES} - the stage size enum value we should use in this situation.
  */
 const resolveStageSize = (stageSizeMode, isFullSize) => {
-    if (stageSizeMode === STAGE_SIZE_MODES.small) {
+    if (stageSizeMode === STAGE_DISPLAY_SIZES.small) {
         return STAGE_DISPLAY_SIZES.small;
     }
     if (isFullSize) {
@@ -38,19 +109,18 @@ const resolveStageSize = (stageSizeMode, isFullSize) => {
 /**
  * 动态改变需要调整这里
  * Retrieve info used to determine the actual stage size based on the current GUI and browser state.
- * @param {STAGE_DISPLAY_SIZES} stageSize - the current fully-resolved stage size.
+ * @param {STAGE_SIZE_MODES} stageSize - the current fully-resolved stage size.
  * @param {boolean} isFullScreen - true if full-screen mode is enabled.
  * @return {StageDimensions} - an object describing the dimensions of the stage.
  */
 const getStageDimensions = (stageSize, isFullScreen) => {
     const stageDimensions = {
-        heightDefault: layout.standardStageHeight,
-        widthDefault: layout.standardStageWidth,
+        heightDefault: window.STAGE_HEIGHT,
+        widthDefault: window.STAGE_WIDTH,
         height: 0,
         width: 0,
         scale: 0
     };
-
     if (isFullScreen) {
         stageDimensions.height = window.innerHeight -
             STAGE_DIMENSION_DEFAULTS.menuHeightAdjustment -
@@ -65,9 +135,18 @@ const getStageDimensions = (stageSize, isFullScreen) => {
 
         stageDimensions.scale = stageDimensions.width / stageDimensions.widthDefault;
     } else {
-        stageDimensions.scale = window.STAGE_CSS_WIDTH / window.STAGE_WIDTH;
+        stageDimensions.scale = window.store.getState().scratchGui.stageSize.stageCssWidth / window.STAGE_WIDTH;
         stageDimensions.height = stageDimensions.scale * stageDimensions.heightDefault;
         stageDimensions.width = stageDimensions.scale * stageDimensions.widthDefault;
+        const ele = document.getElementById('stageCanvasWrapper');
+        if (ele){
+            const rect = ele.getBoundingClientRect();
+            if (stageDimensions.height > rect.height){
+                stageDimensions.scale = rect.height / window.STAGE_HEIGHT;
+                stageDimensions.height = rect.height;
+                stageDimensions.width = stageDimensions.scale * stageDimensions.widthDefault;
+            }
+        }
     }
 
     // Round off dimensions to prevent resampling/blurriness
@@ -101,5 +180,6 @@ const stageSizeToTransform = ({width, height, widthDefault, heightDefault}) => {
 export {
     getStageDimensions,
     resolveStageSize,
-    stageSizeToTransform
+    stageSizeToTransform,
+    doneConstants
 };

@@ -47,8 +47,7 @@ import Counter from '../components/counter/index';
 import {counterType} from '../components/counter/data';
 
 import {param} from '../lib/param.js';
-import {playTipAudio} from '../lib/courseTip/TipAudio.js';
-import soundBtnClickMp3 from '../assets/sounds/sound_btnClick.mp3';
+import {addStageCSSWidth} from '../reducers/stage-size';
 
 class GUI extends React.Component {
     constructor (props) {
@@ -333,7 +332,8 @@ const mapDispatchToProps = dispatch => ({
     onActivateSoundsTab: () => dispatch(activateTab(SOUNDS_TAB_INDEX)),
     onRequestCloseBackdropLibrary: () => dispatch(closeBackdropLibrary()),
     onRequestCloseCostumeLibrary: () => dispatch(closeCostumeLibrary()),
-    onRequestCloseTelemetryModal: () => dispatch(closeTelemetryModal())
+    onRequestCloseTelemetryModal: () => dispatch(closeTelemetryModal()),
+    onResizeStage: offsetX => dispatch(addStageCSSWidth(offsetX))
 });
 
 const ConnectedGUI = injectIntl(connect(

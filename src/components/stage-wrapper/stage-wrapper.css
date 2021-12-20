@@ -15,7 +15,8 @@
 
     display: flex;
     justify-content: center;
-    width: 22.31rem;
+    align-items: center;
+    /* width: 22.31rem; */
     height: 39.69rem;
 }
 

@@ -307,8 +307,11 @@ export default function (Blockly, vm){
     // 保存toolbox配置
     vm.toJSON = function (){
         let prj = orgToJSON();
+        const stageMode = window.store.getState().scratchGui.stageSize.stageMode;
         if (window.vcode_toolbox){
-            prj = `${prj.substr(0, prj.length - 1)}, "toolbox":${JSON.stringify(window.vcode_toolbox)}}`;
+            prj = `${prj.substr(0, prj.length - 1)}, "toolbox":${JSON.stringify(window.vcode_toolbox)}, "stageMode":"${stageMode}"}`;
+        }else{
+            prj = `${prj.substr(0, prj.length - 1)}, "stageMode":"${stageMode}"}`;
         }
         return prj;
     };
