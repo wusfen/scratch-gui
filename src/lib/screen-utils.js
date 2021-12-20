@@ -3,10 +3,6 @@ import {setStageCSSWidth} from '../reducers/stage-size';
 
 // eslint-disable-next-line require-jsdoc, func-style
 function resize (mode) {
-    // fix: android input focus
-    if (/input/i.test(document.activeElement.tagName)) {
-        return;
-    }
     const htmlEl = document.documentElement;
     if (/\b(player\.html|mode=player)\b/.test(location)){
         mode = (typeof mode == 'string') ? mode : (window.store ? window.store.getState().scratchGui.stageSize.stageMode : 'portrait_9_16');
@@ -44,6 +40,10 @@ function resize (mode) {
     htmlEl.style.setProperty('--window-height', window.innerHeight);
 }
 function resize2 (){
+    // fix: android input focus
+    if (/input/i.test(document.activeElement.tagName)) {
+        return;
+    }
     resize();
     window.store && window.store.dispatch(setStageCSSWidth(window.STAGE_CSS_WIDTH));
 }
