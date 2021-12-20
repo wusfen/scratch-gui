@@ -456,7 +456,7 @@ export default function (Blockly, vm){
                 // before positioning the comment bubble.
                     setTimeout(() => {
                         if (block.comment && block.comment.setVisible) {
-                            block.comment.setVisible(visible == 'true');
+                            block.comment.setVisible(!hide && visible == 'true');
                         }
                     }, 1);
                 }
