@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import bindAll from 'lodash.bindall';
 import styles from './styles.css';
 
-const codeBlocks = [
+const list = [
     {
         label: '运动',
         value: '%{BKY_CATEGORY_MOTION}',
@@ -334,7 +334,13 @@ const codeBlocks = [
         label: '变量',
         value: '%{BKY_CATEGORY_VARIABLES}',
         checked: false,
-        list: [],
+        list: [
+            // 未处理
+            // {label: '将(--)设为(--)', value: 'data_setvariableto', checked: false},
+            // {label: '将(--)增加(--)', value: 'data_changevariableby', checked: false},
+            // {label: '显示变量(--)', value: 'data_showvariable', checked: false},
+            // {label: '隐藏变量(--)', value: 'data_hidevariable', checked: false},
+        ],
     },
     {
         label: '自制积木',
@@ -347,252 +353,285 @@ const codeBlocks = [
 class Component extends React.Component {
     constructor (props) {
         super(props);
-        this.state = this.getInitState();
-        bindAll(this, [
-            'handleClose',
-            'enterHandler'
-        ]);
+
+        this.state = {
+            isShow: false,
+            list,
+            index: 0,
+        };
 
         addEventListener(`menu:hideCode`, e => {
+            this.initState();
             this.setState({
                 isShow: true,
             });
         });
+
+        bindAll(this, [
+            'handleClose',
+            'handleSave',
+        ]);
     }
-    getInitState () {
+    initState () {
 
         // window.vcode_toolbox = {
         //     "%{BKY_CATEGORY_LOOKS}": {
         //         "looks_sayforsecs": true,
         //     }
         // }
-        console.log(' window.vcode_toolbox===>');
-        console.log(window.vcode_toolbox);
 
-        // for (var j = 0; j < codeBlocks.length; j++) {
-        //     codeBlocks[j].checked = true;
-        //     for (var m = 0; m < codeBlocks[j].list.length; m++) {
-        //         codeBlocks[j].list[m].checked = true;
-        //     }
-        // }
+        const vcode_toolbox = window.vcode_toolbox || {};
+        console.log('vcode_toolbox', vcode_toolbox);
 
-        for (let i in window.vcode_toolbox) {
-            for (let j = 0; j < codeBlocks.length; j++) {
-                if (codeBlocks[j].value == i) {
-                    codeBlocks[j].checked = true;
-                    break;
-                }
-            }
-
-        }
-        for (let i in window.vcode_toolbox) {
-            for (const k in window.vcode_toolbox[i]) {
-                let found = false;
-                for (var j = 0; j < codeBlocks.length; j++) {
-                    if (codeBlocks[j].value == i) {
-                        found = true;
-                        for (let m = 0; m < codeBlocks[j].list.length; m++) {
-                            if (codeBlocks[j].list[m].value == k) {
-                                codeBlocks[j].list[m].checked = true;
-                                break;
-                            }
-                        }
-                        if (found) break;
-                    }
-                }
-            }
+        for (const typeObj of list) {
+            typeObj.checked = typeObj.value in vcode_toolbox;
+            typeObj.list.forEach(item => {
+                const typeConfig = vcode_toolbox[typeObj.value] || {};
+                item.checked = item.value in typeConfig;
+            });
         }
 
-        return {
-            isShow: false,
-            allSelectCode: false,
-            curSelTypeIndex: -1,
-            codeBlocks: codeBlocks,
-            curSelCodeList: [],
-        };
+        this.setState({list});
+    }
+    // 分类选框
+    handleCheckType (index) {
+        this.setState({index}, e => {
+            this.handleCurSelectAll();
+        });
+    }
+    // 分类标签
+    handleSelectType (index) {
+        this.setState({index});
+    }
+    // 全选按钮（所有）
+    handleSelectAll () {
+        const isAllSelected = this.isAllSelected();
+
+        list.forEach(e => {
+            e.checked = !isAllSelected;
+            e.list.forEach(ee => {
+                ee.checked = !isAllSelected;
+            });
+        });
+        this.setState({
+            list
+        });
+    }
+    // 当前分类全选
+    handleCurSelectAll () {
+        const curList = this.getCurList();
+        const isCurAllSelected = this.isCurAllSelected();
+
+        for (const blockItem of curList) {
+            if (isCurAllSelected) {
+                this.handleSelectBlock(blockItem);
+            } else if (!blockItem.checked) {
+                this.handleSelectBlock(blockItem);
+            }
+        }
+
+        // !length
+        if (!curList.length) {
+            const index = this.state.index;
+            list[index].checked = !list[index].checked;
+            this.setState({list});
+        }
+    }
+    // 勾选积木
+    handleSelectBlock (selObj) {
+        selObj.checked = !selObj.checked;
+
+        list[this.state.index].checked = !this.isCurNoneSelected();
+
+        this.setState({list});
+    }
+    getCurList () {
+        return list[this.state.index].list;
+    }
+    isCurAllSelected () {
+        const curList = this.getCurList();
+        for (const blockItem of curList) {
+            if (!blockItem.checked) {
+                return false;
+            }
+        }
+        return true;
+    }
+    isCurNoneSelected () {
+        const curList = this.getCurList();
+        for (const blockItem of curList) {
+            if (blockItem.checked) {
+                return false;
+            }
+        }
+        return true;
+    }
+    isAllSelected () {
+        for (const typeItem of list) {
+            for (const blockItem of typeItem.list) {
+                if (!blockItem.checked) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    isNodeSelected () {
+        for (const typeItem of list) {
+            for (const blockItem of typeItem.list) {
+                if (blockItem.checked) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
     handleClose () {
-        this.setState(this.getInitState());
-
-    }
-    clickTypeBtnHandler (selObj, clickIndex) {
-
-        let _allSelectCode = true;
-
-        for (var i = 0; i < selObj.list.length; i++) {
-            if (!selObj.list[i].checked) {
-                _allSelectCode = false;
-                break;
-            }
-        }
-        console.log(selObj);
-
         this.setState({
-            curSelCodeList: selObj.list,
-            curSelTypeIndex: clickIndex,
-            allSelectCode: _allSelectCode
-        });
-        console.log(this.state.allSelectCode);
-
-
-    }
-    // 全选&反选代码块
-    clickAllSelCodeHandler () {
-        /* eslint-disable react/no-direct-mutation-state */
-        /* eslint-disable array-callback-return */
-        this.state.allSelectCode = !this.state.allSelectCode;
-        let totalCheckedNum = 0;
-        this.state.curSelCodeList.map(e => {
-            if (e.checked) {
-                totalCheckedNum++;
-            }
-
-        });
-        if (totalCheckedNum == this.state.curSelCodeList.length) {
-            this.state.curSelCodeList.map(e => {
-                e.checked = false;
-                this.state.allSelectCode = false;
-            });
-        } else {
-            this.state.curSelCodeList.map(e => {
-                e.checked = true;
-                this.state.allSelectCode = true;
-            });
-        }
-
-
-        this.setState({
-            allSelectCode: this.state.allSelectCode,
-            curSelCodeList: this.state.curSelCodeList,
+            isShow: false
         });
     }
-    clickCodeBtnHandler (selObj) {
-        selObj.checked = !selObj.checked;
-        this.setState({
-            curSelCodeList: this.state.curSelCodeList,
-        });
-    }
-    enterHandler () {
+    handleSave () {
         const {
             // eslint-disable-next-line no-shadow
-            codeBlocks
+            list
         } = this.state;
 
-        const configJson = this.getConfigJson();
+        const config = this.toConfig();
         let canConfig = true;
-        if (Object.getOwnPropertyNames(configJson).length == 0) {
+        if (Object.getOwnPropertyNames(config).length == 0) {
             canConfig = false;
         }
 
 
-        for (const i in configJson) {
-            if (i != '%{BKY_CATEGORY_VARIABLES}' && i != '%{BKY_CATEGORY_MYBLOCKS}') {
-                if (Object.getOwnPropertyNames(configJson[i]).length == 0) {
+        for (const typeValue in config) {
+            if (typeValue != '%{BKY_CATEGORY_VARIABLES}' && typeValue != '%{BKY_CATEGORY_MYBLOCKS}') {
+                if (Object.getOwnPropertyNames(config[typeValue]).length == 0) {
                     canConfig = false;
                 }
             }
 
         }
 
-        console.log(configJson);
         if (canConfig) {
-            console.log('==>保存配置成功');
-            window.vcode_toolbox = configJson;
+            window.vcode_toolbox = config;
+            console.log('vcode_toolbox save', window.vcode_toolbox);
             dispatchEvent(new Event('updateToolBox'));
-            this.setState(this.getInitState());
+            this.handleClose();
         } else {
             alert('最少要保留一个模块。里面有一个代码块哦');
         }
     }
-
-    getConfigJson () {
+    toConfig () {
         const {
-            codeBlocks
+            list
         } = this.state;
 
+        const config = {};
 
-        const configJson = {};
-        for (let i = 0; i < codeBlocks.length; i++) {
-            if (codeBlocks[i].checked) {
-                configJson[codeBlocks[i].value] = {};
-                for (let j = 0; j < codeBlocks[i].list.length; j++) {
-                    if (codeBlocks[i].list[j].checked) {
-                        configJson[codeBlocks[i].value][codeBlocks[i].list[j].value] = true;
+        for (const typeItem of list) {
+            if (typeItem.checked) {
+                config[typeItem.value] = {};
+                for (const blockItem of typeItem.list) {
+                    if (blockItem.checked) {
+                        config[typeItem.value][blockItem.value] = true;
                     }
 
                 }
             }
         }
-        return configJson;
+        return config;
     }
-
-    clickTypeChecked (selTypesBlock) {
-
-        selTypesBlock.checked = !selTypesBlock.checked;
-        console.log(selTypesBlock.checked);
-        this.setState({
-            codeBlocks: this.state.codeBlocks
-        });
-    }
-
     render () {
         const {
             isShow,
-            curSelTypeIndex,
-            curSelCodeList,
-            allSelectCode,
-            codeBlocks
+            list,
+            index,
         } = this.state;
 
+        const curList = this.getCurList();
+
+        // 左边分类列表
         const blocksTypeList = [];
-        for (let i = 0; i < codeBlocks.length; i++) {
-            blocksTypeList.push(<div key={i}><input
-                type="checkbox"
-                onChange={this.clickTypeChecked.bind(this, codeBlocks[i])}
-                checked={codeBlocks[i].checked}
-            /><div
-                className={curSelTypeIndex == i ? classNames(styles.typeBtnSel) : classNames(styles.typeBtn)}
-                onClick={this.clickTypeBtnHandler.bind(this, codeBlocks[i], i)}
-            > {codeBlocks[i].label}</div></div>);
+        for (let i = 0; i < list.length; i++) {
+            blocksTypeList.push(
+                <div
+                    className={styles.li}
+                    key={i}
+                >
+                    <input
+                        type="checkbox"
+                        onChange={this.handleCheckType.bind(this, i)}
+                        checked={list[i].checked}
+                    />
+                    <div
+                        className={
+                            classNames(styles.typeBtn, {
+                                [styles.typeBtnSel]: index == i
+                            })
+                        }
+                        onClick={this.handleSelectType.bind(this, i)}
+                    >
+                        {list[i].label}
+                    </div>
+                </div>
+            );
         }
 
-        const blocksCodeList = [<div
-            key={'j00'}
-            className={classNames(styles.codeBtn)}
-        >
-            <input
-                type="checkbox"
-                checked={allSelectCode}
-                onChange={this.clickAllSelCodeHandler.bind(this)}
-            />反选</div>];
-
-        for (let j = 0; j < curSelCodeList.length; j++) {
+        // 右边当前分类积木列表
+        const blocksCodeList = [
+            <label
+                key={'j00'}
+                className={classNames(styles.codeBtn)}
+            >
+                <input
+                    type="checkbox"
+                    checked={this.isCurAllSelected()}
+                    onChange={this.handleCurSelectAll.bind(this)}
+                />
+                全选
+            </label>
+        ];
+        for (const blockItem of curList) {
             blocksCodeList.push(
-                <div
-                    key={j}
+                <label
+                    key={blockItem.value}
                     className={classNames(styles.codeBtn)}
                 >
                     <input
                         type="checkbox"
-                        onChange={this.clickCodeBtnHandler.bind(this, curSelCodeList[j])}
-                        checked={curSelCodeList[j].checked}
-                    />{curSelCodeList[j].label}</div>);
+                        onChange={this.handleSelectBlock.bind(this, blockItem)}
+                        checked={blockItem.checked}
+                    />
+                    {blockItem.label}
+                </label>
+            );
         }
+
         return (
             <div
                 hidden={!isShow}
-                className={classNames(styles.overlay
-                )}
+                className={classNames(styles.overlay)}
             >
-                <div className={classNames(styles.container)} >
+                <div className={classNames(styles.container)}>
                     <div className={classNames(styles.title)}>
-                        隐藏代码区
+                        请勾选对学生显示的积木块
                     </div>
                     <div className={classNames(styles.typeListContainer)}>
                         {blocksTypeList}
+                        <label
+                            className={styles.selectAll}
+                        >
+                            <input
+                                type="checkbox"
+                                checked={this.isAllSelected()}
+                                onChange={this.handleSelectAll.bind(this)}
+                            />
+                            全选
+                        </label>
                     </div>
                     <div className={classNames(styles.codeListContainer)}>
-                        {blocksCodeList.length != 1 ? blocksCodeList : ''}
+                        {curList.length ? blocksCodeList : ''}
                     </div>
                     <div className={classNames(styles.tips)}>
                         注意：不论是针对代码盒子，还是针对代码块，均为勾选是显示，不勾选是隐藏
@@ -600,7 +639,7 @@ class Component extends React.Component {
                     <button
                         type="button"
                         className={classNames(styles.button)}
-                        onClick={this.enterHandler}
+                        onClick={this.handleSave}
                     >
                         保存配置
                     </button>
