@@ -5,7 +5,7 @@ import {setStageCSSWidth} from '../reducers/stage-size';
 function resize (mode) {
     const htmlEl = document.documentElement;
     if (/\b(player\.html|mode=player)\b/.test(location)){
-        mode = (typeof mode == 'string') ? mode : (window.store ? window.store.getState().scratchGui.stageSize.stageMode : 'portrait_9_16');
+        mode = (typeof mode === 'string') ? mode : (window.store ? window.store.getState().scratchGui.stageSize.stageMode : 'portrait_9_16');
         window.STAGE_CSS_WIDTH = window.innerWidth;
         switch (mode){
         case 'portrait_3_4':
@@ -32,7 +32,7 @@ function resize (mode) {
     } else {
         window.STAGE_CSS_WIDTH = Math.min(
             // window.STAGE_WIDTH,
-            window.STAGE_UI_WIDTH / (window.UI_WIDTH / htmlEl.clientWidth),
+            // window.STAGE_UI_WIDTH / (window.UI_WIDTH / htmlEl.clientWidth),
             window.STAGE_UI_WIDTH / (window.UI_HEIGHT / htmlEl.clientHeight)
         );
     }
