@@ -31,8 +31,7 @@ const dragTypes = [
 ];
 
 const DroppableThrottledStage = DropAreaHOC(dragTypes)(
-    //ThrottledPropertyHOC('url', 500)(StageSelectorComponent)
-    StageSelectorComponent
+    ThrottledPropertyHOC('assetid', 500)(StageSelectorComponent)
 );
 
 class StageSelector extends React.Component {
@@ -159,9 +158,9 @@ class StageSelector extends React.Component {
     }
     render () {
         if(this.props.asset){
-            if(this.assetId !== this.props.asset.assetId){
+            if(this.assetId !== this.props.assetid){
                 this.costumeURL = this.props.asset.encodeDataURI();
-                this.assetId = this.props.asset.assetId;
+                this.assetId = this.props.assetid;
             }
         }else{
             this.costumeURL = null;
@@ -200,6 +199,7 @@ StageSelector.propTypes = {
 
 const mapStateToProps = (state, {asset, id}) => ({
     //url: asset && asset.encodeDataURI(),
+    assetid:asset && asset.assetId,
     vm: state.scratchGui.vm,
     receivedBlocks: state.scratchGui.hoveredTarget.receivedBlocks &&
             state.scratchGui.hoveredTarget.sprite === id,
