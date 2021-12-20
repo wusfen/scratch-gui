@@ -31,7 +31,7 @@ const dragTypes = [
 ];
 
 const DroppableThrottledStage = DropAreaHOC(dragTypes)(
-    ThrottledPropertyHOC('url', 500)(StageSelectorComponent)
+    ThrottledPropertyHOC('assetid', 500)(StageSelectorComponent)
 );
 
 class StageSelector extends React.Component {
@@ -157,6 +157,16 @@ class StageSelector extends React.Component {
         this.ref = ref;
     }
     render () {
+        if(this.props.asset){
+            if(this.assetId !== this.props.assetid){
+                this.costumeURL = this.props.asset.encodeDataURI();
+                this.assetId = this.props.assetid;
+            }
+        }else{
+            this.costumeURL = null;
+            this.assetId = null;
+        }
+       
         const componentProps = omit(this.props, [
             'asset', 'dispatchSetHoveredSprite', 'id', 'intl',
             'onActivateTab', 'onSelect', 'onShowImporting', 'onCloseImporting']);
@@ -173,6 +183,7 @@ class StageSelector extends React.Component {
                 onMouseLeave={this.handleMouseLeave}
                 onSurpriseBackdropClick={this.handleSurpriseBackdrop}
                 {...componentProps}
+                url = {this.costumeURL}
             />
         );
     }
@@ -187,7 +198,8 @@ StageSelector.propTypes = {
 };
 
 const mapStateToProps = (state, {asset, id}) => ({
-    url: asset && asset.encodeDataURI(),
+    //url: asset && asset.encodeDataURI(),
+    assetid:asset && asset.assetId,
     vm: state.scratchGui.vm,
     receivedBlocks: state.scratchGui.hoveredTarget.receivedBlocks &&
             state.scratchGui.hoveredTarget.sprite === id,
