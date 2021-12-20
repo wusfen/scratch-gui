@@ -85,8 +85,8 @@ const TargetPane = ({
             onProjectTelemetryEvent={onProjectTelemetryEvent}
             onStartSelectingFileUpload={onStartSelectingFileUpload}
         />
-
-        <div
+        {/* 影响性能删除 */}
+        {/* <div
             hidden
             className={styles.stageSelectorWrapper}
         >
@@ -109,7 +109,7 @@ const TargetPane = ({
                     />
                 ) : null}
             </div>
-        </div>
+        </div> */}
     </div>
 );
 
