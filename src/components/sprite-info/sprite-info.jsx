@@ -447,7 +447,7 @@ class SpriteInfo extends React.Component {
                                 </div>
                             </div>
                             <div
-                                hidden={!(mode === 'teacher' || mode === 'normal' || isUat)}
+                                hidden={!(!mode || mode === 'teacher' || mode === 'normal' || isUat)}
                                 className={classNames(styles.item)}
                             >
                                 <button
@@ -470,7 +470,7 @@ class SpriteInfo extends React.Component {
                                 </button>
                             </div>
                             <div
-                                hidden={!(mode === 'teacher' || mode === 'normal' || isUat)}
+                                hidden={!(!mode || mode === 'teacher' || mode === 'normal' || isUat)}
                                 className={classNames(styles.item)}
                             >
                                 <button
