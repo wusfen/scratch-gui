@@ -7,6 +7,7 @@ function resize (mode) {
     if (/input/i.test(document.activeElement.tagName)) {
         return;
     }
+    const htmlEl = document.documentElement;
     if (/\b(player\.html|mode=player)\b/.test(location)){
         mode = (typeof mode == 'string') ? mode : (window.store ? window.store.getState().scratchGui.stageSize.stageMode : 'portrait_9_16');
         window.STAGE_CSS_WIDTH = window.innerWidth;
@@ -33,13 +34,14 @@ function resize (mode) {
             break;
         }
     } else {
-        const htmlEl = document.documentElement;
         window.STAGE_CSS_WIDTH = Math.min(
             // window.STAGE_WIDTH,
             window.STAGE_UI_WIDTH / (window.UI_WIDTH / htmlEl.clientWidth),
             window.STAGE_UI_WIDTH / (window.UI_HEIGHT / htmlEl.clientHeight)
         );
     }
+    htmlEl.style.setProperty('--window-width', window.innerWidth);
+    htmlEl.style.setProperty('--window-height', window.innerHeight);
 }
 function resize2 (){
     resize();
