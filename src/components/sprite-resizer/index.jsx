@@ -10,6 +10,7 @@ import {getEventXY} from '../../lib/touch-utils';
 import {param} from '../../lib/param';
 
 import styles from './styles.css';
+import {getStageDimensions} from '../../lib/screen-utils';
 const c = styles;
 
 // single
@@ -114,16 +115,11 @@ class Component extends React.Component{
         this.show();
     }
     // 舞台坐标转页面坐标
-    getPos ({x, y}) {
-        var STAGE_WIDTH = window.STAGE_WIDTH;
-        var STAGE_HEIGHT = window.STAGE_HEIGHT;
-        var STAGE_CSS_WIDTH = window.STAGE_CSS_WIDTH;
-        var stageScale = STAGE_CSS_WIDTH / STAGE_WIDTH;
+    getPos ({x, y}, stageDimensions) {
         this.canvasRect = this.state.target.renderer.canvas.getBoundingClientRect();
-
         return {
-            x: this.canvasRect.x + (((STAGE_WIDTH / 2) + x) * stageScale),
-            y: this.canvasRect.y + (((STAGE_HEIGHT / 2) - y) * stageScale),
+            x: this.canvasRect.x + (stageDimensions.width / 2 + x * stageDimensions.scale),
+            y: this.canvasRect.y + (stageDimensions.height / 2 - y * stageDimensions.scale),
         };
     }
     // 已知三点求角度
@@ -148,13 +144,11 @@ class Component extends React.Component{
 
         var targetDrawable = target.renderer._allDrawables[target.drawableID];
         var skin = targetDrawable._skin;
-
-        var xy = this.getPos(target);
+        const stageDimensions = getStageDimensions(null, false);
+        const stageScale = stageDimensions.scale;
+        var xy = this.getPos(target, stageDimensions);
 
         this.canvasRect = target.renderer.canvas.getBoundingClientRect();
-        var STAGE_WIDTH = window.STAGE_WIDTH;
-        var STAGE_CSS_WIDTH = window.STAGE_CSS_WIDTH;
-        var stageScale = STAGE_CSS_WIDTH / STAGE_WIDTH;
         var rotationCenter = ({
             x: (skin.rotationCenter[0] * stageScale),
             y: (skin.rotationCenter[1] * stageScale),
