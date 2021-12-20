@@ -6,13 +6,17 @@
     position: absolute;
     background: $ui-primary;
     z-index: $z-index-monitor;
-    border: 1px solid $ui-black-transparent;
+    /* border: 1px solid $ui-black-transparent; */
     border-radius: calc($space / 2);
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 0.75rem;
     transition: box-shadow 0.2s;
     pointer-events: all;
     overflow: hidden;
+    background: #47caff;
+    box-shadow: 0rem 0.13rem 0.19rem 0rem rgba(5, 91, 157, 0.23),
+        0rem 0.03rem 0.66rem 0rem rgba(0, 145, 255, 0.5);
+    border-radius: 0.63rem;
 }
 
 .monitor:hover {
@@ -27,24 +31,32 @@
 .default-monitor {
     display: flex;
     flex-direction: column;
-    padding: 3px;
+    padding: 0.34rem 0.84rem;
 }
 
 .label {
-    font-weight: bold;
-    text-align: center;
-    margin: 0 5px;
+    font-size: 1rem;
+    font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+    font-weight: 500;
+    color: #ffffff;
+    white-space: nowrap;
 }
 
 .value {
     min-width: 40px;
+    height: 2.06rem;
+    padding: 0 0.66rem;
     text-align: center;
     color: white;
     margin: 0 5px;
     border-radius: calc($space / 2);
-    padding: 0 2px;
     white-space: pre-wrap;
     transform: translateZ(0); /* Fixes flickering in Safari */
+    border-radius: 0.44rem;
+    font-size: 1.5rem;
+    font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+    font-weight: 500;
+    white-space: nowrap;
 }
 
 .large-value {
@@ -53,7 +65,7 @@
     padding: 0.1rem 0.25rem;
     text-align: center;
     color: white;
-    font-size: 1rem;
+    font-size: 1.5rem;
     white-space: pre-wrap;
     transform: translateZ(0); /* Fixes flickering in Safari */
 }
@@ -61,6 +73,7 @@
 .row {
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
 .slider {
@@ -75,10 +88,11 @@
 
 .list-header {
     background: $ui-white;
-    border-bottom: 1px solid $ui-black-transparent;
+    /* border-bottom: 1px solid $ui-black-transparent; */
     text-align: center;
-    padding: 3px;
-    font-size: 0.75rem;
+    padding: 0.3rem;
+    font-size: 1rem;
+    line-height: 1.5em;
     font-weight: bold;
     color: $text-primary;
     width: 100%;
@@ -125,8 +139,9 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 3px;
-    font-size: 0.75rem;
+    padding: 0.3rem;
+    font-size: 1rem;
+    line-height: 1.5em;
     font-weight: bold;
     color: $text-primary;
 }

@@ -19,7 +19,7 @@ const MonitorList = props => (
     >
         <Box
             className={styles.monitorListScaler}
-            style={stageSizeToTransform(props.stageSize)}
+            // style={stageSizeToTransform(props.stageSize)}
         >
             {props.monitors.valueSeq().filter(m => m.visible)
                 .map(monitorData => (
