@@ -180,11 +180,19 @@ const GUIComponent = props => {
         isRendererSupported = Renderer.isSupported();
     }
 
+    let timeHandle = null;
+    let offsetX = null;
     const _onmousemove = e => {
         if (_isDown && onResizeStage){
-            const x = getEventXY(e).x;
-            onResizeStage(x - _orgX);
-            _orgX = x;
+            offsetX = getEventXY(e).x;
+            if(!timeHandle){
+                timeHandle = setTimeout(()=>{
+                    onResizeStage(offsetX - _orgX);
+                    _orgX = offsetX;
+                    timeHandle = null;
+                }, 64);
+            }
+            
             e.preventDefault();
         }
     };

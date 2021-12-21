@@ -101,6 +101,7 @@
     align-items: center;
     padding-left: 0.64rem;
     justify-content: space-between;
+    white-space:nowrap;
 }
 
 .stage-mode img {
