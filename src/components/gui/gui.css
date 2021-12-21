@@ -385,6 +385,6 @@ $fade-out-distance: 0.9375rem;
     width: 0.78rem;
     height: 1.26rem;
     margin-left: 0.1rem;
-    z-index: 1;
+    z-index: 100;
 }
 
