@@ -85,12 +85,12 @@ const TargetPane = ({
             onProjectTelemetryEvent={onProjectTelemetryEvent}
             onStartSelectingFileUpload={onStartSelectingFileUpload}
         />
-        {/* 影响性能删除 */}
-        {/* <div
+        <div
             hidden
             className={styles.stageSelectorWrapper}
         >
-            {stage.id && <StageSelector
+            {/* 影响性能删除 */}
+            {/* {stage.id && <StageSelector
                 asset={
                     stage.costume &&
                     stage.costume.asset
@@ -99,7 +99,7 @@ const TargetPane = ({
                 id={stage.id}
                 selected={stage.id === editingTarget}
                 onSelect={onSelectSprite}
-            />}
+            />} */}
             <div>
                 {spriteLibraryVisible ? (
                     <SpriteLibrary
@@ -109,7 +109,7 @@ const TargetPane = ({
                     />
                 ) : null}
             </div>
-        </div> */}
+        </div>
     </div>
 );
 
