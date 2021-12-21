@@ -23,7 +23,7 @@
 .li {
     display: flex;
     align-items: center;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.31rem;
 }
 
 .tips {
@@ -40,16 +40,17 @@
 }
 
 .type-btn {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 8.13rem;
-    height: 2.5rem;
+    height: 1.5rem;
     background: #77d9ff;
     border-radius: 0.63rem;
     font-size: 1rem;
     font-family: SourceHanSansCN-Normal, SourceHanSansCN;
     font-weight: 400;
     color: #007eff;
-    line-height: 2.5rem;
     text-align: center;
     cursor: pointer;
 }

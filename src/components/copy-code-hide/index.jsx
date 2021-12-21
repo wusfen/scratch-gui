@@ -28,7 +28,6 @@ const list = [
         label: '控制',
         value: '%{BKY_CATEGORY_CONTROL}',
         checked: false,
-        value: '%{BKY_CATEGORY_CONTROL}',
         list: [
             {label: '等待 (1) 秒', value: 'control_wait', checked: false},
             {label: '重复执行 (10) 次', value: 'control_repeat', checked: false},
@@ -179,6 +178,66 @@ const list = [
         value: '%{BKY_CATEGORY_MYBLOCKS}',
         checked: false,
         list: [],
+    },
+    {
+        label: '音乐',
+        value: 'music',
+        checked: false,
+        list: [
+            {label: '击打 ((1) 小军鼓) (0.25) 拍', value: 'music_playDrumForBeats', checked: false},
+            {label: '休止 (0.25) 拍', value: 'music_restForBeats', checked: false},
+            {label: '演奏音符 (60) (0.25) 拍', value: 'music_playNoteForBeats', checked: false},
+            {label: '将乐器设为 ((1) 钢琴)', value: 'music_setInstrument', checked: false},
+            {label: '将演奏速度设定为 (60)', value: 'music_setTempo', checked: false},
+            {label: '将演奏速度增加 (20)', value: 'music_changeTempo', checked: false},
+            {label: '演奏速度', value: 'music_getTempo', checked: false},
+        ],
+    },
+    {
+        label: '画笔',
+        value: 'pen',
+        checked: false,
+        list: [
+            {label: '全部擦除', value: 'pen_clear', checked: false},
+            {label: '图章', value: 'pen_stamp', checked: false},
+            {label: '落笔', value: 'pen_penDown', checked: false},
+            {label: '抬笔', value: 'pen_penUp', checked: false},
+            {label: '将笔的颜色设为 ( )', value: 'pen_setPenColorToColor', checked: false},
+            {label: '将笔的 (颜色) 增加 (10)', value: 'pen_changePenColorParamBy', checked: false},
+            {label: '将笔的 (颜色) 设为 (0)', value: 'pen_setPenColorParamTo', checked: false},
+            {label: '将笔的粗细增加 (1)', value: 'pen_changePenSizeBy', checked: false},
+            {label: '将笔的粗细设为 (1)', value: 'pen_setPenSizeTo', checked: false},
+        ],
+    },
+    {
+        label: '视频侦测',
+        value: 'videoSensing',
+        checked: false,
+        list: [
+            {label: '当视频运动 > (10)', value: 'videoSensing_whenMotionGreaterThan', checked: false},
+            {label: '相对于 (角色) 的视频 (运动)', value: 'videoSensing_videoOn', checked: false},
+            {label: '开启摄像头', value: 'videoSensing_videoToggle', checked: false},
+            {label: '将视频透明度设为 (50)', value: 'videoSensing_setVideoTransparency', checked: false},
+        ],
+    },
+    {
+        label: '文字朗读',
+        value: 'text2speech',
+        checked: false,
+        list: [
+            {label: '朗读 (你好)', value: 'text2speech_speakAndWait', checked: false},
+            {label: '使用 (中音) 嗓音', value: 'text2speech_setVoice', checked: false},
+            {label: '将朗读语言设置为 (中文)', value: 'text2speech_setLanguage', checked: false},
+        ],
+    },
+    {
+        label: '翻译',
+        value: 'translate',
+        checked: false,
+        list: [
+            {label: '将 (你好) 译为 (英语)', value: 'translate_getTranslate', checked: false},
+            {label: '访客语言', value: 'translate_getViewerLanguage', checked: false},
+        ],
     },
 ];
 

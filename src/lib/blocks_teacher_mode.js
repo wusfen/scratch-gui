@@ -335,49 +335,41 @@ export default function (Blockly, vm){
         if (!this.options.languageTree) {
             throw 'Existing toolbox is null.  Can\'t create new toolbox.';
         }
-        const categories = tree.getElementsByTagName('category');
+
+        const categories = [...tree.getElementsByTagName('category')];
         const length = categories.length;
         const teacherMode = window.MODE === 'teacher';
-        if (window.vcode_toolbox){
-            for (let i = categories.length - 1; i >= 0; i--){
-                const category = categories[i];
+        const vcode_toolbox = window.vcode_toolbox
+
+        if (vcode_toolbox){
+            for (const category of categories){
+                const categoryId = category.getAttribute('id');
                 const categoryName = category.getAttribute('name');
-                const had = window.vcode_toolbox[categoryName];
-                if(had && (categoryName === '%{BKY_CATEGORY_MYBLOCKS}' || categoryName === '%{BKY_CATEGORY_VARIABLES}')){
-                    continue;
-                }else if (!had || had.length == 0){
-                    if (!teacherMode){
-                        tree.removeChild(category);
-                    } else {
-                        var blocks = category.getElementsByTagName('block');
-                        for (var j = blocks.length - 1; j >= 0; j--){
-                            blocks[j].setAttribute('opacity', '0.5');
-                        }
-                    }
-                } else {
-                    var blocks = category.getElementsByTagName('block');
-                    let remove = true;
-                    for (var j = blocks.length - 1; j >= 0; j--){
-                        const block = blocks[j];
-                        if (!had[block.getAttribute('type')]){
-                            teacherMode ? block.setAttribute('opacity', '0.5') : category.removeChild(block);
+                const categoryConfig = vcode_toolbox[categoryId] || vcode_toolbox[categoryName];
+
+                // category
+                if (!categoryConfig && !teacherMode) {
+                    category.parentNode?.removeChild(category)
+                }
+
+                // block
+                const blocks = [...category.getElementsByTagName('block')];
+                for (const block of blocks) {
+                    const blockType = block.getAttribute('type')
+                    const blockConfig = categoryConfig?.[blockType]
+
+                    if (!blockConfig) {
+                        if (!teacherMode) {
+                            block.parentNode?.removeChild(block)
                         } else {
-                            remove = false;
-                        }
-                    }
-                    if (remove){
-                        if (!teacherMode){
-                            tree.removeChild(category);
-                        } else {
-                            var blocks = category.getElementsByTagName('block');
-                            for (var j = blocks.length - 1; j >= 0; j--){
-                                blocks[j].setAttribute('opacity', '0.5');
-                            }
+                            block.setAttribute('opacity', '0.5');
                         }
                     }
                 }
+
             }
         }
+
         if (length) {
             if (!this.toolbox_) {
                 throw 'Existing toolbox has no categories.  Can\'t change mode.';
