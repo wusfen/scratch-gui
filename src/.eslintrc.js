@@ -46,6 +46,7 @@ module.exports = {
         'import/no-nodejs-modules': 1,
         'no-shadow': 1,
         'max-len': 1,
+        'no-mixed-operators': 1,
     },
     settings: {
         react: {

@@ -88,6 +88,11 @@ class Component extends React.Component{
         removeEventListener('touchend', this.handleUp);
     }
     pick (e) {
+        if (this.props.projectRunning) {
+            this.setState({target: null});
+            return;
+        }
+
         const state = this.state;
         if (state.isRotateDown) return;
         if (state.isResizeDown) return;
