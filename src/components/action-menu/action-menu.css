@@ -63,7 +63,11 @@ button::-moz-focus-inner {
 
 .main-icon {
     width: 0.75rem;
-    height:  0.75rem;
+    height: 0.75rem;
+    transition: 0.5s;
+}
+.expanded .main-icon {
+    transform: rotate(calc(45 * 9 * 1deg));
 }
 
 [dir="rtl"] .main-icon {

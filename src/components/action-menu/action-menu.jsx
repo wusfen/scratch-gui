@@ -31,7 +31,8 @@ class ActionMenu extends React.Component {
         // Touch start on the main button is caught to trigger open and not click
         this.buttonRef.addEventListener('touchstart', this.handleTouchStart);
         // Touch start on document is used to trigger close if it is outside
-        document.addEventListener('touchstart', this.handleTouchOutside);
+        document.addEventListener('touchstart', this.handleTouchOutside, true);
+        document.addEventListener('mousedown', this.handleTouchOutside, true);
     }
     shouldComponentUpdate (newProps, newState) {
         // This check prevents re-rendering while the project is updating.
@@ -45,7 +46,8 @@ class ActionMenu extends React.Component {
     }
     componentWillUnmount () {
         this.buttonRef.removeEventListener('touchstart', this.handleTouchStart);
-        document.removeEventListener('touchstart', this.handleTouchOutside);
+        document.removeEventListener('touchstart', this.handleTouchOutside, true);
+        document.removeEventListener('mousedown', this.handleTouchOutside, true);
     }
     handleClosePopover () {
         this.closeTimeoutId = setTimeout(() => {
@@ -61,15 +63,11 @@ class ActionMenu extends React.Component {
                 isOpen: true,
                 forceHide: false
             });
-            this.iconRef.style.transform = `rotate(45deg)`;
-            this.iconRef.style.transition = `all 0.2s ease-in`;
         } else {
             this.setState({
                 isOpen: false,
                 forceHide: true
             });
-            this.iconRef.style.transform = `rotate(0deg)`;
-            this.iconRef.style.transition = `all 0.2s ease-in`;
         }
     }
     handleTouchOutside (e) {
@@ -92,8 +90,6 @@ class ActionMenu extends React.Component {
             if (title !== '随机'){
                 this.setState({forceHide: true, isOpen: false}, () => {
                     setTimeout(() => this.setState({forceHide: false}));
-                    this.iconRef.style.transform = `rotate(0deg)`;
-                    this.iconRef.style.transition = `all 0.2s ease-in`;
                 });
             }
         };
