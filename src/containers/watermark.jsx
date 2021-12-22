@@ -22,7 +22,7 @@ class Watermark extends React.Component {
 
     getCostumeData () {
         if (!this.props.asset) return null;
-        if(this.assetId === this.props.asset.assetId){
+        if (this.assetId === this.props.asset.assetId){
             return this.costumeURL;
         }
         this.assetId = this.props.asset.assetId;

@@ -216,32 +216,32 @@ class Stage extends React.Component {
 
         if (this.props.isColorPicking) {
             // Set the pickX/Y for the color picker loop to pick up
-            if(window.TouchEvent && e instanceof TouchEvent){
-                if(typeof this.startPickX !== 'number' && 
+            if (window.TouchEvent && e instanceof TouchEvent){
+                if (typeof this.startPickX !== 'number' && 
                     mousePosition[0] > 0 && mousePosition[0] < this.rect.width &&
                     mousePosition[1] > 0 && mousePosition[1] < this.rect.height){
                     this.startPickX = mousePosition[0];
                     this.startPickY = mousePosition[1];
                 }
-                if(typeof this.startPickX === 'number'){
+                if (typeof this.startPickX === 'number'){
                     this.pickX += mousePosition[0] - this.startPickX;
                     this.pickY += mousePosition[1] - this.startPickY;
                     this.startPickX = mousePosition[0];
                     this.startPickY = mousePosition[1];
                 }
                 this._isDown = false;
-            }else{
+            } else {
                 this.pickX = mousePosition[0];
                 this.pickY = mousePosition[1];
             }
-            if(this.pickX < 0){
+            if (this.pickX < 0){
                 this.pickX = 0;
-            }else if(this.pickX > this.rect.width){
+            } else if (this.pickX > this.rect.width){
                 this.pickX = this.rect.width;
             }
-            if(this.pickY < 0){
+            if (this.pickY < 0){
                 this.pickY = 0;
-            }else if(this.pickY > this.rect.height){
+            } else if (this.pickY > this.rect.height){
                 this.pickY = this.rect.height;
             }
         }
@@ -328,12 +328,12 @@ class Stage extends React.Component {
         this.updateRect();
         const {x, y} = getEventXY(e);
         const mousePosition = [x - this.rect.left, y - this.rect.top];
-        if (this.props.isColorPicking) {//只有pad上触发？
+        if (this.props.isColorPicking) { // 只有pad上触发？
             // Set the pickX/Y for the color picker loop to pick up
-            //this.pickX = mousePosition[0];
-            //this.pickY = mousePosition[1];
+            // this.pickX = mousePosition[0];
+            // this.pickY = mousePosition[1];
             // Immediately update the color picker info
-            //this.setState({colorInfo: this.getColorInfo(this.pickX, this.pickY)});
+            // this.setState({colorInfo: this.getColorInfo(this.pickX, this.pickY)});
         } else {
             if (!this.props.projectRunning){
                 const drawableId = this.renderer.pick(mousePosition[0], mousePosition[1]);

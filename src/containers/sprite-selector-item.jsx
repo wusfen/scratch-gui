@@ -45,7 +45,7 @@ class SpriteSelectorItem extends React.PureComponent {
     getCostumeData () {
         if (this.props.costumeURL) return this.props.costumeURL;
         if (!this.props.asset) return null;
-        if(this.assetId === this.props.asset.assetId){
+        if (this.assetId === this.props.asset.assetId){
             return this.costumeURL;
         }
         this.assetId = this.props.asset.assetId;

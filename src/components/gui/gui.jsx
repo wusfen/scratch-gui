@@ -75,7 +75,7 @@ const _onmousedown = function (e) {
 };
 
 const _onmouseup = function (e) {
-    if(_isDown){
+    if (_isDown){
         _isDown = false;
         e.preventDefault();
     }
@@ -185,8 +185,8 @@ const GUIComponent = props => {
     const _onmousemove = e => {
         if (_isDown && onResizeStage){
             offsetX = getEventXY(e).x;
-            if(!timeHandle){
-                timeHandle = setTimeout(()=>{
+            if (!timeHandle){
+                timeHandle = setTimeout(() => {
                     onResizeStage(offsetX - _orgX);
                     _orgX = offsetX;
                     timeHandle = null;
@@ -373,7 +373,8 @@ const GUIComponent = props => {
                             className={styles.resizeBar}
                             onMouseDown={_onmousedown}
                             onTouchStart={_onmousedown}
-                            src={resizeBarIcon} draggable={false}
+                            src={resizeBarIcon}
+                            draggable={false}
                         />
                         
                         <WDSpriteList

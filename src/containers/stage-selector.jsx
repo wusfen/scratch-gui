@@ -157,12 +157,12 @@ class StageSelector extends React.Component {
         this.ref = ref;
     }
     render () {
-        if(this.props.asset){
-            if(this.assetId !== this.props.assetid){
+        if (this.props.asset){
+            if (this.assetId !== this.props.assetid){
                 this.costumeURL = this.props.asset.encodeDataURI();
                 this.assetId = this.props.assetid;
             }
-        }else{
+        } else {
             this.costumeURL = null;
             this.assetId = null;
         }
@@ -183,7 +183,7 @@ class StageSelector extends React.Component {
                 onMouseLeave={this.handleMouseLeave}
                 onSurpriseBackdropClick={this.handleSurpriseBackdrop}
                 {...componentProps}
-                url = {this.costumeURL}
+                url={this.costumeURL}
             />
         );
     }
@@ -198,8 +198,8 @@ StageSelector.propTypes = {
 };
 
 const mapStateToProps = (state, {asset, id}) => ({
-    //url: asset && asset.encodeDataURI(),
-    assetid:asset && asset.assetId,
+    // url: asset && asset.encodeDataURI(),
+    assetid: asset && asset.assetId,
     vm: state.scratchGui.vm,
     receivedBlocks: state.scratchGui.hoveredTarget.receivedBlocks &&
             state.scratchGui.hoveredTarget.sprite === id,

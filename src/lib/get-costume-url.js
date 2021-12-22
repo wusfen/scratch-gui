@@ -5,16 +5,16 @@ import {inlineSvgFonts} from 'scratch-svg-renderer';
 const HAS_FONT_REGEXP = 'font-family(?!="none")';
 
 const getCostumeUrl = (function () {
-   // let cachedAssetId;
-  //  let cachedUrl;
+    // let cachedAssetId;
+    //  let cachedUrl;
 
     return function (asset) {
 
-        //if (cachedAssetId === asset.assetId) {
-           // return cachedUrl;
-        //}
+        // if (cachedAssetId === asset.assetId) {
+        // return cachedUrl;
+        // }
 
-       // cachedAssetId = asset.assetId;
+        // cachedAssetId = asset.assetId;
 
         // If the SVG refers to fonts, they must be inlined in order to display correctly in the img tag.
         // Avoid parsing the SVG when possible, since it's expensive.
@@ -23,14 +23,14 @@ const getCostumeUrl = (function () {
             if (svgString.match(HAS_FONT_REGEXP)) {
                 const svgText = inlineSvgFonts(svgString);
                 return `data:image/svg+xml;utf8,${encodeURIComponent(svgText)}`;
-            } else {
-                return asset.encodeDataURI();
-            }
-        } else {
+            } 
             return asset.encodeDataURI();
-        }
+            
+        } 
+        return asset.encodeDataURI();
+        
 
-        //return cachedUrl;
+        // return cachedUrl;
     };
 }());
 
