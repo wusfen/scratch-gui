@@ -1,29 +1,22 @@
 #!/usr/bin/env bash
 
 # files
-files=$(git diff --cached --name-only | egrep ".(js|cjs|mjs|ts|jsx|tsx|vue)$")
-# -deleted
-for file in $files; do
-  if [[ ! -f $file ]]; then
-    files=$(echo "$files" | egrep -v "^$file$")
-  fi
-done
-# !files
-files=$(echo "$files" | egrep -v "^$")
-if [[ -z $files ]]; then
-  exit 0
-fi
+files=$(
+  git diff --cached --name-only --diff-filter=d | 
+  egrep "[.](js|cjs|mjs|ts|jsx|tsx|vue)$" |
+  egrep -v "^$"
+)
+# echo "$files"
 
-# eslint
-eslint="./node_modules/.bin/eslint"
-if [[ ! -f $eslint ]]; then
+# !files
+if [[ -z $files ]]; then
   exit 0
 fi
 
 # fix
 # -f stylish unix visualstudio codeframe
 rs=$(npx eslint $files --fix)
-rs=$(npx eslint $files --quiet -f=unix)
+rs=$(npx eslint $files --quiet --color -f=unix)
 error=$?
 
 # add again

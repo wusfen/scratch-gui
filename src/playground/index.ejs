@@ -109,7 +109,7 @@
             }
 
             if ("ontouchstart" in window) {
-                if (/dev|uat/.test(env)) {
+                if (/uat/.test(env)) {
                     loadConsole();
                     console.f12 = 1;
                 }

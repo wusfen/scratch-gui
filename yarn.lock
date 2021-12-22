@@ -1698,10 +1698,10 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@wushufen/commit-lint@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@wushufen/commit-lint/-/commit-lint-1.0.3.tgz#138f50ee2a253fbb2b8cf82b4d96c04f1bd7cd56"
-  integrity sha512-IPvOpe4e13u+PrHfQdHj/JxTBU9Zffi6paePUN75d7qIWrOaEuLjCBgGUwKNesv24KJUHVPc8e0gl/H7A58sGQ==
+"@wushufen/commit-lint@1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@wushufen/commit-lint/-/commit-lint-1.0.5.tgz#e604075b58cb42cccd6d5e4be384e846ce1f6cb7"
+  integrity sha512-b10l7JC/XCzhstlexoHyLwSgOqm5buCQcjg2HxA2mLIB2VYUjHxjBF28L7N0MkXF9CjCTmQsNG0FaTRi0NbldA==
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
