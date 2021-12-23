@@ -1,0 +1,1680 @@
+[
+    {
+        "name": "回收机器人-站立",
+        "tags": [
+            "people"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "a655a7437ed1c742c5b9e414329c5d86",
+                "name": "回收机器人-站立01",
+                "bitmapResolution": 2,
+                "md5ext": "a655a7437ed1c742c5b9e414329c5d86.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "e34b12b92d82abd2890ce2758104d03c",
+                "name": "回收机器人-站立02",
+                "bitmapResolution": 2,
+                "md5ext": "e34b12b92d82abd2890ce2758104d03c.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "1a312338058494724be07c4a3063aa51",
+                "name": "回收机器人-站立03",
+                "bitmapResolution": 2,
+                "md5ext": "1a312338058494724be07c4a3063aa51.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "9bf42333f150f077609e127a6dcbcb93",
+                "name": "回收机器人-站立04",
+                "bitmapResolution": 2,
+                "md5ext": "9bf42333f150f077609e127a6dcbcb93.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "757480575c73deebdb6908d3f2e8d775",
+                "name": "回收机器人-站立05",
+                "bitmapResolution": 2,
+                "md5ext": "757480575c73deebdb6908d3f2e8d775.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "1182509ed125f177597d52d195435ba0",
+                "name": "回收机器人-站立06",
+                "bitmapResolution": 2,
+                "md5ext": "1182509ed125f177597d52d195435ba0.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "ffd12dbb4aa5d4dedf07ca8f0006fb3b",
+                "name": "回收机器人-站立07",
+                "bitmapResolution": 2,
+                "md5ext": "ffd12dbb4aa5d4dedf07ca8f0006fb3b.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "4d6ba245e43265f059c9e4a523dc985b",
+                "name": "回收机器人-站立08",
+                "bitmapResolution": 2,
+                "md5ext": "4d6ba245e43265f059c9e4a523dc985b.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "703dc5a6ee99b0a218f843376e8a72f7",
+                "name": "回收机器人-站立09",
+                "bitmapResolution": 2,
+                "md5ext": "703dc5a6ee99b0a218f843376e8a72f7.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "a2ec56d042095666ea77a256f9f273d7",
+                "name": "回收机器人-站立10",
+                "bitmapResolution": 2,
+                "md5ext": "a2ec56d042095666ea77a256f9f273d7.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "大树",
+        "tags": [
+            "people"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "f3f4d98ad26015dfcab187b80c6656ab",
+                "name": "大树01",
+                "bitmapResolution": 2,
+                "md5ext": "f3f4d98ad26015dfcab187b80c6656ab.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "b453dd80b781c565a3bc763f18ad5af6",
+                "name": "大树02",
+                "bitmapResolution": 2,
+                "md5ext": "b453dd80b781c565a3bc763f18ad5af6.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "皮皮虎招手",
+        "tags": [
+            "people"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "c7fb81609d2e04ce8c5fb357b61add31",
+                "name": "皮皮虎招手01",
+                "bitmapResolution": 2,
+                "md5ext": "c7fb81609d2e04ce8c5fb357b61add31.png",
+                "dataFormat": "png",
+                "rotationCenterX": 86,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "e41e6ebf48844ad6c97fae3a9555eb87",
+                "name": "皮皮虎招手02",
+                "bitmapResolution": 2,
+                "md5ext": "e41e6ebf48844ad6c97fae3a9555eb87.png",
+                "dataFormat": "png",
+                "rotationCenterX": 86,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "8ce8f834c0455445b520e511a0ecfa41",
+                "name": "皮皮虎招手03",
+                "bitmapResolution": 2,
+                "md5ext": "8ce8f834c0455445b520e511a0ecfa41.png",
+                "dataFormat": "png",
+                "rotationCenterX": 86,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "98a967d0064ca4b2b1576e681257fdc9",
+                "name": "皮皮虎招手04",
+                "bitmapResolution": 2,
+                "md5ext": "98a967d0064ca4b2b1576e681257fdc9.png",
+                "dataFormat": "png",
+                "rotationCenterX": 86,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "bff4899d53ce58d280ee7a121fda8954",
+                "name": "皮皮虎招手05",
+                "bitmapResolution": 2,
+                "md5ext": "bff4899d53ce58d280ee7a121fda8954.png",
+                "dataFormat": "png",
+                "rotationCenterX": 86,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "3752af0e65ef14dcca998db5fc583e46",
+                "name": "皮皮虎招手06",
+                "bitmapResolution": 2,
+                "md5ext": "3752af0e65ef14dcca998db5fc583e46.png",
+                "dataFormat": "png",
+                "rotationCenterX": 86,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "289c15ab5307c5b5cdbfc0a934c08b2e",
+                "name": "皮皮虎招手07",
+                "bitmapResolution": 2,
+                "md5ext": "289c15ab5307c5b5cdbfc0a934c08b2e.png",
+                "dataFormat": "png",
+                "rotationCenterX": 86,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "bb4b231015964822d30f3c39e85ab86b",
+                "name": "皮皮虎招手08",
+                "bitmapResolution": 2,
+                "md5ext": "bb4b231015964822d30f3c39e85ab86b.png",
+                "dataFormat": "png",
+                "rotationCenterX": 86,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "43d16f949997e59bceaa315e8085a893",
+                "name": "皮皮虎招手09",
+                "bitmapResolution": 2,
+                "md5ext": "43d16f949997e59bceaa315e8085a893.png",
+                "dataFormat": "png",
+                "rotationCenterX": 86,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "d4435434bce23dfcc820d33e2ac02574",
+                "name": "皮皮虎招手10",
+                "bitmapResolution": 2,
+                "md5ext": "d4435434bce23dfcc820d33e2ac02574.png",
+                "dataFormat": "png",
+                "rotationCenterX": 86,
+                "rotationCenterY": 128
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "稻草机器人-站立",
+        "tags": [
+            "people"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "e6fb8e2cf1f3a4a95e315ca240c79124",
+                "name": "稻草机器人-站立01",
+                "bitmapResolution": 2,
+                "md5ext": "e6fb8e2cf1f3a4a95e315ca240c79124.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "572f8e4cdde4afa91895ec5a3f9b18f6",
+                "name": "稻草机器人-站立02",
+                "bitmapResolution": 2,
+                "md5ext": "572f8e4cdde4afa91895ec5a3f9b18f6.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "4c6ff15a91501e4b64e87708c5c8e0ab",
+                "name": "稻草机器人-站立03",
+                "bitmapResolution": 2,
+                "md5ext": "4c6ff15a91501e4b64e87708c5c8e0ab.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "df714bd32fb29f3deb30f4fafa4d28df",
+                "name": "稻草机器人-站立04",
+                "bitmapResolution": 2,
+                "md5ext": "df714bd32fb29f3deb30f4fafa4d28df.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "d782d5bdb3a4c3f4eb359510ff789b03",
+                "name": "稻草机器人-站立05",
+                "bitmapResolution": 2,
+                "md5ext": "d782d5bdb3a4c3f4eb359510ff789b03.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "1707eaa5dc8c32fbbc7b1f51f829c6d8",
+                "name": "稻草机器人-站立06",
+                "bitmapResolution": 2,
+                "md5ext": "1707eaa5dc8c32fbbc7b1f51f829c6d8.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "糊涂巴格",
+        "tags": [
+            "people"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "27c10afc4c5146bb0335c725ab61d5a6",
+                "name": "糊涂巴格01",
+                "bitmapResolution": 2,
+                "md5ext": "27c10afc4c5146bb0335c725ab61d5a6.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "5376e524b6cb24b06b505427fecd0c72",
+                "name": "糊涂巴格02",
+                "bitmapResolution": 2,
+                "md5ext": "5376e524b6cb24b06b505427fecd0c72.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "糊涂巴格-走路",
+        "tags": [
+            "people"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "4724688ab5ecd5c0a1cc727b4e0e242e",
+                "name": "糊涂巴格-走路01",
+                "bitmapResolution": 2,
+                "md5ext": "4724688ab5ecd5c0a1cc727b4e0e242e.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "ca90f645c21ba3f9c32e8f7490673a3b",
+                "name": "糊涂巴格-走路02",
+                "bitmapResolution": 2,
+                "md5ext": "ca90f645c21ba3f9c32e8f7490673a3b.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "53364e16227a1c3af721f2406ac1bc9f",
+                "name": "糊涂巴格-走路03",
+                "bitmapResolution": 2,
+                "md5ext": "53364e16227a1c3af721f2406ac1bc9f.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "24bd9ecf6fa135618c109772e02279ce",
+                "name": "糊涂巴格-走路04",
+                "bitmapResolution": 2,
+                "md5ext": "24bd9ecf6fa135618c109772e02279ce.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "6faf2da56dd0feedecb4fec985f5b1f0",
+                "name": "糊涂巴格-走路05",
+                "bitmapResolution": 2,
+                "md5ext": "6faf2da56dd0feedecb4fec985f5b1f0.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "81114f0835253a2f17e292b12afb6843",
+                "name": "糊涂巴格-走路06",
+                "bitmapResolution": 2,
+                "md5ext": "81114f0835253a2f17e292b12afb6843.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "e412770085b6ac308a960a4f77218394",
+                "name": "糊涂巴格-走路07",
+                "bitmapResolution": 2,
+                "md5ext": "e412770085b6ac308a960a4f77218394.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "11b147f1d05599a5968cb5cad9296f42",
+                "name": "糊涂巴格-走路08",
+                "bitmapResolution": 2,
+                "md5ext": "11b147f1d05599a5968cb5cad9296f42.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "聪明鹿-飞",
+        "tags": [
+            "people"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "e161e4a7128ff9f57d810c48d7358fcd",
+                "name": "聪明鹿-飞01",
+                "bitmapResolution": 2,
+                "md5ext": "e161e4a7128ff9f57d810c48d7358fcd.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "7a18c0fac1f5bebdd22f29e32a290d9b",
+                "name": "聪明鹿-飞02",
+                "bitmapResolution": 2,
+                "md5ext": "7a18c0fac1f5bebdd22f29e32a290d9b.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "491b5fad7ff567af9873175c3c300699",
+                "name": "聪明鹿-飞03",
+                "bitmapResolution": 2,
+                "md5ext": "491b5fad7ff567af9873175c3c300699.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "df422b5e5697057cdf2893d3a60e8160",
+                "name": "聪明鹿-飞04",
+                "bitmapResolution": 2,
+                "md5ext": "df422b5e5697057cdf2893d3a60e8160.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "调皮巴格",
+        "tags": [
+            "people"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "5699f2a0c6d6d16dffe5b8bc5226c477",
+                "name": "调皮巴格01",
+                "bitmapResolution": 2,
+                "md5ext": "5699f2a0c6d6d16dffe5b8bc5226c477.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "840336ee9b5d3137b71b6c7282efb51d",
+                "name": "调皮巴格02",
+                "bitmapResolution": 2,
+                "md5ext": "840336ee9b5d3137b71b6c7282efb51d.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "调皮巴格-走路",
+        "tags": [
+            "people"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "91765fb918480ebee9519859c9f58294",
+                "name": "调皮巴格-走路01",
+                "bitmapResolution": 2,
+                "md5ext": "91765fb918480ebee9519859c9f58294.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "6373ef6b41c5ebf421b464f3f540948a",
+                "name": "调皮巴格-走路02",
+                "bitmapResolution": 2,
+                "md5ext": "6373ef6b41c5ebf421b464f3f540948a.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "aec96f346912f6d19cf6245d5f9bc569",
+                "name": "调皮巴格-走路03",
+                "bitmapResolution": 2,
+                "md5ext": "aec96f346912f6d19cf6245d5f9bc569.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "2bfd06ae60ba0f4e3ea36c5fa1110ff9",
+                "name": "调皮巴格-走路04",
+                "bitmapResolution": 2,
+                "md5ext": "2bfd06ae60ba0f4e3ea36c5fa1110ff9.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "502f8fc2b7bf741668cbeb07bc613f85",
+                "name": "调皮巴格-走路05",
+                "bitmapResolution": 2,
+                "md5ext": "502f8fc2b7bf741668cbeb07bc613f85.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "6849e3abfa0a4cefefc3ad822309bfdd",
+                "name": "调皮巴格-走路06",
+                "bitmapResolution": 2,
+                "md5ext": "6849e3abfa0a4cefefc3ad822309bfdd.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "35cd8f7a6fea4146911ee7224a00a8f2",
+                "name": "调皮巴格-走路07",
+                "bitmapResolution": 2,
+                "md5ext": "35cd8f7a6fea4146911ee7224a00a8f2.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "4665c78a626cc2419e85f97e54bc5259",
+                "name": "调皮巴格-走路08",
+                "bitmapResolution": 2,
+                "md5ext": "4665c78a626cc2419e85f97e54bc5259.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "豌豆精灵眨眼",
+        "tags": [
+            "people"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "281439dd8bd70a96ab5f2a62adeb5b29",
+                "name": "豌豆精灵眨眼01",
+                "bitmapResolution": 2,
+                "md5ext": "281439dd8bd70a96ab5f2a62adeb5b29.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "bf1e07dcc29e7d4d321d39c9db42efdd",
+                "name": "豌豆精灵眨眼02",
+                "bitmapResolution": 2,
+                "md5ext": "bf1e07dcc29e7d4d321d39c9db42efdd.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "10f92378615ecadeb6e4cb6d3641d5d2",
+                "name": "豌豆精灵眨眼03",
+                "bitmapResolution": 2,
+                "md5ext": "10f92378615ecadeb6e4cb6d3641d5d2.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "1c12454c285682bceca5d699e5b3022c",
+                "name": "豌豆精灵眨眼04",
+                "bitmapResolution": 2,
+                "md5ext": "1c12454c285682bceca5d699e5b3022c.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "6f24841fa4cf019d14da6e8950810ad4",
+                "name": "豌豆精灵眨眼05",
+                "bitmapResolution": 2,
+                "md5ext": "6f24841fa4cf019d14da6e8950810ad4.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "邋遢巴格",
+        "tags": [
+            "people"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "3a5c88c68052de95e81632e9d2befd1b",
+                "name": "邋遢巴格01",
+                "bitmapResolution": 2,
+                "md5ext": "3a5c88c68052de95e81632e9d2befd1b.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "509aebdd224c0cfca217dd31fc5d9f35",
+                "name": "邋遢巴格02",
+                "bitmapResolution": 2,
+                "md5ext": "509aebdd224c0cfca217dd31fc5d9f35.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "邋遢巴格-走路",
+        "tags": [
+            "people"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "c43f8d929159855373b22fcda1917e1e",
+                "name": "邋遢巴格-走路01",
+                "bitmapResolution": 2,
+                "md5ext": "c43f8d929159855373b22fcda1917e1e.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "304ba76674efff782deebb8c33ba3664",
+                "name": "邋遢巴格-走路02",
+                "bitmapResolution": 2,
+                "md5ext": "304ba76674efff782deebb8c33ba3664.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "3c8a75c9968d16338ea48831c7cb2919",
+                "name": "邋遢巴格-走路03",
+                "bitmapResolution": 2,
+                "md5ext": "3c8a75c9968d16338ea48831c7cb2919.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "e1b36c3adb12aa1a7ea95c8d89270472",
+                "name": "邋遢巴格-走路04",
+                "bitmapResolution": 2,
+                "md5ext": "e1b36c3adb12aa1a7ea95c8d89270472.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "13ba75402637c9fd16ac80fe348d784c",
+                "name": "邋遢巴格-走路05",
+                "bitmapResolution": 2,
+                "md5ext": "13ba75402637c9fd16ac80fe348d784c.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "e17c5ad4f19b47c054a443382e72342f",
+                "name": "邋遢巴格-走路06",
+                "bitmapResolution": 2,
+                "md5ext": "e17c5ad4f19b47c054a443382e72342f.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "e8cd0ef729aec6493521e43a30e0e232",
+                "name": "邋遢巴格-走路07",
+                "bitmapResolution": 2,
+                "md5ext": "e8cd0ef729aec6493521e43a30e0e232.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "deed255c95dd5dee1ed773988bff4f29",
+                "name": "邋遢巴格-走路08",
+                "bitmapResolution": 2,
+                "md5ext": "deed255c95dd5dee1ed773988bff4f29.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "马虎巴格",
+        "tags": [
+            "people"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "be0a984222171e47000127b2a7adbadc",
+                "name": "马虎巴格01",
+                "bitmapResolution": 2,
+                "md5ext": "be0a984222171e47000127b2a7adbadc.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "39c7f59fd9b6d2d2a86279ae2241e074",
+                "name": "马虎巴格02",
+                "bitmapResolution": 2,
+                "md5ext": "39c7f59fd9b6d2d2a86279ae2241e074.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "马虎巴格-走路",
+        "tags": [
+            "people"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "355ea11dee77d170e1466f112bee5990",
+                "name": "马虎巴格-走路01",
+                "bitmapResolution": 2,
+                "md5ext": "355ea11dee77d170e1466f112bee5990.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "b5d648214492c16be082556e4f837994",
+                "name": "马虎巴格-走路02",
+                "bitmapResolution": 2,
+                "md5ext": "b5d648214492c16be082556e4f837994.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "e19b942fd667ff6614473f6f7f8211f0",
+                "name": "马虎巴格-走路03",
+                "bitmapResolution": 2,
+                "md5ext": "e19b942fd667ff6614473f6f7f8211f0.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "29bc8c8f98e2b7c1a1df8898bebbafbc",
+                "name": "马虎巴格-走路04",
+                "bitmapResolution": 2,
+                "md5ext": "29bc8c8f98e2b7c1a1df8898bebbafbc.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "3ac7301ab58a6fefe4d0f9eee8c73035",
+                "name": "马虎巴格-走路05",
+                "bitmapResolution": 2,
+                "md5ext": "3ac7301ab58a6fefe4d0f9eee8c73035.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "61e154bfd555d98992d94cfa3d2f6933",
+                "name": "马虎巴格-走路06",
+                "bitmapResolution": 2,
+                "md5ext": "61e154bfd555d98992d94cfa3d2f6933.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "6a53a59657645ec682a79c967759e48f",
+                "name": "马虎巴格-走路07",
+                "bitmapResolution": 2,
+                "md5ext": "6a53a59657645ec682a79c967759e48f.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "people"
+                ],
+                "assetId": "31273373efc096c19fae38ca808e2afa",
+                "name": "马虎巴格-走路08",
+                "bitmapResolution": 2,
+                "md5ext": "31273373efc096c19fae38ca808e2afa.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "书本",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "77307143b4a8df05f5eeb8c0977d177b",
+                "name": "数学",
+                "bitmapResolution": 2,
+                "md5ext": "77307143b4a8df05f5eeb8c0977d177b.png",
+                "dataFormat": "png",
+                "rotationCenterX": 79.5,
+                "rotationCenterY": 86
+            },
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "8b779f49877a00619a8ac1563ad3e28f",
+                "name": "英语",
+                "bitmapResolution": 2,
+                "md5ext": "8b779f49877a00619a8ac1563ad3e28f.png",
+                "dataFormat": "png",
+                "rotationCenterX": 79.5,
+                "rotationCenterY": 86
+            },
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "fa616f5339657eb7e89a5dae2555f094",
+                "name": "语文",
+                "bitmapResolution": 2,
+                "md5ext": "fa616f5339657eb7e89a5dae2555f094.png",
+                "dataFormat": "png",
+                "rotationCenterX": 79.5,
+                "rotationCenterY": 86
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "披萨",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "721842f9d4f9e6b2c9dd03100ed434fe",
+                "name": "披萨1",
+                "bitmapResolution": 2,
+                "md5ext": "721842f9d4f9e6b2c9dd03100ed434fe.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "9f35ec0dac123334795eb5075246279c",
+                "name": "披萨2",
+                "bitmapResolution": 2,
+                "md5ext": "9f35ec0dac123334795eb5075246279c.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "桌子",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "cd203d37f9c41e7f99c1cc686c285a7b",
+                "name": "桌子",
+                "bitmapResolution": 2,
+                "md5ext": "cd203d37f9c41e7f99c1cc686c285a7b.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "棋子",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "0b2befbdb3e20fd692559cda56b7247d",
+                "name": "白棋",
+                "bitmapResolution": 2,
+                "md5ext": "0b2befbdb3e20fd692559cda56b7247d.png",
+                "dataFormat": "png",
+                "rotationCenterX": 35.5,
+                "rotationCenterY": 36.5
+            },
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "cd12f5d118cef8368f9692b1508e2e1c",
+                "name": "黑棋",
+                "bitmapResolution": 2,
+                "md5ext": "cd12f5d118cef8368f9692b1508e2e1c.png",
+                "dataFormat": "png",
+                "rotationCenterX": 35.5,
+                "rotationCenterY": 36.5
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "盆栽",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "eddb45f81d0f55dcb134987184135a61",
+                "name": "盆栽1",
+                "bitmapResolution": 2,
+                "md5ext": "eddb45f81d0f55dcb134987184135a61.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "78719fa20029db9d3f61dca7716bd1c2",
+                "name": "盆栽2",
+                "bitmapResolution": 2,
+                "md5ext": "78719fa20029db9d3f61dca7716bd1c2.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "盾牌",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "10cba69ce3056c547c0e98e6e5f15918",
+                "name": "盾牌",
+                "bitmapResolution": 2,
+                "md5ext": "10cba69ce3056c547c0e98e6e5f15918.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "眼镜",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "4424f804f127cc75dcf0bc3a44eb93bd",
+                "name": "眼镜1",
+                "bitmapResolution": 2,
+                "md5ext": "4424f804f127cc75dcf0bc3a44eb93bd.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            },
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "b82a90c2092dc90ef844531d01dcfd6b",
+                "name": "眼镜2",
+                "bitmapResolution": 2,
+                "md5ext": "b82a90c2092dc90ef844531d01dcfd6b.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "能量枪",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "48b2d9d0acf1ab5737f98672b44194b2",
+                "name": "能量枪",
+                "bitmapResolution": 2,
+                "md5ext": "48b2d9d0acf1ab5737f98672b44194b2.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "草丛",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "4978ab38a785a328a08b994cfdf08e0b",
+                "name": "草丛",
+                "bitmapResolution": 2,
+                "md5ext": "4978ab38a785a328a08b994cfdf08e0b.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "锤子",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "418b897ab302caabbd61b95bddffa244",
+                "name": "锤子",
+                "bitmapResolution": 2,
+                "md5ext": "418b897ab302caabbd61b95bddffa244.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    },
+    {
+        "name": "麦子",
+        "tags": [
+            "property"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "tags": [
+                    "property"
+                ],
+                "assetId": "d244296922a6c298f3e53ee12a89faee",
+                "name": "麦子",
+                "bitmapResolution": 2,
+                "md5ext": "d244296922a6c298f3e53ee12a89faee.png",
+                "dataFormat": "png",
+                "rotationCenterX": 128,
+                "rotationCenterY": 128
+            }
+        ],
+        "sounds": [
+            {
+                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+                "name": "pop",
+                "dataFormat": "wav",
+                "format": "",
+                "rate": 44100,
+                "sampleCount": 1032,
+                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+            }
+        ],
+        "blocks": {}
+    }
+]

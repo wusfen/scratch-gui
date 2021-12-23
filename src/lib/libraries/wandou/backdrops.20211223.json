@@ -1,0 +1,38 @@
+[
+    {
+        "name": "迷宫1",
+        "tags": [
+            "games"
+        ],
+        "assetId": "7e7b56504afc74b18caec20b4a7c33cb",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "7e7b56504afc74b18caec20b4a7c33cb.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "迷宫2",
+        "tags": [
+            "games"
+        ],
+        "assetId": "4db870607a79987449fe2e011d74f5d9",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "4db870607a79987449fe2e011d74f5d9.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    },
+    {
+        "name": "河岸",
+        "tags": [
+            "natural"
+        ],
+        "assetId": "a4437970479e1c247911f4838f3fb82f",
+        "bitmapResolution": 1,
+        "dataFormat": "png",
+        "md5ext": "a4437970479e1c247911f4838f3fb82f.png",
+        "rotationCenterX": 593,
+        "rotationCenterY": 333.5
+    }
+]
