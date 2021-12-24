@@ -108,7 +108,7 @@ class Blocks extends React.Component {
                 length: 48,
                 spacing: 48,
                 colour: '#ddf4fb',
-                // snap: true
+                snap: true,
             },
             zoom: {
                 controls: true,
