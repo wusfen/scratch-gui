@@ -57,6 +57,7 @@ const StageSelector = props => {
         onNewBackdropClick,
         onSurpriseBackdropClick,
         onEmptyBackdropClick,
+        onImgLoad,
         ...componentProps
     } = props;
     return (
@@ -86,6 +87,7 @@ const StageSelector = props => {
                     className={styles.costumeCanvas}
                     src={url}
                     draggable={false}
+                    onLoad={onImgLoad}
                 />
             ) : null}
             <div className={styles.label}>
@@ -175,7 +177,8 @@ StageSelector.propTypes = {
     raised: PropTypes.bool.isRequired,
     receivedBlocks: PropTypes.bool.isRequired,
     selected: PropTypes.bool.isRequired,
-    url: PropTypes.string
+    url: PropTypes.string,
+    onImgLoad:PropTypes.func,
 };
 
 export default injectIntl(StageSelector);

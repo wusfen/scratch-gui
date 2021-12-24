@@ -27,7 +27,8 @@ class SpriteSelectorItem extends React.PureComponent {
             'handleMouseDown',
             'handleDragEnd',
             'handleDrag',
-            'handleTouchEnd'
+            'handleTouchEnd',
+            'handImageLoad'
         ]);
 
         this.dragRecognizer = new DragRecognizer({
@@ -49,7 +50,10 @@ class SpriteSelectorItem extends React.PureComponent {
             return this.costumeURL;
         }
         this.assetId = this.props.asset.assetId;
-        this.costumeURL = getCostumeUrl(this.props.asset);
+        this.costumeURL = this.props.asset.getThumbnailURI();
+        if(!this.costumeURL){
+            this.costumeURL = getCostumeUrl(this.props.asset);
+        }
         return this.costumeURL;
     }
     handleDragEnd () {
@@ -127,6 +131,12 @@ class SpriteSelectorItem extends React.PureComponent {
         // Access the DOM node using .elem because it is going through ContextMenuTrigger
         this.ref = component && component.elem;
     }
+    handImageLoad({target}){
+        if(this.props.asset && !this.props.asset.getThumbnailURI()){
+            this.props.asset.setThumbnailURI(target);
+            this.costumeURL = this.props.asset.getThumbnailURI();
+        }
+    }
     render () {
         const {
             /* eslint-disable no-unused-vars */
@@ -156,6 +166,7 @@ class SpriteSelectorItem extends React.PureComponent {
                 onMouseDown={this.handleMouseDown}
                 onMouseEnter={this.handleMouseEnter}
                 onMouseLeave={this.handleMouseLeave}
+                onImgLoad = {this.handImageLoad}
                 {...props}
             />
         );

@@ -16,7 +16,8 @@ class Watermark extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
-            'getCostumeData'
+            'getCostumeData',
+            'handImageLoad'
         ]);
     }
 
@@ -26,8 +27,18 @@ class Watermark extends React.Component {
             return this.costumeURL;
         }
         this.assetId = this.props.asset.assetId;
-        this.costumeURL = getCostumeUrl(this.props.asset);
+        this.costumeURL = this.props.asset.getThumbnailURI();
+        if(!this.costumeURL){
+            this.costumeURL = getCostumeUrl(this.props.asset);
+        }
         return this.costumeURL;
+    }
+
+    handImageLoad({target}){
+        if(this.props.asset && !this.props.asset.getThumbnailURI()){
+            this.props.asset.setThumbnailURI(target);
+            this.costumeURL = this.props.asset.getThumbnailURI();
+        }
     }
 
     render () {
@@ -35,6 +46,7 @@ class Watermark extends React.Component {
         return (
             <WatermarkComponent
                 costumeURL={this.getCostumeData()}
+                onImgLoad = {this.handImageLoad}
                 {...componentProps}
             />
         );

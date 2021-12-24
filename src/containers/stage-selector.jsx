@@ -50,7 +50,8 @@ class StageSelector extends React.Component {
             'handleTouchEnd',
             'handleDrop',
             'setFileInput',
-            'setRef'
+            'setRef',
+            'handImageLoad'
         ]);
     }
     componentDidMount () {
@@ -156,10 +157,19 @@ class StageSelector extends React.Component {
     setRef (ref) {
         this.ref = ref;
     }
+    handImageLoad({target}){
+        if(this.props.asset && !this.props.asset.getThumbnailURI()){
+            this.props.asset.setThumbnailURI(target);
+            this.costumeURL = this.props.asset.getThumbnailURI();
+        }
+    }
     render () {
         if (this.props.asset){
             if (this.assetId !== this.props.assetid){
-                this.costumeURL = this.props.asset.encodeDataURI();
+                this.costumeURL = this.props.asset.getThumbnailURI();
+                if(!this.costumeURL){
+                    this.costumeURL = this.props.asset.encodeDataURI();
+                }
                 this.assetId = this.props.assetid;
             }
         } else {
@@ -184,6 +194,7 @@ class StageSelector extends React.Component {
                 onSurpriseBackdropClick={this.handleSurpriseBackdrop}
                 {...componentProps}
                 url={this.costumeURL}
+                onImgLoad = {this.handImageLoad}
             />
         );
     }
@@ -194,7 +205,7 @@ StageSelector.propTypes = {
     intl: intlShape.isRequired,
     onCloseImporting: PropTypes.func,
     onSelect: PropTypes.func,
-    onShowImporting: PropTypes.func
+    onShowImporting: PropTypes.func,
 };
 
 const mapStateToProps = (state, {asset, id}) => ({
