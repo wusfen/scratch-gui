@@ -11,7 +11,6 @@ import VideoProvider from '../lib/video/video-provider';
 import {BitmapAdapter as V2BitmapAdapter} from 'scratch-svg-renderer';
 
 import StageComponent from '../components/stage/stage.jsx';
-import {isIOS} from '../lib/native-ajax/utils.js';
 
 import {
     activateColorPicker,
@@ -232,7 +231,7 @@ class Stage extends React.Component {
                 }
                 this._isDown = false;
             } else {
-                if(!isIOS()){
+                if(navigator.maxTouchPoints == 0){
                     this.pickX = mousePosition[0];
                     this.pickY = mousePosition[1];
                 }                
