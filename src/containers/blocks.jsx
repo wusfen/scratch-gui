@@ -108,7 +108,7 @@ class Blocks extends React.Component {
                 length: 48,
                 spacing: 48,
                 colour: '#ddf4fb',
-                snap: true
+                // snap: true
             },
             zoom: {
                 controls: true,
@@ -480,6 +480,26 @@ class Blocks extends React.Component {
         this.props.vm.addListener('BLOCKSINFO_UPDATE', this.handleBlocksInfoUpdate);
         this.props.vm.addListener('PERIPHERAL_CONNECTED', this.handleStatusButtonUpdate);
         this.props.vm.addListener('PERIPHERAL_DISCONNECTED', this.handleStatusButtonUpdate);
+
+        // fix: 移动 block 后，与其关联的 comment 坐标没有更新
+        this.workspace.addChangeListener(this._fixMoveBlock = e => {
+            if (e.type === 'move') {
+                // ！！切换角色时也会触发，其旧坐标为0，以此排除非手动移动
+                if (e.oldCoordinate?.x === 0 && e.oldCoordinate?.y === 0) return;
+
+                const target = this.props.vm.editingTarget;
+                const block = target.blocks._blocks[e.blockId];
+                const comment = target.comments[block?.comment];
+
+                if (comment) {
+                    const diffX = e.newCoordinate.x - e.oldCoordinate.x;
+                    const diffY = e.newCoordinate.y - e.oldCoordinate.y;
+                    comment.x += diffX;
+                    comment.y += diffY;
+                }
+
+            }
+        });
     }
     detachVM () {
         this.props.vm.removeListener('SCRIPT_GLOW_ON', this.onScriptGlowOn);
@@ -493,6 +513,8 @@ class Blocks extends React.Component {
         this.props.vm.removeListener('BLOCKSINFO_UPDATE', this.handleBlocksInfoUpdate);
         this.props.vm.removeListener('PERIPHERAL_CONNECTED', this.handleStatusButtonUpdate);
         this.props.vm.removeListener('PERIPHERAL_DISCONNECTED', this.handleStatusButtonUpdate);
+
+        this.workspace.removeChangeListener(this._fixMoveBlock);
     }
 
     updateToolboxBlockValue (id, value) {
@@ -830,6 +852,7 @@ Blocks.propTypes = {
     isRtl: PropTypes.bool,
     isVisible: PropTypes.bool,
     locale: PropTypes.string.isRequired,
+    // eslint-disable-next-line react/forbid-prop-types
     messages: PropTypes.object,
     onActivateColorPicker: PropTypes.func,
     onActivateCustomProcedures: PropTypes.func,
