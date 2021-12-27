@@ -121,7 +121,7 @@ const StageSelector = props => {
                     />
                 </div> :
                 null}
-            
+
             <ActionMenu
                 className={styles.addButton}
                 img={backdropIcon}
@@ -178,7 +178,7 @@ StageSelector.propTypes = {
     receivedBlocks: PropTypes.bool.isRequired,
     selected: PropTypes.bool.isRequired,
     url: PropTypes.string,
-    onImgLoad:PropTypes.func,
+    onImgLoad: PropTypes.func,
 };
 
 export default injectIntl(StageSelector);

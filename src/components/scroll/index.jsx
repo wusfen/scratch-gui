@@ -79,13 +79,13 @@ class Scroll extends React.Component{
             if (nextScrollTop - that.scrollContentRef.scrollTop < 100){
                 if (that.scrollContentRef.scrollTop === 0){
                     cancelAnimationFrame(timer);
-                    return; 
+                    return;
                 }
                 that.scrollContentRef.scrollTop -= 2;
                 timer = requestAnimationFrame(fn);
             } else {
                 cancelAnimationFrame(timer);
-            }    
+            }
         });
     }
 
@@ -98,35 +98,35 @@ class Scroll extends React.Component{
             if (that.scrollContentRef.scrollTop - nextScrollTop < 100){
                 if ((that.scrollContentRef.scrollTop + clientHeight) === scrollHeight){
                     cancelAnimationFrame(timer);
-                    return; 
+                    return;
                 }
                 that.scrollContentRef.scrollTop += 2;
                 timer = requestAnimationFrame(fn);
             } else {
                 cancelAnimationFrame(timer);
-            }    
+            }
         });
     }
-    
+
     render () {
         const {
             children,
             ...props
         } = this.props;
-        
+
         const {
             slideDownImgShow,
             slideUpImgShow,
             ...state
         } = this.state;
-        
+
         return (
             <div className={styles.scroll}>
                 {slideUpImgShow ? <div
                     className={styles.slideUp}
                     onClick={this.slideUpFunc}
                 >
-                    <img 
+                    <img
                         className={styles.slideUpImg}
                         src={require('../../assets/icons/slide-up.svg')}
                     />
@@ -143,7 +143,7 @@ class Scroll extends React.Component{
                     className={styles.slideDown}
                     onClick={this.slideDownFunc}
                 >
-                    <img 
+                    <img
                         className={styles.slideDownImg}
                         src={require('../../assets/icons/slide-down.svg')}
                     />

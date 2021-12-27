@@ -83,8 +83,8 @@ const SpriteSelectorItem = props => {
                     />
                 </div>
             </section>
-            
-            
+
+
         ) : null }
 
         {props.onDuplicateButtonClick || props.onDeleteButtonClick || props.onExportButtonClick ? (
@@ -137,7 +137,8 @@ SpriteSelectorItem.propTypes = {
     onMouseLeave: PropTypes.func,
     preventContextMenu: PropTypes.bool,
     selected: PropTypes.bool.isRequired,
-    isEditSpace: PropTypes.bool
+    isEditSpace: PropTypes.bool,
+    onImgLoad: PropTypes.func,
 };
 
 export default SpriteSelectorItem;

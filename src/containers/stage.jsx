@@ -110,8 +110,8 @@ class Stage extends React.Component {
             this.stopColorPickingLoop();
         }
     }
-    
-    
+
+
     componentWillUnmount () {
         this.detachMouseEvents(this.canvas);
         this.detachRectEvents();
@@ -121,7 +121,7 @@ class Stage extends React.Component {
     questionListener (question) {
         this.setState({question: question});
     }
-    
+
     stageSizeReSet (){
         const w = window.STAGE_WIDTH / 2;
         const h = window.STAGE_HEIGHT / 2;
@@ -217,7 +217,7 @@ class Stage extends React.Component {
         if (this.props.isColorPicking) {
             // Set the pickX/Y for the color picker loop to pick up
             if (window.TouchEvent && e instanceof TouchEvent){
-                if (typeof this.startPickX !== 'number' && 
+                if (typeof this.startPickX !== 'number' &&
                     mousePosition[0] > 0 && mousePosition[0] < this.rect.width &&
                     mousePosition[1] > 0 && mousePosition[1] < this.rect.height){
                     this.startPickX = mousePosition[0];
@@ -230,11 +230,9 @@ class Stage extends React.Component {
                     this.startPickY = mousePosition[1];
                 }
                 this._isDown = false;
-            } else {
-                if(navigator.maxTouchPoints == 0){
-                    this.pickX = mousePosition[0];
-                    this.pickY = mousePosition[1];
-                }                
+            } else if (navigator.maxTouchPoints == 0){
+                this.pickX = mousePosition[0];
+                this.pickY = mousePosition[1];
             }
             if (this.pickX < 0){
                 this.pickX = 0;
@@ -304,7 +302,7 @@ class Stage extends React.Component {
         if (this.state.isDragging) {
             this.onStopDrag(mousePosition[0], mousePosition[1]);
         }
-        
+
         this.props.vm.postIOData('mouse', data);
         if (this.props.isColorPicking &&
             window.MouseEvent && e instanceof MouseEvent &&

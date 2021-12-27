@@ -154,6 +154,7 @@ const vmManagerHOC = function (WrappedComponent) {
         isStarted: PropTypes.bool,
         loadingState: PropTypes.oneOf(LoadingStates),
         locale: PropTypes.string,
+        // eslint-disable-next-line react/forbid-prop-types
         messages: PropTypes.object,
         onError: PropTypes.func,
         onLoadedProject: PropTypes.func,

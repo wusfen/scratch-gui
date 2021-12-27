@@ -12,7 +12,8 @@ const Watermark = props => (
 );
 
 Watermark.propTypes = {
-    costumeURL: PropTypes.string
+    costumeURL: PropTypes.string,
+    onImgLoad: PropTypes.func,
 };
 
 export default Watermark;

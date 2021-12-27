@@ -9,10 +9,10 @@ const initialState = defaultVM;
 window.vm = defaultVM;
 const orgDeserializeProject = defaultVM.deserializeProject;
 defaultVM.deserializeProject = function (projectJSON, zip) {
-    if(window.store){
+    if (window.store){
         if (projectJSON.stageMode){
             window.store.dispatch(setStageSizeMode(projectJSON.stageMode));
-        }else{
+        } else {
             window.store.dispatch(setStageSizeMode('portrait_9_16'));
         }
     }

@@ -98,7 +98,7 @@ Component.alert = function (options, isConfirmOrSecond, second) {
     } else if (typeof isConfirmOrSecond === 'number') {
         countDown = isConfirmOrSecond;
     }
-    
+
     if (typeof options !== 'object') {
         options = {
             title: options

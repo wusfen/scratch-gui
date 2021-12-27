@@ -107,9 +107,9 @@ const StageHeaderComponent = function (props) {
             </Box>
         );
     } else {
-        const stageModeItem = []; 
+        const stageModeItem = [];
         if (!isPlayerOnly){
-       
+
             for (const key in STAGE_SIZE_MODES) {
                 stageModeItem.push(<div key={key}>
                     <Button
@@ -133,7 +133,7 @@ const StageHeaderComponent = function (props) {
                     <div
                         className={classNames(styles.stageModeContent)}
                         ref={ref => {
-                            stageModeContent = ref; 
+                            stageModeContent = ref;
                         }}
                     >
                         {stageModeItem}
@@ -141,7 +141,7 @@ const StageHeaderComponent = function (props) {
                     <div
                         className={classNames(styles.stageMode)}
                         onMouseEnter={() => {
-                            stageModeContent ? stageModeContent.style = null : null; 
+                            stageModeContent ? stageModeContent.style = null : null;
                         }}
                     >
                         {STAGE_SIZE_MODES[stageMode]}

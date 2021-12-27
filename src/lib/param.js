@@ -39,7 +39,7 @@ const param = function (name, value) {
         return setParam(name, value);
     }
     return getParam(name);
-    
+
 };
 
 window.param = param;

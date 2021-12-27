@@ -1,6 +1,6 @@
 /* eslint-disable no-invalid-this */
 import {
-    counterType, 
+    counterType,
     JSON_COUNT_RANGE_START, JSON_COUNT_RANGE_END, SUBMIT_COUNT_RANGE_1, SUBMIT_COUNT_RANGE_2} from './data';
 class Counter {
     constructor (type) {
@@ -23,7 +23,7 @@ class Counter {
             break;
         }
     }
-    
+
     counterAdd = () => {
         this.count++;
         this.judgeCount();

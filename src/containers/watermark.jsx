@@ -28,14 +28,14 @@ class Watermark extends React.Component {
         }
         this.assetId = this.props.asset.assetId;
         this.costumeURL = this.props.asset.getThumbnailURI();
-        if(!this.costumeURL){
+        if (!this.costumeURL){
             this.costumeURL = getCostumeUrl(this.props.asset);
         }
         return this.costumeURL;
     }
 
-    handImageLoad({target}){
-        if(this.props.asset && !this.props.asset.getThumbnailURI()){
+    handImageLoad ({target}){
+        if (this.props.asset && !this.props.asset.getThumbnailURI()){
             this.props.asset.setThumbnailURI(target);
             this.costumeURL = this.props.asset.getThumbnailURI();
         }
@@ -46,7 +46,7 @@ class Watermark extends React.Component {
         return (
             <WatermarkComponent
                 costumeURL={this.getCostumeData()}
-                onImgLoad = {this.handImageLoad}
+                onImgLoad={this.handImageLoad}
                 {...componentProps}
             />
         );

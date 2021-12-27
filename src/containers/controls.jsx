@@ -53,7 +53,7 @@ class Controls extends React.Component {
             }
             this.checkWork();
         }
-        
+
     }
 
     componentWillUnmount () {

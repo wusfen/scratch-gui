@@ -135,7 +135,7 @@ class GUI extends React.Component {
             dom = dom.parentNode;
             count--;
         }
-        
+
     }
 
     handleBtnClick (event) { // 给所有的按钮、和需要有音效的dom，设置点击音效

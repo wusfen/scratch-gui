@@ -320,7 +320,7 @@ class MenuBar extends React.Component {
         } catch (error) {
             console.log('initIndexDB---error', error);
         }
-        
+
     }
     handleClickNew () {
         // if the project is dirty, and user owns the project, we will autosave.
@@ -657,7 +657,7 @@ class MenuBar extends React.Component {
         try {
             await this.indexDB.deleteData(this.state.id, () => {
                 console.log(`${this.state.id}---保存后成功delete本地indexDB中的数据`);
-            }); 
+            });
         } catch (error) {
             console.log('indexDB---delete---error', error);
         }
@@ -696,7 +696,7 @@ class MenuBar extends React.Component {
         }
         console.log('开始保存文件');
         try {
-            
+
             const blob = await project.getSb3Diff();
             if ((blob.size / 1024 / 1024) > 30) { // 30M大小限制
                 return;
@@ -704,7 +704,7 @@ class MenuBar extends React.Component {
             const data = await this.indexDB.getData(projectId);
             console.log('getData---', data);
             if (data) { // 修改
-                
+
                 await this.indexDB.update(projectId, {
                     zip: blob,
                     timestamp: Date.now()
@@ -737,7 +737,7 @@ class MenuBar extends React.Component {
                         console.log(`${projectId}---indexDB添加失败`);
                     }
                 );
-                
+
             }
             window.autoSaveProjectState = false;
         } catch (error) {
@@ -862,7 +862,7 @@ class MenuBar extends React.Component {
         try {
             await this.indexDB.deleteData(this.state.id, () => {
                 console.log(`${this.state.id}---提交后成功delete本地indexDB中的数据`);
-            }); 
+            });
         } catch (error) {
             console.log('indexDB---delete---error', error);
         }
@@ -883,7 +883,7 @@ class MenuBar extends React.Component {
         dispatchEvent(new Event('checkWorkEnd'));
 
         // TODO 目前只有正确错误，之前有规划有人工批改
-        if (checkRes === 1) {            
+        if (checkRes === 1) {
             dispatchEvent(new Event('submit:已提交正确'));
         } else {
             dispatchEvent(new Event('submit:已提交错误'));

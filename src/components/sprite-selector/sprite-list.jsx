@@ -37,7 +37,7 @@ const SpriteList = function (props) {
     React.useEffect(() => {
         dispatchEvent(new Event('addSprite'));
     }, [items]);
-    
+
     return (
         <Box
             id="spriteList"

@@ -154,7 +154,7 @@ class TaskBar extends React.Component{
             document.addEventListener('touchstart', this.handleTouchOutside);
             break;
         case 'normal':
-            
+
             break;
         default:
             break;
@@ -187,7 +187,7 @@ class TaskBar extends React.Component{
             document.removeEventListener('touchstart', this.handleTouchOutside);
             break;
         case 'normal':
-            
+
             break;
         default:
             break;
@@ -427,7 +427,7 @@ class TaskBar extends React.Component{
             this.audio.pause();
         }
     }
-    
+
     stopAudioPlay = () => {
         console.log('读题语音结束，停止动效');
         this.setState({
@@ -507,7 +507,7 @@ class TaskBar extends React.Component{
                 event.preventDefault();
                 clearTimeout(testtimer);
             }, 200);
-            
+
             dragging = true;
             mouseX = e.clientX;// 初始位置时鼠标的坐标
             mouseY = e.clientY;
@@ -545,7 +545,7 @@ class TaskBar extends React.Component{
                 }
                 dragObj.style.left = `${leftOffset}px`;
                 dragObj.style.top = `${topOffset}px`;
-                
+
                 // 设置边界
                 if ((e.clientX - diffX) < 0) { // 鼠标到浏览器左边距小于鼠标到obj的左边距
                     dragObj.style.left = `${0}px`;
@@ -558,7 +558,7 @@ class TaskBar extends React.Component{
                 } else if ((e.clientY - diffY) > (window.innerHeight - dragObj.offsetHeight)) {
                     dragObj.style.top = `${window.innerHeight - dragObj.offsetHeight}px`;
                 }
-            } 
+            }
         };
         const handleEnd = event => { // 拖动结束
             dragging = false;
@@ -567,8 +567,8 @@ class TaskBar extends React.Component{
         };
         const handleScaleStart = event => { // 缩放开始
             const e = this.judgeTouchOrMoveReturnEvent(event);
-            dragging = true;   
-            isScale = true;     
+            dragging = true;
+            isScale = true;
             mouseX = e.clientX;// 初始位置时鼠标的坐标
             mouseY = e.clientY;
             this.setState({oriPos: {
@@ -766,7 +766,7 @@ class TaskBar extends React.Component{
                                     }}
                                 >点击这里，会告诉你本次的任务哦</span>
                             </div>
-                            <div 
+                            <div
                                 className={
                                     classNames('play_audio', {
                                         [c.iconList]: true,
@@ -813,7 +813,7 @@ class TaskBar extends React.Component{
                                 disablePictureInPicture
                             ></video>
                             <div className={c.videoOptions}>
-                                {this.videoFuncList.map((item, index) => 
+                                {this.videoFuncList.map((item, index) =>
                                     (
                                         <div
                                             key={index}
@@ -824,7 +824,7 @@ class TaskBar extends React.Component{
                                                     {
                                                         [c.option]: true,
                                                         [c.active]: currentFuncIndex === index,
-                                                       
+
                                                     }
                                                 )
                                             }
@@ -844,7 +844,7 @@ class TaskBar extends React.Component{
                         </div>}
                     </section>
                 )}
-                
+
             </div>
         );
     }

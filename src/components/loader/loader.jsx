@@ -209,7 +209,7 @@ class LoaderComponent extends React.Component {
                         </a>
                     </span>
                 </div>
-                
+
 
                 {/* <div className={styles.container}>
                     <div className={styles.blockAnimation}>

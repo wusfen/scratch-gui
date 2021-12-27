@@ -18,7 +18,7 @@ class PaintEditorWrapper extends React.Component {
     shouldComponentUpdate (nextProps) {
         return this.props.imageId !== nextProps.imageId ||
             this.props.rtl !== nextProps.rtl ||
-            this.props.name !== nextProps.name || 
+            this.props.name !== nextProps.name ||
             this.props.stageMode !== nextProps.stageMode;
     }
     handleUpdateName (name) {

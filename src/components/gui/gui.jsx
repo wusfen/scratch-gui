@@ -79,7 +79,7 @@ const _onmouseup = function (e) {
         _isDown = false;
         e.preventDefault();
     }
-   
+
 };
 
 const mode = param('mode');
@@ -192,7 +192,7 @@ const GUIComponent = props => {
                     timeHandle = null;
                 }, 64);
             }
-            
+
             e.preventDefault();
         }
     };
@@ -324,7 +324,7 @@ const GUIComponent = props => {
 
                 <Box className={styles.bodyWrapper}>
                     <Box
-                        className={styles.flexWrapper} 
+                        className={styles.flexWrapper}
                         onMouseMove={_onmousemove}
                         onMouseUp={_onmouseup}
                         onTouchEnd={_onmouseup}
@@ -376,7 +376,7 @@ const GUIComponent = props => {
                             src={resizeBarIcon}
                             draggable={false}
                         />
-                        
+
                         <WDSpriteList
                             vm={vm}
                             stageSize={stageSize}

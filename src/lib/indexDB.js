@@ -10,9 +10,9 @@ class IDB {
     }
     // /**
     //  * 创建数据库，已经存在就打开，否则就创建
-    //  * @param {成功回调} success 
-    //  * @param {失败回调} error 
-    //  * @returns 
+    //  * @param {成功回调} success
+    //  * @param {失败回调} error
+    //  * @returns
     //  */
     openDB (success, error) {
         const req = window.indexedDB.open(this.dbName, this.version);
@@ -29,8 +29,8 @@ class IDB {
     // /**
     //  * 获取仓库对象，支持事务（transaction），这意味着一系列操作步骤之中，只要有一步失败，整个事务就都取消，数据库回滚到事务发生之前的状态，不存在只改写一部分数据的情况
     //  * @param {事件对象} e
-    //  * @param {表明} tableName 
-    //  * @returns 
+    //  * @param {表明} tableName
+    //  * @returns
     //  */
     getStore (e, tableName) {
         const db = e.target.result;
@@ -40,10 +40,10 @@ class IDB {
 
     // /**
     //  * 创建表
-    //  * @param {主键} primaryKey 
-    //  * @param {表格列} keyList 
-    //  * @param {成功回调} success 
-    //  * @param {失败回调} error 
+    //  * @param {主键} primaryKey
+    //  * @param {表格列} keyList
+    //  * @param {成功回调} success
+    //  * @param {失败回调} error
     //  */
     createTable (primaryKey, keyList, success, error) {
         const req = this.openDB(success, error);
@@ -62,9 +62,9 @@ class IDB {
 
     // /**
     //  * 添加数据
-    //  * @param {要添加的数据} data 
-    //  * @param {成功回调} success 
-    //  * @param {失败回调} error 
+    //  * @param {要添加的数据} data
+    //  * @param {成功回调} success
+    //  * @param {失败回调} error
     //  */
     add (data, isRetry = false, success, error) {
         return new Promise((resolve, reject) => {
@@ -95,17 +95,17 @@ class IDB {
                 } catch (err) {
                     reject(err);
                 }
-                
+
             };
         });
-        
+
     }
 
     // /**
     //  * 根据主键查询数据
-    //  * @param {主键} primaryKey 
-    //  * @param {成功回调} success 
-    //  * @param {失败回调} error 
+    //  * @param {主键} primaryKey
+    //  * @param {成功回调} success
+    //  * @param {失败回调} error
     //  */
     getData (primaryKey, success, error) {
         return new Promise((resolve, reject) => {
@@ -121,20 +121,20 @@ class IDB {
                     request.onerror = function (e) {
                         error && (typeof error === 'function') ? error() : '';
                         reject(e);
-                    };    
+                    };
                 } catch (err) {
                     reject(err);
                 }
-                
+
             };
         });
-        
+
     }
 
     // /**
     //  * 获取表中的数据列表
-    //  * @param {成功回调} success 
-    //    @param {失败回调} error 
+    //  * @param {成功回调} success
+    //    @param {失败回调} error
     //  */
     getList (success, error) {
         return new Promise((resolve, reject) => {
@@ -156,7 +156,7 @@ class IDB {
                     store.openCursor().onerror = function (e) {
                         error && (typeof error === 'function') ? error(e) : '';
                         reject(e);
-                    }; 
+                    };
                 } catch (err) {
                     reject(err);
                 }
@@ -166,9 +166,9 @@ class IDB {
 
     // /**
     //  * 删除数据
-    //  * @param {主键} primaryKey 
-    //  * @param {成功回调} success 
-    //  * @param {失败回调} error 
+    //  * @param {主键} primaryKey
+    //  * @param {成功回调} success
+    //  * @param {失败回调} error
     //  */
     deleteData (primaryKey, success, error) {
         return new Promise((resolve, reject) => {
@@ -184,21 +184,21 @@ class IDB {
                     request.onerror = function (e) {
                         error && (typeof error === 'function') ? error() : '';
                         reject(e);
-                    };  
+                    };
                 } catch (err) {
                     reject(err);
-                }  
+                }
             };
         });
-        
+
     }
 
     // /**
     //  * 更新数据
-    //  * @param {主键} primaryKey 
-    //  * @param {新数据} newData 
-    //  * @param {成功回调} success 
-    //  * @param {} error 
+    //  * @param {主键} primaryKey
+    //  * @param {新数据} newData
+    //  * @param {成功回调} success
+    //  * @param {} error
     //  */
     update (primaryKey, newData, success, error) {
         return new Promise((resolve, reject) => {
@@ -225,14 +225,14 @@ class IDB {
                             success && typeof success === 'function' ? success() : '';
                             resolve();
                         };
-                    }; 
+                    };
                 } catch (err) {
                     reject(err);
                 }
-                
+
             };
         });
-        
+
     }
 
 }

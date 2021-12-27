@@ -1,7 +1,7 @@
 // import GoogleAnalytics from 'react-ga';
 
 const noop = function () {
-   
+
 };
 
 // fake ga

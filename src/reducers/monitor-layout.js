@@ -57,7 +57,7 @@ const _moveMonitorRect = function (state, action) {
         log.error(`Monitor rectangle not formatted correctly`);
         return state;
     }
-    
+
     const oldMonitor = state.monitors[action.monitorId];
     if (oldMonitor.upperStart.x === action.newX &&
             oldMonitor.upperStart.y === action.newY) {

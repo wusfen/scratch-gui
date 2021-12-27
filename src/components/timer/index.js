@@ -48,7 +48,7 @@ class Timer {
             window.addEventListener('closeVideoGuide', this.createCodeTimer); // 关闭视频引导
             window.addEventListener('closeVideoTips', this.createCodeTimer); // 关闭视频提示
             window.addEventListener('projectRunFinish', this.createCodeTimer); // 代码运行结束
-            
+
             window.addEventListener('editSprite', this.pauseCodeTimer); // 编辑精灵
             window.addEventListener('editStage', this.pauseCodeTimer); // 编辑舞台
             window.addEventListener('onNewSpriteClick', this.pauseCodeTimer); // 选择精灵
@@ -109,7 +109,7 @@ class Timer {
             window.addEventListener('jsonErrorCounterInRange', this.resetRightAnswerTimer);
         }
     }
-   
+
     createTimer = () => {
         this.state = 'exist';
         switch (this.type) {

@@ -76,6 +76,14 @@ const config = {
                             ]
                         }
                     },
+                    {
+                        loader: 'eslint-loader',
+                        options: {
+                            fix: true,
+                            quiet: true,
+                            formatter: require('eslint-formatter-autolinkable-stylish'),
+                        }
+                    },
                     ...require('./path-replace-loader-files')
                 ]
             },
@@ -159,6 +167,7 @@ const config = {
             }
         }
     },
+    stats: 'errors-only',
     plugins: [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`,

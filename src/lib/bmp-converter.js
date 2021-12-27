@@ -4,7 +4,7 @@ export default bmpImage => new Promise(resolve => {
     const imageUrl = bmpImage instanceof String ?
         bmpImage :
         window.URL.createObjectURL(new Blob([bmpImage], {type: 'image/bmp'}));
-    
+
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
 
@@ -16,7 +16,7 @@ export default bmpImage => new Promise(resolve => {
         ctx.drawImage(image, 0, 0);
 
         const dataUrl = canvas.toDataURL('image/png');
-    
+
         // Revoke URL. If a blob URL was generated earlier, this allows the blob to be GC'd and prevents a memory leak.
         window.URL.revokeObjectURL(imageUrl);
 

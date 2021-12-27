@@ -510,7 +510,7 @@ export default function (vm) {
                 if (!svgRootOld) {
                     throw new Error('oldBlock is not rendered.');
                 }
-        
+
                 // Create the new block by cloning the block in the flyout (via XML).
                 var xml = Blockly.Xml.blockToDom(oldBlock);
                 window.duplicateXml = xml;
@@ -518,7 +518,7 @@ export default function (vm) {
                 // will lead to weird jumps.
                 // Resizing will be enabled when the drag ends.
                 ws.setResizesEnabled(false);
-        
+
                 // Disable events and manually emit events after the block has been
                 // positioned and has had its shadow IDs fixed (Scratch-specific).
                 Blockly.Events.disable();
@@ -578,14 +578,14 @@ export default function (vm) {
                 if (!svgRootOld) {
                     throw new Error('oldBlock is not rendered.');
                 }
-        
+
                 // Create the new block by cloning the block in the flyout (via XML).
                 var xml = Blockly.Xml.blockToDom(oldBlock);
                 // The target workspace would normally resize during domToBlock, which
                 // will lead to weird jumps.
                 // Resizing will be enabled when the drag ends.
                 ws.setResizesEnabled(false);
-        
+
                 // Disable events and manually emit events after the block has been
                 // positioned and has had its shadow IDs fixed (Scratch-specific).
                 Blockly.Events.disable();
@@ -594,18 +594,18 @@ export default function (vm) {
                     // Using domToBlock instead of domToWorkspace means that the new block
                     // will be placed at position (0, 0) in main workspace units.
                     newBlock = Blockly.Xml.domToBlock(xml, ws);
-            
+
                     // Scratch-specific: Give shadow dom new IDs to prevent duplicating on paste
                     Blockly.scratchBlocksUtils.changeObscuredShadowIds(newBlock);
-            
+
                     var svgRootNew = newBlock.getSvgRoot();
                     if (!svgRootNew) {
                         throw new Error('newBlock is not rendered.');
                     }
-            
+
                     // The position of the old block in workspace coordinates.
                     var oldBlockPosWs = oldBlock.getRelativeToSurfaceXY();
-            
+
                     // Place the new block as the same position as the old block.
                     // TODO: Offset by the difference between the mouse position and the upper
                     // left corner of the block.
@@ -624,7 +624,7 @@ export default function (vm) {
                 if (newBlock.type === 'procedures_definition') { // 复制定制积木的情况需要更新toolbox
                     dispatchEvent(new Event('updateToolBox'));
                 }
-        
+
                 // if (isMouseEvent) {
                 //     // e is not a real mouseEvent/touchEvent/pointerEvent.  It's an event
                 //     // created by the context menu and has the coordinates of the mouse

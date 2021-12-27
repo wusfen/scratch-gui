@@ -157,7 +157,7 @@ class TargetPane extends React.Component {
         this.fileInput = input;
     }
     // $-sprite-list已经注册  因重复注册会造成多次复制，所以在此处注释
-    handleBlockDragEnd (blocks) { 
+    handleBlockDragEnd (blocks) {
         // if (this.props.hoveredTarget.sprite && this.props.hoveredTarget.sprite !== this.props.editingTarget) {
         //     this.shareBlocks(blocks, this.props.hoveredTarget.sprite, this.props.editingTarget);
         //     this.props.onReceivedBlocks(true);

@@ -1,5 +1,5 @@
 import React from 'react';
- 
+
 const asyncComponent = componentPromise => class AsyncComponentInner extends React.Component {
     constructor () {
         super();
@@ -19,5 +19,5 @@ const asyncComponent = componentPromise => class AsyncComponentInner extends Rea
         return Component ? <Component {...this.props} /> : 'loading...';
     }
 };
- 
+
 export default asyncComponent;

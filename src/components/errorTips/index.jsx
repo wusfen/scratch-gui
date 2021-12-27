@@ -14,17 +14,17 @@ class ErrorTips extends React.Component{
 
         this.state = {
         };
-        
+
         bindAll(this, [
         ]);
     }
     componentDidMount () {
-        
+
     }
     componentWillUnmount () {
-        
+
     }
-    
+
     render () {
         const {
             text,
@@ -43,7 +43,7 @@ class ErrorTips extends React.Component{
                         alt="warn"
                     />
                 </div>
-                
+
                 <div className={c.text}>
                     {text}
                 </div>

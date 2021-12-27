@@ -17,13 +17,13 @@ class SoundCtrl extends React.PureComponent {
 
     }
     componentDidMount () {
-     
+
     }
     componentWillUnmount () {
 
     }
-    
-  
+
+
     render () {
         return (
             <div>
@@ -73,8 +73,8 @@ class SoundCtrl extends React.PureComponent {
                         <p>上传</p>
                     </div>
                 </div>
-               
-               
+
+
             </div>
         );
     }

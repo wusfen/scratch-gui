@@ -51,7 +51,7 @@ class SpriteSelectorItem extends React.PureComponent {
         }
         this.assetId = this.props.asset.assetId;
         this.costumeURL = this.props.asset.getThumbnailURI();
-        if(!this.costumeURL){
+        if (!this.costumeURL){
             this.costumeURL = getCostumeUrl(this.props.asset);
         }
         return this.costumeURL;
@@ -131,8 +131,8 @@ class SpriteSelectorItem extends React.PureComponent {
         // Access the DOM node using .elem because it is going through ContextMenuTrigger
         this.ref = component && component.elem;
     }
-    handImageLoad({target}){
-        if(this.props.asset && !this.props.asset.getThumbnailURI()){
+    handImageLoad ({target}){
+        if (this.props.asset && !this.props.asset.getThumbnailURI()){
             this.props.asset.setThumbnailURI(target);
             this.costumeURL = this.props.asset.getThumbnailURI();
         }
@@ -166,7 +166,7 @@ class SpriteSelectorItem extends React.PureComponent {
                 onMouseDown={this.handleMouseDown}
                 onMouseEnter={this.handleMouseEnter}
                 onMouseLeave={this.handleMouseLeave}
-                onImgLoad = {this.handImageLoad}
+                onImgLoad={this.handImageLoad}
                 {...props}
             />
         );

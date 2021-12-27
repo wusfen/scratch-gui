@@ -128,7 +128,7 @@ class PromptArea extends React.Component{
         const scaleRef = this.scaleRef;
         const shieldList = [this.videoRef, this.imageTextRef, this.imageScaleRef]; // 不允许触发move的对象
         dragObj.style.left = '0px';
-        dragObj.style.top = '0px';    
+        dragObj.style.top = '0px';
         let mouseX;
         let mouseY;
         let objX;
@@ -157,12 +157,12 @@ class PromptArea extends React.Component{
             operateTarget = e.target;
             if (shieldList.includes(e.target)) {
                 return;
-            }  
-            dragging = true;      
+            }
+            dragging = true;
             mouseX = e.clientX;// 初始位置时鼠标的坐标
             mouseY = e.clientY;
             objX = dragObj.offsetLeft; // 元素的初始位置
-            objY = dragObj.offsetTop;   
+            objY = dragObj.offsetTop;
             diffX = mouseX - objX;// 相当于鼠标距物体左边的距离
             diffY = mouseY - objY;
         };
@@ -190,11 +190,11 @@ class PromptArea extends React.Component{
                 // 元素左边距等于鼠标移动的宽度加上元素本身的位置
                 dragObj.style.left = `${e.clientX - mouseX + objX}px`;
                 dragObj.style.top = `${e.clientY - mouseY + objY}px`;
-                
+
                 // 设置边界
                 if ((e.clientX - diffX) < 0) { // 鼠标到浏览器左边距小于鼠标到obj的左边距
                     dragObj.style.left = `${0}px`;
-                } else if ((e.clientX - diffX) > (window.innerWidth - dragObj.offsetWidth)) { 
+                } else if ((e.clientX - diffX) > (window.innerWidth - dragObj.offsetWidth)) {
                     // window.innerWidth浏览器显示区域的宽度，dragObj.offsetWidth物体宽度
                     dragObj.style.left = `${window.innerWidth - dragObj.offsetWidth}px`;
                 }
@@ -203,7 +203,7 @@ class PromptArea extends React.Component{
                 } else if ((e.clientY - diffY) > (window.innerHeight - dragObj.offsetHeight)) {
                     dragObj.style.top = `${window.innerHeight - dragObj.offsetHeight}px`;
                 }
-            } 
+            }
         };
         const handleEnd = () => { // 拖动结束
             dragging = false;
@@ -212,8 +212,8 @@ class PromptArea extends React.Component{
         };
         const handleScaleStart = event => { // 缩放开始
             const e = this.judgeTouchOrMoveReturnEvent(event);
-            dragging = true;   
-            isScale = true;     
+            dragging = true;
+            isScale = true;
             mouseX = e.clientX;// 初始位置时鼠标的坐标
             mouseY = e.clientY;
             this.setState({oriPos: {
@@ -224,7 +224,7 @@ class PromptArea extends React.Component{
         dragObj.ontouchstart = handleStart;
         document.addEventListener('touchmove', handleMove, {passive: false});
         document.addEventListener('touchend', handleEnd);
-        
+
         // 注册move事件（pc端）
         dragObj.onmousedown = handleStart;
         document.addEventListener('mousemove', handleMove);
@@ -252,7 +252,7 @@ class PromptArea extends React.Component{
             type,
             ...props
         } = this.props;
-        
+
         const {
             style,
             title,
@@ -357,7 +357,7 @@ class PromptArea extends React.Component{
                         alt={''}
                     />
                 </div>
-                
+
             </div>
         );
     }

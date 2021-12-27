@@ -157,8 +157,8 @@ class StageSelector extends React.Component {
     setRef (ref) {
         this.ref = ref;
     }
-    handImageLoad({target}){
-        if(this.props.asset && !this.props.asset.getThumbnailURI()){
+    handImageLoad ({target}){
+        if (this.props.asset && !this.props.asset.getThumbnailURI()){
             this.props.asset.setThumbnailURI(target);
             this.costumeURL = this.props.asset.getThumbnailURI();
         }
@@ -167,7 +167,7 @@ class StageSelector extends React.Component {
         if (this.props.asset){
             if (this.assetId !== this.props.assetid){
                 this.costumeURL = this.props.asset.getThumbnailURI();
-                if(!this.costumeURL){
+                if (!this.costumeURL){
                     this.costumeURL = this.props.asset.encodeDataURI();
                 }
                 this.assetId = this.props.assetid;
@@ -176,7 +176,7 @@ class StageSelector extends React.Component {
             this.costumeURL = null;
             this.assetId = null;
         }
-       
+
         const componentProps = omit(this.props, [
             'asset', 'dispatchSetHoveredSprite', 'id', 'intl',
             'onActivateTab', 'onSelect', 'onShowImporting', 'onCloseImporting']);
@@ -194,7 +194,7 @@ class StageSelector extends React.Component {
                 onSurpriseBackdropClick={this.handleSurpriseBackdrop}
                 {...componentProps}
                 url={this.costumeURL}
-                onImgLoad = {this.handImageLoad}
+                onImgLoad={this.handImageLoad}
             />
         );
     }

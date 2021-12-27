@@ -23,12 +23,12 @@ const getCostumeUrl = (function () {
             if (svgString.match(HAS_FONT_REGEXP)) {
                 const svgText = inlineSvgFonts(svgString);
                 return `data:image/svg+xml;utf8,${encodeURIComponent(svgText)}`;
-            } 
+            }
             return asset.encodeDataURI();
-            
-        } 
+
+        }
         return asset.encodeDataURI();
-        
+
 
         // return cachedUrl;
     };
