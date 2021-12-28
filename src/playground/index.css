@@ -29,6 +29,16 @@ html {
         font-size: calc(var(--window-height) * 1px / (768 / 16));
     }
 }
+@media screen and (max-height: 768px) {
+    html {
+        font-size: 14px;
+    }
+}
+@media screen and (max-height: 640px) {
+    html {
+        font-size: calc(var(--window-height) * 1px / (375 / 12));
+    }
+}
 
 /* ================ */
 html {
