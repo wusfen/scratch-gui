@@ -11,6 +11,11 @@ html {
     padding: 1rem 0.75rem;
     padding: 0.75rem 0.6rem;
 }
+@media screen and (max-height: $mobile-max-height) {
+    .page-wrapper {
+        padding: 0;
+    }
+}
 
 .body-wrapper {
     height: 100%;
@@ -60,7 +65,6 @@ html {
 
     display: flex;
     flex-direction: column;
-
 }
 
 .tab-list {
@@ -213,6 +217,14 @@ html {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+@media screen and (max-height: $mobile-max-height) {
+    .stage-and-target-wrapper {
+        background: none;
+        box-shadow: none;
+        padding: 0;
+        margin-left: 0.8rem;
+    }
 }
 
 .target-wrapper {
@@ -378,15 +390,14 @@ $fade-out-distance: 0.9375rem;
 .menu-bar-container-right {
     right: 1.4rem;
 }
-.resize-bar{
+.resize-bar {
     align-self: center;
     touch-action: pan-x;
     padding: 0.1rem;
     width: 1.19rem;
     height: 100%;
-    margin-left: -0.31rem;
+    margin-left: -0.2rem;
     z-index: 100;
     object-fit: contain;
     padding-left: 0.41rem;
 }
-

@@ -149,7 +149,7 @@
 }
 
 .sprite-input {
-    width: 5.63rem !important;
+    width: 5rem;
 }
 
 .small-input {
@@ -183,7 +183,6 @@
 }
 
 .group input{
-    width: 100%;
     text-align: right;
 }
 
@@ -281,13 +280,6 @@
     width: 1.38rem;
     height: 1.38rem;
     margin-right: 0.38rem;
-}
-
-.sprite-show-or-hide {
-    position: absolute;
-    left: -17rem;
-    top: -1rem;
-    z-index: 200;
 }
 
 .language-content {

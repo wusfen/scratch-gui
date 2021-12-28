@@ -33,6 +33,7 @@ import TelemetryModal from '../telemetry-modal/telemetry-modal.jsx';
 
 import WDSpriteList from '../../containers/$-sprite-list.jsx';
 import Running from '../../containers/running.jsx';
+import StageHeader from '../../containers/stage-header.jsx';
 
 import layout, {STAGE_DISPLAY_SIZES, STAGE_SIZE_MODES} from '../../lib/layout-constants';
 import {resolveStageSize} from '../../lib/screen-utils';
@@ -330,6 +331,7 @@ const GUIComponent = props => {
                         onTouchEnd={_onmouseup}
                         onTouchMove={_onmousemove}
                     >
+                        {/* 舞台区 */}
                         <Box
                             className={
                                 classNames(
@@ -350,7 +352,9 @@ const GUIComponent = props => {
                                     text={errorText}
                                 ></ErrorTips>
                             </div>}
+                            {showErrorTips && <div className={styles.warningBorder}></div>}
 
+                            {/* 舞台 */}
                             <StageWrapper
                                 isFullScreen={isFullScreen}
                                 isRendererSupported={isRendererSupported}
@@ -359,8 +363,15 @@ const GUIComponent = props => {
                                 stageMode={stageMode}
                                 vm={vm}
                             />
-                            {showErrorTips && <div className={styles.warningBorder}></div>}
-                            {/* 移到右边 */}
+
+                            {/* 舞台下方按钮区 */}
+                            <StageHeader
+                                stageSize={stageSize}
+                                stageMode={stageMode}
+                                vm={vm}
+                            />
+
+                            {/* 已移到积木区下方 */}
                             {/* <Box className={styles.targetWrapper}>
                                 <TargetPane
                                     stageSize={stageSize}
@@ -377,10 +388,13 @@ const GUIComponent = props => {
                             draggable={false}
                         />
 
+                        {/* 角色列表 */}
                         <WDSpriteList
                             vm={vm}
                             stageSize={stageSize}
                         />
+
+                        {/* 积木区 */}
                         <Box className={styles.editorWrapper}>
                             <Tabs
                                 forceRenderTabPanel

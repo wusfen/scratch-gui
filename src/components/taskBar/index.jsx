@@ -26,7 +26,6 @@ import {
     closeFileMenu
 } from '../../reducers/menus';
 import * as bridge from '../../playground/bridge.js';
-import {pull} from 'lodash';
 const c = styles;
 Object.assign(c, require('../../css/animate.css'));
 
@@ -322,7 +321,7 @@ class TaskBar extends React.Component{
         this.myRef.style.height = ``;
         this.myRef.ontouchstart = undefined;
         this.myRef.onmousedown = undefined;
-        this.removeEventListener();
+        this.removeEventListener?.();
     }
 
     openTitleAudio = event => {
@@ -620,14 +619,7 @@ class TaskBar extends React.Component{
         } = this.state;
 
         return (
-            <div
-                className={classNames({
-                    [styles.container]: true})}
-                ref={r => {
-                    this.myRef = r;
-                }}
-                style={style}
-            >
+            <div className={classNames({[styles.container]: true})}>
                 {mode === 'normal' && <div className={c.productionName}>
                     <div>作品名：</div>
                     <input
@@ -732,7 +724,13 @@ class TaskBar extends React.Component{
                     </div>
                 </div>}
                 {mode === 'course' && (
-                    <section>
+                    <section
+                        className={classNames(c.inner)}
+                        ref={r => {
+                            this.myRef = r;
+                        }}
+                        style={style}
+                    >
                         <div
                             className={
                                 classNames({

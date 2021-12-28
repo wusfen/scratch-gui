@@ -242,27 +242,21 @@ class SpriteInfo extends React.Component {
                         </Label>
                     </div>
                     {/* 显示 */}
-                    {/* 控制隐藏和显示（先注释） */}
-                    <div className={styles.spriteShowOrHide}>
-                        {
-                            this.props.visible ?
-                                <b
-                                    className={classNames(styles.iconWrap)}
-                                    name="show"
-                                    onClick={this.props.onClickNotVisible}
-                                >
-                                    <Icon name="show" />
-                                </b> :
-                                <b
-                                    className={classNames('play_audio', {[styles.iconWrap]: true})}
-                                    name="hide"
-                                    onClick={this.props.onClickVisible}
-                                >
-                                    <Icon name="hide" />
-                                </b>
-                        }
-                    </div>
-
+                    {/* {
+                        this.props.visible ?
+                            <b
+                                className={classNames(styles.iconWrap)}
+                                onClick={this.props.onClickNotVisible}
+                            >
+                                <Icon name="show" />
+                            </b> :
+                            <b
+                                className={classNames('play_audio', {[styles.iconWrap]: true})}
+                                onClick={this.props.onClickVisible}
+                            >
+                                <Icon name="hide" />
+                            </b>
+                    } */}
 
                     <div
                         hidden

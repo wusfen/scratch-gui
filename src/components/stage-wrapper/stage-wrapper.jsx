@@ -46,13 +46,13 @@ const StageWrapperComponent = function (props) {
                         null
                 }
             </Box>
-            <Box className={styles.stageMenuWrapper}>
+            {/* <Box className={styles.stageMenuWrapper}>
                 <StageHeader
                     stageSize={stageSize}
                     stageMode={stageMode}
                     vm={vm}
                 />
-            </Box>
+            </Box> */}
             {loading ? (
                 <Loader
                     isFullScreen={isFullScreen}

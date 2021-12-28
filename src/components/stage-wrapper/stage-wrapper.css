@@ -3,7 +3,8 @@
 @import "../../css/z-index.css";
 
 .stage-wrapper {
-    margin-top: 2.2rem;
+    flex: 1;
+    display: flex;
 }
 .stage-wrapper * {
     box-sizing: border-box;
@@ -17,7 +18,7 @@
     justify-content: center;
     align-items: center;
     /* width: 22.31rem; */
-    height: 39.69rem;
+    /* height: 39.69rem; */
 }
 
 .stage-wrapper.full-screen {

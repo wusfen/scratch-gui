@@ -2,7 +2,7 @@
     flex: none;
     width: 5.25rem;
     margin-left: 0.1rem;
-    background: #B9EBFF;
+    background: #b9ebff;
     box-shadow: 0rem 0.03rem 0.66rem 0rem rgba(0, 145, 255, 0.29);
     border-radius: 0.63rem 0rem 0rem 0.63rem;
     text-align: center;
@@ -24,7 +24,7 @@
 .slide-up {
     width: 4.06rem;
     height: 0.81rem;
-    background: #9EE4FF;
+    background: #9ee4ff;
     border-radius: 0.63rem 0.63rem 0rem 0rem;
     margin: 0.84rem auto;
     margin-bottom: 0.6rem;
@@ -38,7 +38,7 @@
 .slide-down {
     width: 4.06rem;
     height: 0.81rem;
-    background: #9EE4FF;
+    background: #9ee4ff;
     border-radius: 0rem 0rem 0.63rem 0.63rem;
     margin: 0.84rem auto;
     line-height: 0.81rem;

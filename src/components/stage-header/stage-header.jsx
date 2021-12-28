@@ -12,6 +12,7 @@ import Controls from '../../containers/controls.jsx';
 import {getStageDimensions} from '../../lib/screen-utils';
 import {STAGE_SIZE_MODES} from '../../lib/layout-constants';
 
+import Icon from '../../assets/icons/icon.jsx';
 import fullScreenIcon from './icon--fullscreen.svg';
 // import largeStageIcon from './icon--large-stage.svg';
 // import smallStageIcon from './icon--small-stage.svg';
@@ -152,23 +153,36 @@ const StageHeaderComponent = function (props) {
         header = (
             <Box className={styles.stageHeaderWrapper}>
                 <Box className={styles.stageMenuWrapper}>
-                    <div className={styles.stageSizeRow}>
-                        {stageControls}
-                        <div hidden>
-                            <Button
-                                className={styles.stageButton}
-                                onClick={onSetStageFull}
+                    {stageControls}
+                    <Button
+                        hidden
+                        className={styles.stageButton}
+                        onClick={onSetStageFull}
+                    >
+                        <img
+                            alt={props.intl.formatMessage(messages.fullStageSizeMessage)}
+                            className={styles.stageButtonIcon}
+                            draggable={false}
+                            src={fullScreenIcon}
+                            title={props.intl.formatMessage(messages.fullscreenControl)}
+                        />
+                    </Button>
+                    {/* 显示 */}
+                    {
+                        !vm.editingTarget?.isStage && vm.editingTarget?.visible ?
+                            <button
+                                className={classNames(styles.iconWrap)}
+                                onClick={e => vm.postSpriteInfo({visible: false})}
                             >
-                                <img
-                                    alt={props.intl.formatMessage(messages.fullStageSizeMessage)}
-                                    className={styles.stageButtonIcon}
-                                    draggable={false}
-                                    src={fullScreenIcon}
-                                    title={props.intl.formatMessage(messages.fullscreenControl)}
-                                />
-                            </Button>
-                        </div>
-                    </div>
+                                <Icon name="show" />
+                            </button> :
+                            <button
+                                className={classNames(styles.iconWrap)}
+                                onClick={e => vm.postSpriteInfo({visible: true})}
+                            >
+                                <Icon name="hide" />
+                            </button>
+                    }
                     <Controls
                         isPlayerOnly={isPlayerOnly}
                         vm={vm}
@@ -183,7 +197,8 @@ const StageHeaderComponent = function (props) {
 
 const mapStateToProps = state => ({
     // This is the button's mode, as opposed to the actual current state
-    // stageSizeMode: state.scratchGui.stageSize.stageSize
+    // stageSizeMode: state.scratchGui.stageSize.stageSize,
+    sprites: state.scratchGui.targets.sprites,
 });
 
 StageHeaderComponent.propTypes = {

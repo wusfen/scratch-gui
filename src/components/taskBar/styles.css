@@ -1,13 +1,16 @@
 @import "../../css/units.css";
 @import "../../css/colors.css";
 .container {
+    flex: none;
+    height: 1.75rem;
     color: #ffffff;
     margin-bottom: 0.31rem;
     z-index: 200;
+}
+
+.container .inner {
+    z-index: 200;
     position: fixed;
-    top: 1.13rem;
-    left: 1.31rem;
-    /* min-height: 20rem; */
 }
 
 .pull-svg {
@@ -30,17 +33,16 @@
 .input {
     width: 18.38rem;
     height: 1.75rem;
-    background: #FFFEFA;
+    background: #fffefa;
     border-radius: 0.5rem;
     padding: 0.5rem;
     border: 0;
     font-size: 1rem;
     font-family: SourceHanSansCN-Medium, SourceHanSansCN;
     font-weight: 500;
-    color: #2671D0;
+    color: #2671d0;
     line-height: 1.75rem;
     outline: none;
-    
 }
 
 .input::placeholder {
@@ -51,7 +53,7 @@
 .teacher-mode {
     width: 22.38rem;
     height: 1.75rem;
-    background: #0091FF;
+    background: #0091ff;
     border-radius: 0.5rem;
     margin: 0 auto;
     display: flex;
@@ -88,7 +90,7 @@
     min-width: 7.63rem;
     background: rgba(50, 197, 255, 0.9);
     border-radius: 0.63rem;
-    color: #FFFFFF;
+    color: #ffffff;
     z-index: 200;
     transition: all 2s;
 }
@@ -102,7 +104,7 @@
 } */
 
 .more-content::before {
-    content: '';
+    content: "";
     width: 0;
     height: 0;
     top: -0.4rem;
@@ -112,7 +114,6 @@
     position: absolute;
     left: 1rem;
 }
-
 
 .func-item {
     display: flex;
@@ -140,7 +141,7 @@
     position: relative;
     min-width: 22.3rem;
     height: 1.75rem;
-    background: #FF457F;
+    background: #ff457f;
     border-radius: 0.5rem;
     margin: 0 auto;
     font-size: 0.75rem;
@@ -152,7 +153,7 @@
     margin-right: 0.05rem;
 }
 .course-mode.video-content-is-open {
-    background-color: #32C5FF;
+    background-color: #32c5ff;
 }
 
 .course-mode .iconList {
@@ -167,19 +168,16 @@
 .course-mode .video-icon {
     width: 1.41rem;
     height: 1.19rem;
-    
 }
 .course-mode .close-icon {
     width: 1rem;
     height: 1rem;
 }
 
-
 .course-mode .audio-icon {
     width: 1.25rem;
     height: 1.13rem;
     margin-right: 0.47rem;
-    
 }
 
 .course-mode .audio-content {
@@ -199,6 +197,7 @@
     flex-direction: column;
     align-items: center;
     margin-top: -1.8rem;
+    box-shadow: 1px 1px 10px #00000040;
 }
 
 .video {
@@ -206,7 +205,8 @@
     width: 98%;
     object-fit: fill;
 }
-.video::-webkit-media-controls-fullscreen-button { /* 去掉全屏按钮 */
+.video::-webkit-media-controls-fullscreen-button {
+    /* 去掉全屏按钮 */
     /* display: none; */
 }
 
@@ -223,7 +223,7 @@
     font-size: 0.75rem;
     min-width: 3.3rem;
     height: 1.75rem;
-    background: #32C5FF;
+    background: #32c5ff;
     border-radius: 0.63rem;
     padding: 0.06rem;
     line-height: 1.75rem;
@@ -231,20 +231,6 @@
     margin-right: 0.25rem;
 }
 
-
 .video-options .option.active {
-    background-color: #FF457F;
+    background-color: #ff457f;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

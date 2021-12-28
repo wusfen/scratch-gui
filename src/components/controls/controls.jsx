@@ -85,8 +85,8 @@ const Controls = function (props) {
             </button>
             <button
                 className={classNames({
-                    [styles.button]: !active,
-                    [styles.stopButton]: active,
+                    [styles.button]: true,
+                    [styles.stop]: active,
                     [styles.blingBlingHigh]: guide,
                 })}
                 type="button"

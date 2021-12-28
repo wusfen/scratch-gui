@@ -22,7 +22,7 @@ class TipAudio {
         // fix: pause error
         audio._play = audio.play;
         audio.play = function () {
-            var promise = audio._play();
+            var promise = audio._play().catch(console.warn);
 
             audio._pause = audio.pause;
             audio.pause = function () {
