@@ -134,9 +134,11 @@ class Stage extends React.Component {
         });
     }
     startColorPickingLoop () {
-        // 居中初始化一个值
-        this.pickX = this.rect.width / 2;
-        this.pickY = this.rect.height / 2;
+        if(navigator.maxTouchPoints > 0){
+            // 居中初始化一个值
+            this.pickX = this.rect.width / 2;
+            this.pickY = this.rect.height / 2;
+        }
         this.intervalId = setInterval(() => {
             if (typeof this.pickX === 'number') {
                 this.setState({colorInfo: this.getColorInfo(this.pickX, this.pickY)});
