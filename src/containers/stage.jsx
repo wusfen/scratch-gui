@@ -134,7 +134,7 @@ class Stage extends React.Component {
         });
     }
     startColorPickingLoop () {
-        if(navigator.maxTouchPoints > 0){
+        if (navigator.maxTouchPoints > 0){
             // 居中初始化一个值
             this.pickX = this.rect.width / 2;
             this.pickY = this.rect.height / 2;
