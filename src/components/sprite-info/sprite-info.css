@@ -2,7 +2,7 @@
 @import "../../css/colors.css";
 
 .sprite-info {
-    padding: 0.38rem;
+    padding: 0.38rem .5rem;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     /* background-color: #FFFEFA; */
     color: $ui-white;
@@ -200,6 +200,11 @@
 
 .title {
     margin: 0 0.44rem;
+}
+@media screen and (max-height: $mobile-max-height) {
+    .title {
+        margin: 0 0.2rem;
+    }
 }
 
 .more-func {

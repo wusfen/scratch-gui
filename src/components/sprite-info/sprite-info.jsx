@@ -217,7 +217,7 @@ class SpriteInfo extends React.Component {
                 >
                     {/* 角色名 */}
                     <div className={styles.group}>
-                        <div className={styles.title}>角色</div>
+                        <div className={classNames(styles.title, 'xs-hide')}>角色</div>
                         <Label
                             above={labelAbove}
                             // text={sprite}

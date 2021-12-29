@@ -42,12 +42,12 @@ html {
     html {
         font-size: calc(var(--window-height) * 1px / (375 / 14));
     }
-    .xs-hide {
+    :global(.xs-hide) {
         display: none !important;
     }
 }
 @media screen and (min-height: $mobile-max-height) {
-    .xs-show {
+    :global(.xs-show) {
         display: none !important;
     }
 }
