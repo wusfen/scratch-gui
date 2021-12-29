@@ -487,10 +487,9 @@ const GUIComponent = props => {
                                                 src={addExtensionIcon}
                                             /></button>}
                                     </Box>
-                                    {/* 影响性能，整个不要*/}
-                                    {/* <Box className={styles.watermark}>
+                                    <Box className={styles.watermark}>
                                         <Watermark />
-                                    </Box> */}
+                                    </Box>
                                 </TabPanel>
                                 <TabPanel className={tabClassNames.tabPanel}>
                                     {costumesTabVisible ? <CostumeTab vm={vm} /> : null}

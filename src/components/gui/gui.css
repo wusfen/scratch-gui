@@ -308,16 +308,9 @@ $fade-out-distance: 0.9375rem;
 /* Sprite Selection Watermark */
 .watermark {
     position: absolute;
-    top: 1.25rem;
+    bottom: 0.25rem;
+    left: 5rem;
     pointer-events: none;
-}
-
-[dir="ltr"] .watermark {
-    right: 1.25rem;
-}
-
-[dir="rtl"] .watermark {
-    left: 1.25rem;
 }
 
 /* Menu */
