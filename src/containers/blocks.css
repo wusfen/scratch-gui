@@ -22,7 +22,7 @@
 }
 
 :global(.blocklyFlyout).flyout-open {
-    max-width: 15.5rem;
+    max-width: 16rem;
 }
 
 :global(.blocklyFlyout).flyout-close {

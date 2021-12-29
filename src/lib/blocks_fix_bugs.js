@@ -468,9 +468,7 @@ export default function (Blockly){
       };
 
       Blockly.getFitScale = function(){
-        // return Math.max(0.5, Math.min(.75 * (window.innerHeight / 768), 1)); // todo add
-        // TODO
-        return 0.75 * (window.innerHeight / 768)
+        return Math.max(0.75, Math.min(.75 * (window.innerHeight / 768), 1));
       }
       Blockly.Flyout.prototype.setVisible = function(visible) {
         var visibilityChanged = (visible != this.isVisible());
