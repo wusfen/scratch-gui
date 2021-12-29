@@ -1,3 +1,5 @@
+@import "../css/units.css";
+
 html,
 body,
 .app {
@@ -9,6 +11,13 @@ body,
     height: calc(var(--window-height) * 1px);
 
     margin: 0;
+}
+
+.app {
+    /* border-top: solid #000 env(safe-area-inset-top, 20px); */
+    /* border-right: solid #000 env(safe-area-inset-right, 20px); */
+    /* border-bottom: solid #76cbff env(safe-area-inset-bottom, 20px); */
+    padding-left: calc(env(safe-area-inset-left, 20px) * 0.5);
 }
 
 /* @todo: move globally? Safe / side FX, for blocks particularly? */
@@ -29,14 +38,17 @@ html {
         font-size: calc(var(--window-height) * 1px / (768 / 16));
     }
 }
-@media screen and (max-height: 768px) {
+@media screen and (max-height: $mobile-max-height) {
     html {
-        /* font-size: 14px; */
+        font-size: calc(var(--window-height) * 1px / (375 / 14));
+    }
+    .xs-hide {
+        display: none !important;
     }
 }
-@media screen and (max-height: 640px) {
-    html {
-        font-size: calc(var(--window-height) * 1px / (375 / 12));
+@media screen and (min-height: $mobile-max-height) {
+    .xs-show {
+        display: none !important;
     }
 }
 
