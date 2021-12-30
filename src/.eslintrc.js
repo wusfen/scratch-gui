@@ -47,6 +47,7 @@ module.exports = {
         'no-shadow': 1,
         'max-len': 1,
         'no-mixed-operators': 1,
+        'no-debugger': 1,
     },
     settings: {
         react: {
