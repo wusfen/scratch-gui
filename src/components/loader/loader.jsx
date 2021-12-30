@@ -171,7 +171,7 @@ class LoaderComponent extends React.Component {
                     [styles.fullscreen]: this.props.isFullScreen
                 })}
             >
-                {this.state.isPlayerOnly === false ? <video
+                {/* {this.state.isPlayerOnly === false ? <video
                     className={styles.loadingVideo}
                     src={loadingVideo}
                     autoPlay="autoplay"
@@ -183,9 +183,17 @@ class LoaderComponent extends React.Component {
                         src={loadBg}
                         className={styles.loadBgImg}
                     />
+                    <div className={classNames(styles.loadingTxt)}>
+                        Hello World<span className={styles.shadowDot}></span></div>
+                </div>} */}
+                <div>
+                    <img
+                        src={loadBg}
+                        className={styles.loadBgImg}
+                    />
                     {/* <div className={classNames(styles.loadingTxt)}>
                         Hello World<span className={styles.shadowDot}></span></div> */}
-                </div>}
+                </div>
                 <div className={styles.retryContent}>
                     <span
                         hidden={!this.state.retryBtnShow}
