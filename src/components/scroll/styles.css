@@ -1,8 +1,14 @@
+@import "../../css/units.css";
+
 .scroll {
     position: relative;
     height: 38.2rem;
-    padding-top: 1.8rem;
-    padding-bottom: 1.7rem;
+    padding: 1.5rem 0;
+}
+@media screen and (max-height: $mobile-max-height) {
+    .scroll {
+        height: 18.5rem;
+    }
 }
 
 .content {
@@ -14,7 +20,7 @@
 
 .line {
     width: 4rem;
-    border-top: 0.06rem dotted #79BCFF;
+    border-top: 0.06rem dotted #79bcff;
     margin: 0 auto;
 }
 
@@ -25,10 +31,9 @@
     right: 0;
     width: 4.06rem;
     height: 0.81rem;
-    background: #9EE4FF;
+    background: #9ee4ff;
     border-radius: 0.63rem 0.63rem 0rem 0rem;
-    margin: 0.84rem auto;
-    margin-bottom: 0.6rem;
+    margin: 0.5rem auto;
     line-height: 0.81rem;
 }
 .slide-up-img {
@@ -43,7 +48,7 @@
     right: 0;
     width: 4.06rem;
     height: 0.81rem;
-    background: #9EE4FF;
+    background: #9ee4ff;
     border-radius: 0rem 0rem 0.63rem 0.63rem;
     margin: 0.84rem auto;
     line-height: 0.81rem;
