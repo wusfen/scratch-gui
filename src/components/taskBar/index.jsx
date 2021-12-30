@@ -38,18 +38,14 @@ class TaskBar extends React.Component{
             isTeacherPreview: false, // true: 老师切学生
             moreFuncShow: false,
             audioPlaying: false,
-            videoContentShow: false,
+            isVideoContentOpen: false,
             currentTipVideoIndex: 0,
             currentVideoSrc: '',
             currentFuncIndex: -1,
             alreadyClickVideo: [],
             tipsShow: false,
-            rate: 0, // 缩放比例
             style: {
-                left: '1.31rem',
-                top: '1.13rem',
-                width: '22.5rem',
-                height: ''
+                width: '',
             },
             oriPos: { // 开始状态
                 top: 0, // 元素的坐标
@@ -136,9 +132,9 @@ class TaskBar extends React.Component{
             // 正确答案计时器, 重置一次之后是每隔61秒，就引导学生点击提示
             window.addEventListener(`noAction:${timerType.RIGHT_ANSWER}:${RIGHT_ANSWER_2}`, this.touchTip);
             window.addEventListener('submitErrorCounter1', this.touchTip); // 第一次提交错误
-            window.addEventListener('submitErrorCounter2', this.autoPlayTipVideo); // 第二次提交错误，自动播放视频
+            window.addEventListener('submitErrorCounter2', this.openAndAutoPlayTipVideo); // 第二次提交错误，自动播放视频
             window.addEventListener('jsonErrorCounterInRange', this.touchTip); // json自动批改错误，容错小范围内
-            window.addEventListener('jsonErrorCounterOutRange', this.autoPlayTipVideo); // json自动批改错误，超过容错小范围
+            window.addEventListener('jsonErrorCounterOutRange', this.openAndAutoPlayTipVideo); // json自动批改错误，超过容错小范围
 
             // 监听暂停和播放事件
             bridge.on('pause', e => {
@@ -194,7 +190,7 @@ class TaskBar extends React.Component{
     }
 
     touchTip = () => {
-        if (!this.state.videoContentShow) {
+        if (!this.state.isVideoContentOpen) {
             this.setState({
                 tipsShow: true
             });
@@ -210,16 +206,15 @@ class TaskBar extends React.Component{
         }, 11000);
     }
 
-    autoPlayTipVideo = () => {
-        if (!this.tipVideos.length) { // 没有提示视频，无法自动播放
-            return;
-        }
-        this.setState({
-            videoContentShow: true
-        });
-        this.init();
+    openAndAutoPlayTipVideo = () => {
+        // eslint-disable-next-line no-debugger
+        this.initVideoMove();
         if (this.audio) {
             this.audio.pause();
+        }
+
+        if (!this.tipVideos.length) { // 没有提示视频，无法自动播放
+            return;
         }
         const {currentTipVideoIndex} = this.state;
         let count = currentTipVideoIndex + 1;
@@ -301,26 +296,27 @@ class TaskBar extends React.Component{
     }
 
     judgeIsShowVideoContent = () => {
-        if (this.state.videoContentShow) {
+        if (this.state.isVideoContentOpen) {
             if (this.isDrag) {
                 this.isDrag = false;
                 return;
             }
             this.setState({
-                videoContentShow: false
+                isVideoContentOpen: false
             });
-            this.recover();
+            this.closeVideoContent();
             return;
         }
     }
 
-    recover = () => { // 复原 + 取消拖动事件
-        this.myRef.style.left = this.state.oriLeft;
-        this.myRef.style.top = this.state.oriTop;
-        this.myRef.style.width = `${this.state.oriWidth}px`;
-        this.myRef.style.height = ``;
-        this.myRef.ontouchstart = undefined;
-        this.myRef.onmousedown = undefined;
+    closeVideoContent = () => { // 复原 + 取消拖动事件
+        this.setState({
+            style: {
+                position: ''
+            }
+        });
+        this.courseTaskBarInnerEl.ontouchstart = undefined;
+        this.courseTaskBarInnerEl.onmousedown = undefined;
         this.removeEventListener?.();
     }
 
@@ -341,20 +337,18 @@ class TaskBar extends React.Component{
         }
     }
 
-    handleVideoContent = () => {
-        if (this.state.videoContentShow) {
-            this.recover();
-        }
-        if (!this.state.videoContentShow && this.state.tipsShow) {
+    handleOpenVideoContent = () => {
+        if (!this.state.isVideoContentOpen) {
             this.setState({
                 tipsShow: false
             });
+            this.openAndAutoPlayTipVideo(); // 每次点击都播放提示视频，而且视频索引是当前的下一个
         }
-        if (!this.state.videoContentShow) {
-            this.autoPlayTipVideo(); // 每次点击都播放提示视频，而且视频索引是当前的下一个
+        if (this.state.isVideoContentOpen) {
+            this.closeVideoContent();
         }
         this.setState({
-            videoContentShow: !this.state.videoContentShow
+            isVideoContentOpen: !this.state.isVideoContentOpen
         });
     }
 
@@ -434,7 +428,7 @@ class TaskBar extends React.Component{
         });
     }
 
-    judgeTouchOrMoveReturnEvent = event => {
+    toTouchEvent = event => {
         let touchObj;
         if (event.touches) {
             touchObj = event.touches[0];
@@ -444,32 +438,35 @@ class TaskBar extends React.Component{
         return touchObj;
     }
 
-    init = () => {
+    initVideoMove = () => {
+        this.initVideoContentOpenStyle();
         setTimeout(() => {
-            this.initStyle();
             this.removeEventListener = this.initTouchAndMove();
         }, 300);
     }
 
-    initStyle = () => {
+    initVideoContentOpenStyle = () => {
+        // eslint-disable-next-line no-debugger
+        // debugger;
         this.setState({
-            oriLeft: window.getComputedStyle(this.myRef, null).left,
-            oriTop: window.getComputedStyle(this.myRef, null).top,
-            oriWidth: this.myRef.clientWidth,
-            oriHeight: this.myRef.clientHeight
+            oriLeft: window.getComputedStyle(this.courseTaskBarInnerEl, null).left,
+            oriTop: window.getComputedStyle(this.courseTaskBarInnerEl, null).top,
+            oriWidth: this.courseTaskBarInnerEl.clientWidth,
+            oriHeight: this.courseTaskBarInnerEl.clientHeight
         });
-        const rate = this.videoRef.clientWidth / this.videoRef.clientHeight; // 计算展示区的缩放比例
-        this.setState({style: { // 将展示区定位到屏幕中心
-            left: window.getComputedStyle(this.myRef, null).left,
-            top: window.getComputedStyle(this.myRef, null).top,
-            width: this.myRef.clientWidth,
-            height: this.myRef.clientHeight
-        },
-        rate: rate});
+
+        this.setState({
+            style: {
+                position: 'fixed',
+                left: window.getComputedStyle(this.courseTaskBarInnerEl, null).left,
+                top: window.getComputedStyle(this.courseTaskBarInnerEl, null).top,
+                width: this.courseTaskBarInnerEl.clientWidth,
+            },
+        });
     }
 
     initTouchAndMove = () => { // 初始化缩放和拖拽事件
-        const dragObj = this.myRef;
+        const dragObj = this.courseTaskBarInnerEl;
         const scaleRef = this.scaleRef;
         const shieldList = [this.videoRef, this.closeIconRef]; // 不允许触发move的对象
         const noPreventDafualtShieldList = [this.audioTipsTextRef];
@@ -497,7 +494,7 @@ class TaskBar extends React.Component{
         };
 
         const handleStart = event => { // 拖动开始
-            const e = this.judgeTouchOrMoveReturnEvent(event);
+            const e = this.toTouchEvent(event);
             operateTarget = e.target;
             if (shieldList.includes(e.target)) {
                 return;
@@ -520,13 +517,12 @@ class TaskBar extends React.Component{
             if (!judgeDomIsIn(operateTarget)) {
                 return;
             }
-            const e = this.judgeTouchOrMoveReturnEvent(event);
+            const e = this.toTouchEvent(event);
             if (dragging) {
                 if (isScale) {
                     const newStyle = {...this.state.oriPos};
                     const offsetX = e.clientX - this.state.oriPos.mouseX;
                     newStyle.width += offsetX;
-                    newStyle.height += offsetX / this.state.rate; // 根据width和缩放比例算出height
                     if (
                         (newStyle.width < 200 && offsetX <= 0) ||
                          (newStyle.width > document.documentElement.clientWidth && offsetX >= 0)
@@ -565,7 +561,7 @@ class TaskBar extends React.Component{
             operateTarget = undefined;
         };
         const handleScaleStart = event => { // 缩放开始
-            const e = this.judgeTouchOrMoveReturnEvent(event);
+            const e = this.toTouchEvent(event);
             dragging = true;
             isScale = true;
             mouseX = e.clientX;// 初始位置时鼠标的坐标
@@ -610,7 +606,7 @@ class TaskBar extends React.Component{
             isTeacherPreview,
             moreFuncShow,
             audioPlaying,
-            videoContentShow,
+            isVideoContentOpen,
             currentVideoSrc,
             currentFuncIndex,
             tipsShow,
@@ -621,7 +617,7 @@ class TaskBar extends React.Component{
         return (
             <div className={classNames({[styles.container]: true})}>
                 {mode === 'normal' && <div className={c.productionName}>
-                    <div>作品名：</div>
+                    <div className="xs-hide">作品名：</div>
                     <input
                         type="text"
                         className={`${c.input}`}
@@ -727,34 +723,20 @@ class TaskBar extends React.Component{
                     <section
                         className={classNames(c.inner)}
                         ref={r => {
-                            this.myRef = r;
+                            this.courseTaskBarInnerEl = r;
                         }}
                         style={style}
                     >
                         <div
-                            className={
-                                classNames({
-                                    [c.courseMode]: true,
-                                    [c.videoContentIsOpen]: videoContentShow
-                                })
-                            }
+                            className={classNames({[c.courseMode]: true, [c.open]: isVideoContentOpen})}
                             onClick={this.clickCourseMode}
                         >
                             <div
-                                className={classNames(
-                                    {
-                                        [c.audioContent]: true,
-                                        [c.blingBling]: audioPlaying
-                                    }
-                                )}
+                                className={classNames({[c.audioContent]: true, [c.blingBling]: audioPlaying})}
                                 onClick={this.openTitleAudio}
                             >
                                 <img
-                                    className={classNames(
-                                        {
-                                            [c.audioIcon]: true
-                                        }
-                                    )}
+                                    className={classNames({[c.audioIcon]: true})}
                                     src={audio}
                                     alt="audio"
                                 />
@@ -762,39 +744,31 @@ class TaskBar extends React.Component{
                                     ref={r => {
                                         this.audioTipsTextRef = r;
                                     }}
-                                >点击这里，会告诉你本次的任务哦</span>
+                                >
+                                    <span className="xs-hide">点击这里，会告诉你本次的任务哦</span>
+                                    <span className="xs-show">点击语音读题</span>
+                                </span>
                             </div>
-                            <div
-                                className={
-                                    classNames('play_audio', {
-                                        [c.iconList]: true,
-                                        [c.blingBling]: tipsShow
-                                    })
-                                }
-                            >
+                            <div className={classNames('play_audio', {[c.iconList]: true, [c.blingBling]: tipsShow})} >
                                 <img
                                     className={
                                         classNames({
-                                            [c.videoIcon]: !videoContentShow,
-                                            [c.closeIcon]: videoContentShow,
+                                            [c.videoIcon]: !isVideoContentOpen,
+                                            [c.closeIcon]: isVideoContentOpen,
                                         })
                                     }
                                     ref={r => {
                                         this.closeIconRef = r;
                                     }}
                                     draggable={false}
-                                    src={videoContentShow ? close : video}
+                                    src={isVideoContentOpen ? close : video}
                                     alt="video"
-                                    onClick={this.handleVideoContent}
+                                    onClick={this.handleOpenVideoContent}
                                 />
                             </div>
                         </div>
-                        {videoContentShow && <div
-                            className={
-                                classNames({
-                                    [c.videoContent]: true
-                                })
-                            }
+                        <div
+                            className={classNames({[c.videoContent]: true})}
                             ref={r => {
                                 this.videoContentRef = r;
                             }}
@@ -839,7 +813,7 @@ class TaskBar extends React.Component{
                                 }}
                                 draggable={false}
                             />
-                        </div>}
+                        </div>
                     </section>
                 )}
 
