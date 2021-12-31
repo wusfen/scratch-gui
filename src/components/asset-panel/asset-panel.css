@@ -1,5 +1,7 @@
 @import "../../css/units.css";
 @import "../../css/colors.css";
+@import "../../css/units.css";
+@import "../../css/z-index.css";
 
 .wrapper {
     display: flex;
@@ -11,6 +13,18 @@
 
     background: $ui-primary;
     color: $text-primary;
+}
+
+@media screen and (max-height: $mobile-max-height) {
+    .wrapper{
+      /* display: none; */
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: $z-index-modal;
+    }
 }
 
 [dir="ltr"] .wrapper {

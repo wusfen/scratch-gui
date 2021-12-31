@@ -155,8 +155,8 @@ const StageHeaderComponent = function (props) {
                 <Box className={styles.stageMenuWrapper}>
                     {stageControls}
                     <button
+                        className={classNames(styles.iconWrap, styles.fullStageBtn)}
                         hidden={isPlayerOnly}
-                        className={styles.iconWrap}
                         onClick={onSetStageFull}
                     >
                         <img
