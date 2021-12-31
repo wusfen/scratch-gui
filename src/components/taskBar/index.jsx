@@ -457,9 +457,9 @@ class TaskBar extends React.Component{
 
         this.setState({
             style: {
-                position: 'fixed',
-                left: window.getComputedStyle(this.courseTaskBarInnerEl, null).left,
-                top: window.getComputedStyle(this.courseTaskBarInnerEl, null).top,
+                // position: 'fixed',
+                // left: window.getComputedStyle(this.courseTaskBarInnerEl, null).left,
+                // top: window.getComputedStyle(this.courseTaskBarInnerEl, null).top,
                 width: this.courseTaskBarInnerEl.clientWidth,
             },
         });
@@ -721,14 +721,14 @@ class TaskBar extends React.Component{
                 </div>}
                 {mode === 'course' && (
                     <section
-                        className={classNames(c.inner)}
+                        className={classNames(c.courseTipsContainer, {[c.open]: isVideoContentOpen})}
                         ref={r => {
                             this.courseTaskBarInnerEl = r;
                         }}
                         style={style}
                     >
                         <div
-                            className={classNames({[c.courseMode]: true, [c.open]: isVideoContentOpen})}
+                            className={classNames({[c.tipsBar]: true})}
                             onClick={this.clickCourseMode}
                         >
                             <div

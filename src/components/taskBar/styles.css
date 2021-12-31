@@ -14,10 +14,6 @@
     }
 }
 
-.container .inner {
-    z-index: 200;
-}
-
 .pull-svg {
     position: absolute;
     bottom: -0.35rem;
@@ -143,7 +139,26 @@
     margin-right: 0.38rem;
 }
 
-.course-mode {
+.courseTipsContainer {
+    z-index: 200;
+    min-width: 12.5rem;
+    max-height: 1.75rem;
+    transition: max-height 0.3s;
+}
+.courseTipsContainer.open {
+    position: fixed;
+    width: 20rem;
+    min-width: 18rem;
+    max-height: 100rem;
+}
+.courseTipsContainer.open .tipsBar {
+    background-color: #32c5ff;
+}
+.courseTipsContainer.open .video-content {
+    display: flex;
+}
+
+.tipsBar {
     position: relative;
     height: 1.75rem;
     background: #ff457f;
@@ -156,11 +171,7 @@
     z-index: 200;
     white-space: nowrap;
 }
-.course-mode.open {
-    background-color: #32c5ff;
-}
-
-.course-mode .iconList {
+.tipsBar .iconList {
     flex: 1;
     position: absolute;
     right: 0.5rem;
@@ -169,29 +180,26 @@
     justify-content: center;
 }
 
-.course-mode .video-icon {
+.tipsBar .video-icon {
     width: 1.41rem;
     height: 1.19rem;
 }
-.course-mode .close-icon {
+.tipsBar .close-icon {
     width: 1rem;
     height: 1rem;
 }
 
-.course-mode .audio-icon {
+.tipsBar .audio-icon {
     width: 1.25rem;
     height: 1.13rem;
     margin-right: 0.47rem;
 }
 
-.course-mode .audio-content {
+.tipsBar .audio-content {
     display: flex;
     align-items: center;
 }
 
-.course-mode.open + .video-content {
-    display: flex;
-}
 .video-content {
     display: none;
     flex-direction: column;
@@ -233,6 +241,7 @@
     line-height: 1.75rem;
     text-align: center;
     margin-right: 0.25rem;
+    overflow: auto;
 }
 
 .video-options .option.active {
