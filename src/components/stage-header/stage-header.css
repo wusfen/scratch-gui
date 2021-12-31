@@ -26,6 +26,10 @@
 .stage-menu-wrapper>.full-stage-btn{
     display: none;
 }
+.stage-menu-wrapper > *:not(:first-child) {
+    margin-left: 0.25rem;
+}
+
 @media screen and (max-height: $mobile-max-height) {
     .stage-menu-wrapper {
         margin: 0.2rem 0;

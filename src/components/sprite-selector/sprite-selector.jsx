@@ -118,7 +118,7 @@ const SpriteSelectorComponent = function (props) {
                 onExportSprite={onExportSprite}
                 onSelectSprite={onSelectSprite}
             /> */}
-            <ActionMenu
+            {/* <ActionMenu
                 className={styles.addButton}
                 img={spriteIcon}
                 moreButtons={[
@@ -150,7 +150,7 @@ const SpriteSelectorComponent = function (props) {
                 title={intl.formatMessage(messages.addSpriteFromLibrary)}
                 tooltipPlace={isRtl(intl.locale) ? 'right' : 'left'}
                 onClick={onNewSpriteClick}
-            />
+            /> */}
         </Box>
     );
 };

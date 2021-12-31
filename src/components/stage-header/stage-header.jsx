@@ -156,6 +156,7 @@ const StageHeaderComponent = function (props) {
                     {stageControls}
                     <button
                         className={classNames(styles.iconWrap, styles.fullStageBtn)}
+                        hidden={isPlayerOnly}
                         onClick={onSetStageFull}
                     >
                         <img
@@ -170,12 +171,14 @@ const StageHeaderComponent = function (props) {
                     {
                         !vm.editingTarget?.isStage && vm.editingTarget?.visible ?
                             <button
+                                hidden={isPlayerOnly}
                                 className={classNames(styles.iconWrap)}
                                 onClick={e => vm.postSpriteInfo({visible: false})}
                             >
                                 <Icon name="show" />
                             </button> :
                             <button
+                                hidden={isPlayerOnly}
                                 className={classNames(styles.iconWrap)}
                                 onClick={e => vm.postSpriteInfo({visible: true})}
                             >

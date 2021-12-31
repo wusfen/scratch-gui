@@ -377,11 +377,21 @@ $fade-out-distance: 0.9375rem;
     position: absolute;
     z-index: 200;
     top: 1.4rem;
-    right: 4rem;
-}
-.menu-bar-container-right {
     right: 1.4rem;
 }
+.menu-bar-container.course-mode {
+    right: 4rem;
+}
+@media screen and (max-height: $mobile-max-height) {
+    .menu-bar-container {
+        top: 0.2rem;
+        right: 0.5rem;
+    }
+    .menu-bar-container.course-mode {
+        right: 3rem;
+    }
+}
+
 .resize-bar {
     align-self: center;
     touch-action: pan-x;

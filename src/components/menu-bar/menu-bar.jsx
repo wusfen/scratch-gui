@@ -32,7 +32,7 @@ import Dialog from '../dialog/index.jsx';
 import Loading from '../loading/index.jsx';
 
 import {openTipsLibrary} from '../../reducers/modals';
-import {setPlayer} from '../../reducers/mode';
+import {setPlayer, toggleStageHidden} from '../../reducers/mode';
 import Audio from '../../lib/courseTip/TipAudio.js';
 import {
     autoUpdateProject,
@@ -902,8 +902,14 @@ class MenuBar extends React.Component {
     handleSkip () {
         dispatchEvent(new Event('submit:跳过'));
     }
+
+    handleToggleStageHidden () {
+        this.props.toggleStageHidden();
+    }
+
     render () {
         var state = this.state;
+        var props = this.props;
         var {mode} = state;
         var workInfo = window._workInfo || {};
         var isSaveAs = workInfo.id && !/IDEA/i.test(workInfo.workType);
@@ -1380,6 +1386,22 @@ class MenuBar extends React.Component {
                 <div
                     className={classNames(styles.buttons)}
                 >
+                    <button
+                        className={classNames(`${c.button} ${c.toggleStage}`, {
+                            [c.isStageShow]: !props.isStageHidden,
+                            [c.isStageHidden]: props.isStageHidden,
+                        })}
+                        onClick={e => this.handleToggleStageHidden()}
+                    >
+                        <i
+                            className={classNames(`${c.iSizeL}`, {
+                                [c.iCode]: !props.isStageHidden,
+                                [c.iStage]: props.isStageHidden,
+                            })}
+                        />
+                        {props.isStageHidden ? '舞台' : '编码'}
+                    </button>
+
                     {
                         mode === 'normal' ? (
                             <>
@@ -1556,6 +1578,8 @@ MenuBar.propTypes = {
     setProjectTitle: PropTypes.func,
     projectRunning: PropTypes.bool,
     setUploadingProgress: PropTypes.func,
+    toggleStageHidden: PropTypes.func,
+    isStageHidden: PropTypes.bool,
 };
 
 MenuBar.defaultProps = {
@@ -1584,6 +1608,7 @@ const mapStateToProps = (state, ownProps) => {
             (ownProps.authorUsername === user.username),
         vm: state.scratchGui.vm,
         projectRunning: state.scratchGui.vmStatus.running,
+        isStageHidden: state.scratchGui.mode.isStageHidden,
     };
 };
 
@@ -1609,6 +1634,7 @@ const mapDispatchToProps = dispatch => ({
     onSeeCommunity: () => dispatch(setPlayer(true)),
     setProjectTitle: title => dispatch(setProjectTitle(title)),
     setUploadingProgress: (progress, text) => dispatch(setUploadingProgress(progress, text)),
+    toggleStageHidden: isStageHidden => dispatch(toggleStageHidden(isStageHidden)),
 });
 
 export default compose(

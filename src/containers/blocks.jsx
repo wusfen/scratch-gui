@@ -243,7 +243,8 @@ class Blocks extends React.Component {
             this.props.locale !== nextProps.locale ||
             this.props.anyModalVisible !== nextProps.anyModalVisible ||
             this.props.stageSize !== nextProps.stageSize ||
-            this.props.autoClose !== nextProps.autoClose
+            this.props.autoClose !== nextProps.autoClose ||
+            this.props.isStageHidden !== nextProps.isStageHidden
         );
     }
     componentDidUpdate (prevProps) {
@@ -252,7 +253,7 @@ class Blocks extends React.Component {
 
         // console.log('this.props.toolboxXML:', prevProps.toolboxXML === this.props.toolboxXML);
 
-        if (this.props.autoClose !== prevProps.autoClose) {
+        if (this.props.autoClose !== prevProps.autoClose || this.props.isStageHidden !== prevProps.isStageHidden) {
             var Blockly = this.ScratchBlocks;
             var mainWorkspace = this.ScratchBlocks.mainWorkspace;
             const flyout_ = mainWorkspace.toolbox_?.flyout_;
@@ -282,7 +283,10 @@ class Blocks extends React.Component {
         // Only rerender the toolbox when the blocks are visible and the xml is
         // different from the previously rendered toolbox xml.
         // Do not check against prevProps.toolboxXML because that may not have been rendered.
-        if (this.props.isVisible && this.props.toolboxXML !== this._renderedToolboxXML) {
+        if (
+            (this.props.isVisible && this.props.toolboxXML !== this._renderedToolboxXML) ||
+            this.props.isStageHidden !== prevProps.isStageHidden
+        ) {
             this.requestToolboxUpdate();
         }
 
@@ -893,6 +897,7 @@ Blocks.propTypes = {
     autoClose: PropTypes.bool,
     setAutoClose: PropTypes.func,
     setVisible: PropTypes.func,
+    isStageHidden: PropTypes.bool,
 };
 
 Blocks.defaultOptions = {
@@ -941,6 +946,7 @@ const mapStateToProps = state => ({
     customProceduresVisible: state.scratchGui.customProcedures.active,
     workspaceMetrics: state.scratchGui.workspaceMetrics,
     autoClose: state.scratchGui.autoClose.autoClose,
+    isStageHidden: state.scratchGui.mode.isStageHidden,
 });
 
 const mapDispatchToProps = dispatch => ({
