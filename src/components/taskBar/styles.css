@@ -141,15 +141,12 @@
 
 .courseTipsContainer {
     z-index: 200;
-    min-width: 12.5rem;
-    max-height: 1.75rem;
-    transition: max-height 0.3s;
+    position: absolute;
+    width: 100%;
 }
 .courseTipsContainer.open {
-    position: fixed;
     width: 20rem;
     min-width: 18rem;
-    max-height: 100rem;
 }
 .courseTipsContainer.open .tipsBar {
     background-color: #32c5ff;

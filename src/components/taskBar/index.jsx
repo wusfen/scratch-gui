@@ -312,7 +312,8 @@ class TaskBar extends React.Component{
     closeVideoContent = () => { // 复原 + 取消拖动事件
         this.setState({
             style: {
-                position: ''
+                left: '',
+                top: '',
             }
         });
         this.courseTaskBarInnerEl.ontouchstart = undefined;
@@ -778,7 +779,7 @@ class TaskBar extends React.Component{
                                 src={currentVideoSrc}
                                 controls={'controls'}
                                 autoPlay
-                                playsInline
+                                xxxplaysInline
                                 ref={r => {
                                     this.videoRef = r;
                                 }}
