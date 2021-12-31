@@ -10,6 +10,7 @@ import CloseButton from '../close-button/close-button.jsx';
 
 import backIcon from '../../lib/assets/icon--back.svg';
 import helpIcon from '../../lib/assets/icon--help.svg';
+import closeIcon from '../close-button/icon--close.svg';
 
 import styles from './modal.css';
 
@@ -23,10 +24,20 @@ const ModalComponent = props => (
         overlayClassName={styles.modalOverlay}
         onRequestClose={props.onRequestClose}
     >
+        {/* 只有移动端 高度 <=640才会显示这个按钮 */}
+        <button
+            className={styles.mobileCloseBtn}
+            onClick={props.onRequestClose}
+        >
+            <img
+                src={closeIcon}
+            />
+        </button>
         <Box
             dir={props.isRtl ? 'rtl' : 'ltr'}
-            direction="column"
-            grow={1}
+            // direction="column"
+            className={styles.box}
+            // grow={1}
         >
             <div className={classNames(styles.header, props.headerClassName)}>
                 {props.onHelp ? (

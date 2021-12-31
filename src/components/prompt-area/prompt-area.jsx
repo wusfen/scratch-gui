@@ -20,8 +20,8 @@ class PromptArea extends React.Component{
             style: {
                 left: 0,
                 top: 0,
-                width: '49rem',
-                height: '30rem'
+                // width: '49rem',
+                // height: '30rem'
             },
             oriPos: { // 开始状态
                 top: 0, // 元素的坐标

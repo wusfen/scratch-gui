@@ -1,3 +1,5 @@
+@import "../../css/units.css";
+
 
 .drawing-item {
     /* cursor: move; */
@@ -17,6 +19,14 @@
     align-items: center;
     flex-direction: column;
 }
+
+
+@media screen and (max-height: $mobile-max-height) {
+    .drawing-item{
+        width: 40rem;
+        height: 26rem;
+    }
+  }
 .title {
     font-size: 0.88rem;
     font-family: SourceHanSansCN-Medium, SourceHanSansCN;
@@ -49,7 +59,7 @@
 }
 .close-icon {
     width: 1.18rem;
-    height: 1.18rem;    
+    height: 1.18rem;
     position: absolute;
     top: 0.59rem;
     right: 0.59rem;
@@ -76,7 +86,7 @@
     position: absolute;
     left: 1.16rem;
     bottom: 1.26rem;
-    display: flex;  
+    display: flex;
 }
 .big-icon {
     width: 1.38rem;

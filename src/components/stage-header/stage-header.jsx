@@ -13,7 +13,7 @@ import {getStageDimensions} from '../../lib/screen-utils';
 import {STAGE_SIZE_MODES} from '../../lib/layout-constants';
 
 import Icon from '../../assets/icons/icon.jsx';
-import fullScreenIcon from './icon--fullscreen.svg';
+import fullScreenIcon from './icon--fullscreen.png';
 // import largeStageIcon from './icon--large-stage.svg';
 // import smallStageIcon from './icon--small-stage.svg';
 import unFullScreenIcon from './icon--unfullscreen.svg';
@@ -154,9 +154,8 @@ const StageHeaderComponent = function (props) {
             <Box className={styles.stageHeaderWrapper}>
                 <Box className={styles.stageMenuWrapper}>
                     {stageControls}
-                    <Button
-                        hidden
-                        className={styles.stageButton}
+                    <button
+                        className={styles.iconWrap}
                         onClick={onSetStageFull}
                     >
                         <img
@@ -166,7 +165,7 @@ const StageHeaderComponent = function (props) {
                             src={fullScreenIcon}
                             title={props.intl.formatMessage(messages.fullscreenControl)}
                         />
-                    </Button>
+                    </button>
                     {/* 显示 */}
                     {
                         !vm.editingTarget?.isStage && vm.editingTarget?.visible ?

@@ -1,6 +1,8 @@
 @import "../../css/colors.css";
 @import "../../css/units.css";
 @import "../../css/z-index.css";
+@import "../../css/units.css";
+
 
 .modal-overlay {
     position: fixed;
@@ -104,6 +106,8 @@ $sides: 20rem;
     color: #FFFFFF;
 }
 
+
+
 [dir="ltr"] .header-item-title {
     margin: 0 -$sides 0 0;
 }
@@ -165,4 +169,49 @@ $sides: 20rem;
 
 [dir="rtl"] .help-button {
     padding-left: 0;
+}
+
+.box{
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-close-btn{
+    display: none;
+}
+
+/*
+1.移动端隐藏title
+2.左右排版布局
+3.关闭按钮显示在左上角
+4.搜索框显示在右上角
+ */
+@media screen and (max-height: $mobile-max-height) {
+    .modal-overlay{
+        flex-direction: row;
+    }
+    .header{
+        display: none;
+    }
+    .header-item-title{
+      display: none;
+    }
+    .box{
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding-left: 4rem;
+    }
+    .mobile-close-btn{
+        display: block;
+        background: none;
+        color: hsla(0, 100%, 100%, 1);
+        position: fixed;
+        left: 1rem;
+        top: 1rem;
+    }
+    .mobile-close-btn>img{
+        width: 3rem;
+        height: 3rem;
+        transform: rotate(45deg);
+    }
 }
