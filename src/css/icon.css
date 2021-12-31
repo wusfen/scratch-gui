@@ -48,6 +48,14 @@
     background-image: url("../assets/icons/folder.png");
 }
 
+.i-stage:before {
+    background-image: url("../assets/icons/stage.svg");
+}
+
+.i-code:before {
+    background-image: url("../assets/icons/code.svg");
+}
+
 button i[class*="i-"]:first-child {
     margin-right: 0.25rem;
 }

@@ -222,18 +222,20 @@
     :global(.blocklyMainWorkspaceScrollbar.blocklyScrollbarVertical)
     :global(.blocklyScrollbarHandle) {
     fill: $ui-primary;
-    opacity: 0.25;
-    width: 0.25rem;
-    x: 4.5;
+    opacity: 0.5;
+    x: 10.5;
+    transform: rotateY(66deg);
+    transform-origin: center;
 }
 
 .blocks
     :global(.blocklyMainWorkspaceScrollbar.blocklyScrollbarHorizontal)
     :global(.blocklyScrollbarHandle) {
     fill: $ui-primary;
-    opacity: 0.25;
-    height: 0.25rem;
-    y: 4.5;
+    opacity: 0.5;
+    y: 10.5;
+    transform: rotateX(66deg);
+    transform-origin: center;
 }
 
 .blocks :global(.blocklyFlyoutScrollbar) {

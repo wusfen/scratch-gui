@@ -93,7 +93,7 @@
 
 .menu-bar-item.active,
 .menu-bar-item.hoverable:hover {
-    background-color: #20A1F8;
+    background-color: #20a1f8;
 }
 
 .menu-bar-item.growable {
@@ -263,7 +263,7 @@
     width: 3.75rem;
     height: 2.5rem;
     margin-right: -0.75rem;
-    background: #00B6FF;
+    background: #00b6ff;
     border-radius: 0.63rem 0rem 0rem 0.63rem;
 }
 .sider-button::before {
@@ -275,4 +275,11 @@
     background: center no-repeat url("../../assets/icons/sider_left.png");
     background-size: contain;
     margin-right: 0.94rem;
+}
+
+.toggleStage.isStageShow {
+    background: #1ad1a8;
+}
+.toggleStage.isStageHidden {
+    background: #9678ff;
 }

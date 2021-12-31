@@ -310,6 +310,7 @@ const mapStateToProps = state => {
         isError: getIsError(loadingState),
         isFullScreen: state.scratchGui.mode.isFullScreen,
         isPlayerOnly: state.scratchGui.mode.isPlayerOnly,
+        isStageHidden: state.scratchGui.mode.isStageHidden,
         isRtl: state.locales.isRtl,
         isShowingProject: getIsShowingProject(loadingState),
         loadingStateVisible: state.scratchGui.modals.loadingProject,

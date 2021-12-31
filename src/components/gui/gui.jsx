@@ -287,7 +287,7 @@ const GUIComponent = props => {
                 {/* 隐藏顶部菜单栏 */}
                 <div
                     className={classNames(styles.menuBarContainer, {
-                        [styles.menuBarContainerRight]: mode === 'normal'
+                        [styles.courseMode]: mode === 'course'
                     })}
                 >
                     <MenuBar
@@ -333,6 +333,7 @@ const GUIComponent = props => {
                     >
                         {/* 舞台区 */}
                         <Box
+                            hidden={props.isStageHidden}
                             className={
                                 classNames(
                                     styles.stageAndTargetWrapper,
@@ -380,7 +381,10 @@ const GUIComponent = props => {
                             </Box> */}
 
                         </Box>
+
+                        {/* 舞台区拖拉条 */}
                         <img
+                            hidden={props.isStageHidden}
                             className={styles.resizeBar}
                             onMouseDown={_onmousedown}
                             onTouchStart={_onmousedown}
@@ -498,7 +502,10 @@ const GUIComponent = props => {
                                     {soundsTabVisible ? <SoundTab vm={vm} /> : null}
                                 </TabPanel>
                             </Tabs>
-                            <Box className={styles.targetWrapper}>
+                            <Box
+                                hidden={props.isStageHidden}
+                                className={styles.targetWrapper}
+                            >
                                 <TargetPane
                                     stageSize={stageSize}
                                     vm={vm}
@@ -596,7 +603,8 @@ GUIComponent.propTypes = {
     closePromptArea: PropTypes.func,
     errorText: PropTypes.string,
     showErrorTips: PropTypes.bool,
-    setProjectTitle: PropTypes.func
+    setProjectTitle: PropTypes.func,
+    isStageHidden: PropTypes.bool,
 };
 GUIComponent.defaultProps = {
     backpackHost: null,
