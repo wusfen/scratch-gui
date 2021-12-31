@@ -778,6 +778,7 @@ class TaskBar extends React.Component{
                                 src={currentVideoSrc}
                                 controls={'controls'}
                                 autoPlay
+                                playsInline
                                 ref={r => {
                                     this.videoRef = r;
                                 }}
