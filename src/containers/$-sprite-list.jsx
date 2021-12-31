@@ -4,7 +4,7 @@ import bindAll from 'lodash.bindall';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {intlShape, injectIntl} from 'react-intl';
+import {defineMessages, intlShape, injectIntl} from 'react-intl';
 import Dialog from '../components/dialog/index.jsx';
 
 import {
@@ -33,6 +33,39 @@ import styles from './$-sprite-list.css';
 
 import StageSelector from '../containers/stage-selector.jsx';
 import Scroll from '../components/scroll/index.jsx';
+
+import ActionMenu from '../components/action-menu/action-menu.jsx';
+import fileUploadIcon from '../components/action-menu/icon--file-upload.svg';
+import paintIcon from '../components/action-menu/icon--paint.svg';
+import spriteIcon from '../components/action-menu/add.svg';
+import surpriseIcon from '../components/action-menu/icon--surprise.svg';
+import searchIcon from '../components/action-menu/icon--search.svg';
+import {isRtl} from 'scratch-l10n';
+
+
+const messages = defineMessages({
+    addSpriteFromLibrary: {
+        id: 'paint.selectMode.select',
+        description: 'Button to add a sprite in the target pane from library',
+        defaultMessage: 'Choose a Sprite'
+    },
+    addSpriteFromPaint: {
+        id: 'gui.spriteSelector.addSpriteFromPaint',
+        description: 'Button to add a sprite in the target pane from paint',
+        defaultMessage: 'Paint'
+    },
+    addSpriteFromSurprise: {
+        id: 'gui.spriteSelector.addSpriteFromSurprise',
+        description: 'Button to add a random sprite in the target pane',
+        defaultMessage: 'Surprise'
+    },
+    addSpriteFromFile: {
+        id: 'gui.costumeTab.fileUpload',
+        description: 'Button to add a sprite in the target pane from file',
+        defaultMessage: 'Upload'
+    }
+});
+
 
 class TargetPane$ extends React.Component {
     constructor (props) {
@@ -167,6 +200,7 @@ class TargetPane$ extends React.Component {
             .then(this.handleActivateBlocksTab);
     }
     handlePaintSpriteClick () {
+        window.dispatchEvent(new Event('paintSprite'));
         const formatMessage = this.props.intl.formatMessage;
         const emptyItem = emptySprite(
             formatMessage(sharedMessages.sprite, {index: 1}),
@@ -340,6 +374,9 @@ class TargetPane$ extends React.Component {
             onReceivedBlocks,
             onShowImporting,
             workspaceMetrics,
+
+            intl,
+
             ...componentProps
         } = this.props;
         /* eslint-disable no-unused-vars, max-len */
@@ -388,6 +425,40 @@ class TargetPane$ extends React.Component {
                         onSelectSprite={this.handleSelectSprite}
                     />
                 </Scroll>
+
+                <ActionMenu
+                    className={styles.addButton}
+                    img={spriteIcon}
+                    moreButtons={[
+                        {
+                            title: intl.formatMessage(messages.addSpriteFromLibrary),
+                            img: searchIcon,
+                            onClick: onNewSpriteClick
+                        },
+                        {
+                            title: intl.formatMessage(messages.addSpriteFromPaint),
+                            img: paintIcon,
+                            onClick: this.handlePaintSpriteClick
+                        },
+                        {
+                            title: intl.formatMessage(messages.addSpriteFromSurprise),
+                            img: surpriseIcon,
+                            onClick: this.handleSurpriseSpriteClick
+                        },
+                        {
+                            title: intl.formatMessage(messages.addSpriteFromFile),
+                            img: fileUploadIcon,
+                            onClick: this.handleFileUploadClick,
+                            fileAccept: '.svg, .png, .bmp, .jpg, .jpeg, .sprite2, .sprite3, .gif',
+                            fileChange: this.handleSurpriseSpriteClick,
+                            fileInput: this.setFileInput,
+                            fileMultiple: true
+                        }
+                    ]}
+                    title={intl.formatMessage(messages.addSpriteFromLibrary)}
+                    tooltipPlace={isRtl(intl.locale) ? 'right' : 'left'}
+                    onClick={onNewSpriteClick}
+                />
             </div>
 
         );
