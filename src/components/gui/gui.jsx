@@ -338,9 +338,9 @@ const GUIComponent = props => {
                     >
                         {/* 舞台区 */}
                         <Box
-                            hidden={props.isStageHidden}
                             className={
                                 classNames(
+                                    {[styles.isStageHidden]: props.isStageHidden},
                                     styles.stageAndTargetWrapper,
                                     styles[stageSize]
                                 )
