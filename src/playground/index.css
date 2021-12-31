@@ -115,6 +115,7 @@ div[class*="paint-editor_editor-container-top"] {
     transform: scale(0.85);
     transform-origin: top left;
 }
+
 div[class*="paint-editor_top-align-row"] {
     min-width: 20rem;
 }
@@ -142,6 +143,17 @@ span[class*="paint-editor_bitmap-button"] {
 }
 span[class*="paint-editor_bitmap-button"] img {
     display: none;
+}
+/* 移动端绘制区域样式 */
+@media screen and (max-height: $mobile-max-height) {
+    div[class*="paint-editor_editor-container-top"] {
+        margin-top: 0;
+    }
+
+    div[class*="paint-editor_mode-selector"] {
+        flex-direction: row;
+        width: 6rem;
+    }
 }
 
 /* scratchCommentTextarea */
