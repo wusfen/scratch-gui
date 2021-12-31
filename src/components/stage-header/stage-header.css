@@ -21,12 +21,17 @@
     justify-content: space-between;
     flex-shrink: 0;
     align-items: center;
-
     margin: 0.625rem 0;
+}
+.stage-menu-wrapper>.full-stage-btn{
+    display: none;
 }
 @media screen and (max-height: $mobile-max-height) {
     .stage-menu-wrapper {
         margin: 0.2rem 0;
+    }
+    .stage-menu-wrapper>.full-stage-btn{
+        display: block;
     }
 }
 
