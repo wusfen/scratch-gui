@@ -35,10 +35,10 @@ body {
     top: 0;
     right: 0rem;
 }
-.stage-only [class*="stage-header_stage-menu-wrapper"] {
+.stage-only [class*="_stage-menu-wrapper"] {
     margin: 0.5rem;
 }
-.stage-only [class*="stage-header_stage-menu-wrapper"] button {
+.stage-only [class*="_stage-menu-wrapper"] button {
     border-radius: 99px;
 }
 

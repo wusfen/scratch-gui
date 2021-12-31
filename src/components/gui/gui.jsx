@@ -217,6 +217,11 @@ const GUIComponent = props => {
                         <Alerts className={styles.alertsContainer} />
                     ) : null}
                 </StageWrapper>
+                <StageHeader
+                    stageSize={stageSize}
+                    stageMode={stageMode}
+                    vm={vm}
+                />
                 <Keyboard
                     vm={vm}
                     isPlayerOnly={isPlayerOnly}
