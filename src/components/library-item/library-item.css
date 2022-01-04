@@ -25,32 +25,7 @@
     background: #FFE9AC;
 }
 
-@media screen and (max-height: $mobile-max-height) {
-    .library-item{
-        flex: 1;
-        height: 45%;
-        max-width: 22%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        flex-basis: 9.38rem;
-        position: relative;
-        margin: $space;
-        padding: 1rem 1rem 0 1rem;
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        color: $text-primary;
-        border-width: 0.125rem;
-        border-style: solid;
-        border-color: $ui-black-transparent;
-        border-radius: $space;
-        text-align: center;
-        cursor: pointer;
-        box-shadow: 0rem 0.06rem 0.53rem 0rem rgb(0 0 0 / 18%);
-        border: none;
-        background: #FFE9AC;
-    }
-}
+
 
 .library-item-extension {
     align-self: stretch;
@@ -260,4 +235,45 @@
 
 [dir="rtl"] .coming-soon-text {
     transform: translate(calc(-2 * $space), calc(2 * $space));
+}
+
+@media screen and (max-height: $mobile-max-height) {
+    .library-item{
+        flex: 1;
+        height: 45%;
+        max-width: 22%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        flex-basis: 9.38rem;
+        position: relative;
+        margin: $space;
+        padding: 1rem 1rem 0 1rem;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: $text-primary;
+        border-width: 0.125rem;
+        border-style: solid;
+        border-color: $ui-black-transparent;
+        border-radius: $space;
+        text-align: center;
+        cursor: pointer;
+        box-shadow: 0rem 0.06rem 0.53rem 0rem rgb(0 0 0 / 18%);
+        border: none;
+        background: #FFE9AC;
+    }
+    .featured-item {
+        flex: 1;
+        flex-basis: 9.37rem;
+        width: 9.37rem;
+        height: 11.25rem;
+        margin: 1.25rem;
+        overflow: hidden;
+        padding: 0;
+        box-shadow: 0rem 0.06rem 0.53rem 0rem rgb(0 0 0 / 18%);
+        border-radius: 0.63rem;
+        border: none;
+        background: #fff;
+        max-width: 9.37rem;
+    }
 }

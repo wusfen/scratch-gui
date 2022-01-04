@@ -122,7 +122,7 @@
 
     .library-scroll-grid{
         width: 38rem;
-        padding: 0;
+        padding: 0 2.5rem;
         margin-left: 0;
     }
 }
