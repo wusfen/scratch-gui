@@ -212,6 +212,6 @@ $sides: 20rem;
     .mobile-close-btn>img{
         width: 3rem;
         height: 3rem;
-        transform: rotate(45deg);
+        /* transform: rotate(45deg); */
     }
 }
