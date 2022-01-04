@@ -210,8 +210,8 @@ $sides: 20rem;
         top: 1rem;
     }
     .mobile-close-btn>img{
-        width: 3rem;
-        height: 3rem;
+        width: 2rem;
+        height: 2rem;
         /* transform: rotate(45deg); */
     }
 }
