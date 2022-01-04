@@ -221,7 +221,9 @@ class TaskBar extends React.Component{
         if (count > this.tipVideos.length) { // 最多超过2次后的点击固定都是最后一个视频
             count = this.tipVideos.length;
         }
+
         this.openTipVideo(count, count);
+
         dispatchEvent(new Event('clickTips')); // 更新声音停止不了的问题 author：hwh
         dispatchEvent(new Event('clickVideoTips')); // 点击视频提示
     }
@@ -310,6 +312,8 @@ class TaskBar extends React.Component{
     }
 
     closeVideoContent = () => { // 复原 + 取消拖动事件
+        this.videoRef?.pause();
+
         this.setState({
             style: {
                 left: '',
@@ -339,6 +343,10 @@ class TaskBar extends React.Component{
     }
 
     handleOpenVideoContent = () => {
+        this.setState({
+            isVideoContentOpen: !this.state.isVideoContentOpen
+        });
+
         if (!this.state.isVideoContentOpen) {
             this.setState({
                 tipsShow: false
@@ -348,9 +356,6 @@ class TaskBar extends React.Component{
         if (this.state.isVideoContentOpen) {
             this.closeVideoContent();
         }
-        this.setState({
-            isVideoContentOpen: !this.state.isVideoContentOpen
-        });
     }
 
     videoPlayFunc = () => {
@@ -404,12 +409,16 @@ class TaskBar extends React.Component{
             dispatchEvent(new Event('openErrorTips'));
             return;
         }
+
         this.setState({
             currentVideoSrc: this.tipVideos[index - 1],
             currentTipVideoIndex: index,
             currentFuncIndex: funcIndex,
             alreadyClickVideo: this.state.alreadyClickVideo.concat([index]) // 收集已经点击过的视频，已经点过的就可以跳级点击视频
+        }, e => {
+            this.videoRef?.play();
         });
+
         dispatchEvent(new Event('clickVideoTips')); // 点击视频提示
     }
 
@@ -781,7 +790,7 @@ class TaskBar extends React.Component{
                                 src={currentVideoSrc}
                                 controls={'controls'}
                                 autoPlay
-                                xxxplaysInline
+                                playsInline
                                 ref={r => {
                                     this.videoRef = r;
                                 }}
