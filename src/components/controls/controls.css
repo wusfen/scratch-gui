@@ -55,10 +55,3 @@
     background: #32c5ff;
     box-shadow: none;
 }
-
-/* TODO 判断 mode=coursePlayer 时显示 */
-@media screen and (max-width: 768px) {
-    .skip-button {
-        display: none;
-    }
-}
