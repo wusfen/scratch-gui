@@ -53,7 +53,6 @@ class PromptArea extends React.Component{
         bridge.on('resume', e => {
             this.videoRef?.play();
         });
-        this.initTouchAndMove(); // 初始化缩放和拖拽事件
         this.removeTouchAndMove = this.initTouchAndMove(); // 初始化缩放和拖拽事件
     }
 
