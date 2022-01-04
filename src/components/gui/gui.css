@@ -381,7 +381,7 @@ $fade-out-distance: 0.9375rem;
 
 .menu-bar-container {
     position: absolute;
-    z-index: 200;
+    z-index: 20;
     top: 1.4rem;
     right: 1.4rem;
 }
