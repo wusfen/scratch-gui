@@ -554,6 +554,8 @@ class TaskBar extends React.Component{
                 } else if ((e.clientY - diffY) > (window.innerHeight - dragObj.offsetHeight)) {
                     dragObj.style.top = `${window.innerHeight - dragObj.offsetHeight}px`;
                 }
+            } else {
+                alert('error', dragging);
             }
         };
         const handleEnd = event => { // 拖动结束
