@@ -146,4 +146,9 @@ export default defineMessages({
         description: 'Tag for filtering a library for life',
         id: 'gui.libraryTags.life'
     },
+    festival: {
+        defaultMessage: 'festival',
+        description: 'Tag for filtering a library for festival',
+        id: 'gui.libraryTags.festival'
+    },
 });

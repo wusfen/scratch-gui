@@ -1232,64 +1232,6 @@
         "blocks": {}
     },
     {
-        "name": "书本",
-        "tags": [
-            "property"
-        ],
-        "isStage": false,
-        "variables": {},
-        "costumes": [
-            {
-                "tags": [
-                    "property"
-                ],
-                "assetId": "77307143b4a8df05f5eeb8c0977d177b",
-                "name": "数学",
-                "bitmapResolution": 2,
-                "md5ext": "77307143b4a8df05f5eeb8c0977d177b.png",
-                "dataFormat": "png",
-                "rotationCenterX": 79.5,
-                "rotationCenterY": 86
-            },
-            {
-                "tags": [
-                    "property"
-                ],
-                "assetId": "8b779f49877a00619a8ac1563ad3e28f",
-                "name": "英语",
-                "bitmapResolution": 2,
-                "md5ext": "8b779f49877a00619a8ac1563ad3e28f.png",
-                "dataFormat": "png",
-                "rotationCenterX": 79.5,
-                "rotationCenterY": 86
-            },
-            {
-                "tags": [
-                    "property"
-                ],
-                "assetId": "fa616f5339657eb7e89a5dae2555f094",
-                "name": "语文",
-                "bitmapResolution": 2,
-                "md5ext": "fa616f5339657eb7e89a5dae2555f094.png",
-                "dataFormat": "png",
-                "rotationCenterX": 79.5,
-                "rotationCenterY": 86
-            }
-        ],
-        "sounds": [
-            {
-                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
-                "name": "pop",
-                "dataFormat": "wav",
-                "format": "",
-                "rate": 44100,
-                "sampleCount": 1032,
-                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
-            }
-        ],
-        "blocks": {}
-    },
-    {
         "name": "披萨",
         "tags": [
             "property"
@@ -1354,52 +1296,6 @@
                 "dataFormat": "png",
                 "rotationCenterX": 128,
                 "rotationCenterY": 128
-            }
-        ],
-        "sounds": [
-            {
-                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
-                "name": "pop",
-                "dataFormat": "wav",
-                "format": "",
-                "rate": 44100,
-                "sampleCount": 1032,
-                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
-            }
-        ],
-        "blocks": {}
-    },
-    {
-        "name": "棋子",
-        "tags": [
-            "property"
-        ],
-        "isStage": false,
-        "variables": {},
-        "costumes": [
-            {
-                "tags": [
-                    "property"
-                ],
-                "assetId": "0b2befbdb3e20fd692559cda56b7247d",
-                "name": "白棋",
-                "bitmapResolution": 2,
-                "md5ext": "0b2befbdb3e20fd692559cda56b7247d.png",
-                "dataFormat": "png",
-                "rotationCenterX": 35.5,
-                "rotationCenterY": 36.5
-            },
-            {
-                "tags": [
-                    "property"
-                ],
-                "assetId": "cd12f5d118cef8368f9692b1508e2e1c",
-                "name": "黑棋",
-                "bitmapResolution": 2,
-                "md5ext": "cd12f5d118cef8368f9692b1508e2e1c.png",
-                "dataFormat": "png",
-                "rotationCenterX": 35.5,
-                "rotationCenterY": 36.5
             }
         ],
         "sounds": [
@@ -1610,7 +1506,7 @@
         "blocks": {}
     },
     {
-        "name": "锤子",
+        "name": "锤子2",
         "tags": [
             "property"
         ],
@@ -1622,7 +1518,7 @@
                     "property"
                 ],
                 "assetId": "418b897ab302caabbd61b95bddffa244",
-                "name": "锤子",
+                "name": "锤子2",
                 "bitmapResolution": 2,
                 "md5ext": "418b897ab302caabbd61b95bddffa244.png",
                 "dataFormat": "png",
