@@ -36,18 +36,6 @@
         "rotationCenterY": 333.5
     },
     {
-        "name": "足球场",
-        "tags": [
-            "life"
-        ],
-        "assetId": "81909c7f0d7a4edda7c35b55a669cb62",
-        "bitmapResolution": 1,
-        "dataFormat": "png",
-        "md5ext": "81909c7f0d7a4edda7c35b55a669cb62.png",
-        "rotationCenterX": 593,
-        "rotationCenterY": 333.5
-    },
-    {
         "name": "山河上空",
         "tags": [
             "natural"
