@@ -174,7 +174,7 @@
     /* overflow: visible; */
     /* max-width: 320px; */
     width: 16rem;
-    z-index: 41;
+    z-index: 201;
     /* transform: translate(calc(4.375rem - 1px), 0rem) !important; */
     transform: translate(calc(4.59rem - 1px), 0rem) !important;
     border: 0;
@@ -209,7 +209,7 @@
 
 /* 在代码栏中的初始大小不变，只是拖出来之后才自动放大 */
 .blocks :global(.blocklyFlyout) :global(.blocklyText) {
-    font-size: 13.5pt;
+    /* font-size: 13.5pt; */
 }
 .blocks :global(.blocklyText) {
     font-size: 15pt;
