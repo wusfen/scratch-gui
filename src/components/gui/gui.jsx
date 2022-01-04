@@ -351,6 +351,9 @@ const GUIComponent = props => {
                                 onProjectTelemetryEvent={onProjectTelemetryEvent}
                                 onStartSelectingFileUpload={onStartSelectingFileUpload}
                             ></TaskBar>
+
+
+                            {/* 舞台区提示 */}
                             {showErrorTips && <div
                                 className={styles.errorTips}
                             >

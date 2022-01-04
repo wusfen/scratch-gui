@@ -358,9 +358,10 @@ $fade-out-distance: 0.9375rem;
 
 .stage-and-target-wrapper .warning-border {
     position: absolute;
-    width: 22.31rem;
-    height: 39.69rem;
-    top: 2.47rem;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
     border-radius: 0.31rem;
     border: 0.44rem solid rgba(255, 56, 123, 0.5);
     z-index: 100;
