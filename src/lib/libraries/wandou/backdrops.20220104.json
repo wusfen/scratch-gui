@@ -2,7 +2,7 @@
     {
         "name": "中秋节",
         "tags": [
-            "节日"
+            "festival"
         ],
         "assetId": "334dbb0a967ad88711d6d38fe5508aad",
         "bitmapResolution": 1,
@@ -14,7 +14,7 @@
     {
         "name": "元宵节",
         "tags": [
-            "节日"
+            "festival"
         ],
         "assetId": "23f59be59ca478ff4a240a87f664a9a8",
         "bitmapResolution": 1,
@@ -26,7 +26,7 @@
     {
         "name": "春节",
         "tags": [
-            "节日"
+            "festival"
         ],
         "assetId": "bcacbfea15288e6b813873a9b6e31b99",
         "bitmapResolution": 1,
@@ -38,7 +38,7 @@
     {
         "name": "端午节",
         "tags": [
-            "节日"
+            "festival"
         ],
         "assetId": "21b00d740f6d5992692f46c24d3e80cc",
         "bitmapResolution": 1,
