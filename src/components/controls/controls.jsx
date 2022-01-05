@@ -72,8 +72,9 @@ const Controls = function (props) {
                 onClick={onStopAllClickHandle}
             />
 
+            {/* TODO 移至 menu-bar */}
             <button
-                hidden={!(isSkipButtonShow)}
+                hidden={!(isPlayerOnly && isSkipButtonShow)}
                 className={classNames({
                     [styles.button]: true,
                     [styles.skipButton]: true,
