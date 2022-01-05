@@ -46,7 +46,7 @@ html {
         display: none !important;
     }
 }
-@media screen and not (max-height: $mobile-max-height) {
+@media screen and (min-height: calc($mobile-max-height + 1px)) {
     :global(.xs-show) {
         display: none !important;
     }
