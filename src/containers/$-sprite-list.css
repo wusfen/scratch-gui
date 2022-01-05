@@ -1,5 +1,7 @@
 .list {
     flex: none;
+    position: relative;
+    z-index: 20;
     width: 5.25rem;
     margin-left: 0.1rem;
     background: #b9ebff;
