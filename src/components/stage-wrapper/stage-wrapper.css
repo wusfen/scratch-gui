@@ -5,6 +5,7 @@
 .stage-wrapper {
     flex: 1;
     display: flex;
+    justify-content: center;
 }
 .stage-wrapper * {
     box-sizing: border-box;

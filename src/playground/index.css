@@ -79,10 +79,11 @@ button {
 button:active {
     transform: scale(0.95);
     opacity: 0.8;
-    transition: 0;
+    transition: 0s;
 }
 button:not(:active) {
     transition: 0.3s;
+    transition-property: transform, opacity;
 }
 
 /* ================ */
