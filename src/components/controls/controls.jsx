@@ -34,7 +34,7 @@ const Controls = function (props) {
         onGreenFlagClick,
         onStopAllClick,
         turbo,
-        skipButtonShow,
+        isSkipButtonShow,
         isPlayerOnly,
         ...componentProps
     } = props;
@@ -73,7 +73,7 @@ const Controls = function (props) {
             />
 
             <button
-                hidden={!(skipButtonShow)}
+                hidden={!(isSkipButtonShow)}
                 className={classNames({
                     [styles.button]: true,
                     [styles.skipButton]: true,
@@ -112,7 +112,7 @@ Controls.propTypes = {
     onStopAllClick: PropTypes.func.isRequired,
     turbo: PropTypes.bool,
     isPlayerOnly: PropTypes.bool,
-    skipButtonShow: PropTypes.bool
+    isSkipButtonShow: PropTypes.bool
 };
 
 Controls.defaultProps = {

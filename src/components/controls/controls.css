@@ -2,6 +2,7 @@
 
 .controls-container {
     display: flex;
+    margin-left: auto;
 }
 
 .button {

@@ -17,7 +17,7 @@ class Controls extends React.Component {
         super(props);
         this.state = {
             guide: false,
-            skipButtonShow: false
+            isSkipButtonShow: false
         };
         bindAll(this, [
             'handleGreenFlagClick',
@@ -61,12 +61,12 @@ class Controls extends React.Component {
         window.removeEventListener('runCode', this.handleGreenFlagClick);
     }
 
-    // 纯玩模式下，30秒后出现跳过按钮
+    // 在 app 中只玩模式下，30秒后出现跳过按钮
     showSkipButtonFunc () {
-        if (param('mode') === 'coursePlayer') {
+        if (/vipThinkStudent/i.test(navigator.userAgent)) {
             const timer = setTimeout(() => {
                 this.setState({
-                    skipButtonShow: true
+                    isSkipButtonShow: true
                 });
                 clearTimeout(timer);
             }, 30000);
@@ -149,7 +149,7 @@ class Controls extends React.Component {
 
     }
     render () {
-        const {skipButtonShow} = this.state;
+        const {isSkipButtonShow} = this.state;
         const {
             vm, // eslint-disable-line no-unused-vars
             isStarted, // eslint-disable-line no-unused-vars
@@ -170,7 +170,7 @@ class Controls extends React.Component {
                 turbo={turbo}
                 onGreenFlagClick={this.handleGreenFlagClick}
                 onStopAllClick={this.handleStopAllClick}
-                skipButtonShow={skipButtonShow}
+                isSkipButtonShow={isSkipButtonShow}
             />
         );
     }

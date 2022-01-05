@@ -23,18 +23,18 @@
     align-items: center;
     margin: 0.625rem 0;
 }
-.stage-menu-wrapper>.full-stage-btn{
+.stage-menu-wrapper > .full-stage-btn {
     display: none;
 }
-.stage-menu-wrapper > *:not(:first-child) {
-    margin-left: 0.25rem;
+.stage-menu-wrapper > *:not(:last-child) {
+    margin-right: 0.25rem;
 }
 
 @media screen and (max-height: $mobile-max-height) {
     .stage-menu-wrapper {
         margin: 0.2rem 0;
     }
-    .stage-menu-wrapper>.full-stage-btn{
+    .stage-menu-wrapper > .full-stage-btn {
         display: block;
     }
 }

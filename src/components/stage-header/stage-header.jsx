@@ -167,7 +167,7 @@ const StageHeaderComponent = function (props) {
                             title={props.intl.formatMessage(messages.fullscreenControl)}
                         />
                     </button>
-                    {/* 显示 */}
+                    {/* 显示/隐藏 角色 */}
                     {
                         !vm.editingTarget?.isStage && vm.editingTarget?.visible ?
                             <button
