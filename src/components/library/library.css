@@ -99,6 +99,7 @@
     /* 搜索框 */
     .filter-bar{
         width: 100%;
+        padding-right: 2rem;
     }
     .filter-bar-item {
         margin-top: 0.75rem;

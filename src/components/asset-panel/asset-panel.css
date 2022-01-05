@@ -13,6 +13,7 @@
 
     background: $ui-primary;
     color: $text-primary;
+
 }
 
 @media screen and (max-height: $mobile-max-height) {
@@ -24,6 +25,7 @@
       right: 0;
       bottom: 0;
       z-index: $z-index-modal;
+      padding-left: calc(env(safe-area-inset-left, 20px) * 0.5);
     }
 }
 
