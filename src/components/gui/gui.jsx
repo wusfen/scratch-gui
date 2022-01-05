@@ -162,6 +162,7 @@ const GUIComponent = props => {
         // eslint-disable-next-line no-unused-vars
         setProjectTitle,
         onResizeStage,
+        isStageHidden,
         ...componentProps
     } = omit(props, 'dispatch');
     if (children) {

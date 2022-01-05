@@ -787,6 +787,7 @@ class Blocks extends React.Component {
             autoClose,
             setAutoClose,
             setVisible,
+            isStageHidden,
             ...props
         } = this.props;
         /* eslint-enable no-unused-vars */

@@ -71,17 +71,17 @@ class TaskBar extends React.Component{
             },
             {
                 funcName: '提示1',
-                func: index => this.openTipVideo(index, 1),
+                func: index => this.setTipVideoAndPlay(index, 1),
                 show: () => this.tipVideos.length >= 1
             },
             {
                 funcName: '提示2',
-                func: index => this.openTipVideo(index, 2),
+                func: index => this.setTipVideoAndPlay(index, 2),
                 show: () => this.tipVideos.length >= 2
             },
             {
                 funcName: '提示3',
-                func: index => this.openTipVideo(index, 3),
+                func: index => this.setTipVideoAndPlay(index, 3),
                 show: () => this.tipVideos.length >= 3
             },
             // {
@@ -207,22 +207,25 @@ class TaskBar extends React.Component{
     }
 
     openAndAutoPlayTipVideo = () => {
-        // eslint-disable-next-line no-debugger
+        if (!this.tipVideos.length) { // 没有提示视频，无法自动播放
+            return;
+        }
+        this.setState({
+            isVideoContentOpen: true,
+        });
+
         this.initVideoMove();
         if (this.audio) {
             this.audio.pause();
         }
 
-        if (!this.tipVideos.length) { // 没有提示视频，无法自动播放
-            return;
-        }
         const {currentTipVideoIndex} = this.state;
         let count = currentTipVideoIndex + 1;
         if (count > this.tipVideos.length) { // 最多超过2次后的点击固定都是最后一个视频
             count = this.tipVideos.length;
         }
 
-        this.openTipVideo(count, count);
+        this.setTipVideoAndPlay(count, count);
 
         dispatchEvent(new Event('clickTips')); // 更新声音停止不了的问题 author：hwh
         dispatchEvent(new Event('clickVideoTips')); // 点击视频提示
@@ -312,6 +315,10 @@ class TaskBar extends React.Component{
     }
 
     closeVideoContent = () => { // 复原 + 取消拖动事件
+        this.setState({
+            isVideoContentOpen: false
+        });
+
         this.videoRef?.pause();
 
         this.setState({
@@ -342,11 +349,7 @@ class TaskBar extends React.Component{
         }
     }
 
-    handleOpenVideoContent = () => {
-        this.setState({
-            isVideoContentOpen: !this.state.isVideoContentOpen
-        });
-
+    handleToggleVideoContent = () => {
         if (!this.state.isVideoContentOpen) {
             this.setState({
                 tipsShow: false
@@ -395,7 +398,7 @@ class TaskBar extends React.Component{
         });
     }
 
-    openTipVideo = (funcIndex, index) => {
+    setTipVideoAndPlay = (funcIndex, index) => {
         if (!this.tipVideos[index - 1]) {
             // 提示没有该提示视频
             window.editorErrorTipText = `对不起，没有该${this.isExplain ? '讲解' : '提示'}视频哦`;
@@ -773,7 +776,7 @@ class TaskBar extends React.Component{
                                     draggable={false}
                                     src={isVideoContentOpen ? close : video}
                                     alt="video"
-                                    onClick={this.handleOpenVideoContent}
+                                    onClick={this.handleToggleVideoContent}
                                 />
                             </div>
                         </div>

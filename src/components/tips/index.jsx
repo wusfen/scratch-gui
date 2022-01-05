@@ -1,3 +1,5 @@
+console.error('已废弃？');
+
 /* eslint-disable no-invalid-this */
 import React from 'react';
 import PropTypes from 'prop-types';
