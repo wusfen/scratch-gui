@@ -115,7 +115,7 @@
         "@babel/preset-react": "^7.0.0",
         "@commitlint/cli": "^11.0.0",
         "@commitlint/config-conventional": "^11.0.0",
-        "@wushufen/commit-lint": "1.0.6",
+        "@wushufen/commit-lint": "1.0.7",
         "babel-core": "7.0.0-bridge.0",
         "babel-eslint": "^10.0.1",
         "babel-loader": "^8.0.4",
