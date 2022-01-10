@@ -488,8 +488,10 @@ class Blocks extends React.Component {
         // fix: 移动 block 后，与其关联的 comment 坐标没有更新
         this.workspace.addChangeListener(this._fixMoveBlock = e => {
             if (e.type === 'move') {
+                // 从组分离和拼合时分别无旧坐标和新坐标
+                if (!e.oldCoordinate || !e.newCoordinate) return;
                 // ！！切换角色时也会触发，其旧坐标为0，以此排除非手动移动
-                if (e.oldCoordinate?.x === 0 && e.oldCoordinate?.y === 0) return;
+                if (e.oldCoordinate.x === 0 && e.oldCoordinate.y === 0) return;
 
                 const target = this.props.vm.editingTarget;
                 const block = target.blocks._blocks[e.blockId];
