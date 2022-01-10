@@ -54,6 +54,7 @@ class Counter {
         switch (this.type) {
         case counterType.JSON_ERROR:
             removeEventListener('运行时判断不正确', this.counterAdd);
+            removeEventListener('运行时判断正确', this.resetCounter);
             removeEventListener('clickVideoTips', this.resetCounter);
             break;
         case counterType.SUBMIT_ERROR:

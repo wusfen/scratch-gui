@@ -58,7 +58,7 @@ class Component extends React.Component{
         ]);
 
         for (const status in statusMap) {
-            addEventListener(`submit:${status}`, e => {
+            this.addEventListener(`submit:${status}`, e => {
                 this.setState({
                     isShow: true,
                     status: status
@@ -79,7 +79,7 @@ class Component extends React.Component{
                 }
 
             });
-            addEventListener(`error`, e => {
+            this.addEventListener(`error`, e => {
                 this.setState({
                     isShow: false
                 });

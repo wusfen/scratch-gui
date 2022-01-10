@@ -72,7 +72,7 @@ class Tips extends React.Component{
         });
 
         this.audio = playTipAudio(tipAudio);
-        this.timeOutEvent = setTimeout(() => {
+        this.timeOutEvent = this.setTimeout(() => {
             this.setState({
                 showState: false
             });

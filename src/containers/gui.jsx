@@ -203,12 +203,12 @@ class GUI extends React.Component {
             }
         }
         if (videoSrc){ // 有初始引导
-            addEventListener('loaderUnmount', () => { // 等待工程加载完毕
+            this.addEventListener('loaderUnmount', () => { // 等待工程加载完毕
                 this.setState({promptAreaShow: true});
             });
         } else {
             videoSrc = '';
-            addEventListener('projectLoadSucceedLoaderUnmount', () => { // 等待工程加载完毕
+            this.addEventListener('projectLoadSucceedLoaderUnmount', () => { // 等待工程加载完毕
                 window.dispatchEvent(new Event('noVideoGuide'));
             });
         }

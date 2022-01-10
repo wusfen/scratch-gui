@@ -30,7 +30,7 @@ class Component extends React.Component{
         ]);
 
         // fix: 鼠标按下后停止全部脚本后，虚拟键盘隐藏监听不到弹起
-        addEventListener('mouseup', e => {
+        this.addEventListener('mouseup', e => {
             if (this.state.currentKey) {
                 setTimeout(() => {
                     this.upKey(this.state.currentKey);

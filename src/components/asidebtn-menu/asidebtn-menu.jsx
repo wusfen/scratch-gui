@@ -17,8 +17,8 @@ class Component extends React.Component{
     }
 
     componentDidMount (){
-        document.addEventListener('mouseup', this.mouseUp, true);
-        addEventListener('submit:已提交错误', e => {
+        this.addEventListener(document, 'mouseup', this.mouseUp, true);
+        this.addEventListener('submit:已提交错误', e => {
             document.querySelector('#cleanUpButton').click();
         });
     }

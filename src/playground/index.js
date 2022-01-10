@@ -1,3 +1,4 @@
+import '../lib/react.prototype.js';
 import './ajax.config.js';
 import './bridge.js';
 import './bi.js';

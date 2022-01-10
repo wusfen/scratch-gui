@@ -224,11 +224,11 @@ class Blocks extends React.Component {
             this.setLocale();
         }
 
-        addEventListener('updateToolBox', () => {
+        this.addEventListener('updateToolBox', () => {
             this.requestToolboxUpdate();
         });
 
-        addEventListener('updateWorkspace_', () => {
+        this.addEventListener('updateWorkspace_', () => {
             this.props.vm.refreshWorkspace();
             this.requestToolboxUpdate();
         });

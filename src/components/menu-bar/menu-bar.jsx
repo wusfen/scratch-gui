@@ -228,38 +228,37 @@ class MenuBar extends React.Component {
         this.exiting = false;
         this.skiping = false;
         this.worksType = '';
+
         // 30秒显示跳过按钮
-        setTimeout(() => {
+        this.setTimeout(() => {
             this.setState({
                 isShowSkipButton: true,
             });
         }, state._timeout * 1000);
         // TODO 提交保存另存为逻辑单独文件
-        addEventListener('submit-result-dialog:跳过退出', async e => {
+        this.addEventListener('submit-result-dialog:跳过退出', async e => {
             this.skiping = true;
             await this.autoSave();
             this.skiping = false;
             window.bridge.emit('exitEditor', {type: 'skip', interaction_passOrNot: window.subjectPassOrNot});
         });
-
-        addEventListener('运行时判断正确', e => {
+        this.addEventListener('运行时判断正确', e => {
             this.setState({
                 isShowPublishButtonBling: true,
             });
             this.audio = new Audio(require('../../assets/sounds/ti-jiao-an-niu.mp3')).play();
         });
-        addEventListener('clickTips', e => {
+        this.addEventListener('clickTips', e => {
             console.log('clickTips');
             Audio.audio.pause();
         });
-        addEventListener('运行时判断不正确', e => {
+        this.addEventListener('运行时判断不正确', e => {
             this.setState({
                 isShowPublishButtonBling: false,
             });
         });
         // 30秒自动保存一次
-        // TODO 太耗资源
-        addEventListener('projectLoadSucceed', e => {
+        this.addEventListener('projectLoadSucceed', e => {
             var timer = setInterval(() => {
                 if (!(/^(course)$/.test(state.mode) && state.id && state.token)) {
                     console.warn('state.mode:', state.mode);

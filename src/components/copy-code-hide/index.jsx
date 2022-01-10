@@ -251,7 +251,7 @@ class Component extends React.Component {
             index: 0,
         };
 
-        addEventListener(`menu:hideCode`, e => {
+        this.addEventListener(`menu:hideCode`, e => {
             this.initState();
             this.setState({
                 isShow: true,

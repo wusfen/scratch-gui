@@ -196,7 +196,7 @@ class TaskBar extends React.Component{
             });
         }
         this.audio = playTipAudio(tipAudio);
-        const timer = setTimeout(() => { // 如果一直没有点击展开视频提示，那么动效在播放10次后关闭
+        const timer = this.setTimeout(() => { // 如果一直没有点击展开视频提示，那么动效在播放10次后关闭
             if (this.state.tipsShow) {
                 this.setState({
                     tipsShow: false

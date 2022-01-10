@@ -64,7 +64,7 @@ class Controls extends React.Component {
     // 在 app 中只玩模式下，30秒后出现跳过按钮
     showSkipButtonFunc () {
         if (/vipThinkStudent/i.test(navigator.userAgent)) {
-            const timer = setTimeout(() => {
+            const timer = this.setTimeout(() => {
                 this.setState({
                     isSkipButtonShow: true
                 });
@@ -78,7 +78,7 @@ class Controls extends React.Component {
     }
 
     initGuide () {
-        window.addEventListener(`noAction:${timerType.CODE}:${CODE_TIME_1}`, () => {
+        this.addEventListener(`noAction:${timerType.CODE}:${CODE_TIME_1}`, () => {
             console.log('71秒代码区域无变化');
             // 显示引导提示
             if (!this.state.guide) {
@@ -88,7 +88,7 @@ class Controls extends React.Component {
                     guide: true
                 });
 
-                setTimeout(() => {
+                this.setTimeout(() => {
                     this.setState({
                         guide: false
                     });
