@@ -4,9 +4,9 @@ import React from 'react';
 import VM from 'scratch-vm';
 import {connect} from 'react-redux';
 
-import ControlsComponent from '../components/running/index.jsx';
+import RunningComponent from '../components/running/index.jsx';
 
-class Controls extends React.Component {
+class Running extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
@@ -46,7 +46,6 @@ class Controls extends React.Component {
     }
     render () {
         const {
-            vm, // eslint-disable-line no-unused-vars
             isStarted, // eslint-disable-line no-unused-vars
             projectRunning,
             turbo,
@@ -60,7 +59,7 @@ class Controls extends React.Component {
             dispatchEvent(new Event('projectRunFinish'));
         }
         return (
-            <ControlsComponent
+            <RunningComponent
                 {...props}
                 active={projectRunning}
                 turbo={turbo}
@@ -71,7 +70,7 @@ class Controls extends React.Component {
     }
 }
 
-Controls.propTypes = {
+Running.propTypes = {
     isStarted: PropTypes.bool.isRequired,
     projectRunning: PropTypes.bool.isRequired,
     turbo: PropTypes.bool.isRequired,
@@ -86,4 +85,4 @@ const mapStateToProps = state => ({
 // no-op function to prevent dispatch prop being passed to component
 const mapDispatchToProps = () => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Controls);
+export default connect(mapStateToProps, mapDispatchToProps)(Running);

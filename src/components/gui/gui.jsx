@@ -532,10 +532,6 @@ const GUIComponent = props => {
 
                 <SubmitResultDialog vm={vm} />
                 <Uploading></Uploading>
-                <Keyboard
-                    vm={vm}
-                    isPlayerOnly={isPlayerOnly}
-                />
                 <CopyCodeHideModal></CopyCodeHideModal>
                 <SpriteResizer vm={vm}></SpriteResizer>
             </Box>

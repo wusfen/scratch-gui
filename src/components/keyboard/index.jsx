@@ -204,8 +204,7 @@ class Component extends React.Component{
                 hidden={!(projectRunning && keys.length)}
                 className={classNames(
                     styles.container,
-                    isPlayerOnly ?
-                        styles.isPlayerOnly : styles.commonContainer
+                    {[styles.isPlayerOnly]: isPlayerOnly},
                 )}
                 onTouchEnd={e => e.preventDefault()}
                 onContextMenu={e => e.preventDefault()}

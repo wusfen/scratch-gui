@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import bindAll from 'lodash.bindall';
-
+import VM from 'scratch-vm';
+import Keyboard from '../../components/keyboard/index.jsx';
 import styles from './styles.css';
 
-class Component extends React.Component{
+class Running extends React.Component{
     constructor (props) {
         super(props);
 
@@ -21,6 +22,7 @@ class Component extends React.Component{
             active,
             onStopAllClick,
             isPlayerOnly,
+            vm,
             ...props
         } = this.props;
 
@@ -46,15 +48,21 @@ class Component extends React.Component{
                     </div>
                     <p className={classNames(styles.text1)}>{'积木运行中...'}</p>
                 </div>
+
+                <Keyboard
+                    vm={vm}
+                    isPlayerOnly={isPlayerOnly}
+                />
             </div>
         );
     }
 }
 
-Component.propTypes = {
+Running.propTypes = {
     active: PropTypes.bool,
     isPlayerOnly: PropTypes.bool,
-    onStopAllClick: PropTypes.func
+    onStopAllClick: PropTypes.func,
+    vm: PropTypes.instanceOf(VM),
 };
 
-export default Component;
+export default Running;
