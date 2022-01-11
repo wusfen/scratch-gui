@@ -33,12 +33,7 @@ class Running extends React.Component{
         return (
             <div
                 hidden={!active}
-                className={classNames(
-                    styles.container,
-                    {
-                        [styles.commonStyle]: !isPlayerOnly,
-                    }
-                )}
+                className={classNames(styles.container)}
                 onClick={onStopAllClick}
             >
                 <div>

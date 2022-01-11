@@ -409,6 +409,10 @@ const GUIComponent = props => {
 
                         {/* 积木区 */}
                         <Box className={styles.editorWrapper}>
+                            <Running
+                                vm={vm}
+                                isPlayerOnly={isPlayerOnly}
+                            />
                             <Tabs
                                 forceRenderTabPanel
                                 className={tabClassNames.tabs}
@@ -480,10 +484,6 @@ const GUIComponent = props => {
                                             }}
                                             stageSize={stageSize}
                                             vm={vm}
-                                        />
-                                        <Running
-                                            vm={vm}
-                                            isPlayerOnly={isPlayerOnly}
                                         />
                                         {/* <AudioCourse />
                                         <Tips /> */}
