@@ -12,7 +12,7 @@
     justify-content: center;
     cursor: pointer;
     background: rgba(0, 0, 0, 0.75);
-    border-radius: 0.56rem;
+    border-radius: inherit;
     color: #fff;
     animation: fadeIn 0.3s 0.1s backwards;
 }
