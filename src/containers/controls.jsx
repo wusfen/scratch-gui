@@ -63,7 +63,7 @@ class Controls extends React.Component {
 
     // 在 app 中只玩模式下，30秒后出现跳过按钮
     showSkipButtonFunc () {
-        if (/vipThinkStudent/i.test(navigator.userAgent)) {
+        if (/vipthink/i.test(navigator.userAgent)) {
             const timer = this.setTimeout(() => {
                 this.setState({
                     isSkipButtonShow: true
