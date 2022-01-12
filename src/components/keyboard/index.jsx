@@ -208,6 +208,7 @@ class Component extends React.Component{
                 )}
                 onTouchEnd={e => e.preventDefault()}
                 onContextMenu={e => e.preventDefault()}
+                onClick={e => e.stopPropagation()}
             >
                 <div
                     hidden={!(hasArrow)}
