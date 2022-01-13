@@ -74,3 +74,17 @@
     transform: translateY(-50%);
     cursor: pointer;
 }
+
+@media screen and (max-height: $mobile-max-height) {
+    .close-btn {
+        position: relative;
+        width: 2rem;
+        height: 2rem;
+        left: 1rem;
+        top: 1rem;
+        margin-right: 1rem;
+        content:url('../close-button/close-icon-blue.png');
+        order: -1;
+        transform:none;
+    }
+}
