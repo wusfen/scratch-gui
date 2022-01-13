@@ -10,7 +10,6 @@ import CloseButton from '../close-button/close-button.jsx';
 
 import backIcon from '../../lib/assets/icon--back.svg';
 import helpIcon from '../../lib/assets/icon--help.svg';
-import closeIcon from '../close-button/icon--close.svg';
 import closeBlueIcon from '../close-button/close-icon-blue.png';
 
 import styles from './modal.css';
