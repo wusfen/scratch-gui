@@ -42,7 +42,7 @@ class Timer {
                 this.pauseTimer(); // 终止计时器
             };
             window.addEventListener('libraryBack', this.createCodeTimer); // 关闭资源库
-            window.addEventListener('selectSprite', this.createCodeTimer); // 选择精灵
+            window.addEventListener('clickSpriteItem', this.createCodeTimer); // 选择精灵
             window.addEventListener('hideEditingTarget', this.createCodeTimer); // 关闭画板界面
             window.addEventListener('noVideoGuide', this.createCodeTimer); // 没有视频引导
             window.addEventListener('closeVideoGuide', this.createCodeTimer); // 关闭视频引导
@@ -91,7 +91,7 @@ class Timer {
             window.addEventListener('closeVideoTips', this.createRightAnswerTimer); // 关闭视频引导
             window.addEventListener('hideEditingTarget', this.createRightAnswerTimer); // 关闭画板界面
             window.addEventListener('libraryBack', this.createRightAnswerTimer); // 关闭资源库
-            window.addEventListener('selectSprite', this.createRightAnswerTimer); // 选择精灵
+            window.addEventListener('clickSpriteItem', this.createRightAnswerTimer); // 选择精灵
             window.addEventListener('closeVideoTips', this.createRightAnswerTimer); // 关闭视频提示
             window.addEventListener('projectRunFinish', this.createRightAnswerTimer); // 代码运行结束
 
@@ -193,7 +193,7 @@ class Timer {
         switch (this.type) {
         case timerType.CODE:
             window.removeEventListener('libraryBack', this.createCodeTimer);
-            window.removeEventListener('selectSprite', this.createCodeTimer);
+            window.removeEventListener('clickSpriteItem', this.createCodeTimer);
             window.removeEventListener('hideEditingTarget', this.createCodeTimer);
             window.removeEventListener('noVideoGuide', this.createCodeTimer);
             window.removeEventListener('closeVideoGuide', this.createCodeTimer);
@@ -217,7 +217,7 @@ class Timer {
             break;
         case timerType.RIGHT_ANSWER:
             window.removeEventListener('libraryBack', this.createRightAnswerTimer);
-            window.removeEventListener('selectSprite', this.createRightAnswerTimer);
+            window.removeEventListener('clickSpriteItem', this.createRightAnswerTimer);
             window.removeEventListener('hideEditingTarget', this.createRightAnswerTimer);
             window.removeEventListener('noVideoGuide', this.createRightAnswerTimer);
             window.removeEventListener('closeVideoGuide', this.createRightAnswerTimer);

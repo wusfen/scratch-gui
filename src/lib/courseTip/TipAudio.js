@@ -10,7 +10,7 @@ import * as bridge from '../../playground/bridge.js';
 class TipAudio {
     static audio = new Audio()
     constructor (src) {
-        console.warn('TipAudio:', (src));
+        // console.warn('TipAudio:', src);
         TipAudio.audio.pause();
 
         var audio = new Audio(src);
