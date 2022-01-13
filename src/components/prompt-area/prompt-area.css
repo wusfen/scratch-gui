@@ -43,9 +43,10 @@
     overflow: hidden;
 }
 .video {
-    height: 100%;
     width: 100%;
-    object-fit: fill;
+    max-height: 100%;
+    object-fit: cover;
+    
 }
 .video::-webkit-media-controls-fullscreen-button { /* 去掉全屏按钮 */
     display: none;
