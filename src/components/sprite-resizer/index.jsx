@@ -64,7 +64,7 @@ class Component extends React.Component{
 
         // update
         addEventListener('mousemove', this.handleMove);
-        addEventListener('touchmove', this.handleMove);
+        addEventListener('touchmove', this.handleMove, {passive: false});
 
         // unset
         addEventListener('mouseup', this.handleUp);
@@ -242,6 +242,7 @@ class Component extends React.Component{
         });
     }
     handleMove (e) {
+        e.preventDefault();
         this.handleRotate(e);
         this.handleResize(e);
     }
