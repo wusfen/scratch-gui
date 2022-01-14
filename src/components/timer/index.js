@@ -110,23 +110,30 @@ class Timer {
         }
     }
 
+    dispatchEvent (event) {
+        if ([...document.querySelectorAll('video')].some(e => !e.paused)) {
+            return;
+        }
+        dispatchEvent(event);
+    }
+
     createTimer = () => {
         this.state = 'exist';
         switch (this.type) {
         case timerType.CODE:
             clearInterval(this.codeTimer);
             this.codeTimer = setInterval(() => {
-                window.dispatchEvent(new Event(`noAction:${this.type}:${CODE_TIME_1}`));
+                this.dispatchEvent(new Event(`noAction:${this.type}:${CODE_TIME_1}`));
             }, CODE_TIME_1);
             break;
         case timerType.OPERATE:
             clearTimeout(this.operateTimer1);
             clearTimeout(this.operateTimer2);
             this.operateTimer1 = setTimeout(() => {
-                window.dispatchEvent(new Event(`noAction:${this.type}:${OPERATE_TIME_1}`));
+                this.dispatchEvent(new Event(`noAction:${this.type}:${OPERATE_TIME_1}`));
                 clearTimeout(this.operateTimer1);
                 this.operateTimer2 = setTimeout(() => { // OPERATE_TIME_1秒后再触发OPERATE_TIME_2后的事件
-                    window.dispatchEvent(new Event(`noAction:${this.type}:${OPERATE_TIME_2}`));
+                    this.dispatchEvent(new Event(`noAction:${this.type}:${OPERATE_TIME_2}`));
                     clearTimeout(this.operateTimer2);
                     this.createTimer();
                 }, OPERATE_TIME_2);
@@ -144,14 +151,14 @@ class Timer {
         clearInterval(this.rightAnswerTimer2);
         const helpFunc = () => {
             this.rightAnswerTimer2 = setInterval(() => {
-                window.dispatchEvent(new Event(`noAction:${this.type}:${RIGHT_ANSWER_2}`));
+                this.dispatchEvent(new Event(`noAction:${this.type}:${RIGHT_ANSWER_2}`));
             }, RIGHT_ANSWER_2);
         };
         if (this.rightAnswerTimerIsReset) { // 判断是否被重置过
             helpFunc();
         } else {
             this.rightAnswerTimer1 = setTimeout(() => {
-                window.dispatchEvent(new Event(`noAction:${this.type}:${RIGHT_ANSWER_1}`));
+                this.dispatchEvent(new Event(`noAction:${this.type}:${RIGHT_ANSWER_1}`));
                 clearTimeout(this.rightAnswerTimer1);
                 this.rightAnswerTimer1 = null;
                 helpFunc();
