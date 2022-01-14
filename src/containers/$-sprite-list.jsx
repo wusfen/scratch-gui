@@ -450,7 +450,7 @@ class TargetPane$ extends React.Component {
                             img: fileUploadIcon,
                             onClick: this.handleFileUploadClick,
                             fileAccept: '.svg, .png, .bmp, .jpg, .jpeg, .sprite2, .sprite3, .gif',
-                            fileChange: this.handleSurpriseSpriteClick,
+                            fileChange: this.handleSpriteUpload,
                             fileInput: this.setFileInput,
                             fileMultiple: true
                         }
