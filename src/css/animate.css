@@ -79,13 +79,13 @@
 
 @keyframes blingBlingHandRotateX {
     0% {
-        transform: scale3d(0.8, 0.8, 0.8) rotateX(180deg);
+        transform: scale(0.8) rotateX(180deg);
     }
     70% {
-        transform: rotateX(180deg);
+        transform: scale(1) rotateX(180deg);
     }
     100% {
-        transform: scale3d(0.8, 0.8, 0.8) rotateX(180deg);
+        transform: scale(0.8) rotateX(180deg);
     }
 }
 
@@ -107,12 +107,12 @@
 
 @keyframes blingBlingHand {
     0% {
-        transform: scale3d(0.8, 0.8, 0.8);
+        transform: scale(0.8);
     }
     70% {
         transform: none;
     }
     100% {
-        transform: scale3d(0.8, 0.8, 0.8);
+        transform: scale(0.8);
     }
 }
