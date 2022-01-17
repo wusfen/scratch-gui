@@ -41,7 +41,7 @@ function resize (mode) {
 }
 function resize2 (){
     // fix: android input focus
-    if (/input/i.test(document.activeElement.tagName)) {
+    if (/input|textarea/i.test(document.activeElement.tagName)) {
         return;
     }
     resize();
