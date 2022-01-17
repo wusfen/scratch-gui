@@ -186,6 +186,7 @@ class Component extends React.Component{
         var state = this.state;
         if (!state.target) return;
         if (!state.isRotateDown) return;
+        e.preventDefault();
         var {x, y} = getEventXY(e);
 
         // 12点为0度
@@ -222,6 +223,7 @@ class Component extends React.Component{
         var state = this.state;
         if (!state.target) return;
         if (!state.isResizeDown) return;
+        e.preventDefault();
         var {x, y} = getEventXY(e);
 
         var downDistance = this.getDistance(
@@ -242,7 +244,6 @@ class Component extends React.Component{
         });
     }
     handleMove (e) {
-        e.preventDefault();
         this.handleRotate(e);
         this.handleResize(e);
     }
