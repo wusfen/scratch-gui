@@ -119,7 +119,8 @@ class Blocks extends React.Component {
                 minScale: 0.3,
                 scaleSpeed: 1.2
             },
-            collapse: true
+            collapse: true,
+            media: `${window.PUBLIC_PATH || '.'}/static/blocks-media/`.replace(/([^:])[/]{2,}/g, '$1/'),
         },
         Blocks.defaultOptions,
         this.props.options,
