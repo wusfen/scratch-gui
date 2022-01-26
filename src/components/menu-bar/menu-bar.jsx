@@ -820,6 +820,26 @@ class MenuBar extends React.Component {
             return;
         }
 
+        // 人工批改正确
+        if (workInfo.analystType === 4) {
+            if (silence) {
+                return;
+            }
+            if (workInfo.analystStatus === 1) {
+                alert('你已经做对了，不用再提交了哦');
+            }
+            return;
+        }
+
+        // 人工批改中
+        if (workInfo.analystStatus === 3) {
+            if (silence) {
+                return;
+            }
+            alert('老师正在批改中，请不要重复提交');
+            return;
+        }
+
         this.setState({
             isShowPublishButtonBling: false,
         });
@@ -844,7 +864,9 @@ class MenuBar extends React.Component {
         const {ossDomain, path} = await uploadSb3DiffPromise;
         silence || this.props.setUploadingProgress(90, '正在保存...');
 
+
         // 提交
+        const correctType = param('correctType');
         const {data} = await ajax.put('/hwUserWork/newSubmitWork', {
             id: workInfo.id,
             workId: workInfo.analystStatus === -1 ? workInfo.workId : '',
@@ -855,7 +877,8 @@ class MenuBar extends React.Component {
             attachId: (await uploadSb3DiffPromise).id,
             workCoverAttachId: (await uploadCoverPromise).id,
             analystStatus: window.codeRunningResult === 1 ? 1 : 2,
-            projectJsonStr: this.props.vm.toJSON()
+            projectJsonStr: this.props.vm.toJSON(),
+            correctType,
         }, {silence});
         const {analystStatus} = data;
         try {
@@ -881,11 +904,14 @@ class MenuBar extends React.Component {
         silence || this.props.setUploadingProgress(100, '正在批改中...');
         dispatchEvent(new Event('checkWorkEnd'));
 
-        // TODO 目前只有正确错误，之前有规划有人工批改
         if (checkRes === 1) {
             dispatchEvent(new Event('submit:已提交正确'));
-        } else {
+        }
+        if (checkRes === 2) {
             dispatchEvent(new Event('submit:已提交错误'));
+        }
+        if (checkRes === 3) {
+            dispatchEvent(new Event('submit:已提交人工'));
         }
 
         setTimeout(() => {
