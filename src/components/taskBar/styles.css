@@ -244,3 +244,7 @@
 .video-options .option.active {
     background-color: #ff457f;
 }
+
+.visibility-hiden {
+    visibility: hidden;
+}

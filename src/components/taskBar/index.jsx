@@ -57,7 +57,9 @@ class TaskBar extends React.Component{
             oriTop: '',
             oriWidth: 0,
             oriHeight: 0,
-            isAlreadyInitTouchMove: false
+            isAlreadyInitTouchMove: false,
+            nativePlayVideo: getParam('nativePlayVideo'),
+            isPlayOnNative: false
         };
         this.introVideoSrc = '';
         this.titleAudioSrc = '';
@@ -143,6 +145,7 @@ class TaskBar extends React.Component{
             bridge.on('resume', e => {
                 this.videoRef?.play();
             });
+            bridge.on('closeIntroVideoModal', this.closeIntroVideoModal);
             break;
         case 'teacher':
             this.moreFuncBtnRef && this.moreFuncBtnRef.addEventListener('touchstart', this.handleTouchStart);
@@ -350,6 +353,18 @@ class TaskBar extends React.Component{
     }
 
     handleToggleVideoContent = () => {
+        if (this.state.nativePlayVideo){
+            Promise.resolve().then(() => {
+                const react = this.courseTaskBarInnerEl.getBoundingClientRect();
+                window.bridge.emit('showIntroVideoModal', react);
+            });
+            this.setState({
+                isPlayOnNative: true,
+                isVideoContentOpen: true
+            });
+            this.initVideoMove();
+            return;
+        }
         if (!this.state.isVideoContentOpen) {
             this.setState({
                 tipsShow: false
@@ -475,6 +490,13 @@ class TaskBar extends React.Component{
                 // top: window.getComputedStyle(this.courseTaskBarInnerEl, null).top,
                 width: this.courseTaskBarInnerEl.clientWidth,
             },
+        });
+    }
+
+    closeIntroVideoModal = () => {
+        this.setState({
+            isPlayOnNative: false,
+            isVideoContentOpen: false
         });
     }
 
@@ -734,11 +756,12 @@ class TaskBar extends React.Component{
                 </div>}
                 {mode === 'course' && (
                     <section
-                        className={classNames(c.courseTipsContainer, {[c.open]: isVideoContentOpen})}
+                        className={classNames(c.courseTipsContainer, {[c.open]: isVideoContentOpen, [c.visibilityHiden]: this.state.nativePlayVideo && this.state.isPlayOnNative})}
                         ref={r => {
                             this.courseTaskBarInnerEl = r;
                         }}
                         style={style}
+                        // hidden={this.state.nativePlayVideo && this.state.isPlayOnNative}
                     >
                         <div
                             className={classNames({[c.tipsBar]: true})}

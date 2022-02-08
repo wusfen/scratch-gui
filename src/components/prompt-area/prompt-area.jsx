@@ -273,6 +273,7 @@ class PromptArea extends React.Component{
                 }}
                 style={style}
                 className={c.drawingItem}
+                hidden={getTipParam('nativePlayVideo') == 1}
             >
                 <div
                     className={c.title}
