@@ -756,7 +756,7 @@ class TaskBar extends React.Component{
                 </div>}
                 {mode === 'course' && (
                     <section
-                        className={classNames(c.courseTipsContainer, {[c.open]: isVideoContentOpen, [c.visibilityHiden]: this.state.nativePlayVideo && this.state.isPlayOnNative})}
+                        className={classNames(c.courseTipsContainer, {[c.open]: isVideoContentOpen, [c.visibilityHidden]: this.state.nativePlayVideo && this.state.isPlayOnNative})}
                         ref={r => {
                             this.courseTaskBarInnerEl = r;
                         }}
