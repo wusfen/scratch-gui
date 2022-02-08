@@ -24,4 +24,5 @@ npm-*
 *.local.*
 .vscode
 lint.json
+.idea
 ######
