@@ -145,7 +145,7 @@ class TaskBar extends React.Component{
             bridge.on('resume', e => {
                 this.videoRef?.play();
             });
-            bridge.on('closeIntroVideoModal', this.closeIntroVideoModal);
+            bridge.on('closeVideoModal', this.closeVideoModal);
             break;
         case 'teacher':
             this.moreFuncBtnRef && this.moreFuncBtnRef.addEventListener('touchstart', this.handleTouchStart);
@@ -356,7 +356,7 @@ class TaskBar extends React.Component{
         if (this.state.nativePlayVideo){
             Promise.resolve().then(() => {
                 const react = this.courseTaskBarInnerEl.getBoundingClientRect();
-                window.bridge.emit('showIntroVideoModal', react);
+                window.bridge.emit('showVideoModal', react);
             });
             this.setState({
                 isPlayOnNative: true,
@@ -493,7 +493,7 @@ class TaskBar extends React.Component{
         });
     }
 
-    closeIntroVideoModal = () => {
+    closeVideoModal = () => {
         this.setState({
             isPlayOnNative: false,
             isVideoContentOpen: false
