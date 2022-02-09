@@ -11,6 +11,7 @@
         <title>豌豆编辑器<%= htmlWebpackPlugin.options.version %></title>
 
         <script>
+            var PUBLIC_PATH = "<%= htmlWebpackPlugin.options.PUBLIC_PATH %>";
             var version = "<%= htmlWebpackPlugin.options.version %>";
             var env = "prod";
             if (/\b(base=uat)\b/.test(location)) env = "uat";

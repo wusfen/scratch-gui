@@ -121,6 +121,10 @@ class Controls extends React.Component {
 
     async checkWork () {
         if (param('mode') === 'course' && window._workInfo) {
+            if (param('correctType') === 1) {
+                return;
+            }
+
             var json = this.props.vm.toJSON();
             if (this.lastVmJSON === json) {
                 return;
