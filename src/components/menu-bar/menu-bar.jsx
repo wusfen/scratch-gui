@@ -810,6 +810,7 @@ class MenuBar extends React.Component {
         }
         const workInfo = window._workInfo || {};
         const workName = this.getWorkName();
+        const correctType = param('correctType'); // 批改类型
 
         if (!workInfo.id) {
             await Dialog.alert({
@@ -820,24 +821,20 @@ class MenuBar extends React.Component {
             return;
         }
 
-        // 人工批改正确
-        if (workInfo.analystType === 4) {
-            if (silence) {
+        // 人工批改
+        if (correctType == 1) {
+            // 批改中
+            if (workInfo.analystStatus === 0) {
+                silence || alert('老师正在批改中，请不要重复提交');
                 return;
             }
-            if (workInfo.analystStatus === 1) {
-                alert('你已经做对了，不用再提交了哦');
-            }
-            return;
-        }
 
-        // 人工批改中
-        if (workInfo.analystStatus === 3) {
-            if (silence) {
+            // 已做对
+            if (workInfo.analystStatus === 1) {
+                silence || alert('你已经做对了，不用再提交了哦');
                 return;
             }
-            alert('老师正在批改中，请不要重复提交');
-            return;
+
         }
 
         this.setState({
@@ -866,7 +863,6 @@ class MenuBar extends React.Component {
 
 
         // 提交
-        const correctType = param('correctType');
         const {data} = await ajax.put('/hwUserWork/newSubmitWork', {
             id: workInfo.id,
             workId: workInfo.analystStatus === -1 ? workInfo.workId : '',
