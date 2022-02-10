@@ -125,12 +125,8 @@ class Component extends React.Component{
             dispatchEvent(new Event('submit-result-dialog:跳过退出'));
             return;
         }
-        if (/正确/.test(status)) {
-            // dispatchEvent(new Event('submit-result-dialog:正确退出'));
-            window.bridge.emit('exitEditor', {type: 'submit', interaction_passOrNot: window.subjectPassOrNot});
-            return;
-        }
 
+        window.bridge.emit('exitEditor', {type: 'submit', interaction_passOrNot: window.subjectPassOrNot});
     }
     startBackTimer () {
         this.setState({
