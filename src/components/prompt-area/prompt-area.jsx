@@ -9,6 +9,7 @@ import scaleIcon from './scale.svg';
 import {scale} from 'twgl.js';
 import * as bridge from '../../playground/bridge.js';
 import getTipParam from '../../lib/courseTip/getTipParam';
+import getParam from '@/lib/param';
 const c = styles;
 
 class PromptArea extends React.Component{
@@ -32,7 +33,8 @@ class PromptArea extends React.Component{
             title: props.title,
             imageTextScale: 1,
             imageTextScaleRate: 0.25,
-            transformOrigin: 'center center'
+            transformOrigin: 'center center',
+            nativePlayVideo: getParam('nativePlayVideo')
         };
 
         if (props.type){
@@ -301,7 +303,7 @@ class PromptArea extends React.Component{
                         className={c.video}
                         src={videoSrc}
                         controls={'controls'}
-                        autoPlay={title?.includes('介绍') ? null : 'autoplay'}
+                        autoPlay={title?.includes('介绍') ? null : this.state.nativePlayVideo ? null : 'autoplay'} // 介绍视频不自动播放
                         controlsList="nodownload"
                         playsInline
                         disablePictureInPicture
