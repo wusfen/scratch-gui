@@ -763,7 +763,7 @@ class TaskBar extends React.Component{
                             this.courseTaskBarInnerEl = r;
                         }}
                         style={style}
-                        hidden={this.state.nativePlayVideo && this.state.isPlayOnNative}
+                        // hidden={this.state.nativePlayVideo && this.state.isPlayOnNative}
                     >
                         <div
                             className={classNames({[c.tipsBar]: true})}
