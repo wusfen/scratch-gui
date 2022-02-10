@@ -356,15 +356,24 @@ class TaskBar extends React.Component{
 
     handleToggleVideoContent = () => {
         if (this.state.nativePlayVideo){
+            if (this.tipVideos.length === 0) {
+                // 提示没有该提示视频
+                window.editorErrorTipText = `对不起，没有该${this.isExplain ? '讲解' : '提示'}视频哦`;
+                dispatchEvent(new Event('openErrorTips'));
+                return;
+            }
             Promise.resolve().then(() => {
                 const react = this.courseTaskBarInnerEl.getBoundingClientRect();
                 bridge.emit('showVideoModal', react);
             });
             this.setState({
                 isPlayOnNative: true,
-                isVideoContentOpen: true
+                isVideoContentOpen: true,
             });
             this.initVideoMove();
+            if (this.state.isVideoContentOpen) {
+                this.closeVideoContent();
+            }
             return;
         }
         if (!this.state.isVideoContentOpen) {
@@ -763,7 +772,7 @@ class TaskBar extends React.Component{
                             this.courseTaskBarInnerEl = r;
                         }}
                         style={style}
-                        hidden={this.state.nativePlayVideo && this.state.isPlayOnNative}
+                        // hidden={this.state.nativePlayVideo && this.state.isPlayOnNative}
                     >
                         <div
                             className={classNames({[c.tipsBar]: true})}
