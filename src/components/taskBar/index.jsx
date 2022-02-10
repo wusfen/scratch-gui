@@ -103,6 +103,7 @@ class TaskBar extends React.Component{
 
     componentDidMount () {
         this.handleMode();
+        bridge.emit('ready');
     }
 
     componentWillUnmount () {
@@ -147,7 +148,6 @@ class TaskBar extends React.Component{
             });
             // 移动端视频播放相关
             bridge.on('closeVideoModal', this.closeVideoModal);
-            bridge.emit('showVideoModal', {canPlayVideo: true});
             break;
         case 'teacher':
             this.moreFuncBtnRef && this.moreFuncBtnRef.addEventListener('touchstart', this.handleTouchStart);
