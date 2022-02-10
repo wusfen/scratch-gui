@@ -905,7 +905,7 @@ class MenuBar extends React.Component {
         if (checkRes === 2) {
             dispatchEvent(new Event('submit:已提交错误'));
         }
-        if (checkRes === 3) {
+        if (checkRes === 0) {
             dispatchEvent(new Event('submit:已提交人工'));
         }
 

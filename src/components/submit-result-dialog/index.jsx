@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import bindAll from 'lodash.bindall';
-import {OPERATE_TIME_2, timerType} from './../timer/data';
 import Audio from '../../lib/courseTip/TipAudio.js';
 
 import styles from './styles.css';
