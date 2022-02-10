@@ -509,6 +509,7 @@ class TaskBar extends React.Component{
             isPlayOnNative: false,
             isVideoContentOpen: false
         });
+        this.closeVideoContent();
     }
 
     initTouchAndMove = () => { // 初始化缩放和拖拽事件
