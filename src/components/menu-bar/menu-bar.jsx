@@ -874,7 +874,6 @@ class MenuBar extends React.Component {
             workCoverAttachId: (await uploadCoverPromise).id,
             analystStatus: window.codeRunningResult === 1 ? 1 : 2,
             projectJsonStr: this.props.vm.toJSON(),
-            correctType,
         }, {silence});
         const {analystStatus} = data;
         try {
