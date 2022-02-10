@@ -192,7 +192,7 @@ class Component extends React.Component{
                     </button>
 
                     <button
-                        hidden={!(/从未运行|跳过|超时|已提交/.test(status))}
+                        hidden={!(/跳过|超时/.test(status))}
                         type="button"
                         className={classNames(styles.close)}
                         onClick={() => this.handleClose(false)}
