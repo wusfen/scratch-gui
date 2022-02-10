@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import bindAll from 'lodash.bindall';
 import Audio from '../../lib/courseTip/TipAudio.js';
+import {param} from '../../lib/param';
 
 import styles from './styles.css';
 
@@ -122,8 +123,13 @@ class Component extends React.Component{
         // exitEditor
         // to: menu-bar.jsx autoSave
         if (/跳过/.test(status)) {
-            dispatchEvent(new Event('submit-result-dialog:跳过退出'));
-            return;
+            // 人工批改的跳过先不保存（提交）
+            if (param('correctType') == 1) {
+                // to end
+            } else {
+                dispatchEvent(new Event('submit-result-dialog:跳过退出'));
+                return;
+            }
         }
 
         window.bridge.emit('exitEditor', {type: 'submit', interaction_passOrNot: window.subjectPassOrNot});
