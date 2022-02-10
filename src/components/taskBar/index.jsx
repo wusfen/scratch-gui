@@ -145,7 +145,9 @@ class TaskBar extends React.Component{
             bridge.on('resume', e => {
                 this.videoRef?.play();
             });
+            // 移动端视频播放相关
             bridge.on('closeVideoModal', this.closeVideoModal);
+            bridge.emit('showVideoModal', {canPlayVideo: true});
             break;
         case 'teacher':
             this.moreFuncBtnRef && this.moreFuncBtnRef.addEventListener('touchstart', this.handleTouchStart);
@@ -356,7 +358,7 @@ class TaskBar extends React.Component{
         if (this.state.nativePlayVideo){
             Promise.resolve().then(() => {
                 const react = this.courseTaskBarInnerEl.getBoundingClientRect();
-                window.bridge.emit('showVideoModal', react);
+                bridge.emit('showVideoModal', react);
             });
             this.setState({
                 isPlayOnNative: true,
@@ -761,7 +763,7 @@ class TaskBar extends React.Component{
                             this.courseTaskBarInnerEl = r;
                         }}
                         style={style}
-                        // hidden={this.state.nativePlayVideo && this.state.isPlayOnNative}
+                        hidden={this.state.nativePlayVideo && this.state.isPlayOnNative}
                     >
                         <div
                             className={classNames({[c.tipsBar]: true})}
