@@ -825,7 +825,7 @@ class TaskBar extends React.Component{
                                 className={c.video}
                                 src={currentVideoSrc}
                                 controls={'controls'}
-                                autoPlay
+                                autoPlay={!this.state.nativePlayVideo}
                                 playsInline
                                 ref={r => {
                                     this.videoRef = r;

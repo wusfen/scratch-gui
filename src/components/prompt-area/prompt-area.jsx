@@ -275,7 +275,7 @@ class PromptArea extends React.Component{
                 }}
                 style={style}
                 className={c.drawingItem}
-                hidden={getTipParam('nativePlayVideo') == 1}
+                hidden={this.state.nativePlayVideo}
             >
                 <div
                     className={c.title}
@@ -307,6 +307,7 @@ class PromptArea extends React.Component{
                         controlsList="nodownload"
                         playsInline
                         disablePictureInPicture
+                        hidden={this.state.nativePlayVideo}
                     >
                     </video>) : <div
                         className={c.imageTextContent}
