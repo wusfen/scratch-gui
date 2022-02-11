@@ -103,7 +103,7 @@ class TaskBar extends React.Component{
 
     componentDidMount () {
         this.handleMode();
-        bridge.emit('ready');
+        // bridge.emit('ready');
     }
 
     componentWillUnmount () {

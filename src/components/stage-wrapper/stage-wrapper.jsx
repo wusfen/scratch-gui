@@ -11,6 +11,8 @@ import Loader from '../loader/loader.jsx';
 
 import styles from './stage-wrapper.css';
 
+let isLoaded = false;
+
 const StageWrapperComponent = function (props) {
     const {
         isFullScreen,
@@ -22,6 +24,10 @@ const StageWrapperComponent = function (props) {
         stageMode,
         vm
     } = props;
+    if (!loading && !isLoaded){
+        isLoaded = true;
+        window.bridge.emit('ready');
+    }
 
     return (
         <Box
