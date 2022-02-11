@@ -53,7 +53,7 @@ import TaskBar from '../taskBar/index.jsx';
 import ErrorTips from '../errorTips/index.jsx';
 import SpriteResizer from '../sprite-resizer/index.jsx';
 
-import {param} from '../../lib/param.js';
+import {getParam, param} from '../../lib/param.js';
 import {getEventXY} from '../../lib/touch-utils';
 
 const messages = defineMessages({
@@ -201,7 +201,7 @@ const GUIComponent = props => {
 
     return (<MediaQuery minWidth={layout.fullSizeMinWidth}>{isFullSize => {
         const stageSize = resolveStageSize(stageSizeMode, isFullSize);
-
+        const nativePlayVideo = getParam('nativePlayVideo');
         return isPlayerOnly ? (
             <div >
                 <StageWrapper
@@ -234,7 +234,7 @@ const GUIComponent = props => {
                 dir={isRtl ? 'rtl' : 'ltr'}
                 {...componentProps}
             >
-                {promptAreaShow ? <PromptArea
+                {promptAreaShow && !nativePlayVideo ? <PromptArea
                     closePromptArea={closePromptArea}
                     videoSrc={videoSrc}
                     type={'视频'}
