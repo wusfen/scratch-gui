@@ -146,6 +146,7 @@ class LoaderComponent extends React.Component {
         }, 40000);
     }
     componentWillUnmount () {
+        window.bridge.emit('ready');
         dispatchEvent(new Event('loaderUnmount'));
         clearInterval(this.intervalId);
         clearTimeout(this.retryBtnShowTimer);
