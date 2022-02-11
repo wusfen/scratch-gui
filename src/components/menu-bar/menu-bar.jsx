@@ -775,8 +775,14 @@ class MenuBar extends React.Component {
         this.exiting = true;
         var exitType = 'exit';
         if (e === 'requireExitEditor') exitType = 'sidebar';
+        const workInfo = window._workInfo || {};
+        const correctType = param('correctType'); // 批改类型
 
-        if (this.props.projectChanged) {
+        // 人工批改直接退出不确认提交
+        if (correctType == 1) {
+            // to end
+            // window.bridge.emit(e, {type: exitType});
+        } else if (this.props.projectChanged) {
             await Dialog.confirm({
                 title: '还未保存作品哦，是否保存作品？',
                 onCancel () {
