@@ -22,7 +22,7 @@ const buildTime = [
 ].map(e => ''.padStart.call(e, 2, 0)).join('');
 const commit = require('child_process').execSync('git log --oneline -n 1')
     .toString()
-    .split(' ')[0];
+    .slice(0, 7);
 
 const isProduction = process.env.NODE_ENV === 'production';
 
