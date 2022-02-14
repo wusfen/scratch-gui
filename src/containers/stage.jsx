@@ -134,13 +134,14 @@ class Stage extends React.Component {
         });
     }
     startColorPickingLoop () {
-        if (navigator.maxTouchPoints > 0){
+        // 暂时只知道ios 14 获取userAgent没有这些值iPhone|iPad|iPod|iOS
+        if (navigator.maxTouchPoints > 0 || (/(iPhone|iPad|iPod|iOS)/i).test(navigator.userAgent)){
             // 居中初始化一个值
             this.pickX = this.rect.width / 2;
             this.pickY = this.rect.height / 2;
         }
         this.intervalId = setInterval(() => {
-            if (typeof this.pickX === 'number') {
+            if (typeof this.pickX === 'number' && !isNaN(this.pickX)) {
                 this.setState({colorInfo: this.getColorInfo(this.pickX, this.pickY)});
             }
         }, 30);
@@ -226,13 +227,18 @@ class Stage extends React.Component {
                     this.startPickY = mousePosition[1];
                 }
                 if (typeof this.startPickX === 'number'){
+                    // 以防没有值
+                    if (typeof this.pickX !== 'number'){
+                        this.pickX = this.rect.width / 2;
+                        this.pickY = this.rect.height / 2;
+                    }
                     this.pickX += mousePosition[0] - this.startPickX;
                     this.pickY += mousePosition[1] - this.startPickY;
                     this.startPickX = mousePosition[0];
                     this.startPickY = mousePosition[1];
                 }
                 this._isDown = false;
-            } else if (navigator.maxTouchPoints == 0){
+            } else if (!navigator.maxTouchPoints){
                 this.pickX = mousePosition[0];
                 this.pickY = mousePosition[1];
             }
