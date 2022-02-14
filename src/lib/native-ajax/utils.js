@@ -20,7 +20,7 @@ export function getQueryVariable (variable) {
  * @returns {boolean} 是否在iOS环境
  */
 export function isIOS () {
-    return (/(iPhone|iPad|iPod|iOS)/i).test(navigator.userAgent);
+    return (/(iPhone|iPad|iPod|iOS)/i).test(navigator.userAgent) || ((/AppleWebKit/i).test(navigator.userAgent) && navigator.maxTouchPoints > 0);
 }
 
 /**
