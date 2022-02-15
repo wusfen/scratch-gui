@@ -87,7 +87,9 @@ class PromptArea extends React.Component{
 
     videoPause = () => {
         setTimeout(() => {
-            this.props.closePromptArea();
+            if (!IS_NATIVE_PLAY_VIDEO) {
+                this.props.closePromptArea();
+            }
         }, 1000);
     }
 
