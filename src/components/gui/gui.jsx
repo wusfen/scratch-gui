@@ -34,6 +34,7 @@ import TelemetryModal from '../telemetry-modal/telemetry-modal.jsx';
 import WDSpriteList from '../../containers/$-sprite-list.jsx';
 import Running from '../../containers/running.jsx';
 import StageHeader from '../../containers/stage-header.jsx';
+import {IS_NATIVE_PLAY_VIDEO} from '../../lib/const';
 
 import layout, {STAGE_DISPLAY_SIZES, STAGE_SIZE_MODES} from '../../lib/layout-constants';
 import {resolveStageSize} from '../../lib/screen-utils';
@@ -233,7 +234,7 @@ const GUIComponent = props => {
                 dir={isRtl ? 'rtl' : 'ltr'}
                 {...componentProps}
             >
-                {promptAreaShow ? <PromptArea
+                {promptAreaShow && !IS_NATIVE_PLAY_VIDEO ? <PromptArea
                     closePromptArea={closePromptArea}
                     videoSrc={videoSrc}
                     type={'视频'}

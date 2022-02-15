@@ -59,7 +59,7 @@ class Timer {
         case timerType.OPERATE:
             this.createOperateTimer = () => { // 监听创建操作计时器事件
                 if (this.state === 'exist') return;
-                console.log('创建操作计时器');
+                alert('创建操作计时器');
                 this.createTimer(); // 开始计时
             };
             this.pauseOperateTimer = () => { // 监听终止操作计时器事件
