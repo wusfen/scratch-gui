@@ -511,6 +511,7 @@ class TaskBar extends React.Component{
             isVideoContentOpen: false
         });
         this.closeVideoContent();
+        dispatchEvent(new Event('closeVideoTips')); // 关闭视频提示
     }
 
     initTouchAndMove = () => { // 初始化缩放和拖拽事件
