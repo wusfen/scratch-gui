@@ -510,6 +510,7 @@ class TaskBar extends React.Component{
             isPlayOnNative: false,
             isVideoContentOpen: false
         });
+        alert('closeVideoModal');
         this.closeVideoContent();
     }
 
