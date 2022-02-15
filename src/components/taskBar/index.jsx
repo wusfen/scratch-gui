@@ -26,6 +26,7 @@ import {
     closeFileMenu
 } from '../../reducers/menus';
 import * as bridge from '../../playground/bridge.js';
+import {IS_NATIVE_PLAY_VIDEO} from '@/lib/const';
 const c = styles;
 Object.assign(c, require('../../css/animate.css'));
 
@@ -58,7 +59,6 @@ class TaskBar extends React.Component{
             oriWidth: 0,
             oriHeight: 0,
             isAlreadyInitTouchMove: false,
-            nativePlayVideo: getParam('nativePlayVideo'),
             isPlayOnNative: false
         };
         this.introVideoSrc = '';
@@ -355,7 +355,7 @@ class TaskBar extends React.Component{
     }
 
     handleToggleVideoContent = () => {
-        if (this.state.nativePlayVideo){
+        if (IS_NATIVE_PLAY_VIDEO){
             if (this.tipVideos.length === 0) {
                 // 提示没有该提示视频
                 window.editorErrorTipText = `对不起，没有该${this.isExplain ? '讲解' : '提示'}视频哦`;
@@ -474,6 +474,7 @@ class TaskBar extends React.Component{
         } else {
             touchObj = event;
         }
+
         return touchObj;
     }
 
@@ -768,7 +769,7 @@ class TaskBar extends React.Component{
                 </div>}
                 {mode === 'course' && (
                     <section
-                        className={classNames(c.courseTipsContainer, {[c.open]: isVideoContentOpen, [c.visibilityHidden]: this.state.nativePlayVideo && this.state.isPlayOnNative})}
+                        className={classNames(c.courseTipsContainer, {[c.open]: isVideoContentOpen, [c.visibilityHidden]: IS_NATIVE_PLAY_VIDEO && this.state.isPlayOnNative})}
                         ref={r => {
                             this.courseTaskBarInnerEl = r;
                         }}
@@ -825,7 +826,7 @@ class TaskBar extends React.Component{
                                 className={c.video}
                                 src={currentVideoSrc}
                                 controls={'controls'}
-                                autoPlay={!this.state.nativePlayVideo}
+                                autoPlay={!IS_NATIVE_PLAY_VIDEO}
                                 playsInline
                                 ref={r => {
                                     this.videoRef = r;

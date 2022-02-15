@@ -201,7 +201,6 @@ const GUIComponent = props => {
 
     return (<MediaQuery minWidth={layout.fullSizeMinWidth}>{isFullSize => {
         const stageSize = resolveStageSize(stageSizeMode, isFullSize);
-        const nativePlayVideo = getParam('nativePlayVideo');
         return isPlayerOnly ? (
             <div >
                 <StageWrapper
@@ -234,7 +233,7 @@ const GUIComponent = props => {
                 dir={isRtl ? 'rtl' : 'ltr'}
                 {...componentProps}
             >
-                {promptAreaShow && !nativePlayVideo ? <PromptArea
+                {promptAreaShow ? <PromptArea
                     closePromptArea={closePromptArea}
                     videoSrc={videoSrc}
                     type={'视频'}
