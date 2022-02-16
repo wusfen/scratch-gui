@@ -202,6 +202,7 @@ class GUI extends React.Component {
                 });
             }
         }
+        console.log('videoSrc',videoSrc)
         if (videoSrc){ // 有初始引导
             this.addEventListener('loaderUnmount', () => { // 等待工程加载完毕
                 if (!IS_NATIVE_PLAY_VIDEO) {
