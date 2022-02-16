@@ -48,6 +48,7 @@ import {counterType} from '../components/counter/data';
 
 import {param} from '../lib/param.js';
 import {addStageCSSWidth} from '../reducers/stage-size';
+import {IS_NATIVE_PLAY_VIDEO} from '@/lib/const';
 
 class GUI extends React.Component {
     constructor (props) {
@@ -66,7 +67,6 @@ class GUI extends React.Component {
         setIsScratchDesktop(this.props.isScratchDesktop);
         this.props.onStorageInit(storage);
         this.props.onVmInit(this.props.vm);
-        console.log('GUI componentDidMount ');
         var mode = param('mode');
 
         this.initTimer(); // 初始化计时器
@@ -167,7 +167,6 @@ class GUI extends React.Component {
     }
 
     initTimer = () => {
-        console.log('initTimer', param('mode'));
         if (param('mode') === 'course') {
             window.operateTimer = new Timer(timerType.OPERATE); // 操作计时器
             window.codeTimer = new Timer(timerType.CODE); // 代码计时器
@@ -205,7 +204,9 @@ class GUI extends React.Component {
         }
         if (videoSrc){ // 有初始引导
             this.addEventListener('loaderUnmount', () => { // 等待工程加载完毕
-                this.setState({promptAreaShow: true});
+                if (!IS_NATIVE_PLAY_VIDEO) {
+                    this.setState({promptAreaShow: true});
+                }
             });
         } else {
             videoSrc = '';
