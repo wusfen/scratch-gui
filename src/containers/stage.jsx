@@ -135,7 +135,8 @@ class Stage extends React.Component {
     }
     startColorPickingLoop () {
         // 暂时只知道ios 14 获取userAgent没有这些值iPhone|iPad|iPod|iOS
-        if (navigator.maxTouchPoints > 0 || (/(iPhone|iPad|iPod|iOS)/i).test(navigator.userAgent)){
+        // if (navigator.maxTouchPoints > 0 || (/(iPhone|iPad|iPod|iOS)/i).test(navigator.userAgent)){
+        if ('ontouchstart' in window){
             // 居中初始化一个值
             this.pickX = this.rect.width / 2;
             this.pickY = this.rect.height / 2;
@@ -238,8 +239,7 @@ class Stage extends React.Component {
                     this.startPickY = mousePosition[1];
                 }
                 this._isDown = false;
-                console.log('onMouseMove', this.pickX, this.startPickX, mousePosition[0]);
-            } else if (!navigator.maxTouchPoints){
+            } else if (!('ontouchstart' in window)){
                 this.pickX = mousePosition[0];
                 this.pickY = mousePosition[1];
             }
