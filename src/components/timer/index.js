@@ -93,7 +93,6 @@ class Timer {
             window.addEventListener('hideEditingTarget', this.createRightAnswerTimer); // 关闭画板界面
             window.addEventListener('libraryBack', this.createRightAnswerTimer); // 关闭资源库
             window.addEventListener('clickSpriteItem', this.createRightAnswerTimer); // 选择精灵
-            window.addEventListener('closeVideoTips', this.createRightAnswerTimer); // 关闭视频提示
             window.addEventListener('projectRunFinish', this.createRightAnswerTimer); // 代码运行结束
 
             window.addEventListener('editSprite', this.pauseRightAnswerTimer); // 编辑精灵

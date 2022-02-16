@@ -68,6 +68,7 @@ class LibraryComponent extends React.Component {
         this.props.onItemSelected(this.getFilteredData()[id]);
     }
     handleClose () {
+        console.log('libraryBack');
         window.dispatchEvent(new Event('libraryBack'));
         this.props.onRequestClose();
     }

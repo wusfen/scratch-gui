@@ -212,6 +212,7 @@ class GUI extends React.Component {
         } else {
             videoSrc = '';
             this.addEventListener('projectLoadSucceedLoaderUnmount', () => { // 等待工程加载完毕
+                console.log('noVideoGuide');
                 window.dispatchEvent(new Event('noVideoGuide'));
             });
         }
@@ -220,6 +221,7 @@ class GUI extends React.Component {
 
     closePromptArea = () => {
         this.setState({promptAreaShow: false});
+        console.log('closeVideoGuide');
         window.dispatchEvent(new Event('closeVideoGuide'));
     }
 

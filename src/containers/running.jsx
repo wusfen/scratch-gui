@@ -56,6 +56,7 @@ class Running extends React.Component {
         if (projectRunning) {
             dispatchEvent(new Event('projectRunning'));
         } else {
+            console.log('projectRunFinish');
             dispatchEvent(new Event('projectRunFinish'));
         }
         return (
