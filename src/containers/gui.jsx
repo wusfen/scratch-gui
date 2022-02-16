@@ -66,7 +66,7 @@ class GUI extends React.Component {
         setIsScratchDesktop(this.props.isScratchDesktop);
         this.props.onStorageInit(storage);
         this.props.onVmInit(this.props.vm);
-        console.log('GUI componentDidMount ')
+        console.log('GUI componentDidMount ');
         var mode = param('mode');
 
         this.initTimer(); // 初始化计时器
@@ -167,7 +167,7 @@ class GUI extends React.Component {
     }
 
     initTimer = () => {
-        console.log('initTimer',param('mode'))
+        console.log('initTimer', param('mode'));
         if (param('mode') === 'course') {
             window.operateTimer = new Timer(timerType.OPERATE); // 操作计时器
             window.codeTimer = new Timer(timerType.CODE); // 代码计时器
