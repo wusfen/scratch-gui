@@ -238,6 +238,7 @@ class Stage extends React.Component {
                     this.startPickY = mousePosition[1];
                 }
                 this._isDown = false;
+                console.log('onMouseMove', this.pickX, this.startPickX, mousePosition[0]);
             } else if (!navigator.maxTouchPoints){
                 this.pickX = mousePosition[0];
                 this.pickY = mousePosition[1];
