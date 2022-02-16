@@ -830,7 +830,7 @@ class TaskBar extends React.Component{
                                 ref={r => {
                                     this.videoRef = r;
                                 }}
-                                controlsList="nodownload"
+                                controlsList="nodownload nofullscreen noremoteplayback"
                                 disablePictureInPicture
                             ></video>
                             <div className={c.videoOptions}>
