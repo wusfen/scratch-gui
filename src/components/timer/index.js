@@ -58,7 +58,7 @@ class Timer {
             break;
         case timerType.OPERATE:
             this.createOperateTimer = (e) => { // 监听创建操作计时器事件
-                console.log(e)
+                console.log(JSON.stringify(e,null,2));
                 if (this.state === 'exist') return;
                 console.log('创建操作计时器');
                 this.createTimer(); // 开始计时
