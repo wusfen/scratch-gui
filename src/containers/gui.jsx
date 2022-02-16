@@ -167,6 +167,7 @@ class GUI extends React.Component {
     }
 
     initTimer = () => {
+        console.log('initTimer',param('mode'))
         if (param('mode') === 'course') {
             window.operateTimer = new Timer(timerType.OPERATE); // 操作计时器
             window.codeTimer = new Timer(timerType.CODE); // 代码计时器
