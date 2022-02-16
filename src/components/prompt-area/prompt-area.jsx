@@ -10,6 +10,7 @@ import {scale} from 'twgl.js';
 import * as bridge from '../../playground/bridge.js';
 import getTipParam from '../../lib/courseTip/getTipParam';
 import getParam from '@/lib/param';
+import {IS_NATIVE_PLAY_VIDEO} from '@/lib/const';
 const c = styles;
 
 class PromptArea extends React.Component{
@@ -33,8 +34,7 @@ class PromptArea extends React.Component{
             title: props.title,
             imageTextScale: 1,
             imageTextScaleRate: 0.25,
-            transformOrigin: 'center center',
-            nativePlayVideo: getParam('nativePlayVideo')
+            transformOrigin: 'center center'
         };
 
         if (props.type){
@@ -87,7 +87,9 @@ class PromptArea extends React.Component{
 
     videoPause = () => {
         setTimeout(() => {
-            this.props.closePromptArea();
+            if (!IS_NATIVE_PLAY_VIDEO) {
+                this.props.closePromptArea();
+            }
         }, 1000);
     }
 
@@ -275,7 +277,7 @@ class PromptArea extends React.Component{
                 }}
                 style={style}
                 className={c.drawingItem}
-                hidden={this.state.nativePlayVideo}
+                hidden={IS_NATIVE_PLAY_VIDEO}
             >
                 <div
                     className={c.title}
@@ -303,11 +305,11 @@ class PromptArea extends React.Component{
                         className={c.video}
                         src={videoSrc}
                         controls={'controls'}
-                        autoPlay={title?.includes('介绍') ? null : this.state.nativePlayVideo ? null : 'autoplay'} // 介绍视频不自动播放
+                        autoPlay={title?.includes('介绍') ? null : IS_NATIVE_PLAY_VIDEO ? null : 'autoplay'} // 介绍视频不自动播放
                         controlsList="nodownload"
                         playsInline
                         disablePictureInPicture
-                        hidden={this.state.nativePlayVideo}
+                        hidden={IS_NATIVE_PLAY_VIDEO}
                     >
                     </video>) : <div
                         className={c.imageTextContent}
