@@ -66,7 +66,7 @@ class GUI extends React.Component {
         setIsScratchDesktop(this.props.isScratchDesktop);
         this.props.onStorageInit(storage);
         this.props.onVmInit(this.props.vm);
-
+        console.log('GUI componentDidMount ')
         var mode = param('mode');
 
         this.initTimer(); // 初始化计时器
