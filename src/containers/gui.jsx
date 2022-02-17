@@ -49,6 +49,7 @@ import {counterType} from '../components/counter/data';
 import {param} from '../lib/param.js';
 import {addStageCSSWidth} from '../reducers/stage-size';
 import {IS_NATIVE_PLAY_VIDEO} from '@/lib/const';
+import {playVideoOnNative} from '@/lib/native-event';
 
 class GUI extends React.Component {
     constructor (props) {
@@ -202,17 +203,21 @@ class GUI extends React.Component {
                 });
             }
         }
-        console.log('videoSrc', videoSrc);
         if (videoSrc){ // 有初始引导
             this.addEventListener('loaderUnmount', () => { // 等待工程加载完毕
-                if (!IS_NATIVE_PLAY_VIDEO) {
+                if (IS_NATIVE_PLAY_VIDEO) {
+                    playVideoOnNative({
+                        type: 1,
+                        videoSrc,
+                        promptTitle: this.state.promptTitle
+                    });
+                } else {
                     this.setState({promptAreaShow: true});
                 }
             });
         } else {
             videoSrc = '';
             this.addEventListener('projectLoadSucceedLoaderUnmount', () => { // 等待工程加载完毕
-                console.log('noVideoGuide');
                 window.dispatchEvent(new Event('noVideoGuide'));
             });
         }

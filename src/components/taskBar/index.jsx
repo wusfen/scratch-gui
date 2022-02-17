@@ -27,9 +27,9 @@ import {
 } from '../../reducers/menus';
 import * as bridge from '../../playground/bridge.js';
 import {IS_NATIVE_PLAY_VIDEO} from '@/lib/const';
+import {playVideoOnNative, unlockNextVideo} from '@/lib/native-event';
 const c = styles;
 Object.assign(c, require('../../css/animate.css'));
-
 class TaskBar extends React.Component{
     constructor (props) {
         super(props);
@@ -363,8 +363,8 @@ class TaskBar extends React.Component{
                 return;
             }
             Promise.resolve().then(() => {
-                const react = this.courseTaskBarInnerEl.getBoundingClientRect();
-                bridge.emit('showVideoModal', react);
+                const rect = this.courseTaskBarInnerEl.getBoundingClientRect();
+                playVideoOnNative({rect, type: 2});
             });
             this.setState({
                 isPlayOnNative: true,
@@ -512,6 +512,7 @@ class TaskBar extends React.Component{
         });
         this.closeVideoContent();
         dispatchEvent(new Event('closeVideoTips')); // 关闭视频提示
+        unlockNextVideo();
     }
 
     initTouchAndMove = () => { // 初始化缩放和拖拽事件
