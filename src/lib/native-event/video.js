@@ -18,8 +18,10 @@ function getTipVideos () {
 
 const videos = getTipVideos();
 
-export function unlockNextVideo (){ // 解锁下一个视频
-    playIndex++;
+export function unlockNextVideo (data = {type: 1}){ // 解锁下一个视频
+    if (data.type == 2 && playIndex < videos.length - 1){
+        playIndex++;
+    }
 }
 
 export function playVideoOnNative (data = {type: 1}) { // 发送视频播放事件，通过原生播放视频
@@ -38,7 +40,7 @@ export function playVideoOnNative (data = {type: 1}) { // 发送视频播放事�
         data.playIndex = 0;
     } else {
         data.videos = videos.map((video, index) => {
-            video.lock = index <= playIndex;
+            video.lock = index > playIndex;
             return video;
         });
         data.playIndex = playIndex;
