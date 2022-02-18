@@ -505,14 +505,14 @@ class TaskBar extends React.Component{
         });
     }
 
-    closeVideoModal = () => {
+    closeVideoModal = data => {
         this.setState({
             isPlayOnNative: false,
             isVideoContentOpen: false
         });
         this.closeVideoContent();
         dispatchEvent(new Event('closeVideoTips')); // 关闭视频提示
-        unlockNextVideo();
+        unlockNextVideo(data);
     }
 
     initTouchAndMove = () => { // 初始化缩放和拖拽事件
