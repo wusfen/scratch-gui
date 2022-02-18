@@ -3,7 +3,7 @@ import getTipParam from '@/lib/courseTip/getTipParam';
 let playIndex = 0;
 
 function getTipVideos () {
-    let tipVideos = getTipParam('tipVideo') || [];
+    let tipVideos = getTipParam('tipVideo');
     if (!tipVideos) return [];
     tipVideos = tipVideos.split('|');
     return tipVideos.map((url, index) => {
