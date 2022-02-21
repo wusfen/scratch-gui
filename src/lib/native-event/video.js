@@ -75,3 +75,15 @@ export function playVideoOnNative (data = {type: 1}) { // 发送视频播放事�
     window.bridge.emit('showVideoModal', data);
     setIsNatvePlaying(true);
 }
+
+export function removeTimer () {
+    if (window.operateTimer) window.operateTimer.removeListener();
+    if (window.codeTimer) window.codeTimer.removeListener();
+    if (window.rightAnswerTimer) window.rightAnswerTimer.removeListener();
+}
+
+export function openTimer () {
+    if (window.operateTimer) window.operateTimer.iniTimertListener();
+    if (window.codeTimer) window.codeTimer.iniTimertListener();
+    if (window.rightAnswerTimer) window.rightAnswerTimer.iniTimertListener();
+}

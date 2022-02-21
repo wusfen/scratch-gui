@@ -12,7 +12,7 @@ import {ajax} from '../lib/ajax.js';
 import {param} from '../lib/param.js';
 import {playTipAudio} from '../lib/courseTip/TipAudio.js';
 import {IS_NATIVE_PLAY_VIDEO} from '@/lib/const';
-import {getIsNatvePlaying} from '@/lib/native-event';
+import {getIsNatvePlaying, removeTimer} from '@/lib/native-event';
 
 class Controls extends React.Component {
     constructor (props) {
@@ -82,7 +82,10 @@ class Controls extends React.Component {
     initGuide () {
         this.addEventListener(`noAction:${timerType.CODE}:${CODE_TIME_1}`, () => {
             console.log('71秒代码区域无变化');
-            if (IS_NATIVE_PLAY_VIDEO && getIsNatvePlaying()) return;
+            if (IS_NATIVE_PLAY_VIDEO && getIsNatvePlaying()) {
+                removeTimer();
+                return;
+            }
             // 显示引导提示
             if (!this.state.guide) {
                 // 处理

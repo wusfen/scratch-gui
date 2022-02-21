@@ -27,7 +27,13 @@ import {
 } from '../../reducers/menus';
 import * as bridge from '../../playground/bridge.js';
 import {IS_NATIVE_PLAY_VIDEO} from '@/lib/const';
-import {getIsNatvePlaying, playVideoOnNative, setIsNatvePlaying, unlockNextVideo} from '@/lib/native-event';
+import {
+    getIsNatvePlaying, openTimer,
+    playVideoOnNative,
+    removeTimer,
+    setIsNatvePlaying,
+    unlockNextVideo
+} from '@/lib/native-event';
 const c = styles;
 Object.assign(c, require('../../css/animate.css'));
 class TaskBar extends React.Component{
@@ -195,7 +201,10 @@ class TaskBar extends React.Component{
     }
 
     touchTip = () => {
-        if (IS_NATIVE_PLAY_VIDEO && getIsNatvePlaying()) return;
+        if (IS_NATIVE_PLAY_VIDEO && getIsNatvePlaying()) {
+            removeTimer();
+            return;
+        }
         if (!this.state.isVideoContentOpen) {
             this.setState({
                 tipsShow: true
@@ -368,7 +377,10 @@ class TaskBar extends React.Component{
     openTitleAudio = event => {
         event.preventDefault();
         event.stopPropagation();
-        if (IS_NATIVE_PLAY_VIDEO && getIsNatvePlaying()) return;
+        if (IS_NATIVE_PLAY_VIDEO && getIsNatvePlaying()) {
+            removeTimer();
+            return;
+        }
         if (window.ontouchstart !== undefined) {
             this.isDrag = false;
         }
@@ -543,6 +555,7 @@ class TaskBar extends React.Component{
         dispatchEvent(new Event('closeVideoTips')); // 关闭视频提示
         unlockNextVideo(data);
         setIsNatvePlaying(false);
+        openTimer();
     }
 
     initTouchAndMove = () => { // 初始化缩放和拖拽事件
