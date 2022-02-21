@@ -14,6 +14,7 @@ function getTipVideos () {
     tipVideos = tipVideos.split('|');
     if (introVideoSrc){
         tipVideos.unshift(introVideoSrc);
+        playIndex++;
     }
 
     return tipVideos.map((url, index) => {
