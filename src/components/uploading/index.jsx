@@ -41,7 +41,7 @@ class Component extends React.Component{
                 <main className={classNames(c.container)}>
                     <button onClick={e => this.abort()}>x</button>
                     <img src={require('../submit-result-dialog/img/ing.png')} />
-                    <h2>作业提交中···</h2>
+                    <h2>作品提交中···</h2>
                     <p>
                         <span style={{width: `${props.progress}%`}}>
                             <em>{props.progress}%</em>
