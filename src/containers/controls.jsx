@@ -82,7 +82,7 @@ class Controls extends React.Component {
     initGuide () {
         this.addEventListener(`noAction:${timerType.CODE}:${CODE_TIME_1}`, () => {
             console.log('71秒代码区域无变化');
-            if(IS_NATIVE_PLAY_VIDEO && !getIsNatvePlaying())return;
+            if(IS_NATIVE_PLAY_VIDEO && getIsNatvePlaying())return;
             // 显示引导提示
             if (!this.state.guide) {
                 // 处理

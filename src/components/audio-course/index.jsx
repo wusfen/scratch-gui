@@ -54,7 +54,7 @@ class AudioCourse extends React.Component{
     createAudio = () => {
     }
     openTitleAudio = () => {
-        if(IS_NATIVE_PLAY_VIDEO && !getIsNatvePlaying())return;
+        if(IS_NATIVE_PLAY_VIDEO && getIsNatvePlaying())return;
         if (this.titleAudioSrc){
             this.setState({
                 isPlay: true
