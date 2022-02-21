@@ -219,16 +219,22 @@ class TaskBar extends React.Component{
             if (this.audio) {
                 this.audio.pause();
             }
-            Promise.resolve().then(() => {
-                const rect = this.courseTaskBarInnerEl.getBoundingClientRect();
-                playVideoOnNative({rect, type: 2});
-            });
             const tempUrl = this.tipVideos[0];
             this.setState({
-                currentVideoSrc: tempUrl,
-                isPlayOnNative: true,
-                isVideoContentOpen: true,
+                currentVideoSrc: tempUrl
+            }, () => {
+                this.setState(state => {
+                    state.isPlayOnNative = true;
+                    state.isVideoContentOpen = true;
+                    Promise.resolve().then(() => {
+                        const rect = this.courseTaskBarInnerEl.getBoundingClientRect();
+                        console.log(this.courseTaskBarInnerEl.clientHeight, 'this.courseTaskBarInnerEl.clientHeight');
+                        playVideoOnNative({rect, type: 2});
+                    });
+                    return state;
+                });
             });
+
             this.initVideoMove();
             if (this.state.isVideoContentOpen) {
                 this.closeVideoContent();
