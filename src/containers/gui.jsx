@@ -186,12 +186,14 @@ class GUI extends React.Component {
     handleVideoSrc = () => {
         const isExplain = getTipParam('tipVideo')?.includes('_explain');
         let videoSrc;
+        let promptTitle = '';
         if (isExplain) { // 讲解视频就取第一个讲解视频作为入口
             let tipVideos = getTipParam('tipVideo') || [];
             if (typeof tipVideos === 'string') {
                 tipVideos = tipVideos.split('|');
             }
             videoSrc = tipVideos[0];
+            promptTitle = '讲解';
             this.setState({
                 promptTitle: '讲解'
             });
@@ -201,6 +203,7 @@ class GUI extends React.Component {
                 this.setState({
                     promptTitle: '介绍'
                 });
+                promptTitle = '介绍';
             }
         }
         if (videoSrc){ // 有初始引导
@@ -209,7 +212,7 @@ class GUI extends React.Component {
                     playVideoOnNative({
                         type: 1,
                         videoSrc,
-                        promptTitle: this.state.promptTitle
+                        promptTitle
                     });
                 } else {
                     this.setState({promptAreaShow: true});
