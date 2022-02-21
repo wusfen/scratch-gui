@@ -872,7 +872,7 @@ class MenuBar extends React.Component {
         const {data} = await ajax.put('/hwUserWork/newSubmitWork', {
             id: workInfo.id,
             workId: workInfo.analystStatus === -1 ? workInfo.workId : '',
-            submitType: silence ? 1 : 3,
+            submitType: silence ? 1 : param('correctType') || 1,
             userBlockNum: _userBlockNum,
             workCoverPath: `${ossDomainCover}${pathCover}`,
             workPath: `${ossDomain}${path}`,
