@@ -13,6 +13,8 @@ import {setTipAudioSrc} from '../../reducers/tipAudio';
 import tipAudioSource from '../../assets/sounds/tipAudio.mp3';
 import {playTipAudio} from '../../lib/courseTip/TipAudio.js';
 import {param} from '../../lib/param.js';
+import {getIsNatvePlaying} from "@/lib/native-event";
+import {IS_NATIVE_PLAY_VIDEO} from "@/lib/const";
 const c = styles;
 Object.assign(c, require('../../css/animate.css'));
 class AudioCourse extends React.Component{
@@ -52,6 +54,7 @@ class AudioCourse extends React.Component{
     createAudio = () => {
     }
     openTitleAudio = () => {
+        if(IS_NATIVE_PLAY_VIDEO && !getIsNatvePlaying())return;
         if (this.titleAudioSrc){
             this.setState({
                 isPlay: true

@@ -2,6 +2,16 @@ import getTipParam from '@/lib/courseTip/getTipParam';
 
 let playIndex = 0;
 
+let isNaivePlaying = false;
+
+export function setIsNatvePlaying (_isNaivePlaying) {
+    isNaivePlaying = _isNaivePlaying;
+}
+
+export function getIsNatvePlaying () {
+    return isNaivePlaying;
+}
+
 // 任务视频，在最前面
 const introVideoSrc = getTipParam('introVideo');
 
@@ -63,4 +73,5 @@ export function playVideoOnNative (data = {type: 1}) { // 发送视频播放事�
         }
     }
     window.bridge.emit('showVideoModal', data);
+    setIsNatvePlaying(true);
 }
