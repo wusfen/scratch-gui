@@ -58,6 +58,9 @@ export function playVideoOnNative (data = {type: 1}) { // 发送视频播放事�
             return video;
         });
         data.playIndex = playIndex;
+        if (data.rect){
+            data.rect.height = data.rect.width * 0.72;
+        }
     }
     window.bridge.emit('showVideoModal', data);
 }

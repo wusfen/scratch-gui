@@ -228,7 +228,6 @@ class TaskBar extends React.Component{
                     state.isVideoContentOpen = true;
                     Promise.resolve().then(() => {
                         const rect = this.courseTaskBarInnerEl.getBoundingClientRect();
-                        console.log(this.courseTaskBarInnerEl.clientHeight, 'this.courseTaskBarInnerEl.clientHeight');
                         playVideoOnNative({rect, type: 2});
                     });
                     return state;
