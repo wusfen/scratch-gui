@@ -219,12 +219,12 @@ class TaskBar extends React.Component{
             if (this.audio) {
                 this.audio.pause();
             }
-            this.state.currentVideoSrc = this.state.tipVideos[0];
             Promise.resolve().then(() => {
                 const rect = this.courseTaskBarInnerEl.getBoundingClientRect();
                 playVideoOnNative({rect, type: 2});
             });
             this.setState({
+                currentVideoSrc: this.state.tipVideos[0],
                 isPlayOnNative: true,
                 isVideoContentOpen: true,
             });
