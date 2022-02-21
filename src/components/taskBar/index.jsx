@@ -215,6 +215,26 @@ class TaskBar extends React.Component{
         if (!this.tipVideos.length) { // 没有提示视频，无法自动播放
             return;
         }
+        if (IS_NATIVE_PLAY_VIDEO){
+            if (this.audio) {
+                this.audio.pause();
+            }
+            Promise.resolve().then(() => {
+                const rect = this.courseTaskBarInnerEl.getBoundingClientRect();
+                playVideoOnNative({rect, type: 2});
+            });
+            this.setState({
+                isPlayOnNative: true,
+                isVideoContentOpen: true,
+            });
+            this.initVideoMove();
+            if (this.state.isVideoContentOpen) {
+                this.closeVideoContent();
+            }
+            dispatchEvent(new Event('clickTips')); // 更新声音停止不了的问题 author：hwh
+            dispatchEvent(new Event('clickVideoTips')); // 点击视频提示
+            return;
+        }
         this.setState({
             isVideoContentOpen: true,
         });
