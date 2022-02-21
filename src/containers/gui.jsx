@@ -186,7 +186,7 @@ class GUI extends React.Component {
     handleVideoSrc = () => {
         const isExplain = getTipParam('tipVideo')?.includes('_explain');
         let videoSrc;
-        let promptTitle = '';
+        let promptTitle = this.state.promptTitle;
         if (isExplain) { // 讲解视频就取第一个讲解视频作为入口
             let tipVideos = getTipParam('tipVideo') || [];
             if (typeof tipVideos === 'string') {
