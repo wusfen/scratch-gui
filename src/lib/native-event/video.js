@@ -18,7 +18,7 @@ function getTipVideos () {
 
     return tipVideos.map((url, index) => {
         // 首个视频为任务视频
-        const label = introVideoSrc && index === 0 ? '任务' : `${isExplain ? '讲解' : '提示'}${index + 1}`;
+        const label = introVideoSrc && index === 0 ? '任务' : `${isExplain ? '讲解' : '提示'}${introVideoSrc ? index : index + 1}`;
         return {
             url,
             lock: false,
