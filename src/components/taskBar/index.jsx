@@ -195,6 +195,7 @@ class TaskBar extends React.Component{
     }
 
     touchTip = () => {
+        if (IS_NATIVE_PLAY_VIDEO && getIsNatvePlaying()) return;
         if (!this.state.isVideoContentOpen) {
             this.setState({
                 tipsShow: true
