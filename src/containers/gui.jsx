@@ -199,11 +199,11 @@ class GUI extends React.Component {
             });
         } else {
             videoSrc = getTipParam('introVideo');
+            promptTitle = '介绍';
             if (videoSrc?.includes('_task')) {
                 this.setState({
                     promptTitle: '介绍'
                 });
-                promptTitle = '介绍';
             }
         }
         if (videoSrc){ // 有初始引导
