@@ -19,7 +19,7 @@ const c = styles;
 Object.assign(c, require('../../css/animate.css'));
 import {playTipAudio} from '../../lib/courseTip/TipAudio.js';
 import {OPERATE_TIME_2, timerType, RIGHT_ANSWER_1, RIGHT_ANSWER_2} from '../timer/data';
-import {getIsNatvePlaying} from "@/lib/native-event";
+import {getIsNatvePlaying, removeTimer} from "@/lib/native-event";
 
 class Tips extends React.Component{
     constructor (props) {
@@ -70,7 +70,10 @@ class Tips extends React.Component{
     }
 
     touchTip = () => {
-        if(IS_NATIVE_PLAY_VIDEO && getIsNatvePlaying())return;
+        // if(IS_NATIVE_PLAY_VIDEO && getIsNatvePlaying()){
+        //     removeTimer();
+        //     return;
+        // };
         this.setState({
             showState: true
         });

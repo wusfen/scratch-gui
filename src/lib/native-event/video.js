@@ -51,12 +51,13 @@ export function unlockNextVideo (data = {type: 1}){ // 解锁下一个视频
 export function playVideoOnNative (data = {type: 1}) { // 发送视频播放事件，通过原生播放视频
     data.autoPlay = true;
     if (data.type === 1){
+        const label = `${data.promptTitle}视频`;
         data.videos = [
             {
                 url: data.videoSrc,
                 lock: false,
-                label: `${data.promptTitle}视频`,
-                title: `${data.promptTitle}视频`
+                label,
+                title: label
             }
         ];
         delete data.videoSrc;
@@ -74,4 +75,16 @@ export function playVideoOnNative (data = {type: 1}) { // 发送视频播放事�
     }
     window.bridge.emit('showVideoModal', data);
     setIsNatvePlaying(true);
+}
+
+export function removeTimer () {
+    if (window.operateTimer) window.operateTimer.removeListener();
+    if (window.codeTimer) window.codeTimer.removeListener();
+    if (window.rightAnswerTimer) window.rightAnswerTimer.removeListener();
+}
+
+export function openTimer () {
+    if (window.operateTimer) window.operateTimer.iniTimertListener();
+    if (window.codeTimer) window.codeTimer.iniTimertListener();
+    if (window.rightAnswerTimer) window.rightAnswerTimer.iniTimertListener();
 }
