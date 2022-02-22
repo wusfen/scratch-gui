@@ -34,6 +34,9 @@ class Timer {
         switch (this.type) {
         case timerType.CODE:
             this.createCodeTimer = () => { // 监听创建代码计时器事件
+                console.log('this.state', this.state);
+                console.log('IS_NATIVE_PLAY_VIDEO', IS_NATIVE_PLAY_VIDEO);
+                console.log('getIsNatvePlaying()', getIsNatvePlaying());
                 if (this.state === 'exist' || (IS_NATIVE_PLAY_VIDEO && getIsNatvePlaying())) return;
                 console.log('创建代码计时器');
                 this.createTimer(); // 开始计时
