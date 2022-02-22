@@ -201,10 +201,10 @@ class TaskBar extends React.Component{
     }
 
     touchTip = () => {
-        if (IS_NATIVE_PLAY_VIDEO && getIsNatvePlaying()) {
-            removeTimer();
-            return;
-        }
+        // if (IS_NATIVE_PLAY_VIDEO && getIsNatvePlaying()) {
+        //     removeTimer();
+        //     return;
+        // }
         if (!this.state.isVideoContentOpen) {
             this.setState({
                 tipsShow: true
@@ -377,10 +377,10 @@ class TaskBar extends React.Component{
     openTitleAudio = event => {
         event.preventDefault();
         event.stopPropagation();
-        if (IS_NATIVE_PLAY_VIDEO && getIsNatvePlaying()) {
-            removeTimer();
-            return;
-        }
+        // if (IS_NATIVE_PLAY_VIDEO && getIsNatvePlaying()) {
+        //     removeTimer();
+        //     return;
+        // }
         if (window.ontouchstart !== undefined) {
             this.isDrag = false;
         }
