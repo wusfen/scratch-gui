@@ -547,6 +547,7 @@ class TaskBar extends React.Component{
     }
 
     closeVideoModal = data => {
+        setIsNatvePlaying(false);
         this.setState({
             isPlayOnNative: false,
             isVideoContentOpen: false
@@ -554,7 +555,6 @@ class TaskBar extends React.Component{
         this.closeVideoContent();
         dispatchEvent(new Event('closeVideoTips')); // 关闭视频提示
         unlockNextVideo(data);
-        setIsNatvePlaying(false);
         openTimer();
     }
 
