@@ -153,7 +153,7 @@ class TaskBar extends React.Component{
                 this.videoRef?.play();
             });
             // 移动端视频播放相关
-            bridge.on('closeVideoModal', this.closeVideoModal);
+            if (IS_NATIVE_PLAY_VIDEO) bridge.on('closeVideoModal', this.closeVideoModal);
             break;
         case 'teacher':
             this.moreFuncBtnRef && this.moreFuncBtnRef.addEventListener('touchstart', this.handleTouchStart);

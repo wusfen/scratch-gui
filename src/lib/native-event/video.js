@@ -1,4 +1,6 @@
 import getTipParam from '@/lib/courseTip/getTipParam';
+import Timer from '@/components/timer';
+import {timerType} from '@/components/timer/data';
 
 let playIndex = 0;
 
@@ -84,7 +86,12 @@ export function removeTimer () {
 }
 
 export function openTimer () {
-    if (window.operateTimer) window.operateTimer.iniTimertListener();
-    if (window.codeTimer) window.codeTimer.iniTimertListener();
-    if (window.rightAnswerTimer) window.rightAnswerTimer.iniTimertListener();
+    if (window.param('mode') === 'course') {
+        window.operateTimer = window.operateTimer || new Timer(timerType.OPERATE); // 操作计时器
+        window.codeTimer = window.codeTimer || new Timer(timerType.CODE); // 代码计时器
+        window.rightAnswerTimer = window.rightAnswerTimer || new Timer(timerType.RIGHT_ANSWER); // 正确答案计时器
+    }
+    if (window.param('mode') === 'normal') {
+        window.codeTimer = window.codeTimer || new Timer(timerType.CODE); // 代码计时器
+    }
 }
