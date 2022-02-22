@@ -90,8 +90,12 @@ export function openTimer () {
         window.operateTimer = window.operateTimer || new Timer(timerType.OPERATE); // 操作计时器
         window.codeTimer = window.codeTimer || new Timer(timerType.CODE); // 代码计时器
         window.rightAnswerTimer = window.rightAnswerTimer || new Timer(timerType.RIGHT_ANSWER); // 正确答案计时器
+        window.operateTimer.resetTimer();
+        window.codeTimer.resetTimer();
+        window.rightAnswerTimer.resetTimer();
     }
     if (window.param('mode') === 'normal') {
         window.codeTimer = window.codeTimer || new Timer(timerType.CODE); // 代码计时器
+        window.codeTimer.resetTimer();
     }
 }
