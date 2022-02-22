@@ -34,7 +34,7 @@ class Timer {
         switch (this.type) {
         case timerType.CODE:
             this.createCodeTimer = () => { // 监听创建代码计时器事件
-                if (this.state === 'exist' || IS_NATIVE_PLAY_VIDEO && getIsNatvePlaying()) return;
+                if (this.state === 'exist' || (IS_NATIVE_PLAY_VIDEO && getIsNatvePlaying())) return;
                 console.log('创建代码计时器');
                 this.createTimer(); // 开始计时
             };
@@ -60,7 +60,7 @@ class Timer {
             break;
         case timerType.OPERATE:
             this.createOperateTimer = e => { // 监听创建操作计时器事件
-                if (this.state === 'exist' || IS_NATIVE_PLAY_VIDEO && getIsNatvePlaying()) return;
+                if (this.state === 'exist' || (IS_NATIVE_PLAY_VIDEO && getIsNatvePlaying())) return;
                 console.log('创建操作计时器');
                 this.createTimer(); // 开始计时
             };
@@ -79,7 +79,7 @@ class Timer {
             break;
         case timerType.RIGHT_ANSWER:
             this.createRightAnswerTimer = () => { // 监听创建正确答案计时器事件
-                if (this.state === 'exist' || IS_NATIVE_PLAY_VIDEO && getIsNatvePlaying()) return;
+                if (this.state === 'exist' || (IS_NATIVE_PLAY_VIDEO && getIsNatvePlaying())) return;
                 console.log('创建正确答案计时器');
                 this.createTimer(); // 开始计时
             };
