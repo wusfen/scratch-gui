@@ -48,6 +48,7 @@ module.exports = {
         'max-len': 1,
         'no-mixed-operators': 1,
         'no-debugger': 1,
+        'no-negated-condition': 1,
     },
     settings: {
         react: {

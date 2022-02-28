@@ -22,6 +22,7 @@ class Running extends React.Component{
             active,
             onStopAllClick,
             isPlayerOnly,
+            isFullScreen,
             vm,
             ...props
         } = this.props;
@@ -29,6 +30,10 @@ class Running extends React.Component{
         const {
             ...state
         } = this.state;
+
+        if (isFullScreen) {
+            return null;
+        }
 
         return (
             <div
@@ -56,6 +61,7 @@ class Running extends React.Component{
 Running.propTypes = {
     active: PropTypes.bool,
     isPlayerOnly: PropTypes.bool,
+    isFullScreen: PropTypes.bool,
     onStopAllClick: PropTypes.func,
     vm: PropTypes.instanceOf(VM),
 };

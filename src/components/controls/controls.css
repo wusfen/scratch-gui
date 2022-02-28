@@ -24,14 +24,6 @@
     text-align: center;
     outline: 0;
 }
-@media screen and (max-height: $mobile-max-height) {
-    .button {
-        min-width: 5rem;
-        height: 2rem;
-        line-height: 2rem;
-    }
-}
-
 .button.stop {
     background: #00b6ff;
     color: #ffffff;
@@ -52,4 +44,17 @@
     min-width: 5rem;
     background: #32c5ff;
     box-shadow: none;
+}
+
+@media screen and (max-height: $mobile-max-height) {
+    .button {
+        min-width: 4.5rem;
+        height: 1.75rem;
+        line-height: 1.75rem;
+    }
+    .button img {
+        width: 1rem;
+        height: 1rem;
+        margin-right: 0.125rem;
+    }
 }

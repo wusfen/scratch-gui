@@ -17,6 +17,10 @@ html {
     }
 }
 
+.isFullScreen {
+    border: solid 1px red;
+}
+
 .body-wrapper {
     height: 100%;
 }
@@ -45,6 +49,7 @@ html {
 }
 
 .spritesAndEditorWrapper {
+    min-width: 1px;
     flex: 1;
     display: flex;
     position: relative;
@@ -224,9 +229,17 @@ html {
     position: relative;
 }
 
+/* fix: ios 舞台全屏再关闭后，宽度无法撑开 */
+.isFullScreen .stage-and-target-wrapper {
+    position: fixed;
+    z-index: 5000;
+}
+
 .stage-and-target-wrapper {
     position: relative;
     /* width: 23.75rem; */
+    min-width: 1px;
+    flex: none;
     padding: 0.41rem 0.72rem;
     background: #47caff;
     box-shadow: inset 0 1px 0.625rem 0 $motion-primary;

@@ -81,7 +81,8 @@ Running.propTypes = {
 const mapStateToProps = state => ({
     isStarted: state.scratchGui.vmStatus.running,
     projectRunning: state.scratchGui.vmStatus.running,
-    turbo: state.scratchGui.vmStatus.turbo
+    turbo: state.scratchGui.vmStatus.turbo,
+    isFullScreen: state.scratchGui.mode.isFullScreen,
 });
 // no-op function to prevent dispatch prop being passed to component
 const mapDispatchToProps = () => ({});

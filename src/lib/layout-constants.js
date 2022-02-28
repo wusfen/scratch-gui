@@ -1,5 +1,4 @@
 import keyMirror from 'keymirror';
-import {string} from 'to-style';
 
 /**
  * Names for each state of the stage size toggle
@@ -7,23 +6,21 @@ import {string} from 'to-style';
  */
 const STAGE_SIZE_MODES = {
     /**
-    *竖屏3:4
-    */
-    portrait_3_4: '竖屏3:4',
-
-    /**
     *竖屏9:16
     */
     portrait_9_16: '竖屏9:16',
-
     /**
-    *横屏4:3
+    *竖屏3:4
     */
-    landscape_4_3: '横屏4:3',
+    portrait_3_4: '竖屏3:4',
     /**
     *横屏16:9
     */
     landscape_16_9: '横屏16:9',
+    /**
+    *横屏4:3
+    */
+    landscape_4_3: '横屏4:3',
 };
 
 /**

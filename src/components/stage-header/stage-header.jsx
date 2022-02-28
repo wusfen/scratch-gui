@@ -16,7 +16,8 @@ import Icon from '../../assets/icons/icon.jsx';
 import fullScreenIcon from './icon--fullscreen.png';
 // import largeStageIcon from './icon--large-stage.svg';
 // import smallStageIcon from './icon--small-stage.svg';
-import unFullScreenIcon from './icon--unfullscreen.svg';
+// import unFullScreenIcon from './icon--unfullscreen.svg';
+import unFullScreenIcon from '@/assets/icons/close.svg';
 import downUpIcon from './icon--pull-down-up.svg';
 import scratchLogo from '../menu-bar/scratch-logo.svg';
 import styles from './stage-header.css';
@@ -100,10 +101,9 @@ const StageHeaderComponent = function (props) {
             <Box className={styles.stageHeaderWrapperOverlay}>
                 <Box
                     className={styles.stageMenuWrapper}
-                    style={{width: stageDimensions.width}}
                 >
-                    <Controls vm={vm} />
                     {stageButton}
+                    <Controls vm={vm} />
                 </Box>
             </Box>
         );
@@ -146,7 +146,6 @@ const StageHeaderComponent = function (props) {
                         }}
                     >
                         {STAGE_SIZE_MODES[stageMode]}
-                        <img src={downUpIcon} />
                     </div>
                 </div>
             );
@@ -154,9 +153,10 @@ const StageHeaderComponent = function (props) {
             <Box className={styles.stageHeaderWrapper}>
                 <Box className={styles.stageMenuWrapper}>
                     {stageControls}
+                    {/* 全屏 */}
                     <button
+                        hidden={isPlayerOnly}
                         className={classNames(styles.iconWrap, styles.fullStageBtn)}
-                        hidden
                         onClick={onSetStageFull}
                     >
                         <img

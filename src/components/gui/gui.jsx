@@ -223,14 +223,10 @@ const GUIComponent = props => {
                     stageMode={stageMode}
                     vm={vm}
                 />
-                <Keyboard
-                    vm={vm}
-                    isPlayerOnly={isPlayerOnly}
-                />
             </div>
         ) : (
             <Box
-                className={styles.pageWrapper}
+                className={classNames(styles.pageWrapper, {[styles.isFullScreen]: isFullScreen})}
                 dir={isRtl ? 'rtl' : 'ltr'}
                 {...componentProps}
             >
