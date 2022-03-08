@@ -224,3 +224,11 @@ textarea[class*="scratchCommentTextarea"]:-ms-input-placeholder {
     color: #ffffff;
     font-style: normal;
 }
+
+/* ====== blocklyFlyoutButton ====== */
+:global(.blocklyFlyoutLabel) :global(.blocklyFlyoutButton){
+    x: 10rem;
+}
+:global(.blocklyFlyoutLabel) :global(.blocklyFlyoutButton)+ :global(.blocklyTouchTargetBackground){
+    x: 9rem;
+}
