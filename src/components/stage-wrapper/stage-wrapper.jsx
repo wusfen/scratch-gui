@@ -8,6 +8,7 @@ import {STAGE_DISPLAY_SIZES, STAGE_SIZE_MODES} from '../../lib/layout-constants.
 import StageHeader from '../../containers/stage-header.jsx';
 import Stage from '../../containers/stage.jsx';
 import Loader from '../loader/loader.jsx';
+import Keyboard from '../keyboard/index.jsx';
 
 import styles from './stage-wrapper.css';
 
@@ -60,6 +61,15 @@ const StageWrapperComponent = function (props) {
                     isPlayerOnly={isPlayerOnly}
                 />
             ) : null}
+
+            {/* 虚拟键盘 */}
+            {(isFullScreen || isPlayerOnly) ?
+                <Keyboard
+                    vm={vm}
+                    isPlayerOnly
+                /> : null
+            }
+
         </Box>
     );
 };

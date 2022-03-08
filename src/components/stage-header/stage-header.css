@@ -8,9 +8,9 @@
 
 .stage-header-wrapper-overlay {
     position: fixed;
-    background-color: rgb(232, 237, 241);
+    /* background-color: rgb(232, 237, 241); */
     top: 0;
-    left: 0;
+    /* left: 0; */
     right: 0;
     z-index: $z-index-stage-header;
 }
@@ -24,7 +24,7 @@
     margin: 0.625rem 0;
 }
 .stage-menu-wrapper > .full-stage-btn {
-    display: none;
+    /* display: none; */
 }
 .stage-menu-wrapper > *:not(:last-child) {
     margin-right: 0.25rem;
@@ -34,9 +34,15 @@
     .stage-menu-wrapper {
         margin: 0.2rem 0;
     }
-    .stage-menu-wrapper > .full-stage-btn {
-        display: block;
-    }
+}
+
+[class*="stage-only"] .stage-menu-wrapper,
+[class*="isFullScreen"] .stage-menu-wrapper {
+    margin: 0.5rem;
+}
+[class*="stage-only"] .stage-menu-wrapper button,
+[class*="isFullScreen"] .stage-menu-wrapper button {
+    border-radius: 99px;
 }
 
 .embed-scratch-logo img {
@@ -58,21 +64,25 @@
 }
 
 .stage-button {
+    position: fixed;
+    top: 1.25rem;
+    left: 2rem;
     display: block;
-    border: 1px solid $ui-black-transparent;
+    /* border: 1px solid $ui-black-transparent; */
     border-radius: $form-radius;
-    width: calc(2rem + 0.125rem);
-    height: calc(2rem + 0.125rem);
-    background: $ui-white;
+    /* width: calc(2rem + 0.125rem); */
+    /* height: calc(2rem + 0.125rem); */
+    /* background: $ui-white; */
     padding: 0.375rem;
     user-select: none;
     cursor: pointer;
 }
 
 .stage-button-icon {
+    display: block;
     width: 1rem;
     height: 1rem;
-    background: #00b6ff;
+    /* background: #00b6ff; */
 }
 
 [dir="rtl"] .stage-button-icon {
@@ -104,16 +114,14 @@
 .stage-mode {
     display: flex;
     flex-direction: row;
-    /* width: 5rem; */
     height: 1.75rem;
-    background: #00a7ff;
+    padding: 0 0.35rem;
+    background: #00b6ff;
     border-radius: 0.63rem;
     font-size: 0.75rem;
     font-weight: 400;
     color: #ffffff;
-    line-height: 1.13rem;
     align-items: center;
-    padding-left: 0.64rem;
     justify-content: space-between;
     white-space: nowrap;
 }

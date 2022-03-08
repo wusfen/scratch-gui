@@ -1,25 +1,24 @@
 /* eslint-disable no-loop-func */
-import classNames from 'classnames';
-import {defineMessages, injectIntl, intlShape} from 'react-intl';
-import PropTypes from 'prop-types';
-import React from 'react';
-import {connect} from 'react-redux';
-import VM from 'scratch-vm';
-
-import Box from '../box/box.jsx';
-import Button from '../button/button.jsx';
-import Controls from '../../containers/controls.jsx';
-import {getStageDimensions} from '../../lib/screen-utils';
-import {STAGE_SIZE_MODES} from '../../lib/layout-constants';
-
-import Icon from '../../assets/icons/icon.jsx';
-import fullScreenIcon from './icon--fullscreen.png';
 // import largeStageIcon from './icon--large-stage.svg';
 // import smallStageIcon from './icon--small-stage.svg';
-import unFullScreenIcon from './icon--unfullscreen.svg';
-import downUpIcon from './icon--pull-down-up.svg';
+// import unFullScreenIcon from './icon--unfullscreen.svg';
+import unFullScreenIcon from '@/assets/icons/close.svg';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {defineMessages, injectIntl, intlShape} from 'react-intl';
+import {connect} from 'react-redux';
+import VM from 'scratch-vm';
+import Icon from '../../assets/icons/icon.jsx';
+import Controls from '../../containers/controls.jsx';
+import {STAGE_SIZE_MODES} from '../../lib/layout-constants';
+import {getStageDimensions} from '../../lib/screen-utils';
+import Box from '../box/box.jsx';
+import Button from '../button/button.jsx';
 import scratchLogo from '../menu-bar/scratch-logo.svg';
+import fullScreenIcon from './icon--fullscreen.png';
 import styles from './stage-header.css';
+
 
 const messages = defineMessages({
     largeStageSizeMessage: {
@@ -100,10 +99,9 @@ const StageHeaderComponent = function (props) {
             <Box className={styles.stageHeaderWrapperOverlay}>
                 <Box
                     className={styles.stageMenuWrapper}
-                    style={{width: stageDimensions.width}}
                 >
-                    <Controls vm={vm} />
                     {stageButton}
+                    <Controls vm={vm} />
                 </Box>
             </Box>
         );
@@ -146,7 +144,6 @@ const StageHeaderComponent = function (props) {
                         }}
                     >
                         {STAGE_SIZE_MODES[stageMode]}
-                        <img src={downUpIcon} />
                     </div>
                 </div>
             );
@@ -154,9 +151,10 @@ const StageHeaderComponent = function (props) {
             <Box className={styles.stageHeaderWrapper}>
                 <Box className={styles.stageMenuWrapper}>
                     {stageControls}
+                    {/* 全屏 */}
                     <button
+                        hidden={isPlayerOnly}
                         className={classNames(styles.iconWrap, styles.fullStageBtn)}
-                        hidden
                         onClick={onSetStageFull}
                     >
                         <img
@@ -175,14 +173,20 @@ const StageHeaderComponent = function (props) {
                                 className={classNames(styles.iconWrap)}
                                 onClick={e => vm.postSpriteInfo({visible: false})}
                             >
-                                <Icon name="show" />
+                                <Icon
+                                    name="show"
+                                    className={styles.stageButtonIcon}
+                                />
                             </button> :
                             <button
                                 hidden={isPlayerOnly}
                                 className={classNames(styles.iconWrap)}
                                 onClick={e => vm.postSpriteInfo({visible: true})}
                             >
-                                <Icon name="hide" />
+                                <Icon
+                                    name="hide"
+                                    className={styles.stageButtonIcon}
+                                />
                             </button>
                     }
                     <Controls

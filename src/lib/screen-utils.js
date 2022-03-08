@@ -124,16 +124,8 @@ const getStageDimensions = (stageSize, isFullScreen) => {
         scale: 0
     };
     if (isFullScreen) {
-        stageDimensions.height = window.innerHeight -
-            STAGE_DIMENSION_DEFAULTS.menuHeightAdjustment -
-            STAGE_DIMENSION_DEFAULTS.fullScreenSpacingBorderAdjustment;
-
-        stageDimensions.width = stageDimensions.height + (stageDimensions.height / 3);
-
-        if (stageDimensions.width > window.innerWidth) {
-            stageDimensions.width = window.innerWidth;
-            stageDimensions.height = stageDimensions.width * .75;
-        }
+        stageDimensions.height = window.innerHeight;
+        stageDimensions.width = stageDimensions.widthDefault * (stageDimensions.height / stageDimensions.heightDefault);
 
         stageDimensions.scale = stageDimensions.width / stageDimensions.widthDefault;
     } else {

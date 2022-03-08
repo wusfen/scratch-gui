@@ -4,6 +4,7 @@
 
 .stage-wrapper {
     flex: 1;
+    min-width: 0;
     display: flex;
     justify-content: center;
 }
@@ -24,15 +25,15 @@
 
 .stage-wrapper.full-screen {
     position: fixed;
-    top: $stage-menu-height;
+    top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: $z-index-stage-wrapper-overlay;
-    background-color: $ui-white;
-    /* spacing between stage and control bar (on the top), or between
-    stage and window edges (on left/right/bottom) */
-    padding: $stage-full-screen-stage-padding;
+    background-color: hsl(0deg 0% 0% / 30%);
+    background: #000;
+    backdrop-filter: blur(5px);
+    padding: 0;
 
     /* this centers the stage */
     display: flex;

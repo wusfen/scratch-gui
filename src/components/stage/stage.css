@@ -26,7 +26,7 @@ $stage-height: calc($stage-css-height * 1px); */
     display: block;
 
     /* border-radius: $space; */
-    border-radius: 0.25rem;
+    /* border-radius: 0.25rem; */
     /* border: $stage-standard-border-width solid $ui-black-transparent; */
     overflow: hidden;
 
@@ -54,7 +54,7 @@ $stage-height: calc($stage-css-height * 1px); */
 }  */
 
 .stage.full-screen {
-    border: $stage-full-screen-border-width solid rgb(126, 133, 151);
+    /* border: $stage-full-screen-border-width solid rgb(126, 133, 151); */
 }
 
 .with-color-picker {
