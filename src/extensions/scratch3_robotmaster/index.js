@@ -1,13 +1,6 @@
-const ArgumentType = require('../../extension-support/argument-type');
-const BlockType = require('../../extension-support/block-type');
-const Cast = require('../../util/cast');
+/* eslint-disable valid-jsdoc */
 const formatMessage = require('format-message');
-const color = require('../../util/color');
-const BLE = require('../../io/ble');
-const Base64Util = require('../../util/base64-util');
-const MathUtil = require('../../util/math-util');
-const RateLimiter = require('../../util/rateLimiter.js');
-const log = require('../../util/log');
+const {ArgumentType, BlockType, Cast, BLE, Base64Util, color, log, RateLimiter, MathUtil} = require('scratch-vm');
 
 /**
  * Icon svg to be displayed at the left edge of each extension block, encoded as a data URI.
@@ -22,7 +15,7 @@ const iconURI = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOE
  */
 const BLEService = {
     NAME_ESP32: 'TUDAO_MASTER',
-    NAME_nRF51822: 'Nordic_TUDAO', //旧版
+    NAME_nRF51822: 'Nordic_TUDAO', // 旧版
     DEVICE_SERVICE: '6e400001-b5a3-f393-e0a9-e50e24dcca9e'
 };
 
@@ -219,11 +212,11 @@ class Robotmaster {
         this._ble = new BLE(this._runtime, this._extensionId, {
             filters: [{
                 name: BLEService.NAME_ESP32
-            }
-            ,{
+            },
+            {
                 name: BLEService.NAME_nRF51822
             }
-        ],
+            ],
             optionalServices: [BLEService.DEVICE_SERVICE]
         }, this._onConnect, this.reset);
     }
@@ -300,11 +293,11 @@ class Robotmaster {
      * Starts reading data from peripheral after BLE has connected.
      * @private
      */
-    _onConnect() {
+    _onConnect () {
         this._ble.startNotifications(
-           BLEService.DEVICE_SERVICE,
-           BLECharacteristic.OUTPUT_COMMAND,
-           this._onMessage
+            BLEService.DEVICE_SERVICE,
+            BLECharacteristic.OUTPUT_COMMAND,
+            this._onMessage
         );
     }
 
@@ -317,34 +310,41 @@ class Robotmaster {
         const data = Base64Util.base64ToUint8Array(base64);
         // log.info("onMessage: "+data);
 
-        if(data.length===11){ //旧版固件
-            if(data[7]<255){
-                this._sensors.distance=data[7];
-                if(this._sensors.distance>6)
-                    this._sensors.distance=6;
+        if (data.length === 11){ // 旧版固件
+            if (data[7] < 255){
+                this._sensors.distance = data[7];
+                if (this._sensors.distance > 6) {
+                    this._sensors.distance = 6;
+                }
             }
-            if(data[8]<255){
-                this._sensors.distance2=data[8];
-                if(this._sensors.distance2>6)
-                    this._sensors.distance2=6;
+            if (data[8] < 255){
+                this._sensors.distance2 = data[8];
+                if (this._sensors.distance2 > 6) {
+                    this._sensors.distance2 = 6;
+                }
             }
-        }else{ //新版固件返回值长度为19
-            if(data[6]<255){
-                this._sensors.distance=data[6];
-                if(this._sensors.distance>6)
-                    this._sensors.distance=6;
+        } else { // 新版固件返回值长度为19
+            if (data[6] < 255){
+                this._sensors.distance = data[6];
+                if (this._sensors.distance > 6) {
+                    this._sensors.distance = 6;
+                }
             }
-            if(data[7]<255){
-                this._sensors.distance2=data[7];
-                if(this._sensors.distance2>6)
-                    this._sensors.distance2=6;
+            if (data[7] < 255){
+                this._sensors.distance2 = data[7];
+                if (this._sensors.distance2 > 6) {
+                    this._sensors.distance2 = 6;
+                }
             }
-            if(data[8]<255)
-                this._sensors.gyro_x_axis_angle=data[8]-90;
-            if(data[9]<255)
-                this._sensors.gyro_y_axis_angle=data[9]-90;
-            if(data[10]<255)
-                this._sensors.gyro_sum_acceleration=data[10];
+            if (data[8] < 255) {
+                this._sensors.gyro_x_axis_angle = data[8] - 90;
+            }
+            if (data[9] < 255) {
+                this._sensors.gyro_y_axis_angle = data[9] - 90;
+            }
+            if (data[10] < 255) {
+                this._sensors.gyro_sum_acceleration = data[10];
+            }
         }
     }
 
@@ -353,7 +353,7 @@ class Robotmaster {
      * @param index
      * @param value
      */
-    _setCommand(index, value){
+    _setCommand (index, value){
         this._lastCommand[index] = value;
         return this._lastCommand;
     }
@@ -363,18 +363,18 @@ class Robotmaster {
      * @param {*} light 灯的位置
      * @param {*} hue 灯的颜色代码
      */
-    setLightHue(light, hue){
+    setLightHue (light, hue){
         switch (light) {
-            case "LIGHT1":
-                this._setCommand(8, Number(hue));
-                break;
-            case "LIGHT2":
-                this._setCommand(9, Number(hue));
-                break;
-            case "ALLLIGHTS":
-                this._setCommand(8, Number(hue));
-                this._setCommand(9, Number(hue));
-                break;
+        case 'LIGHT1':
+            this._setCommand(8, Number(hue));
+            break;
+        case 'LIGHT2':
+            this._setCommand(9, Number(hue));
+            break;
+        case 'ALLLIGHTS':
+            this._setCommand(8, Number(hue));
+            this._setCommand(9, Number(hue));
+            break;
         }
         return this.send(BLECharacteristic.INPUT_COMMAND, this._lastCommand);
     }
@@ -385,16 +385,16 @@ class Robotmaster {
      */
     turnOffLight (light) {
         switch (light) {
-            case "LIGHT1":
-                this._setCommand(8, Number(RobotmasterLedHue.CLOSED));
-                break;
-            case "LIGHT2":
-                this._setCommand(9, Number(RobotmasterLedHue.CLOSED));
-                break;
-            case "ALLLIGHTS":
-                this._setCommand(8, Number(RobotmasterLedHue.CLOSED));
-                this._setCommand(9, Number(RobotmasterLedHue.CLOSED));
-                break;
+        case 'LIGHT1':
+            this._setCommand(8, Number(RobotmasterLedHue.CLOSED));
+            break;
+        case 'LIGHT2':
+            this._setCommand(9, Number(RobotmasterLedHue.CLOSED));
+            break;
+        case 'ALLLIGHTS':
+            this._setCommand(8, Number(RobotmasterLedHue.CLOSED));
+            this._setCommand(9, Number(RobotmasterLedHue.CLOSED));
+            break;
         }
         return this.send(BLECharacteristic.INPUT_COMMAND, this._lastCommand);
     }
@@ -405,23 +405,23 @@ class Robotmaster {
      * @param {*} speed 速度
      * @param {*} direction 方向
      */
-    setMotorSpeed(port, speed, direction){
-        var sign = (direction === "CLOCKWISE") ? 1 : -1;
+    setMotorSpeed (port, speed, direction){
+        var sign = (direction === 'CLOCKWISE') ? 1 : -1;
         switch (port) {
-            case "PORT1":
-                this._setCommand(5, Number(speed) * sign);
-                break;
-            case "PORT2":
-                this._setCommand(6, Number(speed) * sign);
-                break;
-            case "PORT3":
-                this._setCommand(7, Number(speed) * sign);
-                break;
-            case "ALLPORTS":
-                this._setCommand(5, Number(speed) * sign);
-                this._setCommand(6, Number(speed) * sign);
-                this._setCommand(7, Number(speed) * sign);
-                break;
+        case 'PORT1':
+            this._setCommand(5, Number(speed) * sign);
+            break;
+        case 'PORT2':
+            this._setCommand(6, Number(speed) * sign);
+            break;
+        case 'PORT3':
+            this._setCommand(7, Number(speed) * sign);
+            break;
+        case 'ALLPORTS':
+            this._setCommand(5, Number(speed) * sign);
+            this._setCommand(6, Number(speed) * sign);
+            this._setCommand(7, Number(speed) * sign);
+            break;
         }
         return this.send(BLECharacteristic.INPUT_COMMAND, this._lastCommand);
     }
@@ -430,22 +430,22 @@ class Robotmaster {
      * 停止电机
      * @param {*} port 端口
      */
-    stopMotor(port){
+    stopMotor (port){
         switch (port) {
-            case "PORT1":
-                this._setCommand(5, 0);
-                break;
-            case "PORT2":
-                this._setCommand(6, 0);
-                break;
-            case "PORT3":
-                this._setCommand(7, 0);
-                break;
-            case "ALLPORTS":
-                this._setCommand(5, 0);
-                this._setCommand(6, 0);
-                this._setCommand(7, 0);
-                break;
+        case 'PORT1':
+            this._setCommand(5, 0);
+            break;
+        case 'PORT2':
+            this._setCommand(6, 0);
+            break;
+        case 'PORT3':
+            this._setCommand(7, 0);
+            break;
+        case 'ALLPORTS':
+            this._setCommand(5, 0);
+            this._setCommand(6, 0);
+            this._setCommand(7, 0);
+            break;
         }
         return this.send(BLECharacteristic.INPUT_COMMAND, this._lastCommand);
     }
@@ -454,7 +454,7 @@ class Robotmaster {
      * Stop all the motors that are currently running.
      */
     stopAllMotors () {
-        this.stopMotor("ALLPORTS");
+        this.stopMotor('ALLPORTS');
     }
 }
 
@@ -463,7 +463,7 @@ class Robotmaster {
  */
 class Scratch3RobotmasterBlocks {
 
-    
+
     /**
      * @return {string} - the ID of this extension.
      */
@@ -941,14 +941,14 @@ class Scratch3RobotmasterBlocks {
      * @return {boolean} - the result of the comparison, or false on error.
      */
     whenDistance (args) {
-        let dist=0;
-        switch(args.DEV){
-            case '1':
-                dist=this._peripheral.distance;
-                break;
-            case '2':
-                dist=this._peripheral.distance2;
-                break;
+        let dist = 0;
+        switch (args.DEV){
+        case '1':
+            dist = this._peripheral.distance;
+            break;
+        case '2':
+            dist = this._peripheral.distance2;
+            break;
         }
         switch (args.OP) {
         case '<':
@@ -975,15 +975,15 @@ class Scratch3RobotmasterBlocks {
         return this._peripheral.distance2;
     }
 
-    getGyroXaxisAngle(){
+    getGyroXaxisAngle (){
         return this._peripheral.gyro_x_axis_angle;
     }
 
-    getGyroYaxisAngle(){
+    getGyroYaxisAngle (){
         return this._peripheral.gyro_y_axis_angle;
     }
 
-    getGyroSumAcceleration(){
+    getGyroSumAcceleration (){
         return this._peripheral.gyro_sum_acceleration;
     }
 
@@ -994,10 +994,10 @@ class Scratch3RobotmasterBlocks {
      * @return {Promise} - a Promise that resolves after some delay.
      */
     setLightHue (args) {
-        let inputLight=args.LIGHT;
-        let inputHue = Cast.toNumber(args.HUE);
+        const inputLight = args.LIGHT;
+        const inputHue = Cast.toNumber(args.HUE);
 
-        this._peripheral.setLightHue(inputLight, inputHue); 
+        this._peripheral.setLightHue(inputLight, inputHue);
 
         return new Promise(resolve => {
             window.setTimeout(() => {
@@ -1013,9 +1013,9 @@ class Scratch3RobotmasterBlocks {
      * @return {Promise} - a Promise that resolves after some delay.
      */
     turnOffLight (args) {
-        let inputLight=args.LIGHT;
+        const inputLight = args.LIGHT;
 
-        this._peripheral.turnOffLight(inputLight); 
+        this._peripheral.turnOffLight(inputLight);
 
         return new Promise(resolve => {
             window.setTimeout(() => {
@@ -1030,15 +1030,15 @@ class Scratch3RobotmasterBlocks {
      * @return {Promise} - a Promise that resolves after some delay.
      */
     setMotorSpeedByNum (args) {
-        const _maxSpeed=12;
+        const _maxSpeed = 12;
 
-        let inputPort=args.PORT;
+        const inputPort = args.PORT;
         let inputSpeed = Cast.toNumber(args.SPEED);
-        inputSpeed=(inputSpeed>_maxSpeed)?_maxSpeed:inputSpeed;
-        inputSpeed=(inputSpeed<0)?0:inputSpeed;
-        let inputDirection = args.DIRECTION;
+        inputSpeed = (inputSpeed > _maxSpeed) ? _maxSpeed : inputSpeed;
+        inputSpeed = (inputSpeed < 0) ? 0 : inputSpeed;
+        const inputDirection = args.DIRECTION;
 
-        this._peripheral.setMotorSpeed(inputPort, inputSpeed, inputDirection); 
+        this._peripheral.setMotorSpeed(inputPort, inputSpeed, inputDirection);
 
         return new Promise(resolve => {
             window.setTimeout(() => {
@@ -1053,9 +1053,9 @@ class Scratch3RobotmasterBlocks {
      * @return {Promise} - a Promise that resolves after some delay.
      */
     stopMotor (args) {
-        let inputPort=args.PORT;
-        
-        this._peripheral.stopMotor(inputPort); 
+        const inputPort = args.PORT;
+
+        this._peripheral.stopMotor(inputPort);
 
         return new Promise(resolve => {
             window.setTimeout(() => {
@@ -1063,7 +1063,7 @@ class Scratch3RobotmasterBlocks {
             }, BLESendInterval);
         });
     }
-    
+
     /**
      * Test whether the tilt sensor is currently tilted.
      * @param {object} args - the block's arguments.
@@ -1092,19 +1092,19 @@ class Scratch3RobotmasterBlocks {
      */
     _isTilted (direction) {
         switch (direction) {
-            case RobotmasterTiltDirection.FRONT:
-                return this._peripheral.gyro_y_axis_angle >= Scratch3RobotmasterBlocks.TILT_THRESHOLD;
-            case RobotmasterTiltDirection.BACK:
-                return this._peripheral.gyro_y_axis_angle <= (-1)*Scratch3RobotmasterBlocks.TILT_THRESHOLD;
-            case RobotmasterTiltDirection.LEFT:
-                return this._peripheral.gyro_x_axis_angle <= (-1)*Scratch3RobotmasterBlocks.TILT_THRESHOLD;
-            case RobotmasterTiltDirection.RIGHT:
-                return this._peripheral.gyro_x_axis_angle >= Scratch3RobotmasterBlocks.TILT_THRESHOLD;
-            case RobotmasterTiltDirection.ANY:
-                return (Math.abs(this._peripheral.gyro_x_axis_angle) >= Scratch3RobotmasterBlocks.TILT_THRESHOLD) ||
+        case RobotmasterTiltDirection.FRONT:
+            return this._peripheral.gyro_y_axis_angle >= Scratch3RobotmasterBlocks.TILT_THRESHOLD;
+        case RobotmasterTiltDirection.BACK:
+            return this._peripheral.gyro_y_axis_angle <= (-1) * Scratch3RobotmasterBlocks.TILT_THRESHOLD;
+        case RobotmasterTiltDirection.LEFT:
+            return this._peripheral.gyro_x_axis_angle <= (-1) * Scratch3RobotmasterBlocks.TILT_THRESHOLD;
+        case RobotmasterTiltDirection.RIGHT:
+            return this._peripheral.gyro_x_axis_angle >= Scratch3RobotmasterBlocks.TILT_THRESHOLD;
+        case RobotmasterTiltDirection.ANY:
+            return (Math.abs(this._peripheral.gyro_x_axis_angle) >= Scratch3RobotmasterBlocks.TILT_THRESHOLD) ||
                     (Math.abs(this._peripheral.gyro_y_axis_angle) >= Scratch3RobotmasterBlocks.TILT_THRESHOLD);
-            default:
-                return false;
+        default:
+            return false;
         }
     }
 }
