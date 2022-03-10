@@ -929,6 +929,10 @@ class MenuBar extends React.Component {
         dispatchEvent(new Event('submit:跳过'));
     }
 
+    handleCodeDownToHardware (){
+        window.tudaoUploadCode();
+    }
+
     handleToggleStageHidden () {
         this.props.toggleStageHidden();
     }
@@ -1412,6 +1416,15 @@ class MenuBar extends React.Component {
                 <div
                     className={classNames(styles.buttons)}
                 >
+                    <button
+                        className={classNames(`${c.button} ${c.toggleStage}`)}
+                        onClick={e => this.handleCodeDownToHardware()}
+                    >
+                        <i
+                            className={classNames(`${c.iSizeL}`)}
+                        />
+                        {'下载'}
+                    </button>
                     <button
                         className={classNames(`${c.button} ${c.toggleStage}`, {
                             [c.isStageShow]: !props.isStageHidden,

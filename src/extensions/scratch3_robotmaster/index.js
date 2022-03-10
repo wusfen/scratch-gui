@@ -1,7 +1,7 @@
 /* eslint-disable valid-jsdoc */
 const formatMessage = require('format-message');
-const {ArgumentType, BlockType, Cast, BLE, Base64Util, color, log, RateLimiter, MathUtil} = require('scratch-vm');
-
+const {ArgumentType, BlockType, Cast, BLE, Base64Util, log, RateLimiter} = require('scratch-vm');
+import Blockly from 'scratch-blocks';
 /**
  * Icon svg to be displayed at the left edge of each extension block, encoded as a data URI.
  * @type {string}
@@ -219,6 +219,7 @@ class Robotmaster {
             ],
             optionalServices: [BLEService.DEVICE_SERVICE]
         }, this._onConnect, this.reset);
+        window.scratchExtensions[this._extensionId].session = this;
     }
 
     /**
@@ -455,6 +456,47 @@ class Robotmaster {
      */
     stopAllMotors () {
         this.stopMotor('ALLPORTS');
+    }
+
+    /**
+     * 上传代码
+     * @param {*} code
+     */
+    uploadCode (){
+        const code = Blockly.Lua.workspaceToCode(Blockly.getMainWorkspace());
+        const content = (new TextEncoder()).encode(code);
+        if (content.length > (256 * 256)) {
+            alert('离线程序过大，无法传入机器人！');
+            return;
+        }
+        const queue = [0xFF, 0xFE, 0x09, 0x02,
+            Math.floor(content.length / 256), Math.floor(content.length % 256),
+            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFD, 0xFC];
+        // console.log(`写入下载模式帧:${JSON.stringify(queue)}`);
+        this.send(BLECharacteristic.INPUT_COMMAND, queue, false);
+
+        // 写入程序文本
+        let buf;
+        let offset = 0;
+        const _frame_length = 14;
+
+        setTimeout(() => {
+            while (offset < content.length) {
+                if ((content.length - offset) <= _frame_length) { // 最后一帧
+                    buf = content.slice(offset, content.length);
+                    setTimeout(() => {
+                        alert('上传完毕');
+                    }, 2000);
+                } else {
+                    buf = content.slice(offset, offset + _frame_length);
+                }
+                offset += _frame_length;
+
+                // 发出
+                this.send(BLECharacteristic.INPUT_COMMAND, buf, false);
+            }
+        }, 1500);
+
     }
 }
 
