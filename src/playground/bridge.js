@@ -3,6 +3,8 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable func-style */
 
+import getParam from '@/lib/param';
+
 /**
  * 编辑器调其它端
  * @param {string} action 调用行为
@@ -10,7 +12,21 @@
  */
 function emit (action, data) {
     console.info('[bridge.emit]', action, data);
-
+    // 首次保存退出分享
+    if (action === 'exitEditor') { // 调用了分享，就不调退出
+        if (window._shareId) {
+            const userId = getParam('userId');
+            const shareId = window._shareId;
+            const base = getParam('base');
+            window.bridge.emit('share', {
+                title: '分享作品',
+                content: '让爸爸妈妈扫描二维码\n试玩你的作品吧～',
+                url: `https://${base === 'uat' ? 'uat' : 'www'}.vipthink.cn/activity/market/crm-mobile-page/index.html#/workShare?channel=0&channelS=0&setRead=1&id=${shareId}&userId=${userId}`
+            });
+            delete window._shareId;
+        }
+        return;
+    }
     const event = new Event('bridge.emit');
     event.data = {
         action,
@@ -43,14 +59,6 @@ function emit (action, data) {
         } catch (e) {}
     }, 1);
 
-
-    // 首次保存退出分享
-    if (action === 'exitEditor') {
-        if (window._shareId) {
-            window.bridge.emit('share', {id: window._shareId});
-            delete window._shareId;
-        }
-    }
 }
 
 function on (action, cb) {
