@@ -42,6 +42,15 @@ function emit (action, data) {
             }
         } catch (e) {}
     }, 1);
+
+
+    // 首次保存退出分享
+    if (action === 'exitEditor') {
+        if (window._shareId) {
+            window.bridge.emit('share', {id: window._shareId});
+            delete window._shareId;
+        }
+    }
 }
 
 function on (action, cb) {
