@@ -661,6 +661,12 @@ class MenuBar extends React.Component {
             console.log('indexDB---delete---error', error);
         }
         this.state.id = data;
+
+        // 首次保存分享
+        if (!this.state.id) {
+            window.bridge.emit('share', {id: data});
+        }
+
         param('id', this.state.id);
 
         this.props.onProjectSaved({
