@@ -24,8 +24,8 @@ function emit (action, data) {
                 url: `https://${base === 'uat' ? 'uat' : 'www'}.vipthink.cn/activity/market/crm-mobile-page/index.html#/workShare?channel=0&channelS=0&setRead=1&id=${shareId}&userId=${userId}`
             });
             delete window._shareId;
+            return;
         }
-        return;
     }
     const event = new Event('bridge.emit');
     event.data = {
