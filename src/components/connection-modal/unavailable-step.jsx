@@ -7,6 +7,7 @@ import Box from '../box/box.jsx';
 import Dots from './dots.jsx';
 import helpIcon from './icons/help.svg';
 import backIcon from './icons/back.svg';
+import refreshIcon from './icons/refresh.svg';
 import bluetoothIcon from './icons/bluetooth.svg';
 import scratchLinkIcon from './icons/scratchlink.svg';
 
@@ -15,7 +16,32 @@ import styles from './connection-modal.css';
 const UnavailableStep = props => (
     <Box className={styles.body}>
         <Box className={styles.activityArea}>
+            <div className={styles['scratch-link-help-title']}>
+                连接助手：请检查以下内容
+            </div>
             <div className={styles.scratchLinkHelp}>
+                <div className={styles.scratchLinkHelpStep}>
+                    <div className={styles.helpStepNumber}> {'1'} </div>
+                    <div className={styles.helpStepText}>当前设备蓝牙已开启</div>
+                </div>
+                <div className={styles.scratchLinkHelpStep}>
+                    <div className={styles.helpStepNumber}> {'2'} </div>
+                    <div className={styles.helpStepText}>硬件设备开关已开启</div>
+                </div>
+            </div>
+            <div className={styles['peripheral-tile-item']}>
+                <div
+                    className={classNames([styles['peripheral-tile-status'], styles.warn])}
+                >
+                    扫描失败
+                </div>
+            </div>
+
+
+            <div
+                hidden
+                className={styles.scratchLinkHelp}
+            >
                 <div className={styles.scratchLinkHelpStep}>
                     <div className={styles.helpStepNumber}>
                         {'1'}
@@ -67,7 +93,7 @@ const UnavailableStep = props => (
                 >
                     <img
                         className={classNames(styles.buttonIconLeft, styles.buttonIconBack)}
-                        src={backIcon}
+                        src={refreshIcon}
                     />
                     <FormattedMessage
                         defaultMessage="Try again"
@@ -76,6 +102,7 @@ const UnavailableStep = props => (
                     />
                 </button>
                 <button
+                    hidden
                     className={styles.connectionButton}
                     onClick={props.onHelp}
                 >

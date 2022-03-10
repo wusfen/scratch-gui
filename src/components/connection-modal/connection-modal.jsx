@@ -29,17 +29,19 @@ const ConnectionModalComponent = props => (
         headerClassName={styles.header}
         headerImage={props.connectionSmallIconURL}
         id="connectionModal"
-        onHelp={props.onHelp}
+        xxonHelp={props.onHelp}
         onRequestClose={props.onCancel}
     >
-        <Box className={styles.body}>
-            {props.phase === PHASES.scanning && !props.useAutoScan && <ScanningStep {...props} />}
-            {props.phase === PHASES.scanning && props.useAutoScan && <AutoScanningStep {...props} />}
-            {props.phase === PHASES.connecting && <ConnectingStep {...props} />}
-            {props.phase === PHASES.connected && <ConnectedStep {...props} />}
-            {props.phase === PHASES.error && <ErrorStep {...props} />}
-            {props.phase === PHASES.unavailable && <UnavailableStep {...props} />}
-        </Box>
+        {/* {console.log(props.phase, props)} */}
+        {/* <ScanningStep {...props} /> */}
+
+        {props.phase === PHASES.scanning && !props.useAutoScan && <ScanningStep {...props} />}
+        {props.phase === PHASES.scanning && props.useAutoScan && <AutoScanningStep {...props} />}
+        {props.phase === PHASES.connecting && <ConnectingStep {...props} />}
+        {props.phase === PHASES.connected && <ConnectedStep {...props} />}
+        {props.phase === PHASES.error && <ErrorStep {...props} />}
+        {props.phase === PHASES.unavailable && <UnavailableStep {...props} />}
+
     </Modal>
 );
 

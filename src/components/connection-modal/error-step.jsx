@@ -51,6 +51,7 @@ const ErrorStep = props => (
                     />
                 </button>
                 <button
+                    hidden
                     className={styles.connectionButton}
                     onClick={props.onHelp}
                 >

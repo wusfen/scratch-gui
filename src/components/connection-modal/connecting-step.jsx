@@ -14,7 +14,18 @@ import styles from './connection-modal.css';
 const ConnectingStep = props => (
     <Box className={styles.body}>
         <Box className={styles.activityArea}>
-            <Box className={styles.centeredRow}>
+            <div className={styles['peripheral-tile-item']}>
+                <div
+                    className={classNames([styles['peripheral-tile-status']])}
+                >
+                    正在连接
+                </div>
+            </div>
+
+            <Box
+                hidden
+                className={styles.centeredRow}
+            >
                 <div className={styles.peripheralActivity}>
                     <img
                         className={styles.peripheralActivityIcon}
@@ -28,7 +39,10 @@ const ConnectingStep = props => (
             </Box>
         </Box>
         <Box className={styles.bottomArea}>
-            <Box className={classNames(styles.bottomAreaItem, styles.instructions)}>
+            <Box
+                hidden
+                className={classNames(styles.bottomAreaItem, styles.instructions)}
+            >
                 {props.connectingMessage}
             </Box>
             <Dots
