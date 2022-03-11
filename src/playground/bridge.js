@@ -31,8 +31,9 @@ function emit (action, data) {
                 shareDetail: '点击查看宝贝的精彩作品',
                 url: `https://${base === 'uat' ? 'uat' : 'www'}.vipthink.cn/activity/market/crm-mobile-page/index.html#/workShare?channel=0&channelS=0&setRead=1&id=${shareId}&userId=${userId}`
             };
-            window.bridge.emit('share', data);
+            window.bridge.emit(action, data);
             delete window._shareId;
+            return;
         }
     }
     const event = new Event('bridge.emit');
