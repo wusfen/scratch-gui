@@ -19,6 +19,9 @@ function emit (action, data) {
     // 首次保存退出分享
     if (action === 'exitEditor') { // 调用了分享，就不调退出
         if (window._shareId) {
+            const userId = getParam('userId');
+            const shareId = window._shareId;
+            const base = getParam('base');
             options.action = action = 'share';
             options.data = data = {
                 title: '分享作品',
@@ -28,9 +31,6 @@ function emit (action, data) {
                 shareDetail: '点击查看宝贝的精彩作品',
                 url: `https://${base === 'uat' ? 'uat' : 'www'}.vipthink.cn/activity/market/crm-mobile-page/index.html#/workShare?channel=0&channelS=0&setRead=1&id=${shareId}&userId=${userId}`
             };
-            const userId = getParam('userId');
-            const shareId = window._shareId;
-            const base = getParam('base');
             window.bridge.emit('share', data);
             delete window._shareId;
         }
