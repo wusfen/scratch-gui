@@ -48,6 +48,10 @@ const ScanningStep = props => (
                     hidden={!(props.scanning)}
                     className={styles['peripheral-tile-status']}
                 >
+                    <img
+                        className={classNames(styles.radarSmall, styles.radarSpin)}
+                        src={radarIcon}
+                    />
                     正在扫描，请靠近设备！
                 </div>
                 <div
@@ -120,6 +124,7 @@ const ScanningStep = props => (
                 total={3}
             />
             <button
+                disabled={props.scanning}
                 className={classNames(styles.bottomAreaItem, styles.connectionButton)}
                 onClick={props.onRefresh}
             >

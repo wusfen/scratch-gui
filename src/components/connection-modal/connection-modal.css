@@ -182,8 +182,9 @@
 }
 
 .radar-small {
-    width: 40px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
+    filter: brightness(1.5);
 }
 
 [dir="ltr"] .radar-small {

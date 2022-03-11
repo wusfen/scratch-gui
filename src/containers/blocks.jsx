@@ -957,6 +957,7 @@ const mapDispatchToProps = dispatch => ({
     onActivateColorPicker: callback => dispatch(activateColorPicker(callback)),
     onActivateCustomProcedures: (data, callback) => dispatch(activateCustomProcedures(data, callback)),
     onOpenConnectionModal: id => {
+        console.log('id:', id);
         dispatch(setConnectionModalExtensionId(id));
         dispatch(openConnectionModal());
     },

@@ -31,7 +31,7 @@ import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
 import Dialog from '../dialog/index.jsx';
 import Loading from '../loading/index.jsx';
 
-import {openTipsLibrary} from '../../reducers/modals';
+import {openTipsLibrary, openConnectionModal} from '../../reducers/modals';
 import {setPlayer, toggleStageHidden} from '../../reducers/mode';
 import Audio from '../../lib/courseTip/TipAudio.js';
 import {
@@ -43,6 +43,7 @@ import {
     remixProject,
     saveProjectAsCopy
 } from '../../reducers/project-state';
+import {setConnectionModalExtensionId} from '../../reducers/connection-modal';
 import {setProjectTitle} from '../../reducers/project-title';
 import {setUploadingProgress} from '../../reducers/uploading';
 import {
@@ -219,6 +220,9 @@ class MenuBar extends React.Component {
             isSaveAsChanged: false,
             workUserBlockNum: 0,
             _timeout: param('_timeout') || 30, // dev
+            isShowBluetoothButton: false,
+            isBluetoothConnected: false,
+            robotmasterId: null,
         };
         var state = this.state;
         this.indexDB = indexDB;
@@ -302,9 +306,52 @@ class MenuBar extends React.Component {
         if ('indexedDB' in window) {
             this.initIndexDB();
         }
+
+
+        const vm = this.props.vm;
+        const runtime = vm.runtime;
+        const Runtime = runtime.constructor;
+
+        const vmOnList = [];
+        function vmOn (type, cb) {
+            vm.on(type, cb);
+            vmOnList.push([type, cb]);
+            return function off () {
+                vm.removeListener(type, cb);
+            };
+        }
+        this.vmOff = function () {
+            vmOnList.forEach(e => {
+                vm.removeListener(e[0], e[1]);
+            });
+        };
+
+        vmOn(Runtime.EXTENSION_ADDED, e => {
+            // console.info('EXTENSION_ADDED', arguments);
+            if (e.id == 'robotmaster') {
+                this.setState({
+                    isShowBluetoothButton: true,
+                    robotmasterId: e.id,
+                });
+            }
+        });
+        vmOn(Runtime.PERIPHERAL_CONNECTED, e => {
+            // console.warn('PERIPHERAL_CONNECTED', arguments);
+            this.setState({
+                isBluetoothConnected: true,
+            });
+        });
+        vmOn(Runtime.PERIPHERAL_DISCONNECTED, e => {
+            // console.warn('PERIPHERAL_DISCONNECTED', arguments);
+            this.setState({
+                isBluetoothConnected: false,
+            });
+        });
     }
     componentWillUnmount () {
         document.removeEventListener('keydown', this.handleKeyPress);
+
+        this.vmOff();
     }
     initIndexDB () {
         try {
@@ -937,6 +984,11 @@ class MenuBar extends React.Component {
         this.props.toggleStageHidden();
     }
 
+    handleOpenConnectionModal () {
+        this.props.openConnectionModal();
+        this.props.setConnectionModalExtensionId(this.state.robotmasterId);
+    }
+
     render () {
         var state = this.state;
         var props = this.props;
@@ -1204,7 +1256,7 @@ class MenuBar extends React.Component {
                             >
                                 <ProjectTitleInput
                                     className={classNames(styles.titleFieldGrowable)}
-                                    projectTitle="fuck"
+                                    projectTitle=""
                                 />
                             </MenuBarItemTooltip>
                         </div>
@@ -1413,18 +1465,24 @@ class MenuBar extends React.Component {
                 </div>
 
                 {aboutButton}
-                <div
-                    className={classNames(styles.buttons)}
-                >
-                    <button
-                        className={classNames(`${c.button} ${c.toggleStage}`)}
-                        onClick={e => this.handleCodeDownToHardware()}
+                <div className={classNames(styles.buttons)} >
+                    <div
+                        hidden={!(this.state.isShowBluetoothButton)}
+                        className={classNames(styles.bluetoothButtonGroup, {
+                            [styles.online]: this.state.isBluetoothConnected,
+                        })}
                     >
-                        <i
-                            className={classNames(`${c.iSizeL}`)}
-                        />
-                        {'下载'}
-                    </button>
+                        <i className={classNames(c.iBluetooth)}></i>
+                        <span onClick={e => this.handleOpenConnectionModal()}>
+                            {this.state.isBluetoothConnected ? '已连接' : '未连接' }
+                        </span>
+                        <button
+                            className={classNames(styles.bluetoothDownload)}
+                            onClick={e => this.handleCodeDownToHardware()}
+                        >
+                            <i className={classNames(c.iDownload)}></i>
+                        </button>
+                    </div>
                     <button
                         className={classNames(`${c.button} ${c.toggleStage}`, {
                             [c.isStageShow]: !props.isStageHidden,
@@ -1619,6 +1677,8 @@ MenuBar.propTypes = {
     setUploadingProgress: PropTypes.func,
     toggleStageHidden: PropTypes.func,
     isStageHidden: PropTypes.bool,
+    openConnectionModal: PropTypes.func,
+    setConnectionModalExtensionId: PropTypes.func,
 };
 
 MenuBar.defaultProps = {
@@ -1674,6 +1734,8 @@ const mapDispatchToProps = dispatch => ({
     setProjectTitle: title => dispatch(setProjectTitle(title)),
     setUploadingProgress: (progress, text) => dispatch(setUploadingProgress(progress, text)),
     toggleStageHidden: isStageHidden => dispatch(toggleStageHidden(isStageHidden)),
+    openConnectionModal: () => dispatch(openConnectionModal()),
+    setConnectionModalExtensionId: extensionId => dispatch(setConnectionModalExtensionId(extensionId)),
 });
 
 export default compose(

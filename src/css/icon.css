@@ -56,6 +56,14 @@
     background-image: url("../assets/icons/code.svg");
 }
 
+.i-bluetooth:before {
+    background-image: url("../assets/icons/bluetooth.svg");
+}
+
+.i-download:before {
+    background-image: url("../assets/icons/download.svg");
+}
+
 button i[class*="i-"]:first-child {
     margin-right: 0.25rem;
 }
