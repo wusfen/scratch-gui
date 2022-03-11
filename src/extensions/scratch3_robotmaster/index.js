@@ -485,8 +485,8 @@ class Robotmaster {
                 if ((content.length - offset) <= _frame_length) { // 最后一帧
                     buf = content.slice(offset, content.length);
                     setTimeout(() => {
-                        alert('上传完毕');
-                    }, 2000);
+                        alert('下载成功');
+                    }, 200);
                 } else {
                     buf = content.slice(offset, offset + _frame_length);
                 }
@@ -495,7 +495,7 @@ class Robotmaster {
                 // 发出
                 this.send(BLECharacteristic.INPUT_COMMAND, buf, false);
             }
-        }, 1500);
+        }, 150);
 
     }
 }
