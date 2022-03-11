@@ -21,6 +21,9 @@ function emit (action, data) {
             window.bridge.emit('share', {
                 title: '分享作品',
                 content: '让爸爸妈妈扫描二维码\n试玩你的作品吧～',
+                mobileContent: '让爸爸妈妈试玩你的作品吧～',
+                shareTitle: '快来试玩我家宝贝在豌豆编程的创意作品吧，超赞~',
+                shareDetail: '点击查看宝贝的精彩作品',
                 url: `https://${base === 'uat' ? 'uat' : 'www'}.vipthink.cn/activity/market/crm-mobile-page/index.html#/workShare?channel=0&channelS=0&setRead=1&id=${shareId}&userId=${userId}`
             });
             delete window._shareId;
