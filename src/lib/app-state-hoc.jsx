@@ -6,8 +6,8 @@ import ConnectedIntlProvider from './connected-intl-provider.jsx';
 
 import localesReducer, {initLocale, localesInitialState} from '../reducers/locales';
 
-import {setPlayer, setFullScreen} from '../reducers/mode.js';
-
+import {setPlayer} from '../reducers/mode.js';
+import {setFullScreen} from '../reducers/stage-size';
 import locales from 'scratch-l10n';
 import {detectLocale} from './detect-locale';
 

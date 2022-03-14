@@ -547,13 +547,13 @@ Stage.defaultProps = {
 
 const mapStateToProps = state => ({
     isColorPicking: state.scratchGui.colorPicker.active,
-    isFullScreen: state.scratchGui.mode.isFullScreen,
+    isFullScreen: state.scratchGui.stageSize.isFullScreen,
     isStarted: state.scratchGui.vmStatus.started,
     micIndicator: state.scratchGui.micIndicator,
     stageCssWidth: state.scratchGui.stageSize.stageCssWidth,
     // Do not use editor drag style in fullscreen or player mode.
     useEditorDragStyle: !(
-        state.scratchGui.mode.isFullScreen ||
+        state.scratchGui.stageSize.isFullScreen ||
         state.scratchGui.mode.isPlayerOnly ||
         state.scratchGui.vmStatus.running
     ),

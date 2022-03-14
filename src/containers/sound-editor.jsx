@@ -488,7 +488,7 @@ const mapStateToProps = (state, {soundIndex}) => {
         soundId: sound.soundId,
         sampleRate: audioBuffer.sampleRate,
         samples: audioBuffer.getChannelData(0),
-        isFullScreen: state.scratchGui.mode.isFullScreen,
+        isFullScreen: state.scratchGui.stageSize.isFullScreen,
         name: sound.name,
         vm: state.scratchGui.vm
     };

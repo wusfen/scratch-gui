@@ -111,38 +111,20 @@ const resolveStageSize = (stageSizeMode, isFullSize) => {
 /**
  * 动态改变需要调整这里
  * Retrieve info used to determine the actual stage size based on the current GUI and browser state.
- * @param {STAGE_SIZE_MODES} stageSize - the current fully-resolved stage size.
+ * @param {STAGE_SIZE_MODES} stageSizeMode - the current fully-resolved stage size.
  * @param {boolean} isFullScreen - true if full-screen mode is enabled.
  * @return {StageDimensions} - an object describing the dimensions of the stage.
  */
-const getStageDimensions = (stageSize, isFullScreen) => {
+const getStageDimensions = (stageSizeMode, isFullScreen) => {
+    const stageSize = window.store.getState().scratchGui.stageSize;
     const stageDimensions = {
         heightDefault: window.STAGE_HEIGHT,
         widthDefault: window.STAGE_WIDTH,
-        height: 0,
-        width: 0,
-        scale: 0
+        height: stageSize.stageCssHeight,
+        width: stageSize.stageCssWidth,
+        scale: stageSize.stageScale,
+        rotate: stageSize.stageRotate
     };
-    if (isFullScreen) {
-        stageDimensions.height = window.innerHeight;
-        stageDimensions.width = stageDimensions.widthDefault * (stageDimensions.height / stageDimensions.heightDefault);
-
-        stageDimensions.scale = stageDimensions.width / stageDimensions.widthDefault;
-    } else {
-        stageDimensions.scale = window.store.getState().scratchGui.stageSize.stageCssWidth / window.STAGE_WIDTH;
-        stageDimensions.height = stageDimensions.scale * stageDimensions.heightDefault;
-        stageDimensions.width = stageDimensions.scale * stageDimensions.widthDefault;
-        const ele = document.getElementById('stageCanvasWrapper');
-        if (ele){
-            const rect = ele.getBoundingClientRect();
-            if (stageDimensions.height > rect.height){
-                stageDimensions.scale = rect.height / window.STAGE_HEIGHT;
-                stageDimensions.height = rect.height;
-                stageDimensions.width = stageDimensions.scale * stageDimensions.widthDefault;
-            }
-        }
-    }
-
     // Round off dimensions to prevent resampling/blurriness
     stageDimensions.height = Math.round(stageDimensions.height);
     stageDimensions.width = Math.round(stageDimensions.width);
