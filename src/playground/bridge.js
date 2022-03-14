@@ -26,7 +26,9 @@ function emit (action, data) {
             options.data = data = {
                 title: '分享作品',
                 content: '让爸爸妈妈扫描二维码\n试玩你的作品吧～',
+                soundUrl: 'https://oss.iandcode.com/s/platform/interactive/common/interactiveTemplate/wdProj/moduleRelease/flower/zpfx.mp3',
                 mobileContent: '让爸爸妈妈试玩你的作品吧～',
+                mobileSoundUrl: 'https://oss.iandcode.com/s/platform/interactive/common/interactiveTemplate/wdProj/moduleRelease/flower/zpfx2.mp3',
                 shareTitle: '快来试玩我家宝贝在豌豆编程的创意作品吧，超赞~',
                 shareDetail: '点击查看宝贝的精彩作品',
                 url: `https://${base === 'uat' ? 'uat' : 'www'}.vipthink.cn/activity/market/crm-mobile-page/index.html#/workShare?channel=0&channelS=0&setRead=1&id=${shareId}&userId=${userId}`
