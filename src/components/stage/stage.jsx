@@ -50,14 +50,15 @@ const StageComponent = props => {
                     )}
                     style={{
                         height: stageDimensions.height,
-                        width: stageDimensions.width
+                        width: stageDimensions.width,
+                        transform: `rotate(${('ontouchstart' in window) ? stageDimensions.rotate : 0}deg)`
                     }}
                 >
                     <DOMElementRenderer
                         domElement={canvas}
                         style={{
                             height: stageDimensions.height,
-                            width: stageDimensions.width
+                            width: stageDimensions.width,
                         }}
                         {...boxProps}
                     />

@@ -321,7 +321,7 @@ const mapStateToProps = state => {
         costumesTabVisible: state.scratchGui.editorTab.activeTabIndex === COSTUMES_TAB_INDEX,
         error: state.scratchGui.projectState.error,
         isError: getIsError(loadingState),
-        isFullScreen: state.scratchGui.mode.isFullScreen,
+        isFullScreen: state.scratchGui.stageSize.isFullScreen,
         isPlayerOnly: state.scratchGui.mode.isPlayerOnly,
         isStageHidden: state.scratchGui.mode.isStageHidden,
         isRtl: state.locales.isRtl,

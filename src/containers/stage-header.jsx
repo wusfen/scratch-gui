@@ -3,8 +3,7 @@ import React from 'react';
 import bindAll from 'lodash.bindall';
 import VM from 'scratch-vm';
 import {STAGE_SIZE_MODES} from '../lib/layout-constants';
-import {setStageSizeMode} from '../reducers/stage-size';
-import {setFullScreen} from '../reducers/mode';
+import {setStageSizeMode, setFullScreen} from '../reducers/stage-size';
 
 import {connect} from 'react-redux';
 
@@ -55,7 +54,7 @@ StageHeader.propTypes = {
 const mapStateToProps = state => ({
     // stageSizeMode: state.scratchGui.stageSize.stageSize,
     showBranding: state.scratchGui.mode.showBranding,
-    isFullScreen: state.scratchGui.mode.isFullScreen,
+    isFullScreen: state.scratchGui.stageSize.isFullScreen,
     isPlayerOnly: state.scratchGui.mode.isPlayerOnly
 });
 

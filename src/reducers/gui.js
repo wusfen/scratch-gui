@@ -73,7 +73,7 @@ const initPlayer = function (currentState) {
         {},
         currentState,
         {mode: {
-            isFullScreen: currentState.mode.isFullScreen,
+            isFullScreen: currentState.stageSize.isFullScreen,
             isPlayerOnly: true,
             // When initializing in player mode, make sure to reset
             // hasEverEnteredEditorMode

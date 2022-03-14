@@ -12,7 +12,7 @@ import VM from 'scratch-vm';
 import Icon from '../../assets/icons/icon.jsx';
 import Controls from '../../containers/controls.jsx';
 import {STAGE_SIZE_MODES} from '../../lib/layout-constants';
-import {getStageDimensions} from '../../lib/screen-utils';
+// import {getStageDimensions} from '../../lib/screen-utils';
 import Box from '../box/box.jsx';
 import Button from '../button/button.jsx';
 import scratchLogo from '../menu-bar/scratch-logo.svg';
@@ -66,7 +66,7 @@ const StageHeaderComponent = function (props) {
     let header = null;
     let stageModeContent = null;
     if (isFullScreen) {
-        const stageDimensions = getStageDimensions(null, true);
+        // const stageDimensions = getStageDimensions(null, true);
         const stageButton = showBranding ? (
             <div className={styles.embedScratchLogo}>
                 <a
