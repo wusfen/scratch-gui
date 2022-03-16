@@ -210,6 +210,11 @@ class TaskBar extends React.Component{
         //     removeTimer();
         //     return;
         // }
+
+        if (this.state.closeTipVideo) {
+            return;
+        }
+
         if (!this.state.isVideoContentOpen) {
             this.setState({
                 tipsShow: true
