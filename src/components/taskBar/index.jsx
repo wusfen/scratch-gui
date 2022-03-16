@@ -232,6 +232,10 @@ class TaskBar extends React.Component{
     }
 
     openAndAutoPlayTipVideo = () => {
+        if (this.state.closeTipVideo) {
+            return;
+        }
+
         if (!this.tipVideos.length) { // 没有提示视频，无法自动播放
             return;
         }
