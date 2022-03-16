@@ -94,7 +94,7 @@ import setupIcon from '../../assets/icons/set up.svg';
 import resetIcon from '../../assets/icons/redo.svg';
 
 import {ajax} from '../../lib/ajax.js';
-import {param} from '../../lib/param.js';
+import {getParam, param} from '../../lib/param.js';
 import {project} from '../../lib/project.js';
 import {indexDB} from '../../lib/indexDB';
 
@@ -660,9 +660,8 @@ class MenuBar extends React.Component {
         } catch (error) {
             console.log('indexDB---delete---error', error);
         }
-
         // 首次保存退出分享
-        if (!this.state.id) {
+        if (!this.state.id && getParam('isexample')) {
             // window.bridge.emit('share', {id: data});
             window._shareId = data;
         }
