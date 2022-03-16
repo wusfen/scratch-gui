@@ -18,7 +18,7 @@ function emit (action, data) {
     };
     // 首次保存退出分享
     if (action === 'exitEditor') { // 调用了分享，就不调退出
-        if (window._shareId) {
+        if (window._shareId && getParam('mode') === 'normal') {
             const userId = getParam('userId');
             const shareId = window._shareId;
             const base = getParam('base');
