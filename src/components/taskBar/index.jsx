@@ -26,6 +26,7 @@ import {
     closeFileMenu
 } from '../../reducers/menus';
 import * as bridge from '../../playground/bridge.js';
+import {param} from '@/lib/param.js';
 import {IS_NATIVE_PLAY_VIDEO} from '@/lib/const';
 import {
     getIsNatvePlaying, openTimer,
@@ -65,7 +66,8 @@ class TaskBar extends React.Component{
             oriWidth: 0,
             oriHeight: 0,
             isAlreadyInitTouchMove: false,
-            isPlayOnNative: false
+            isPlayOnNative: false,
+            closeTipVideo: param('closeTipVideo'),
         };
         this.introVideoSrc = '';
         this.titleAudioSrc = '';
@@ -141,9 +143,11 @@ class TaskBar extends React.Component{
             // 正确答案计时器, 重置一次之后是每隔61秒，就引导学生点击提示
             window.addEventListener(`noAction:${timerType.RIGHT_ANSWER}:${RIGHT_ANSWER_2}`, this.touchTip);
             window.addEventListener('submitErrorCounter1', this.touchTip); // 第一次提交错误
-            window.addEventListener('submitErrorCounter2', this.openAndAutoPlayTipVideo); // 第二次提交错误，自动播放视频
             window.addEventListener('jsonErrorCounterInRange', this.touchTip); // json自动批改错误，容错小范围内
-            window.addEventListener('jsonErrorCounterOutRange', this.openAndAutoPlayTipVideo); // json自动批改错误，超过容错小范围
+            if (!param('noAutoShowTipVideo')) {
+                window.addEventListener('submitErrorCounter2', this.openAndAutoPlayTipVideo); // 第二次提交错误，自动播放视频
+                window.addEventListener('jsonErrorCounterOutRange', this.openAndAutoPlayTipVideo); // json自动批改错误，超过容错小范围
+            }
 
             // 监听暂停和播放事件
             bridge.on('pause', e => {
@@ -843,7 +847,10 @@ class TaskBar extends React.Component{
                                     <span className="xs-show">点击语音读题</span>
                                 </span>
                             </div>
-                            <div className={classNames('play_audio', {[c.iconList]: true, [c.blingBling]: tipsShow})} >
+                            <div
+                                hidden={this.state.closeTipVideo}
+                                className={classNames('play_audio', {[c.iconList]: true, [c.blingBling]: tipsShow})}
+                            >
                                 <img
                                     className={
                                         classNames({
