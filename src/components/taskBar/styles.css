@@ -290,3 +290,6 @@
     background: #d8d8d8;
     margin: 0 0.25rem;
 }
+.videoImgList ol li.active {
+    background: #0af;
+}

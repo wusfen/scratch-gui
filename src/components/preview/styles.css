@@ -9,6 +9,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: auto;
     background: rgba(0, 0, 0, 0.4);
 }
 
@@ -27,9 +28,9 @@
 .close {
     position: absolute;
     top: 0;
-    right: 0;
+    left: 0;
     margin-top: -3rem;
-    margin-right: -3rem;
+    margin-left: -3rem;
     width: 1.38rem;
     height: 1.38rem;
     background: center/contain no-repeat

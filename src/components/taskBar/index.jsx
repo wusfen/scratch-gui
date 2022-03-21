@@ -71,6 +71,7 @@ class TaskBar extends React.Component{
             isPlayOnNative: false,
             closeTipVideo: param('closeTipVideo'),
             videoImgList: [],
+            curVideoImgSrc: '',
         };
         this.introVideoSrc = '';
         this.titleAudioSrc = '';
@@ -918,19 +919,42 @@ class TaskBar extends React.Component{
                                 className={c.videoImgList}
                                 ref={el => (this.videoImgListEl = el)}
                             >
-                                <ul >
+                                <ul
+                                    onWheel={e => {
+                                        e.currentTarget.scrollLeft += e.deltaY;
+                                        this.setState({
+                                            curVideoImgSrc: e.target.src
+                                        });
+                                    }}
+                                >
                                     {this.state.videoImgList.map(src => (
                                         <li key={src}>
                                             <img
                                                 src={src}
-                                                onClick={e => Preview.show(src)}
+                                                onClick={e => {
+                                                    Preview.show(src);
+                                                    this.setState({
+                                                        curVideoImgSrc: src
+                                                    });
+                                                }}
+                                                onTouchStart={e => {
+                                                    this.setState({
+                                                        curVideoImgSrc: e.target.src
+                                                    });
+                                                }}
                                             />
                                         </li>
                                     ))}
                                 </ul>
                                 <ol>
                                     {this.state.videoImgList.map(src => (
-                                        <li key={src}>
+                                        <li
+                                            key={src}
+                                            title={this.state.curVideoImgSrc}
+                                            className={classNames({
+                                                [styles.active]: this.state.curVideoImgSrc === src
+                                            })}
+                                        >
                                         </li>
                                     ))}
                                 </ol>
