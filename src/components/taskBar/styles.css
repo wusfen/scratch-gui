@@ -249,3 +249,44 @@
 .visibility-hidden {
     visibility: hidden;
 }
+
+.videoImgList {
+    width: 100%;
+    min-width: 0;
+    padding: 1.22rem 0.34rem;
+}
+.videoImgList ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    overflow: auto;
+    width: 100%;
+    min-width: 0;
+}
+.videoImgList ul li {
+    height: 10rem;
+    margin-right: 0.84rem;
+    overflow: hidden;
+    flex: none;
+    border-radius: 0.25rem;
+}
+.videoImgList ul li img {
+    display: block;
+    height: 100%;
+}
+
+.videoImgList ol {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    margin: 0.25rem 0;
+}
+.videoImgList ol li {
+    list-style: none;
+    border-radius: 99px;
+    width: 0.38rem;
+    height: 0.38rem;
+    background: #d8d8d8;
+    margin: 0 0.25rem;
+}

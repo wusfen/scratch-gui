@@ -1,0 +1,38 @@
+.container {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.inner {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.inner img {
+    max-width: 100%;
+    max-height: 100%;
+    box-shadow: 2px 2px 15px #353535;
+}
+
+.close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: -3rem;
+    margin-right: -3rem;
+    width: 1.38rem;
+    height: 1.38rem;
+    background: center/contain no-repeat
+        url("../../assets/icons/POP-up windows close.svg");
+    color: transparent;
+}

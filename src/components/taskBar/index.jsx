@@ -22,6 +22,7 @@ import getTipParam from '../../lib/courseTip/getTipParam';
 import tipAudio from './tips.mp3';
 import {OPERATE_TIME_1, RIGHT_ANSWER_1, RIGHT_ANSWER_2, timerType} from '../timer/data';
 import pullSvg from './pull.svg';
+import Preview from '../preview/index.jsx';
 import {
     closeFileMenu
 } from '../../reducers/menus';
@@ -37,6 +38,7 @@ import {
 } from '@/lib/native-event';
 const c = styles;
 Object.assign(c, require('../../css/animate.css'));
+
 class TaskBar extends React.Component{
     constructor (props) {
         super(props);
@@ -68,6 +70,7 @@ class TaskBar extends React.Component{
             isAlreadyInitTouchMove: false,
             isPlayOnNative: false,
             closeTipVideo: param('closeTipVideo'),
+            videoImgList: [],
         };
         this.introVideoSrc = '';
         this.titleAudioSrc = '';
@@ -501,9 +504,22 @@ class TaskBar extends React.Component{
             alreadyClickVideo: this.state.alreadyClickVideo.concat([index]) // 收集已经点击过的视频，已经点过的就可以跳级点击视频
         }, e => {
             this.videoRef?.play();
+            this.setCurrentVideoImgList();
         });
 
         dispatchEvent(new Event('clickVideoTips')); // 点击视频提示
+    }
+
+    setCurrentVideoImgList () {
+        const src = this.state.currentVideoSrc;
+        const imgCount = +src.match(/_img(\d+)/)?.[1] || 0;
+        const imgList = [];
+        for (let i = 0; i < imgCount; i++){
+            imgList.push(src.replace(/_img\d+.*/, `_${i}.png`));
+        }
+        this.setState({
+            videoImgList: imgList,
+        });
     }
 
     closeAudio = () => {
@@ -692,6 +708,8 @@ class TaskBar extends React.Component{
 
         // 注册缩放事件（pc端）
         scaleRef.onmousedown = handleScaleStart;
+
+        this.videoImgListEl.ontouchstart = e => e.stopPropagation();
 
         return () => {
             document.removeEventListener('touchmove', handleMove);
@@ -896,6 +914,27 @@ class TaskBar extends React.Component{
                                 controlsList="nodownload nofullscreen noremoteplayback"
                                 disablePictureInPicture
                             ></video>
+                            <div
+                                className={c.videoImgList}
+                                ref={el => (this.videoImgListEl = el)}
+                            >
+                                <ul >
+                                    {this.state.videoImgList.map(src => (
+                                        <li key={src}>
+                                            <img
+                                                src={src}
+                                                onClick={e => Preview.show(src)}
+                                            />
+                                        </li>
+                                    ))}
+                                </ul>
+                                <ol>
+                                    {this.state.videoImgList.map(src => (
+                                        <li key={src}>
+                                        </li>
+                                    ))}
+                                </ol>
+                            </div>
                             <div className={c.videoOptions}>
                                 {this.videoFuncList.map((item, index) =>
                                     (

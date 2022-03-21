@@ -384,7 +384,7 @@ $fade-out-distance: 0.9375rem;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    z-index: 100;
+    z-index: 202;
 }
 
 .stage-and-target-wrapper .warning-border {
