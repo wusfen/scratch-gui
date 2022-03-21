@@ -36,7 +36,7 @@ class Component extends React.Component{
                 className={classNames(styles.container)}
             >
                 <div className={classNames(c.inner)}>
-                    <img src="https://unsplash.it/300/200/?blur" />
+                    <img src={props.src} />
                     <button
                         className={classNames(c.close)}
                         onClick={props.onClose}
