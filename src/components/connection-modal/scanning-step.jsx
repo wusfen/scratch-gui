@@ -124,7 +124,7 @@ const ScanningStep = props => (
                 total={3}
             />
             <button
-                disabled={props.scanning}
+                disabled={(props.scanning && !props.peripheralList.length)}
                 className={classNames(styles.bottomAreaItem, styles.connectionButton)}
                 onClick={props.onRefresh}
             >
