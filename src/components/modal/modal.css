@@ -1,8 +1,6 @@
 @import "../../css/colors.css";
 @import "../../css/units.css";
 @import "../../css/z-index.css";
-@import "../../css/units.css";
-
 
 .modal-overlay {
     position: fixed;
@@ -63,10 +61,19 @@
 $sides: 20rem;
 
 .header {
-    position: relative;
-    background: none;
-    display: block;
-    height: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    height: $library-header-height;
+
+    box-sizing: border-box;
+    width: 100%;
+    background-color: $motion-primary;
+
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: normal;
 }
 
 .header-item {
@@ -99,14 +106,7 @@ $sides: 20rem;
     user-select: none;
     letter-spacing: 0.025rem;
     cursor: default;
-    position: absolute;
-    top: -3rem;
-    left: -1rem;
-    font-size: 1rem;
-    color: #FFFFFF;
 }
-
-
 
 [dir="ltr"] .header-item-title {
     margin: 0 -$sides 0 0;
@@ -171,12 +171,12 @@ $sides: 20rem;
     padding-left: 0;
 }
 
-.box{
+.box {
     display: flex;
     flex-direction: column;
 }
 
-.mobile-close-btn{
+.mobile-close-btn {
     display: none;
 }
 
@@ -187,21 +187,21 @@ $sides: 20rem;
 4.搜索框显示在右上角
  */
 @media screen and (max-height: $mobile-max-height) {
-    .modal-overlay{
+    .modal-overlay {
         flex-direction: row;
     }
-    .header{
+    .header {
         display: none;
     }
-    .header-item-title{
-      display: none;
+    .header-item-title {
+        display: none;
     }
-    .box{
+    .box {
         flex-direction: row;
         flex-wrap: wrap;
         padding-left: 4rem;
     }
-    .mobile-close-btn{
+    .mobile-close-btn {
         display: block;
         background: none;
         color: hsla(0, 100%, 100%, 1);
@@ -209,7 +209,7 @@ $sides: 20rem;
         left: 1rem;
         top: 1rem;
     }
-    .mobile-close-btn>img{
+    .mobile-close-btn > img {
         width: 2rem;
         height: 2rem;
         /* transform: rotate(45deg); */

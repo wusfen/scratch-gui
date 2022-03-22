@@ -65,6 +65,7 @@ class GUI extends React.Component {
 
     componentDidMount () {
         window.gui = this;
+        window.ScratchGui = this;
         setIsScratchDesktop(this.props.isScratchDesktop);
         this.props.onStorageInit(storage);
         this.props.onVmInit(this.props.vm);

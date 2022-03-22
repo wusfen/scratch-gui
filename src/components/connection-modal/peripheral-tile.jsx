@@ -19,14 +19,21 @@ class PeripheralTile extends React.Component {
     }
     render () {
         return (
-            <Box className={styles.peripheralTile}>
+            <Box
+                className={styles.peripheralTile}
+                onClick={this.handleConnecting}
+            >
                 <Box className={styles.peripheralTileName}>
                     <img
+                        hidden
                         className={styles.peripheralTileImage}
                         src={this.props.connectionSmallIconURL}
                     />
                     <Box className={styles.peripheralTileNameWrapper}>
-                        <Box className={styles.peripheralTileNameLabel}>
+                        <Box
+                            hidden
+                            className={styles.peripheralTileNameLabel}
+                        >
                             <FormattedMessage
                                 defaultMessage="Device name"
                                 description="Label for field showing the device name"
@@ -38,8 +45,18 @@ class PeripheralTile extends React.Component {
                         </Box>
                     </Box>
                 </Box>
-                <Box className={styles.peripheralTileWidgets}>
-                    <Box className={styles.signalStrengthMeter}>
+                <div className={styles['peripheral-tile-item']}>
+                    <div
+                        className={classNames([styles['peripheral-tile-status'], styles.warn])}
+                    >
+                        未连接
+                    </div>
+                </div>
+                <Box className={styles.peripheralTileWidgets} >
+                    <Box
+                        hidden
+                        className={styles.signalStrengthMeter}
+                    >
                         <div
                             className={classNames(styles.signalBar, {
                                 [styles.greenBar]: this.props.rssi > -80
@@ -62,6 +79,7 @@ class PeripheralTile extends React.Component {
                         />
                     </Box>
                     <button
+                        hidden
                         onClick={this.handleConnecting}
                     >
                         <FormattedMessage

@@ -15,10 +15,60 @@ import styles from './connection-modal.css';
 const ScanningStep = props => (
     <Box className={styles.body}>
         <Box className={styles.activityArea}>
+
+            {props.peripheralList.length ?
+                <>
+                    <div className={styles['scratch-link-help-title']}>
+                        请选择连接设备
+                    </div>
+                    <div className={styles.scratchLinkHelp}></div>
+                </> :
+                <>
+                    <div className={styles['scratch-link-help-title']}>
+                        连接助手：请检查以下内容
+                    </div>
+                    <div className={styles.scratchLinkHelp}>
+                        <div className={styles.scratchLinkHelpStep}>
+                            <div className={styles.helpStepNumber}> {'1'} </div>
+                            <div className={styles.helpStepText}>当前设备蓝牙已开启</div>
+                        </div>
+                        <div className={styles.scratchLinkHelpStep}>
+                            <div className={styles.helpStepNumber}> {'2'} </div>
+                            <div className={styles.helpStepText}>硬件设备开关已开启</div>
+                        </div>
+                    </div>
+                </>
+            }
+
+            <div
+                hidden={(props.scanning && props.peripheralList.length)}
+                className={styles['peripheral-tile-item']}
+            >
+                <div
+                    hidden={!(props.scanning)}
+                    className={styles['peripheral-tile-status']}
+                >
+                    <img
+                        className={classNames(styles.radarSmall, styles.radarSpin)}
+                        src={radarIcon}
+                    />
+                    正在扫描，请靠近设备！
+                </div>
+                <div
+                    hidden={!(!props.scanning && !props.peripheralList.length)}
+                    className={classNames([styles['peripheral-tile-status'], styles.warn])}
+                >
+                    没有发现任何设备
+                </div>
+            </div>
+
             {props.scanning ? (
                 props.peripheralList.length === 0 ? (
                     <div className={styles.activityAreaInfo}>
-                        <div className={styles.centeredRow}>
+                        <div
+                            hidden
+                            className={styles.centeredRow}
+                        >
                             <img
                                 className={classNames(styles.radarSmall, styles.radarSpin)}
                                 src={radarIcon}
@@ -45,7 +95,10 @@ const ScanningStep = props => (
                     </div>
                 )
             ) : (
-                <Box className={styles.instructions}>
+                <Box
+                    hidden
+                    className={styles.instructions}
+                >
                     <FormattedMessage
                         defaultMessage="No devices found"
                         description="Text shown when no devices could be found"
@@ -55,7 +108,10 @@ const ScanningStep = props => (
             )}
         </Box>
         <Box className={styles.bottomArea}>
-            <Box className={classNames(styles.bottomAreaItem, styles.instructions)}>
+            <Box
+                hidden
+                className={classNames(styles.bottomAreaItem, styles.instructions)}
+            >
                 <FormattedMessage
                     defaultMessage="Select your device in the list above."
                     description="Prompt for choosing a device to connect to"
@@ -68,6 +124,7 @@ const ScanningStep = props => (
                 total={3}
             />
             <button
+                disabled={props.scanning}
                 className={classNames(styles.bottomAreaItem, styles.connectionButton)}
                 onClick={props.onRefresh}
             >

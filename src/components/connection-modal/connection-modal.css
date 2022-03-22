@@ -2,15 +2,34 @@
 @import "../../css/units.css";
 
 .modal-content {
-    width: 480px;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    border: 0;
+}
+.modal-content > div {
+    height: 100%;
 }
 
 .header {
-    background-color: $pen-primary;
+    background: none;
 }
 
 .body {
-    background: $ui-white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.activityArea {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
 }
 
 .label {
@@ -26,28 +45,28 @@
 }
 
 .peripheral-tile-pane {
-    overflow-y: auto;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    height: 100%;
 }
 
 .peripheral-tile {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
 
-    background-color: $ui-white;
-    border-radius: 0.25rem;
-    padding: 10px;
-    width: 100%;
-    height: 55px;
-    margin-bottom: 0.5rem;
+    position: relative;
+    margin: 0 calc(5.63rem / 2);
 }
 
 .peripheral-tile-name {
     display: flex;
     align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
 }
 
 [dir="ltr"] .peripheral-tile-image {
@@ -56,6 +75,40 @@
 
 [dir="rtl"] .peripheral-tile-image {
     margin-left: 0.5rem;
+}
+
+.peripheral-tile-item {
+    position: relative;
+    flex: none;
+    width: 18rem;
+    height: 18rem;
+    background: center/contain no-repeat url("./icons/item.png");
+    background-position-x: 0.4rem;
+}
+.peripheral-tile-status {
+    position: absolute;
+    top: -0.5rem;
+    left: 50%;
+    transform: translate(-50%);
+    height: 2.44rem;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0091ff;
+    border-radius: 1.22rem;
+    font-size: 0.94rem;
+    font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+    font-weight: 500;
+    color: #ffffff;
+    line-height: 1.41rem;
+    white-space: nowrap;
+}
+.peripheral-tile-status.warn {
+    background: #ff8534;
+}
+.peripheral-tile-status.success {
+    background: #3ebf03;
 }
 
 .peripheral-tile-name-wrapper {
@@ -71,7 +124,10 @@
 }
 
 .peripheral-tile-name-text {
-    font-size: 0.875rem;
+    font-size: 0.94rem;
+    font-family: SourceHanSansCN-Bold, SourceHanSansCN;
+    font-weight: bold;
+    color: #32c5ff;
 }
 
 .peripheral-tile button {
@@ -105,21 +161,30 @@
 .signal-bar {
     width: 4px;
     border-radius: 4px;
-    background-color: #DBDBDB;
+    background-color: #dbdbdb;
 }
 
-.signal-bar:nth-of-type(1) { height: 25%; }
-.signal-bar:nth-of-type(2) { height: 50%; }
-.signal-bar:nth-of-type(3) { height: 75%; }
-.signal-bar:nth-of-type(4) { height: 100%; }
+.signal-bar:nth-of-type(1) {
+    height: 25%;
+}
+.signal-bar:nth-of-type(2) {
+    height: 50%;
+}
+.signal-bar:nth-of-type(3) {
+    height: 75%;
+}
+.signal-bar:nth-of-type(4) {
+    height: 100%;
+}
 
 .green-bar {
     background-color: $pen-primary;
 }
 
 .radar-small {
-    width: 40px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
+    filter: brightness(1.5);
 }
 
 [dir="ltr"] .radar-small {
@@ -140,11 +205,11 @@
 }
 
 [dir="ltr"] .radar {
-    margin-right: .5rem;
+    margin-right: 0.5rem;
 }
 
 [dir="rtl"] .radar {
-    margin-left: .5rem;
+    margin-left: 0.5rem;
 }
 
 @keyframes spin {
@@ -177,7 +242,6 @@
     box-shadow: 0px 0px 0px 4px $motion-transparent;
     /* animation: pulse-blue-ring 1s infinite ease-in-out alternate; */
     animation: wiggle 0.5s infinite ease-in-out alternate;
-
 }
 
 @keyframes pulse-blue-ring {
@@ -198,11 +262,21 @@
 }
 
 @keyframes wiggle {
-    0% {transform: rotate(3deg) scale(1.05);}
-    25% {transform: rotate(-3deg) scale(1.05);}
-    50% {transform: rotate(5deg) scale(1.05);}
-    75% {transform: rotate(-2deg) scale(1.05);}
-    100% {transform: rotate(0deg) scale(1.05);}
+    0% {
+        transform: rotate(3deg) scale(1.05);
+    }
+    25% {
+        transform: rotate(-3deg) scale(1.05);
+    }
+    50% {
+        transform: rotate(5deg) scale(1.05);
+    }
+    75% {
+        transform: rotate(-2deg) scale(1.05);
+    }
+    100% {
+        transform: rotate(0deg) scale(1.05);
+    }
 }
 
 .bluetooth-centered-icon {
@@ -218,33 +292,35 @@
     align-items: center;
 }
 
-.activityArea {
-    height: 165px;
-    background-color: $motion-light-transparent;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: .5rem;
+.scratch-link-help-title {
+    font-size: 1.25rem;
+    font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+    font-weight: 500;
+    color: #fffc2b;
+    line-height: 1.88rem;
+    text-align: center;
 }
 
 .scratch-link-help {
+    min-height: 3rem;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    height: 100%;
-    padding-top: .5rem;
-    padding-bottom: .5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 2.5rem;
 }
 
 .scratch-link-help-step {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
+    margin: 0.25rem 0;
 }
 
 [dir="ltr"] .scratch-link-help-step {
-    margin-left: 2.5rem;
+    /* margin-left: 2.5rem; */
 }
 
 [dir="rtl"] .scratch-link-help-step {
@@ -264,7 +340,7 @@
 }
 
 .help-step-number {
-    background: $pen-primary;
+    background: #fffc2b;
     border-radius: 100%;
     display: flex;
     justify-content: center;
@@ -273,6 +349,11 @@
     font-weight: bold;
     min-width: 2rem;
     height: 2rem;
+    font-size: 1.25rem;
+    font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+    font-weight: 500;
+    color: #2151ff;
+    line-height: 1.88rem;
 }
 
 [dir="ltr"] .help-step-number {
@@ -360,23 +441,27 @@
 }
 
 .bottom-area {
-    background-color: $ui-white;
+    /* background-color: $ui-white; */
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 1rem;
-    padding-bottom: .75rem;
-    padding-left: .75rem;
-    padding-right: .75rem;
+    padding-top: 2rem;
+    padding-bottom: 0.75rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
 }
 
-.bottom-area .bottom-area-item+.bottom-area-item {
+.bottom-area .bottom-area-item + .bottom-area-item {
     margin-top: 1rem;
 }
 
 .instructions {
     text-align: center;
+    font-size: 1.25rem;
+    font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+    font-weight: 500;
+    color: #fffc2b;
 }
 
 .dots-row {

@@ -6,12 +6,13 @@ import optimize from './blocks_optimize';
 import appear_modify from './blocks_appearance_modify';
 import addNew from './blocks_add_new';
 import Style from '../css/blockly.css';
+import tudo_upCode from '../tudao/blockly/generators/lua';
 
 addNew(ScratchBlocks);// 增加积木块
 appear_modify(ScratchBlocks);// UI样式修改
 fixBugs(ScratchBlocks);// 修正bug
 optimize(ScratchBlocks);// 优化
-
+tudo_upCode(ScratchBlocks);// 途道上传功能
 /**
  * Connect scratch blocks with the vm
  * @param {VirtualMachine} vm - The scratch vm
