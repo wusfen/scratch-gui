@@ -916,6 +916,7 @@ class TaskBar extends React.Component{
                                 disablePictureInPicture
                             ></video>
                             <div
+                                hidden={!state.videoImgList.length}
                                 className={c.videoImgList}
                                 ref={el => (this.videoImgListEl = el)}
                             >
