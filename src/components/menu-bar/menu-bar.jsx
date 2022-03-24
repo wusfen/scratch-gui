@@ -332,6 +332,8 @@ class MenuBar extends React.Component {
                 this.setState({
                     isShowBluetoothButton: true,
                     robotmasterId: e.id,
+                }, () => {
+                    this.handleOpenConnectionModal();
                 });
             }
         });
@@ -1479,10 +1481,11 @@ class MenuBar extends React.Component {
                         })}
                     >
                         <button
+                            onClick={e => this.handleOpenConnectionModal()}
                             className={classNames(styles.bluetoothLink)}
                         >
                             <i className={classNames(c.iBluetooth)}></i>
-                            <span onClick={e => this.handleOpenConnectionModal()}>
+                            <span>
                                 {this.state.isBluetoothConnected ? '已连接' : '未连接' }
                             </span>
                         </button>

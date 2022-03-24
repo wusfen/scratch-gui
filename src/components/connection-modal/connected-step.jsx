@@ -7,6 +7,7 @@ import Dots from './dots.jsx';
 import bluetoothIcon from './icons/bluetooth-white.svg';
 import styles from './connection-modal.css';
 import classNames from 'classnames';
+import {LAST_PERIPHERAL_ID_KEY} from './peripheral-tile.jsx';
 
 const ConnectedStep = props => (
     <Box className={styles.body}>
@@ -61,7 +62,11 @@ const ConnectedStep = props => (
             <div className={classNames(styles.bottomAreaItem, styles.cornerButtons)}>
                 <button
                     className={classNames(styles.redButton, styles.connectionButton)}
-                    onClick={props.onDisconnect}
+                    onClick={function (e){
+                        // eslint-disable-next-line no-invalid-this
+                        props.onDisconnect.apply(this, arguments);
+                        delete localStorage[LAST_PERIPHERAL_ID_KEY];
+                    }}
                 >
                     <FormattedMessage
                         defaultMessage="Disconnect"

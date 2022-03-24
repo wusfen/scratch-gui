@@ -113,3 +113,6 @@ PeripheralTile.propTypes = {
 };
 
 export default PeripheralTile;
+export {
+    LAST_PERIPHERAL_ID_KEY,
+};
