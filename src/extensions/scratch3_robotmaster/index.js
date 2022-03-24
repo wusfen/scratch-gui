@@ -486,7 +486,7 @@ class Robotmaster {
                 if ((content.length - offset) <= _frame_length) { // 最后一帧
                     buf = content.slice(offset, content.length);
                     setTimeout(() => {
-                        alert('下载成功');
+                        alert('下载结束');
                     }, 200);
                 } else {
                     buf = content.slice(offset, offset + _frame_length);
