@@ -288,17 +288,6 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 1.75rem;
-    padding: 0 0.5rem;
-    background: #0091ff;
-    box-shadow: 0rem 0.06rem 0.25rem 0rem rgba(0, 0, 0, 0.21);
-    border-radius: 0.63rem;
-
-    font-size: 0.75rem;
-    font-family: SourceHanSansCN-Medium, SourceHanSansCN;
-    font-weight: 500;
-    color: #ffffff;
-    line-height: 1.13rem;
 }
 
 .bluetoothButtonGroup i {
@@ -307,24 +296,47 @@
     margin-right: 0.1875rem;
 }
 
-.bluetoothDownload {
+button.bluetoothLink {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 1.75rem;
+    padding: 0 0.5rem;
+    background: #0091ff;
+    box-shadow: 0rem 0.06rem 0.25rem 0rem rgba(0, 0, 0, 0.21);
+    border-radius: 0.63rem;
+    font-size: 0.75rem;
+    font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+    font-weight: 500;
+    color: #ffffff;
+    line-height: 1.13rem;
+}
+
+button.bluetoothDownload {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 1.94rem;
     height: 1.75rem;
-    margin-left: 0.25rem;
-    margin-right: -0.5rem;
-    border-top-right-radius: inherit;
-    border-bottom-right-radius: inherit;
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 0.63rem;
     background: #15bdff;
 }
+.bluetoothButtonGroup.online button.bluetoothLink {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.bluetoothButtonGroup.online button.bluetoothDownload {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
 
-.bluetoothButtonGroup:not(.online) {
+.bluetoothButtonGroup:not(.online) button.bluetoothLink {
     background: #c2c5c6;
     color: #ffffff;
 }
 
-.bluetoothButtonGroup:not(.online) .bluetoothDownload {
+.bluetoothButtonGroup:not(.online) button.bluetoothDownload {
     display: none;
 }

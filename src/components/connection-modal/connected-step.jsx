@@ -11,6 +11,13 @@ import classNames from 'classnames';
 const ConnectedStep = props => (
     <Box className={styles.body}>
         <Box className={styles.activityArea}>
+            <Box className={styles.peripheralTileName}>
+                <Box className={styles.peripheralTileNameWrapper}>
+                    <Box className={styles.peripheralTileNameText}>
+                        {window._currentPeripheralName}
+                    </Box>
+                </Box>
+            </Box>
             <div className={styles['peripheral-tile-item']}>
                 <div
                     className={classNames([styles['peripheral-tile-status'], styles.success])}

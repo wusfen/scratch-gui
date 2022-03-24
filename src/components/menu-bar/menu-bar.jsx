@@ -1478,10 +1478,14 @@ class MenuBar extends React.Component {
                             [styles.online]: this.state.isBluetoothConnected,
                         })}
                     >
-                        <i className={classNames(c.iBluetooth)}></i>
-                        <span onClick={e => this.handleOpenConnectionModal()}>
-                            {this.state.isBluetoothConnected ? '已连接' : '未连接' }
-                        </span>
+                        <button
+                            className={classNames(styles.bluetoothLink)}
+                        >
+                            <i className={classNames(c.iBluetooth)}></i>
+                            <span onClick={e => this.handleOpenConnectionModal()}>
+                                {this.state.isBluetoothConnected ? '已连接' : '未连接' }
+                            </span>
+                        </button>
                         <button
                             className={classNames(styles.bluetoothDownload)}
                             onClick={e => this.handleCodeDownToHardware()}

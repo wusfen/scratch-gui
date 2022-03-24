@@ -7,19 +7,29 @@ import Box from '../box/box.jsx';
 
 import styles from './connection-modal.css';
 
+const LAST_PERIPHERAL_ID_KEY = 'scratch/20220324/LAST_PERIPHERAL_ID_KEY';
+
 class PeripheralTile extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
             'handleConnecting'
         ]);
+
+        // 自动连接上次
+        if (localStorage[LAST_PERIPHERAL_ID_KEY] == this.props.peripheralId) {
+            this.handleConnecting();
+        }
     }
     handleConnecting () {
         this.props.onConnecting(this.props.peripheralId);
+        window._currentPeripheralName = this.props.name;
+        localStorage[LAST_PERIPHERAL_ID_KEY] = this.props.peripheralId;
     }
     render () {
         return (
             <Box
+                title={this.props.peripheralId}
                 className={styles.peripheralTile}
                 onClick={this.handleConnecting}
             >
