@@ -221,7 +221,7 @@ class GUI extends React.Component {
             });
         } else {
             videoSrc = '';
-            this.addEventListener('projectLoadSucceedLoaderUnmount', () => { // 等待工程加载完毕
+            this.addEventListener('loaderUnmount', () => { // 等待工程加载完毕
                 window.dispatchEvent(new Event('noVideoGuide'));
             });
         }
