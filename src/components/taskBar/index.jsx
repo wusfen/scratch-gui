@@ -150,8 +150,10 @@ class TaskBar extends React.Component{
             window.addEventListener('jsonErrorCounterInRange', this.touchTip); // json自动批改错误，容错小范围内
             window.addEventListener('submitErrorCounter2', this.openAndAutoPlayTipVideo); // 第二次提交错误，自动播放视频
             window.addEventListener('jsonErrorCounterOutRange', this.openAndAutoPlayTipVideo); // json自动批改错误，超过容错小范围
+
+            // 自动展开提示视频
             if (param('autoShowTipVideo')) {
-                this.openAndAutoPlayTipVideo();
+                window.addEventListener('loaderUnmount', this.openAndAutoPlayTipVideo);
             }
 
             // 监听暂停和播放事件
@@ -196,6 +198,10 @@ class TaskBar extends React.Component{
             window.removeEventListener('jsonErrorCounterOutRange', this.clickTips);
             window.removeEventListener(`noAction:${timerType.RIGHT_ANSWER}:${RIGHT_ANSWER_1}`, this.touchTip);
             window.removeEventListener(`noAction:${timerType.RIGHT_ANSWER}:${RIGHT_ANSWER_2}`, this.touchTip);
+
+            window.removeEventListener('submitErrorCounter2', this.openAndAutoPlayTipVideo);
+            window.removeEventListener('jsonErrorCounterOutRange', this.openAndAutoPlayTipVideo);
+            window.removeEventListener('loaderUnmount', this.openAndAutoPlayTipVideo);
             break;
         case 'teacher':
             this.moreFuncBtnRef && this.moreFuncBtnRef.removeEventListener('touchstart', this.handleTouchStart);
