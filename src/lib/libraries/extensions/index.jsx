@@ -21,7 +21,7 @@ import penInsetIconURL from './pen/pen-small.svg';
 import penIconURL from './pen/pen.png';
 import robotmasterConnectionTipIconURL from './robotmaster/robotmaster-button-illustration.gif';
 import robotmasterConnectionIconURL from './robotmaster/robotmaster-illustration.svg';
-import {default as robotmasterConnectionSmallIconURL, default as robotmasterInsetIconURL} from './robotmaster/robotmaster-small.png';
+import {default as robotmasterConnectionSmallIconURL, default as robotmasterInsetIconURL} from './robotmaster/robotmaster-small.svg';
 import robotmasterIconURL from './robotmaster/robotmaster.png';
 import text2speechInsetIconURL from './text2speech/text2speech-small.svg';
 import text2speechIconURL from './text2speech/text2speech.png';
