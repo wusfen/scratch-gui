@@ -929,9 +929,6 @@ class TaskBar extends React.Component{
                                 <ul
                                     onWheel={e => {
                                         e.currentTarget.scrollLeft += e.deltaY;
-                                        this.setState({
-                                            curVideoImgSrc: e.target.src
-                                        });
                                     }}
                                 >
                                     {this.state.videoImgList.map(src => (
@@ -945,6 +942,11 @@ class TaskBar extends React.Component{
                                                     });
                                                 }}
                                                 onTouchStart={e => {
+                                                    this.setState({
+                                                        curVideoImgSrc: e.target.src
+                                                    });
+                                                }}
+                                                onMouseEnter={e => {
                                                     this.setState({
                                                         curVideoImgSrc: e.target.src
                                                     });
