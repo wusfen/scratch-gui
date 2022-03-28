@@ -526,6 +526,7 @@ class TaskBar extends React.Component{
         }
         this.setState({
             videoImgList: imgList,
+            curVideoImgSrc: imgList[0],
         });
     }
 
@@ -929,6 +930,16 @@ class TaskBar extends React.Component{
                                 <ul
                                     onWheel={e => {
                                         e.currentTarget.scrollLeft += e.deltaY;
+                                        const ulRect = e.currentTarget.getBoundingClientRect();
+                                        e.currentTarget.querySelectorAll('img').forEach(img => {
+                                            const imgRect = img.getBoundingClientRect();
+                                            const offset = imgRect.left - ulRect.left;
+                                            if (offset < ulRect.width / 2) {
+                                                this.setState({
+                                                    curVideoImgSrc: img.src
+                                                });
+                                            }
+                                        });
                                     }}
                                 >
                                     {this.state.videoImgList.map(src => (
@@ -937,19 +948,6 @@ class TaskBar extends React.Component{
                                                 src={src}
                                                 onClick={e => {
                                                     Preview.show(src);
-                                                    this.setState({
-                                                        curVideoImgSrc: src
-                                                    });
-                                                }}
-                                                onTouchStart={e => {
-                                                    this.setState({
-                                                        curVideoImgSrc: e.target.src
-                                                    });
-                                                }}
-                                                onMouseEnter={e => {
-                                                    this.setState({
-                                                        curVideoImgSrc: e.target.src
-                                                    });
                                                 }}
                                             />
                                         </li>
@@ -959,9 +957,11 @@ class TaskBar extends React.Component{
                                     {this.state.videoImgList.map(src => (
                                         <li
                                             key={src}
-                                            title={this.state.curVideoImgSrc}
+                                            src={src}
+                                            data-cur={this.state.curVideoImgSrc}
+                                            data-eq={this.state.curVideoImgSrc === src}
                                             className={classNames({
-                                                [styles.active]: this.state.curVideoImgSrc === src
+                                                [styles.active]: decodeURIComponent(this.state.curVideoImgSrc) === decodeURIComponent(src)
                                             })}
                                         >
                                         </li>
