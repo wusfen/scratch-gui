@@ -26,7 +26,7 @@ const UnavailableStep = props => (
                 </div>
                 <div className={styles.scratchLinkHelpStep}>
                     <div className={styles.helpStepNumber}> {'2'} </div>
-                    <div className={styles.helpStepText}>硬件设备开关已开启</div>
+                    <div className={styles.helpStepText}>硬件设备开关已开启，超过3分钟未连接请重启设备</div>
                 </div>
             </div>
             <div className={styles['peripheral-tile-item']}>
