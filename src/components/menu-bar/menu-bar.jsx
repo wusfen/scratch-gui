@@ -1490,6 +1490,7 @@ class MenuBar extends React.Component {
                             </span>
                         </button>
                         <button
+                            hidden
                             className={classNames(styles.bluetoothDownload)}
                             onClick={e => this.handleCodeDownToHardware()}
                         >
