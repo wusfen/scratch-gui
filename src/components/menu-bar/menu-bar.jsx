@@ -712,7 +712,8 @@ class MenuBar extends React.Component {
         // 首次保存退出分享
         if (!this.state.id && getParam('isexample')) {
             // window.bridge.emit('share', {id: data});
-            window._shareId = data;
+            // 暂时屏蔽分享
+            // window._shareId = data;
         }
 
         this.state.id = data;
