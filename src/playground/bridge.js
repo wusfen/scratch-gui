@@ -16,8 +16,10 @@ function emit (action, data) {
         action,
         data
     };
-    // 首次保存退出分享
+
+    // 退出的处理
     if (action === 'exitEditor') { // 调用了分享，就不调退出
+        // 首次保存退出分享
         if (window._shareId && getParam('mode') === 'normal') {
             const userId = getParam('userId');
             const shareId = window._shareId;
@@ -38,6 +40,13 @@ function emit (action, data) {
             return;
         }
     }
+
+    // 退出前通知原生关闭视频
+    if (/exitEditor/i.test(action)) {
+        emit('closeVideoModal', {type: 1});
+        emit('closeVideoModal', {type: 2});
+    }
+
     const event = new Event('bridge.emit');
     event.data = {
         action,
